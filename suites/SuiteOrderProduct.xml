@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="SuiteOrderProduct" verbose="1">
+    <test name="Order">
+        <classes>
+            <class name="com.thuydung.testcases.OrderTest"/>
+        </classes>
+    </test>
+</suite>

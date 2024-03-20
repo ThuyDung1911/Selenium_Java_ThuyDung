@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="SuiteFullFlow" verbose="1" parallel="none">
+    <test name="Add New Product">
+        <classes>
+            <class name="com.thuydung.testcases.AddProductTest"/>
+        </classes>
+    </test>
+    <test name="Get Product Info">
+        <classes>
+            <class name="com.thuydung.testcases.ProductInfoTest"/>
+        </classes>
+    </test>
+    <test name="Order Product">
+        <classes>
+            <class name="com.thuydung.testcases.OrderTest"/>
+        </classes>
+    </test>
+</suite>

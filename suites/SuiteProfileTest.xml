@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="SuiteProfileTest" verbose="1">
+    <test name="Update Profile">
+        <classes>
+            <class name="com.thuydung.testcases.ProfileTest"/>
+        </classes>
+    </test>
+</suite>

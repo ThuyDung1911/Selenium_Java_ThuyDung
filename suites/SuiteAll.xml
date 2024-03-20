@@ -1,0 +1,28 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="All Tests" verbose="1">
+    <test name="LoginTest" parallel="methods">
+        <classes>
+            <class name="com.thuydung.testcases.LoginTest"/>
+        </classes>
+    </test>
+    <test name="AddProductTest" parallel="none">
+        <classes>
+            <class name="com.thuydung.testcases.AddProductTest"/>
+        </classes>
+    </test>
+    <test name="ProductInfoTest" parallel="none">
+        <classes>
+            <class name="com.thuydung.testcases.ProductInfoTest"/>
+        </classes>
+    </test>
+    <test name="OrderTest" parallel="none">
+        <classes>
+            <class name="com.thuydung.testcases.OrderTest"/>
+        </classes>
+    </test>
+    <test name="ProfileTest" parallel="none">
+        <classes>
+            <class name="com.thuydung.testcases.ProfileTest"/>
+        </classes>
+    </test>
+</suite>

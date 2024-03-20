@@ -1,0 +1,12 @@
+.idea/
+target/
+out/
+logs/
+allure-results/
+allure-reports/
+VideoRecord/
+VideoRecords/
+screenshots/
+screenshot/
+report/
+*.iml

@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="SuiteProductTest" verbose="1">
+    <test name="Add Product and verify Product">
+        <classes>
+            <class name="com.thuydung.testcases.AddProductTest"/>
+        </classes>
+    </test>
+</suite>
