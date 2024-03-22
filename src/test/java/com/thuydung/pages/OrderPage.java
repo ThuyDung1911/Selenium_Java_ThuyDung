@@ -1,12 +1,8 @@
 package com.thuydung.pages;
 
-import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.keywords.WebUI;
 import org.openqa.selenium.By;
-
-import java.awt.*;
-import java.util.List;
 
 public class OrderPage {
     private By selectProductNabati = By.xpath("(//a[contains(text(),'Nabati')])[1]");
@@ -99,7 +95,7 @@ public class OrderPage {
         System.out.println("Sub total from Summary Order: " + subTotal);
 
         WebUI.sleep(2);
-        WebUI.verifyEquals(sumPrice, subTotal, "The total price is failed");
+        WebUI.verifyAssertEquals(sumPrice, subTotal, "The total price is failed");
         WebUI.clickElement(buttonCompleteOrder);
         WebUI.verifyAssertTrueIsDisplayed(messageOrderSuccess, "Order is failed");
         WebUI.waitForPageLoaded();

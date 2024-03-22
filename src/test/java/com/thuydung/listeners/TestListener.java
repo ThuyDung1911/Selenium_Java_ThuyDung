@@ -33,6 +33,7 @@ public class TestListener implements ITestListener {
     public void onFinish(ITestContext result) {
         LogUtils.info("End Testing " + result.getName());
         ExtentReportManager.getExtentReports().flush();
+        WebUI.stopSoftAssertAll();
         System.out.println("onFinish: " + result.getEndDate());
     }
 

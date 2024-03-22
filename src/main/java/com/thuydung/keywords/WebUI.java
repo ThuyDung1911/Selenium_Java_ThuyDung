@@ -1,22 +1,20 @@
 package com.thuydung.keywords;
 
+import com.aventstack.extentreports.Status;
 import com.thuydung.constants.ConfigData;
 import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.reports.AllureManager;
 import com.thuydung.reports.ExtentTestManager;
 import com.thuydung.utils.LogUtils;
-import com.aventstack.extentreports.Status;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -28,7 +26,7 @@ public class WebUI {
     private final static int TIMEOUT = Integer.parseInt(PropertiesHelper.getValue("TIMEOUT"));
     private final static int STEP_TIME = Integer.parseInt(PropertiesHelper.getValue("STEP_TIME"));
     private final static int PAGE_LOAD_TIMEOUT = Integer.parseInt(PropertiesHelper.getValue("PAGE_LOAD_TIMEOUT"));
-
+    private static SoftAssert softAssert = new SoftAssert();
     public static void sleep(double second) {
         try {
             Thread.sleep((long) (second * 1000));
@@ -36,7 +34,9 @@ public class WebUI {
             throw new RuntimeException(e);
         }
     }
-
+    public static void stopSoftAssertAll() {
+        softAssert.assertAll();
+    }
     @Step("Click element: {0}")
     public static void clickElement(By by) {
         waitForPageLoaded();
@@ -108,15 +108,27 @@ public class WebUI {
         } catch (Exception e) {
             if (message.isEmpty() || message == null) {
                 LogUtils.error("The element is not visible. " + by);
-                Assert.fail("The element is NOT visible. " + by);
+                softAssert.fail("The element is NOT visible. " + by);
             } else {
                 LogUtils.error(message + by);
-                Assert.fail(message + by);
+                softAssert.fail(message + by);
             }
             return false;
         }
     }
 
+    @Step("Verify {1} is display correct on {0}")
+    public static void verifySoftAssertTrueEqual(By by, String verifyText, String message) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        softAssert.assertTrue(DriverManager.getDriver().findElement(by).getText().trim().equals(verifyText), message);
+        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+            highLightElement(by);
+        }
+        LogUtils.info("Verify " + verifyText + " is display correct on " + by.toString());
+        //AllureReportManager.saveTextLog("Verify " + verifyText + " is display correct on " + by.toString());
+        ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display correct on " + by.toString());
+    }
     @Step("Verify {1} is display correct on {0}")
     public static void verifyAssertTrueEqual(By by, String verifyText, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
@@ -129,13 +141,38 @@ public class WebUI {
         //AllureReportManager.saveTextLog("Verify " + verifyText + " is display correct on " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display correct on " + by.toString());
     }
+    @Step("Verify {1} is display incorrect on {0}")
+    public static void verifySoftAssertFalseEqual(By by, String verifyText, String message) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        softAssert.assertFalse(DriverManager.getDriver().findElement(by).getText().trim().equals(verifyText), message);
+        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+            highLightElement(by);
+        }
+        LogUtils.info("Verify " + verifyText + " is display correct on " + by.toString());
+        //AllureReportManager.saveTextLog("Verify " + verifyText + " is display incorrect on " + by.toString());
+        ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display incorrect on " + by.toString());
+    }
+    @Step("Verify {1} is display incorrect on {0}")
+    public static void verifyAssertFalseEqual(By by, String verifyText, String message) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+            highLightElement(by);
+        }
+        Assert.assertFalse(DriverManager.getDriver().findElement(by).getText().trim().equals(verifyText), message);
+        LogUtils.info("Verify " + verifyText + " is display correct on " + by.toString());
+        //AllureReportManager.saveTextLog("Verify " + verifyText + " is display incorrect on " + by.toString());
+        ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display incorrect on " + by.toString());
+    }
+
 
     @Step("Verify attribute {1} is contains {2} on {0}")
-    public static void verifyAssertTrueContain(By by, String attribute, String verifyText, String message) {
+    public static void verifySoftAssertTrueContain(By by, String attribute, String verifyText, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         LogUtils.info("Verify contain: " + verifyText);
-        Assert.assertTrue(DriverManager.getDriver().findElement(by).getAttribute(attribute).contains(verifyText), message);
+        softAssert.assertTrue(DriverManager.getDriver().findElement(by).getAttribute(attribute).contains(verifyText), message);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
@@ -144,22 +181,64 @@ public class WebUI {
     }
 
     @Step("Verify {0} is displayed")
+    public static void verifySoftAssertTrueIsDisplayed(By by, String message) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            LogUtils.info("Verify " + by + " is displayed");
+            softAssert.assertTrue(DriverManager.getDriver().findElement(by).isDisplayed(), message);
+            if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+                highLightElement(by);
+            }
+            //AllureReportManager.saveTextLog("Verify " + by + " is displayed");
+            ExtentTestManager.logMessage("Verify " + by + " is displayed");
+        } catch (NoSuchElementException e) {
+            softAssert.fail(message);
+        }
+    }
+    @Step("Verify {0} is displayed")
     public static void verifyAssertTrueIsDisplayed(By by, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            LogUtils.info("Verify " + by + " is displayed");
+            Assert.assertTrue(DriverManager.getDriver().findElement(by).isDisplayed(), message);
+            if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+                highLightElement(by);
+            }
+            //AllureReportManager.saveTextLog("Verify " + by + " is displayed");
+            ExtentTestManager.logMessage("Verify " + by + " is displayed");
+        } catch (NoSuchElementException e) {
+            Assert.fail(message);
+        }
+    }
+
+    @Step("Verify {0} is notdisplayed")
+    public static void verifySoftAssertFalseIsDisplayed(By by, String message) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        LogUtils.info("Verify " + by + " is displayed");
-        Assert.assertTrue(DriverManager.getDriver().findElement(by).isDisplayed(), message);
+        LogUtils.info("Verify " + by + " is not displayed");
+        softAssert.assertFalse(DriverManager.getDriver().findElement(by).isDisplayed(), message);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
-        //AllureReportManager.saveTextLog("Verify " + by + " is displayed");
-        ExtentTestManager.logMessage("Verify " + by + " is displayed");
-        if (DriverManager.getDriver().findElement(by).isDisplayed() == false) {
-            ExtentTestManager.logMessage(message);
-        }
+        //AllureReportManager.saveTextLog("Verify " + by + " is not displayed");
+        ExtentTestManager.logMessage("Verify " + by + " is not displayed");
 
     }
 
+    @Step("Verify attribute {1} is contains {2} on {0}")
+    public static void verifySoftAssertTrueAttribute(By by, String attribute, String expectedValue, String message) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        LogUtils.info("Verify attribute " + attribute + " is contains " + expectedValue + " on " + by.toString());
+        softAssert.assertTrue(DriverManager.getDriver().findElement(by).getAttribute(attribute).trim().equals(expectedValue), message);
+        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+            highLightElement(by);
+        }
+        //AllureReportManager.saveTextLog("Verify attribute " + attribute + " is contains " + expectedValue + " on " + by.toString());
+        ExtentTestManager.logMessage("Verify attribute " + attribute + " is contains " + expectedValue + " on " + by.toString());
+    }
     @Step("Verify attribute {1} is contains {2} on {0}")
     public static void verifyAssertTrueAttribute(By by, String attribute, String expectedValue, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
@@ -358,7 +437,7 @@ public class WebUI {
             wait.until(ExpectedConditions.presenceOfElementLocated(by));
         } catch (Throwable error) {
             LogUtils.info("Element not exist. " + by.toString());
-            Assert.fail("Element not exist. " + by.toString());
+            softAssert.fail("Element not exist. " + by.toString());
         }
     }
 
@@ -368,7 +447,7 @@ public class WebUI {
             wait.until(ExpectedConditions.presenceOfElementLocated(by));
         } catch (Throwable error) {
             LogUtils.info("Element not exist. " + by.toString());
-            Assert.fail("Element not exist. " + by.toString());
+            softAssert.fail("Element not exist. " + by.toString());
         }
     }
 
@@ -378,7 +457,7 @@ public class WebUI {
             wait.until(ExpectedConditions.elementToBeClickable(getWebElement(by)));
         } catch (Throwable error) {
             LogUtils.info("Timeout waiting for the element ready to click. " + by.toString());
-            Assert.fail("Timeout waiting for the element ready to click. " + by.toString());
+            softAssert.fail("Timeout waiting for the element ready to click. " + by.toString());
         }
     }
 
@@ -388,7 +467,7 @@ public class WebUI {
             wait.until(ExpectedConditions.elementToBeClickable(getWebElement(by)));
         } catch (Throwable error) {
             LogUtils.info("Timeout waiting for the element ready to click. " + by.toString());
-            Assert.fail("Timeout waiting for the element ready to click. " + by.toString());
+            softAssert.fail("Timeout waiting for the element ready to click. " + by.toString());
         }
     }
 
@@ -396,19 +475,29 @@ public class WebUI {
     public static void verifyEquals(Object actual, Object expected) {
         waitForPageLoaded();
         sleep(STEP_TIME);
-        Assert.assertEquals(actual, expected, "Fail, NOT match: " + actual.toString() + " != " + expected.toString());
+        softAssert.assertEquals(actual, expected, "Fail, NOT match: " + actual.toString() + " != " + expected.toString());
         ExtentTestManager.logMessage(Status.PASS, "Verify result: " + expected + " is correct");
         LogUtils.info("Verify result: " + expected + " is correct");
     }
 
     @Step("Verify result {1} is correct")
-    public static void verifyEquals(Object actual, Object expected, String message) {
+    public static void verifySoftAssertEquals(Object actual, Object expected, String message) {
+        waitForPageLoaded();
+        sleep(STEP_TIME);
+        softAssert.assertEquals(actual, expected, message);
+        ExtentTestManager.logMessage(Status.PASS, "Verify result: " + expected + " is correct");
+        LogUtils.info("Verify result: " + expected + " is correct");
+    }
+    @Step("Verify result {1} is correct")
+    public static void verifyAssertEquals(Object actual, Object expected, String message) {
         waitForPageLoaded();
         sleep(STEP_TIME);
         Assert.assertEquals(actual, expected, message);
         ExtentTestManager.logMessage(Status.PASS, "Verify result: " + expected + " is correct");
         LogUtils.info("Verify result: " + expected + " is correct");
     }
+
+
 
     /**
      * Chờ đợi trang tải xong (Javascript) với thời gian thiết lập sẵn
@@ -432,7 +521,7 @@ public class WebUI {
                 wait.until(jsLoad);
             } catch (Throwable error) {
                 error.printStackTrace();
-                Assert.fail("Timeout waiting for page load (Javascript). (" + PAGE_LOAD_TIMEOUT + "s)");
+                softAssert.fail("Timeout waiting for page load (Javascript). (" + PAGE_LOAD_TIMEOUT + "s)");
             }
         }
     }
@@ -461,7 +550,7 @@ public class WebUI {
                 //Wait for jQuery to load
                 wait.until(jQueryLoad);
             } catch (Throwable error) {
-                Assert.fail("Timeout waiting for JQuery load. (" + PAGE_LOAD_TIMEOUT + "s)");
+                softAssert.fail("Timeout waiting for JQuery load. (" + PAGE_LOAD_TIMEOUT + "s)");
             }
         }
     }
@@ -492,7 +581,7 @@ public class WebUI {
                 //Wait for jQuery to load
                 wait.until(angularLoad);
             } catch (Throwable error) {
-                Assert.fail("Timeout waiting for Angular load. (" + PAGE_LOAD_TIMEOUT + "s)");
+                softAssert.fail("Timeout waiting for Angular load. (" + PAGE_LOAD_TIMEOUT + "s)");
             }
         }
 

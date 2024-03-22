@@ -9,4 +9,5 @@ public class DashboardPage extends CommonPage{
     public static By buttonSubmitSearch = By.xpath("//div[@class='input-group-append d-none d-lg-block']//button[@type='submit']");
     public static By fullNameAccount = By.xpath("//span[contains(@class,'avatar')]/following-sibling::h4");
     public static By emailAccount = By.xpath("//span[contains(@class,'avatar')]/following-sibling::div");
+    public static By buttonLogout = By.xpath("//a[normalize-space()='My Panel']/parent::li/following-sibling::li/a[normalize-space()='Logout']");
 }
