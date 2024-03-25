@@ -34,8 +34,8 @@ public class ProfilePage extends CommonPage{
     private By titlePopupEditAddress = By.xpath("//div[@id='edit-address-modal']//h5[@id='exampleModalLabel']");
     private By inputYourAddress = By.xpath("(//textarea[@name='address'])[2]");
     private By inputAddYourAddress = By.xpath("(//textarea[@name='address'])[1]");
-    private By selectCountry = By.xpath("(//select[@data-placeholder='Select your country']/parent::div)[2]");
-    private By selectAddCountry = By.xpath("(//select[@data-placeholder='Select your country']/parent::div)[1]");
+    private By selectCountry = By.xpath("//div[@id='edit-address-modal']//select[@data-placeholder='Select your country']/parent::div");
+    private By selectAddCountry = By.xpath("//div[@id='new-address-modal']//select[@data-placeholder='Select your country']/parent::div");
     private By inputSearchCountry = By.xpath("//div[@class='dropdown-menu show']//input[@aria-label='Search']");
     private By selectState = By.xpath("(//select[@name='state_id']/parent::div)[2]");
     private By selectAddState = By.xpath("(//select[@name='state_id']/parent::div)[1]");
@@ -222,8 +222,8 @@ public class ProfilePage extends CommonPage{
         WebUI.setTextAndClear(inputAddPostalCode, postalCode);
         WebUI.setTextAndClear(inputAddPhoneAddress, phone);
         WebUI.clickElement(buttonSaveNewAddress);
-        //WebUI.checkHTML5MessageWithValueInvalid(selectAddCountry,"Country khong hop le.");
-        WebUI.verifyAssertTrueEqualMessageHTML(selectAddCountry,"Please select an item in the list.1","Message khong dung.");
+        WebUI.checkHTML5MessageWithValueInvalid(By.xpath("//div[@id='new-address-modal']//select[@name='country_id']"),"Country khong hop le.");
+        WebUI.verifyAssertTrueEqualMessageHTML(By.xpath("//div[@id='new-address-modal']//select[@data-placeholder='Select your country']"),"Please select an item in the list.1","Message khong dung.");
         WebUI.verifyAssertTrueIsDisplayed(titlePopupNewAddress, "Popup New Address da dong lai, dia chi moi duoc them vao.");
     }
     public void addNewAddressWithoutState(String address, String country, String postalCode, String phone) {
