@@ -8,6 +8,7 @@ import com.thuydung.keywords.WebUI;
 import com.thuydung.utils.LogUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
 import java.util.Random;
@@ -124,7 +125,14 @@ public class AddProductPage extends CommonPage {
         addProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
+        nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
         verifyNewProduct(category, unit, Double.valueOf(unitPrice), description);
+    }
+    public void addProductInvalid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
+        addProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
+        WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
+        WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
+        //verifyNewProduct(category, unit, Double.valueOf(unitPrice), description);
     }
 
     public void verifyNewProduct(String category, String unit, Double unitPrice, String description) {

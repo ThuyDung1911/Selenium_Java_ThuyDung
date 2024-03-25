@@ -222,8 +222,8 @@ public class ProfilePage extends CommonPage{
         WebUI.setTextAndClear(inputAddPostalCode, postalCode);
         WebUI.setTextAndClear(inputAddPhoneAddress, phone);
         WebUI.clickElement(buttonSaveNewAddress);
-        WebUI.checkHTML5MessageWithValueInvalid(By.xpath("//div[@id='new-address-modal']//select[@name='country_id']"),"Country khong hop le.");
-        WebUI.verifyAssertTrueEqualMessageHTML(By.xpath("//div[@id='new-address-modal']//select[@data-placeholder='Select your country']"),"Please select an item in the list.1","Message khong dung.");
+//        WebUI.checkHTML5MessageWithValueInvalid(By.xpath("//div[@id='new-address-modal']//div[contains(@class,'dropdown')]/select[@name='country_id']"),"Country khong hop le.");
+//        WebUI.verifyAssertTrueEqualMessageHTML(By.xpath("//div[@id='new-address-modal']//div[contains(@class,'dropdown')]/select[@name='country_id']"),"Please select an item in the list.","Message khong dung.");
         WebUI.verifyAssertTrueIsDisplayed(titlePopupNewAddress, "Popup New Address da dong lai, dia chi moi duoc them vao.");
     }
     public void addNewAddressWithoutState(String address, String country, String postalCode, String phone) {
@@ -262,10 +262,14 @@ public class ProfilePage extends CommonPage{
     }
     public void addNewAddressWithoutPostalCode(String address, String country, String state, String city, String postalCode, String phone) {
         addNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.checkHTML5MessageWithValueInvalid(inputAddPostalCode,"Postal code khong hop le");
+        WebUI.verifyAssertTrueEqualMessageHTML(inputAddPostalCode,"Please fill out this field.","Message khong dung.");
         WebUI.verifyAssertTrueIsDisplayed(titlePopupNewAddress, "Popup New Address da dong lai, dia chi moi duoc them vao.");
     }
     public void addNewAddressWithoutPhone(String address, String country, String state, String city, String postalCode, String phone) {
         addNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.checkHTML5MessageWithValueInvalid(inputAddPhoneAddress,"Phone khong hop le");
+        WebUI.verifyAssertTrueEqualMessageHTML(inputAddPhoneAddress,"Please fill out this field.","Message khong dung.");
         WebUI.verifyAssertTrueIsDisplayed(titlePopupNewAddress, "Popup New Address da dong lai, dia chi moi duoc them vao.");
     }
     public void editNewAddress(String address, String country, String state, String city, String postalCode, String phone) {
@@ -301,6 +305,8 @@ public class ProfilePage extends CommonPage{
     }
     public void editAddressWithoutAddress(String address, String country, String state, String city, String postalCode, String phone) {
         editNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.checkHTML5MessageWithValueInvalid(inputYourAddress,"Adress khong hop le.");
+        WebUI.verifyAssertTrueEqualMessageHTML(inputYourAddress,"Please fill out this field.","Message khong dung.");
         WebUI.verifyAssertTrueIsDisplayed(titlePopupEditAddress, "Popup New Address da dong lai, dia chi moi duoc sua lai.");
     }
     public void editAddressWithoutCountry(String address, String country, String postalCode, String phone) {
@@ -366,10 +372,14 @@ public class ProfilePage extends CommonPage{
     }
     public void editAddressWithoutPostalCode(String address, String country, String state, String city, String postalCode, String phone) {
         editNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.checkHTML5MessageWithValueInvalid(inputPostalCode,"Postal Code khong hop le.");
+        WebUI.verifyAssertTrueEqualMessageHTML(inputPostalCode,"Please fill out this field.","Message khong dung.");
         WebUI.verifyAssertTrueIsDisplayed(titlePopupEditAddress, "Popup New Address da dong lai, dia chi moi duoc sua lai.");
     }
     public void editAddressWithoutPhone(String address, String country, String state, String city, String postalCode, String phone) {
         editNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.checkHTML5MessageWithValueInvalid(inputPhoneAddress,"Phone khong hop le.");
+        WebUI.verifyAssertTrueEqualMessageHTML(inputPhoneAddress,"Please fill out this field.","Message khong dung.");
         WebUI.verifyAssertTrueIsDisplayed(titlePopupEditAddress, "Popup New Address da dong lai, dia chi moi duoc sua lai.");
     }
 
