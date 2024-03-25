@@ -117,7 +117,8 @@ public class LoginPage extends CommonPage {
         WebUI.setTextAndClear(inputEmail, email);
         WebUI.setTextAndClear(inputPassword, password);
         WebUI.clickElement(buttonSubmitLogin);
-        WebUI.verifyAssertTrueIsDisplayed(titleLoginPage, "Trang hiện tại không phải là trang đăng nhập.");
+        //WebUI.verifyAssertTrueIsDisplayed(titleLoginPage, "Trang hiện tại không phải là trang đăng nhập.");
+        WebUI.checkHTML5MessageWithValueInvalid(inputEmail,"Email sai dinh dang");
         WebUI.sleep(2);
     }
 }

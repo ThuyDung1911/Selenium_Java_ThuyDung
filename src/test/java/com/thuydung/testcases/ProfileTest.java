@@ -101,15 +101,15 @@ public class ProfileTest extends BaseTest {
     }
 
     //Update Email Customer with Email invalid
-//    @Test(priority = 9)
-//    public void updateEmailCustomerWithEmailInvalid() {
-//        excelLogin = new ExcelHelper();
-//        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-//        excelUpdateProfile = new ExcelHelper();
-//        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "UpdateEmail");
-//        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-//        getProfilePage().updateProfileWithNewEmailIncorrectFormat(excelUpdateProfile.getCellData("email",3));
-//    }
+    @Test(priority = 9)
+    public void updateEmailCustomerWithEmailInvalid() {
+        excelLogin = new ExcelHelper();
+        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
+        excelUpdateProfile = new ExcelHelper();
+        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "UpdateEmail");
+        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        getProfilePage().updateProfileWithNewEmailIncorrectFormat(excelUpdateProfile.getCellData("email",3));
+    }
 
     //Add New Address Customer Valid
     @Test(priority = 10)

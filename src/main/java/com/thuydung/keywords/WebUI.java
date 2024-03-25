@@ -144,6 +144,18 @@ public class WebUI {
         //AllureReportManager.saveTextLog("Verify " + verifyText + " is display correct on " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display correct on " + by.toString());
     }
+    @Step("Verify {1} is display correct on {0}")
+    public static void verifyAssertTrueEqualMessageHTML(By by, String verifyText, String message) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        Assert.assertTrue(DriverManager.getDriver().findElement(by).getAttribute("validationMessage").equals(verifyText), message);
+        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+            highLightElement(by);
+        }
+        LogUtils.info("Verify " + verifyText + " is display correct on " + by.toString());
+        //AllureReportManager.saveTextLog("Verify " + verifyText + " is display correct on " + by.toString());
+        ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display correct on " + by.toString());
+    }
     @Step("Verify {1} is display incorrect on {0}")
     public static void verifySoftAssertFalseEqual(By by, String verifyText, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
@@ -211,6 +223,22 @@ public class WebUI {
             }
             //AllureReportManager.saveTextLog("Verify " + by + " is displayed");
             ExtentTestManager.logMessage("Verify " + by + " is displayed");
+        } catch (NoSuchElementException e) {
+            Assert.fail(message);
+        }
+    }
+    @Step("Message HTML with value {0} invalid is displayed")
+    public static void checkHTML5MessageWithValueInvalid(By by, String message) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            LogUtils.info("Message HTML with value " + by + " invalid is displayed");
+            Assert.assertFalse((Boolean)((JavascriptExecutor) DriverManager.getDriver()).executeScript("return arguments[0].validity.valid;", DriverManager.getDriver().findElement(by)), message);
+            if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+                highLightElement(by);
+            }
+            //AllureReportManager.saveTextLog("Message HTML with value " + by + " invalid is displayed");
+            ExtentTestManager.logMessage("Message HTML with value " + by + " invalid is displayed");
         } catch (NoSuchElementException e) {
             Assert.fail(message);
         }

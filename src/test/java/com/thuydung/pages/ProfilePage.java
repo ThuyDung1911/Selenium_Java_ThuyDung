@@ -1,5 +1,6 @@
 package com.thuydung.pages;
 
+import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.ExcelHelper;
 import com.thuydung.keywords.WebUI;
 import org.openqa.selenium.By;
@@ -168,10 +169,10 @@ public class ProfilePage extends CommonPage{
         WebUI.verifyElementVisible(messageUpdate, "Cap nhat email that bai");
         WebUI.verifyAssertTrueEqual(messageUpdate, "Email already exists!", "Thông báo cập nhật email không đúng");
     }
-//    public void updateProfileWithNewEmailIncorrectFormat(String email) {
-//        updateEmail(email);
-//        WebUI.verifyAssertFalseIsDisplayed(messageUpdate, "Thông báo cập nhật email hiển thị");
-//    }
+    public void updateProfileWithNewEmailIncorrectFormat(String email) {
+        updateEmail(email);
+        WebUI.checkHTML5MessageWithValueInvalid(inputEmail,"Email khong hop le.");
+    }
 
     public void addNewAddress(String address, String country, String state, String city, String postalCode, String phone) {
         WebUI.waitForPageLoaded();
@@ -205,6 +206,8 @@ public class ProfilePage extends CommonPage{
     }
     public void addNewAddressWithoutAddress(String address, String country, String state, String city, String postalCode, String phone) {
         addNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.checkHTML5MessageWithValueInvalid(inputAddYourAddress,"Address khong hop le.");
+        WebUI.verifyAssertTrueEqualMessageHTML(inputAddYourAddress,"Please fill out this field.","Message khong dung.");
         WebUI.verifyAssertTrueIsDisplayed(titlePopupNewAddress, "Popup New Address da dong lai, dia chi moi duoc them vao.");
     }
     public void addNewAddressWithoutCountry(String address, String postalCode, String phone) {
@@ -219,6 +222,8 @@ public class ProfilePage extends CommonPage{
         WebUI.setTextAndClear(inputAddPostalCode, postalCode);
         WebUI.setTextAndClear(inputAddPhoneAddress, phone);
         WebUI.clickElement(buttonSaveNewAddress);
+        //WebUI.checkHTML5MessageWithValueInvalid(selectAddCountry,"Country khong hop le.");
+        WebUI.verifyAssertTrueEqualMessageHTML(selectAddCountry,"Please select an item in the list.1","Message khong dung.");
         WebUI.verifyAssertTrueIsDisplayed(titlePopupNewAddress, "Popup New Address da dong lai, dia chi moi duoc them vao.");
     }
     public void addNewAddressWithoutState(String address, String country, String postalCode, String phone) {
