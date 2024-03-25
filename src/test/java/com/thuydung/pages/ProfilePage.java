@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
 public class ProfilePage extends CommonPage{
-    private By menuManageProfile = By.xpath("//div[@class='d-flex align-items-start']//span[@class='aiz-side-nav-text' and normalize-space()='Manage Profile']");
+    private By menuManageProfile = By.xpath("(//span[normalize-space()='Manage Profile'])[1]/ancestor::li");
     private By titleManageProfile = By.xpath("//h1[normalize-space()='Manage Profile']");
     private By inputName = By.xpath("//input[@placeholder='Your name']");
     private By inputPhone = By.xpath("//input[@placeholder='Your Phone']");
@@ -21,18 +21,33 @@ public class ProfilePage extends CommonPage{
     private By buttonUpdateEmail = By.xpath("//button[normalize-space()='Update Email']");
     private By messageUpdate = By.xpath("//span[@data-notify='message']");
     private By titleAddress = By.xpath("//h5[normalize-space()='Address']");
-    private By buttonAddNewAddress = By.xpath("//div[@class='border p-3 rounded mb-3 c-pointer text-center bg-light']");
+    private By divAddress = By.xpath("//h5[normalize-space()='Address']/ancestor::div[@class='card']");
+    private By buttonAddNewAddress = By.xpath("//div[@onclick='add_new_address()']/div");
+    private By valueNewestAddress = By.xpath("//div[@onclick='add_new_address()']/preceding-sibling::div[1]//span[text()='Address:']/following-sibling::span");
+    private By valueNewestCountry = By.xpath("//div[@onclick='add_new_address()']/preceding-sibling::div[1]//span[text()='Country:']/following-sibling::span");
+    private By valueNewestState = By.xpath("//div[@onclick='add_new_address()']/preceding-sibling::div[1]//span[text()='State:']/following-sibling::span");
+    private By valueNewestCity = By.xpath("//div[@onclick='add_new_address()']/preceding-sibling::div[1]//span[text()='City:']/following-sibling::span");
+    private By valueNewestPostalCode = By.xpath("//div[@onclick='add_new_address()']/preceding-sibling::div[1]//span[text()='Postal code:']/following-sibling::span");
+    private By valueNewestPhone = By.xpath("//div[@onclick='add_new_address()']/preceding-sibling::div[1]//span[text()='Phone:']/following-sibling::span");
     private By titlePopupNewAddress = By.xpath("//div[@id='new-address-modal']//h5[@id='exampleModalLabel']");
-    private By inputYourAddress = By.xpath("//textarea[@placeholder='Your Address']");
-    private By selectCountry = By.xpath("//button[@title='Select your country']");
+    private By titlePopupEditAddress = By.xpath("//div[@id='edit-address-modal']//h5[@id='exampleModalLabel']");
+    private By inputYourAddress = By.xpath("(//textarea[@name='address'])[2]");
+    private By inputAddYourAddress = By.xpath("(//textarea[@name='address'])[1]");
+    private By selectCountry = By.xpath("(//select[@data-placeholder='Select your country']/parent::div)[2]");
+    private By selectAddCountry = By.xpath("(//select[@data-placeholder='Select your country']/parent::div)[1]");
     private By inputSearchCountry = By.xpath("//div[@class='dropdown-menu show']//input[@aria-label='Search']");
-    private By selectState = By.xpath("//div[contains(text(),'Select State')]");
+    private By selectState = By.xpath("(//select[@name='state_id']/parent::div)[2]");
+    private By selectAddState = By.xpath("(//select[@name='state_id']/parent::div)[1]");
     private By inputSearchState = By.xpath("//div[@class='dropdown-menu show']//input[@aria-label='Search']");
-    private By selectCity = By.xpath("//div[contains(text(),'Select City')]");
+    private By selectCity = By.xpath("(//select[@name='city_id']/parent::div)[2]");
+    private By selectAddCity = By.xpath("(//select[@name='city_id']/parent::div)[1]");
     private By inputSearchCity = By.xpath("//div[@class='dropdown-menu show']//input[@aria-label='Search']");
-    private By inputPostalCode = By.xpath("//input[@placeholder='Your Postal Code']");
-    private By inputPhoneAddress = By.xpath("//input[@placeholder='+880']");
-    private By buttonSaveNewAddress = By.xpath("//button[normalize-space()='Save']");
+    private By inputPostalCode = By.xpath("(//input[@name='postal_code'])[2]");
+    private By inputAddPostalCode = By.xpath("(//input[@name='postal_code'])[1]");
+    private By inputPhoneAddress = By.xpath("(//input[@name='phone'])[3]");
+    private By inputAddPhoneAddress = By.xpath("(//input[@name='phone'])[2]");
+    private By buttonSaveNewAddress = By.xpath("(//button[normalize-space()='Save'])[1]");
+    private By buttonSaveEditAddress = By.xpath("(//button[normalize-space()='Save'])[2]");
     private By inputPhoto = By.xpath("//label[normalize-space()='Photo']/following-sibling::div/descendant::div[normalize-space()='Browse']");
     private By tabUploadNew = By.xpath("//a[normalize-space()='Upload New']");
     private By tabSelectFile = By.xpath("//a[normalize-space()='Select File']");
@@ -40,15 +55,17 @@ public class ProfilePage extends CommonPage{
     private By buttonAddFile = By.xpath("//button[normalize-space()='Add Files']");
     private By inputSearchPhoto = By.xpath("//input[@placeholder='Search your files']");
     private By imageUploaded = By.xpath("(//div[@class='modal-body']//div[contains(@title,'AvatarAccount')]/descendant::img[@class='img-fit'])[1]");
-
+    private By iconEllipsisInCardAddressNewest = By.xpath("//div[@onclick='add_new_address()']/preceding-sibling::div[1]//i[@class='la la-ellipsis-v']");
+    private By buttonEditInCardAddressNewest = By.xpath("//div[@onclick='add_new_address()']/preceding-sibling::div[1]//i[@class='la la-ellipsis-v']/parent::button/following-sibling::div[contains(@class, 'dropdown-menu')]/a[normalize-space()='Edit']");
     public void updateInfoBasicProfileCustomer(String name, String phone, String imgName, String password, String confirmPassword) {
         WebUI.waitForPageLoaded();
+        WebUI.scrollToElementToBottom(menuManageProfile);
         WebUI.clickElement(menuManageProfile);
-        WebUI.waitForPageLoaded();
         WebUI.verifyElementVisible(titleManageProfile, "Trang Manage Profile KHÔNG được hiển thị.");
         WebUI.setTextAndClear(inputName, name);
         WebUI.setTextAndClear(inputPhone, phone);
         WebUI.clickElement(inputPhoto);
+        //Upload file new
 //        WebUI.clickElement(tabUploadNew);
 //        DriverManager.getDriver().findElement(inputUploadPhoto).sendKeys(SystemHelper.getCurrentDir() + "DataTest\\" + imgName + ".png");
         WebUI.clickElement(tabSelectFile);
@@ -120,16 +137,17 @@ public class ProfilePage extends CommonPage{
     }
     public void updateInfoBasicProfileCustomerPasswordLessCharacter(String name, String phone, String imgName, String password, String confirmPassword) {
         updateInfoBasicProfileCustomer(name, phone, imgName, password, confirmPassword);
-        WebUI.verifySoftAssertTrueIsDisplayed(messageUpdate, "Thông báo không xuất hiện");
-        WebUI.verifySoftAssertFalseEqual(messageUpdate, "Your Profile has been updated successfully!", "Thông báo cập nhật thành công VẪN được hiển thị, mật khẩu ít hơn 6 ký tự.");
+        WebUI.verifyAssertTrueIsDisplayed(messageUpdate, "Thông báo không xuất hiện");
+        WebUI.verifyAssertFalseEqual(messageUpdate, "Your Profile has been updated successfully!", "Thông báo cập nhật thành công VẪN được hiển thị, mật khẩu ít hơn 6 ký tự.");
         WebUI.sleep(2);
         //Đăng nhập lại để kiểm tra thông tin đã được cập nhật
         //verifyUpdatePasswordFail(password, confirmPassword);
     }
     public void updateEmail(String email) {
         WebUI.waitForPageLoaded();
-        WebUI.scrollToElementToBottom(titleChangeEmail);
+        WebUI.scrollToElementToBottom(menuManageProfile);
         WebUI.clickElement(menuManageProfile);
+        WebUI.scrollToElementToBottom(titleChangeEmail);
         WebUI.verifyElementVisible(titleChangeEmail, "Tieu de Change your email KHONG xuat hien.");
         WebUI.setTextAndClear(inputEmail, email);
         WebUI.clickElement(buttonUpdateEmail);
@@ -150,30 +168,204 @@ public class ProfilePage extends CommonPage{
         WebUI.verifyElementVisible(messageUpdate, "Cap nhat email that bai");
         WebUI.verifyAssertTrueEqual(messageUpdate, "Email already exists!", "Thông báo cập nhật email không đúng");
     }
-    public void updateProfileWithNewEmailIncorrectFormat(String email) {
-        updateEmail(email);
-        WebUI.verifyElementVisible(messageUpdate, "Cap nhat email that bai");
-    }
+//    public void updateProfileWithNewEmailIncorrectFormat(String email) {
+//        updateEmail(email);
+//        WebUI.verifyAssertFalseIsDisplayed(messageUpdate, "Thông báo cập nhật email hiển thị");
+//    }
 
-    public void addNewAddress() {
+    public void addNewAddress(String address, String country, String state, String city, String postalCode, String phone) {
         WebUI.waitForPageLoaded();
+        WebUI.moveToElement(menuManageProfile);
+//        WebUI.scrollToElementToBottom(menuManageProfile);
         WebUI.clickElement(menuManageProfile);
-        WebUI.scrollToElementToBottom(titleAddress);
-        WebUI.verifyElementVisible(titleAddress, "Change address block is NOT displayed");
+        WebUI.waitForPageLoaded();
+        WebUI.scrollToElementToBottom(divAddress);
         WebUI.clickElement(buttonAddNewAddress);
-        WebUI.verifyElementVisible(titlePopupNewAddress, "Popup New Address is NOT displayed");
-        WebUI.setTextAndClear(inputYourAddress, "Hoan Kiem");
-        WebUI.clickElement(selectCountry);
-        WebUI.setTextAndClear(inputSearchCountry, "Vietnam", Keys.ENTER);
-        WebUI.clickElement(selectState);
-        WebUI.setTextAndClear(inputSearchState, "Hà Nội", Keys.ENTER);
-        WebUI.clickElement(selectCity);
-        WebUI.setTextAndClear(inputSearchCity, "Hà Nội", Keys.ENTER);
-        WebUI.setTextAndClear(inputPostalCode, "65000");
-        WebUI.setTextAndClear(inputPhoneAddress, "0123456789");
+        WebUI.verifyElementVisible(titlePopupNewAddress, "Popup New Address KHONG hien thi.");
+        WebUI.setTextAndClear(inputAddYourAddress, address);
+        WebUI.clickElement(selectAddCountry);
+        WebUI.setTextAndClear(inputSearchCountry, country, Keys.ENTER);
+        WebUI.clickElement(selectAddState);
+        WebUI.setTextAndClear(inputSearchState, state, Keys.ENTER);
+        WebUI.clickElement(selectAddCity);
+        WebUI.setTextAndClear(inputSearchCity, city, Keys.ENTER);
+        WebUI.setTextAndClear(inputAddPostalCode, postalCode);
+        WebUI.setTextAndClear(inputAddPhoneAddress, phone);
         WebUI.clickElement(buttonSaveNewAddress);
-        WebUI.scrollToElementToTop(By.xpath("//h5[normalize-space()='Address']"));
-        WebUI.verifyElementVisible(By.xpath("//span[normalize-space()='Hà Nội']"), "Không thêm được địa chỉ. Hà Nội không tồn tại.");
+        }
+    public void addNewAddressValid(String address, String country, String state, String city, String postalCode, String phone) {
+        addNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.scrollToElementToBottom(divAddress);
+        WebUI.verifyAssertTrueEqual(valueNewestAddress, address, "Địa chỉ mới không được thêm vào.");
+        WebUI.verifyAssertTrueEqual(valueNewestCountry, country, "Quốc gia mới không được thêm vào.");
+        WebUI.verifyAssertTrueEqual(valueNewestState, state, "Tỉnh/Thành phố mới không được thêm vào.");
+        WebUI.verifyAssertTrueEqual(valueNewestCity, city, "Thành phố mới không được thêm vào.");
+        WebUI.verifyAssertTrueEqual(valueNewestPostalCode, postalCode, "Mã bưu chính mới không được thêm vào.");
+        WebUI.verifyAssertTrueEqual(valueNewestPhone, phone, "Số điện thoại mới không được thêm vào.");
+    }
+    public void addNewAddressWithoutAddress(String address, String country, String state, String city, String postalCode, String phone) {
+        addNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.verifyAssertTrueIsDisplayed(titlePopupNewAddress, "Popup New Address da dong lai, dia chi moi duoc them vao.");
+    }
+    public void addNewAddressWithoutCountry(String address, String postalCode, String phone) {
+        WebUI.waitForPageLoaded();
+        WebUI.moveToElement(menuManageProfile);
+        WebUI.clickElement(menuManageProfile);
+        WebUI.waitForPageLoaded();
+        WebUI.scrollToElementToBottom(divAddress);
+        WebUI.clickElement(buttonAddNewAddress);
+        WebUI.verifyElementVisible(titlePopupNewAddress, "Popup New Address KHONG hien thi.");
+        WebUI.setTextAndClear(inputAddYourAddress, address);
+        WebUI.setTextAndClear(inputAddPostalCode, postalCode);
+        WebUI.setTextAndClear(inputAddPhoneAddress, phone);
+        WebUI.clickElement(buttonSaveNewAddress);
+        WebUI.verifyAssertTrueIsDisplayed(titlePopupNewAddress, "Popup New Address da dong lai, dia chi moi duoc them vao.");
+    }
+    public void addNewAddressWithoutState(String address, String country, String postalCode, String phone) {
+        WebUI.waitForPageLoaded();
+        WebUI.moveToElement(menuManageProfile);
+        WebUI.clickElement(menuManageProfile);
+        WebUI.waitForPageLoaded();
+        WebUI.scrollToElementToBottom(divAddress);
+        WebUI.clickElement(buttonAddNewAddress);
+        WebUI.verifyElementVisible(titlePopupNewAddress, "Popup New Address KHONG hien thi.");
+        WebUI.setTextAndClear(inputAddYourAddress, address);
+        WebUI.clickElement(selectAddCountry);
+        WebUI.setTextAndClear(inputSearchCountry, country, Keys.ENTER);
+        WebUI.setTextAndClear(inputAddPostalCode, postalCode);
+        WebUI.setTextAndClear(inputAddPhoneAddress, phone);
+        WebUI.clickElement(buttonSaveNewAddress);
+        WebUI.verifyAssertTrueIsDisplayed(titlePopupNewAddress, "Popup New Address da dong lai, dia chi moi duoc them vao.");
+    }
+    public void addNewAddressWithoutCity(String address, String country, String state, String postalCode, String phone) {
+        WebUI.waitForPageLoaded();
+        WebUI.moveToElement(menuManageProfile);
+        WebUI.clickElement(menuManageProfile);
+        WebUI.waitForPageLoaded();
+        WebUI.scrollToElementToBottom(divAddress);
+        WebUI.clickElement(buttonAddNewAddress);
+        WebUI.verifyElementVisible(titlePopupNewAddress, "Popup New Address KHONG hien thi.");
+        WebUI.setTextAndClear(inputAddYourAddress, address);
+        WebUI.clickElement(selectAddCountry);
+        WebUI.setTextAndClear(inputSearchCountry, country, Keys.ENTER);
+        WebUI.clickElement(selectAddState);
+        WebUI.setTextAndClear(inputSearchState, state, Keys.ENTER);
+        WebUI.setTextAndClear(inputAddPostalCode, postalCode);
+        WebUI.setTextAndClear(inputAddPhoneAddress, phone);
+        WebUI.clickElement(buttonSaveNewAddress);
+        WebUI.verifyAssertTrueIsDisplayed(titlePopupNewAddress, "Popup New Address da dong lai, dia chi moi duoc them vao.");
+    }
+    public void addNewAddressWithoutPostalCode(String address, String country, String state, String city, String postalCode, String phone) {
+        addNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.verifyAssertTrueIsDisplayed(titlePopupNewAddress, "Popup New Address da dong lai, dia chi moi duoc them vao.");
+    }
+    public void addNewAddressWithoutPhone(String address, String country, String state, String city, String postalCode, String phone) {
+        addNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.verifyAssertTrueIsDisplayed(titlePopupNewAddress, "Popup New Address da dong lai, dia chi moi duoc them vao.");
+    }
+    public void editNewAddress(String address, String country, String state, String city, String postalCode, String phone) {
+        WebUI.waitForPageLoaded();
+        WebUI.moveToElement(menuManageProfile);
+        WebUI.clickElement(menuManageProfile);
+        WebUI.waitForPageLoaded();
+        WebUI.scrollToElementToBottom(divAddress);
+        WebUI.clickElement(iconEllipsisInCardAddressNewest); //Click vào icon 3 chấm cua card moi nhat
+        WebUI.clickElement(buttonEditInCardAddressNewest); //Click vào Edit
+        WebUI.verifyElementVisible(titlePopupNewAddress, "Popup New Address KHONG hien thi.");
+        WebUI.setTextAndClear(inputYourAddress, address);
+        WebUI.clickElement(selectCountry);
+        WebUI.setTextAndClear(inputSearchCountry, country, Keys.ENTER);
+        WebUI.clickElement(selectState);
+        WebUI.setTextAndClear(inputSearchState, state, Keys.ENTER);
+        WebUI.clickElement(selectCity);
+        WebUI.setTextAndClear(inputSearchCity, city, Keys.ENTER);
+        WebUI.setTextAndClear(inputPostalCode, postalCode);
+        WebUI.setTextAndClear(inputPhoneAddress, phone);
+        WebUI.clickElement(buttonSaveEditAddress);
+    }
+    public void editAddressValid(String address, String country, String state, String city, String postalCode, String phone) {
+        editNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.verifyAssertTrueEqual(valueNewestAddress, address, "Địa chỉ mới không được sua lai.");
+        WebUI.verifyAssertTrueEqual(valueNewestCountry, country, "Quốc gia mới không được sua lai.");
+        WebUI.verifyAssertTrueEqual(valueNewestState, state, "Tỉnh/Thành phố mới không được sua lai.");
+        WebUI.verifyAssertTrueEqual(valueNewestCity, city, "Thành phố mới không được sua lai.");
+        WebUI.verifyAssertTrueEqual(valueNewestPostalCode, postalCode, "Mã bưu chính mới không được sua lai.");
+        WebUI.verifyAssertTrueEqual(valueNewestPhone, phone, "Số điện thoại mới không được sua lai.");
+        WebUI.verifyAssertTrueIsDisplayed(messageUpdate, "Thông báo cập nhật thanh cong không hiển thị.");
+        WebUI.verifyAssertTrueEqual(messageUpdate, "Address info updated successfully", "Thông báo cập nhật không đúng.");
+    }
+    public void editAddressWithoutAddress(String address, String country, String state, String city, String postalCode, String phone) {
+        editNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.verifyAssertTrueIsDisplayed(titlePopupEditAddress, "Popup New Address da dong lai, dia chi moi duoc sua lai.");
+    }
+    public void editAddressWithoutCountry(String address, String country, String postalCode, String phone) {
+        WebUI.waitForPageLoaded();
+        WebUI.moveToElement(menuManageProfile);
+        WebUI.clickElement(menuManageProfile);
+        WebUI.waitForPageLoaded();
+        WebUI.scrollToElementToBottom(divAddress);
+        WebUI.clickElement(iconEllipsisInCardAddressNewest); //Click vào icon 3 chấm cua card moi nhat
+        WebUI.clickElement(buttonEditInCardAddressNewest); //Click vào Edit
+        WebUI.verifyElementVisible(titlePopupNewAddress, "Popup New Address KHONG hien thi.");
+        WebUI.setTextAndClear(inputYourAddress, address);
+        WebUI.clickElement(selectCountry);
+        WebUI.setTextAndClear(inputSearchCountry, country, Keys.ENTER);
+        WebUI.setTextAndClear(inputPostalCode, postalCode);
+        WebUI.setTextAndClear(inputPhoneAddress, phone);
+        WebUI.clickElement(buttonSaveEditAddress);
+        WebUI.verifyAssertTrueIsDisplayed(titlePopupEditAddress, "Popup New Address da dong lai, dia chi moi duoc sua lai.");
+    }
+    public void editAddressWithoutState(String address, String country, String state, String postalCode, String phone) {
+        WebUI.waitForPageLoaded();
+        WebUI.moveToElement(menuManageProfile);
+        WebUI.clickElement(menuManageProfile);
+        WebUI.waitForPageLoaded();
+        WebUI.scrollToElementToBottom(divAddress);
+        WebUI.clickElement(iconEllipsisInCardAddressNewest); //Click vào icon 3 chấm cua card moi nhat
+        WebUI.clickElement(buttonEditInCardAddressNewest); //Click vào Edit
+        WebUI.verifyElementVisible(titlePopupNewAddress, "Popup New Address KHONG hien thi.");
+        WebUI.setTextAndClear(inputYourAddress, address);
+        WebUI.clickElement(selectCountry);
+        WebUI.setTextAndClear(inputSearchCountry, "Select your country", Keys.ENTER);
+        WebUI.clickElement(selectCountry);
+        WebUI.setTextAndClear(inputSearchCountry, country, Keys.ENTER);
+        WebUI.clickElement(selectState);
+        WebUI.setTextAndClear(inputSearchState, state, Keys.ENTER);
+        WebUI.setTextAndClear(inputPostalCode, postalCode);
+        WebUI.setTextAndClear(inputPhoneAddress, phone);
+        WebUI.clickElement(buttonSaveEditAddress);
+        WebUI.verifyAssertTrueIsDisplayed(titlePopupEditAddress, "Popup New Address da dong lai, dia chi moi duoc sua lai.");
+    }
+    public void editAddressWithoutCity(String address, String country, String state, String city, String postalCode, String phone) {
+        WebUI.waitForPageLoaded();
+        WebUI.moveToElement(menuManageProfile);
+        WebUI.clickElement(menuManageProfile);
+        WebUI.waitForPageLoaded();
+        WebUI.scrollToElementToBottom(divAddress);
+        WebUI.clickElement(iconEllipsisInCardAddressNewest); //Click vào icon 3 chấm cua card moi nhat
+        WebUI.clickElement(buttonEditInCardAddressNewest); //Click vào Edit
+        WebUI.verifyElementVisible(titlePopupNewAddress, "Popup New Address KHONG hien thi.");
+        WebUI.setTextAndClear(inputYourAddress, address);
+        WebUI.clickElement(selectCountry);
+        WebUI.setTextAndClear(inputSearchCountry, "Select your country", Keys.ENTER);
+        WebUI.clickElement(selectCountry);
+        WebUI.setTextAndClear(inputSearchCountry, country, Keys.ENTER);
+        WebUI.clickElement(selectState);
+        WebUI.setTextAndClear(inputSearchState, state, Keys.ENTER);
+        WebUI.clickElement(selectCity);
+        WebUI.setTextAndClear(inputSearchCity, city, Keys.ENTER);
+        WebUI.setTextAndClear(inputPostalCode, postalCode);
+        WebUI.setTextAndClear(inputPhoneAddress, phone);
+        WebUI.clickElement(buttonSaveEditAddress);
+        WebUI.verifyAssertTrueIsDisplayed(titlePopupEditAddress, "Popup New Address da dong lai, dia chi moi duoc sua lai.");
+    }
+    public void editAddressWithoutPostalCode(String address, String country, String state, String city, String postalCode, String phone) {
+        editNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.verifyAssertTrueIsDisplayed(titlePopupEditAddress, "Popup New Address da dong lai, dia chi moi duoc sua lai.");
+    }
+    public void editAddressWithoutPhone(String address, String country, String state, String city, String postalCode, String phone) {
+        editNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.verifyAssertTrueIsDisplayed(titlePopupEditAddress, "Popup New Address da dong lai, dia chi moi duoc sua lai.");
     }
 
 }

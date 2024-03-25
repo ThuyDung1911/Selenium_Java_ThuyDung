@@ -9,7 +9,7 @@ public class DataProviderAddProduct {
     public Object[][] dataAddProduct() {
         ExcelHelper excelHelpers = new ExcelHelper();
 //        Object[][] data = excelHelpers.getExcelData(SystemHelper.getCurrentDir() + "DataTest/AddProduct.xlsx", "AddProduct");
-        Object[][] data = excelHelpers.getDataHashTable(SystemHelper.getCurrentDir() + "DataTest/AddProduct.xlsx", "AddProduct", 1, 1);
+        Object[][] data = excelHelpers.getDataHashTable(SystemHelper.getCurrentDir() + "DataTest/AddProduct.xlsx", "AddProduct", 2, 2);
         return data;
     }
 }

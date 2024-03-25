@@ -81,6 +81,9 @@ public class WebUI {
     public static void scrollToElementToBottom(By by) {
         JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
         js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
+        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+            highLightElement(by);
+        }
         LogUtils.info("Scroll to element " + by);
     }
 
@@ -213,12 +216,13 @@ public class WebUI {
         }
     }
 
-    @Step("Verify {0} is notdisplayed")
-    public static void verifySoftAssertFalseIsDisplayed(By by, String message) {
+
+    @Step("Verify {0} is not displayed")
+    public static void verifyAssertFalseIsDisplayed(By by, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         LogUtils.info("Verify " + by + " is not displayed");
-        softAssert.assertFalse(DriverManager.getDriver().findElement(by).isDisplayed(), message);
+        Assert.assertFalse(DriverManager.getDriver().findElement(by).isDisplayed(), message);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }

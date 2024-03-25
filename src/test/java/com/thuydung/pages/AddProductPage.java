@@ -1,12 +1,11 @@
 package com.thuydung.pages;
 
 import com.thuydung.constants.ConfigData;
-import com.thuydung.helpers.SystemHelper;
-import org.openqa.selenium.Keys;
 import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.PropertiesHelper;
-import com.thuydung.utils.LogUtils;
+import com.thuydung.helpers.SystemHelper;
 import com.thuydung.keywords.WebUI;
+import com.thuydung.utils.LogUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -49,7 +48,7 @@ public class AddProductPage extends CommonPage {
     private By blockProductDescription = By.xpath("//h5[normalize-space()='Product Description']");
     private By inputDescription = By.xpath("//div[@role='textbox']");
     private By buttonSavePublish = By.xpath("//button[normalize-space()='Save & Publish']");
-    private By messageAddProductSuccess = By.xpath("//span[@data-notify='message']");
+    private By messageAddProduct = By.xpath("//span[@data-notify='message']");
     private By allCategoriesTabUI = By.xpath("//a[normalize-space()='All categories']");
     private By unitUI = By.xpath("//span[@class='opacity-70']");
     private By descriptionUI = By.xpath("//div[@class = 'mw-100 overflow-auto text-left aiz-editor-data']//p");
@@ -58,16 +57,16 @@ public class AddProductPage extends CommonPage {
     private By newProduct = By.xpath("(//span[@class='text-muted text-truncate-2'])[1]");
     private By inputSearchProduct = By.xpath("//input[@id='search']");
 
-    public void addProduct(String email, String password, String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
+    public void addProduct(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
         productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
-        new LoginPage().loginSuccessAdminPage(email, password);
         WebUI.clickElement(menuProduct);
         WebUI.waitForPageLoaded();
         WebUI.clickElement(submenuAddProduct);
         WebUI.waitForPageLoaded();
-        WebUI.verifyElementVisible(titleAddNewProduct, "Title Add New Product is NOT displayed");
-        WebUI.verifyElementVisible(blockProductInf, "Product Information block is not displayed");
+        WebUI.verifyElementVisible(titleAddNewProduct, "Tieu de Add New Product KHONG xuat hien");
+        //Product Information
+        WebUI.verifyElementVisible(blockProductInf, "Product Information block KHONG xuat hien");
         WebUI.setTextAndClear(inputProductName, productName);
         WebUI.clickElement(selectCategory);
         WebUI.setTextEnter(inputSearchCategory, category);
@@ -78,7 +77,8 @@ public class AddProductPage extends CommonPage {
         WebUI.setTextAndClear(inputUnit, unit);
         WebUI.setTextAndClear(inputWeight, String.valueOf(weight));
         WebUI.setTextAndClear(inputTags, tags);
-        WebUI.verifyAssertTrueIsDisplayed(blockProductImages, "Product Images block is not displayed");
+        //Product Images
+        WebUI.verifyAssertTrueIsDisplayed(blockProductImages, "Product Images block KHONG xuat hien");
         WebUI.clickElement(selectChooseGalleryImages);
         WebUI.clickElement(uploadNewImageTab);
         DriverManager.getDriver().findElement(inputGalleryImages).sendKeys(SystemHelper.getCurrentDir() + "DataTest\\" + imgName);
@@ -97,7 +97,8 @@ public class AddProductPage extends CommonPage {
         WebUI.sleep(2);
         WebUI.clickElement(selectThumbnailImages);
         WebUI.clickElement(buttonAddFileImages);
-        WebUI.verifyAssertTrueIsDisplayed(blockProductPrice, "Product price block is NOT displayed");
+        //Product price + stock
+        WebUI.verifyAssertTrueIsDisplayed(blockProductPrice, "Product price block KHONG xuat hien");
         WebUI.setTextAndClear(inputUnitPrice, String.valueOf(unitPrice));
         WebUI.setTextAndClear(selectDate, discountDate);
         WebUI.clickElement(buttonSelectDiscountDate);
@@ -106,37 +107,44 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(selectUnitDiscountPercent);
         WebUI.setTextAndClear(inputQuantity, String.valueOf(quantity));
         WebUI.setTextAndClear(inputSKU, String.valueOf(randomNumber));
-        WebUI.verifyAssertTrueIsDisplayed(blockProductDescription, "Product description is not displayed");
+        //Product Description  
+        WebUI.verifyAssertTrueIsDisplayed(blockProductDescription, "Product description KHONG xuat hien");
         WebUI.setTextAndClear(inputDescription, description);
         WebUI.clickElement(buttonSavePublish); //Click button Save&Public
-        WebUI.verifyAssertTrueIsDisplayed(messageAddProductSuccess, "Add Product is failed");
-        WebUI.clickElement(menuAllProducts);
-        WebUI.waitForPageLoaded();
-        WebUI.setTextAndClear(inputSearchProduct, productName, Keys.ENTER);
-        WebUI.waitForJQueryLoad();
-        WebUI.sleep(2);
-        WebUI.waitForElementVisible(newProduct);
-        nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
+        
+//        WebUI.clickElement(menuAllProducts);
+//        WebUI.waitForPageLoaded();
+//        WebUI.setTextAndClear(inputSearchProduct, productName, Keys.ENTER);
+//        WebUI.waitForJQueryLoad();
+//        WebUI.sleep(2);
+//        WebUI.waitForElementVisible(newProduct);
+//        nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
+    }
+    public void addProductValid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
+        addProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
+        WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
+        WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
+        verifyNewProduct(category, unit, Double.valueOf(unitPrice), description);
     }
 
     public void verifyNewProduct(String category, String unit, Double unitPrice, String description) {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
-        WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
+        //WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
         WebUI.waitForPageLoaded();
         WebUI.clickElement(allCategoriesTabUI);
         WebUI.waitForPageLoaded();
         WebUI.clickElement(By.xpath("//a[contains(text(),'" + category + "')]"));
         WebUI.waitForPageLoaded();
-        WebUI.verifyAssertTrueIsDisplayed(By.xpath("(//a[normalize-space()='" + nameProductVerify + "'])"), "Product is NOT displayed");
+        WebUI.verifyAssertTrueIsDisplayed(By.xpath("(//a[normalize-space()='" + nameProductVerify + "'])"), "Product KHONG xuat hien");
         WebUI.sleep(2);
         WebUI.clickElement(By.xpath("(//a[normalize-space()='" + nameProductVerify + "'])[1]"));
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
-        WebUI.verifyAssertTrueEqual(By.xpath("//h1[normalize-space()='" + nameProductVerify + "']"), nameProductVerify, "Product name displayed wrong");
-        WebUI.verifyAssertTrueEqual(unitUI, "/" + unit, "Unit displayed wrong");
-        Assert.assertTrue(DriverManager.getDriver().findElement(unitUI).getText().trim().contains(unit), "Unit displayed wrong");
+        WebUI.verifyAssertTrueEqual(By.xpath("//h1[normalize-space()='" + nameProductVerify + "']"), nameProductVerify, "Product name hien thi sai");
+        WebUI.verifyAssertTrueEqual(unitUI, "/" + unit, "Unit hien thi sai");
+        Assert.assertTrue(DriverManager.getDriver().findElement(unitUI).getText().trim().contains(unit), "Unit hien thi sai");
         WebUI.scrollToElement(descriptionUI);
         WebUI.sleep(1);
-        WebUI.verifyAssertTrueEqual(descriptionUI, description, "Description displayed wrong");
+        WebUI.verifyAssertTrueEqual(descriptionUI, description, "Description hien thi sai");
     }
 }
