@@ -8,7 +8,6 @@ import com.thuydung.keywords.WebUI;
 import com.thuydung.utils.LogUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
 import java.util.Random;
@@ -126,18 +125,19 @@ public class AddProductPage extends CommonPage {
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
-        verifyNewProduct(category, unit, Double.valueOf(unitPrice), description);
+        //verifyNewProduct(category, unit, Double.valueOf(unitPrice), description);
     }
     public void addProductInvalid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
         addProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
-        WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
-        WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
+        WebUI.checkHTML5MessageWithValueInvalid(inputUnit, "Unit la truong bat buoc");
+        WebUI.verifyAssertTrueEqualMessageHTML(inputUnit, "Please fill out this field.","Messge Unit hien thi khong dung");
+        //WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         //verifyNewProduct(category, unit, Double.valueOf(unitPrice), description);
     }
 
-    public void verifyNewProduct(String category, String unit, Double unitPrice, String description) {
+    public void verifyNewProduct(String nameProductVerify, String category, String unit, String unitPrice, String discountDate, String quantity, String description, String discount) {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
-        //WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
+        WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
         WebUI.waitForPageLoaded();
         WebUI.clickElement(allCategoriesTabUI);
         WebUI.waitForPageLoaded();
@@ -148,9 +148,24 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(By.xpath("(//a[normalize-space()='" + nameProductVerify + "'])[1]"));
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
+        //nameProduct
         WebUI.verifyAssertTrueEqual(By.xpath("//h1[normalize-space()='" + nameProductVerify + "']"), nameProductVerify, "Product name hien thi sai");
+        //unitPrice
+        String unitPriceVer1 = WebUI.getElementText(By.xpath("//div[text()='Price:']/parent::div[contains(@class,'col')]/following-sibling::div//del"));
+        String unitPriceVer2 = unitPriceVer1.replaceAll("[^0-9.]","");
+        String unitPriceVer3 = "" + (int) Double.parseDouble(unitPriceVer2);
+        Assert.assertEquals(unitPriceVer3, unitPrice, "Unit Price hien thi sai");
+        //discountPrice
+
+        String discountPriceVer1 = WebUI.getElementText(By.xpath("//div[text()='Discount Price:']/parent::div[contains(@class,'col')]/following-sibling::div//strong"));
+        String discountPriceVer2 = discountPriceVer1.replaceAll("[^0-9.]","");
+        String discountPriceVer3 = "" + (int) Double.parseDouble(discountPriceVer2);
+        String comparePrice = "" + (int) (Double.parseDouble(unitPriceVer2) - Double.parseDouble(unitPriceVer2) * Double.parseDouble(discount)/100 - (int) Double.parseDouble(discountPriceVer2));
+        Assert.assertEquals(comparePrice, "0", "Discount Price hien thi sai");
+        //unit
         WebUI.verifyAssertTrueEqual(unitUI, "/" + unit, "Unit hien thi sai");
         Assert.assertTrue(DriverManager.getDriver().findElement(unitUI).getText().trim().contains(unit), "Unit hien thi sai");
+        //description
         WebUI.scrollToElement(descriptionUI);
         WebUI.sleep(1);
         WebUI.verifyAssertTrueEqual(descriptionUI, description, "Description hien thi sai");
