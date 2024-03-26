@@ -10,6 +10,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class AddProductPage extends CommonPage {
@@ -125,7 +127,7 @@ public class AddProductPage extends CommonPage {
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
-        //verifyNewProduct(category, unit, Double.valueOf(unitPrice), description);
+        verifyNewProduct(nameProductVerify,category,unit,unitPrice,discountDate,quantity, description, discount);
     }
     public void addProductInvalid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
         addProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
@@ -134,10 +136,17 @@ public class AddProductPage extends CommonPage {
         //WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         //verifyNewProduct(category, unit, Double.valueOf(unitPrice), description);
     }
+    public void addProductValidWithDiscount(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
+        addProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
+        WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
+        WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
+        nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
+        verifyNewProduct(nameProductVerify,category,unit,unitPrice,discountDate,quantity, description, discount);
+    }
 
     public void verifyNewProduct(String nameProductVerify, String category, String unit, String unitPrice, String discountDate, String quantity, String description, String discount) {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
-        WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
+        //WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
         WebUI.waitForPageLoaded();
         WebUI.clickElement(allCategoriesTabUI);
         WebUI.waitForPageLoaded();
@@ -151,17 +160,27 @@ public class AddProductPage extends CommonPage {
         //nameProduct
         WebUI.verifyAssertTrueEqual(By.xpath("//h1[normalize-space()='" + nameProductVerify + "']"), nameProductVerify, "Product name hien thi sai");
         //unitPrice
-        String unitPriceVer1 = WebUI.getElementText(By.xpath("//div[text()='Price:']/parent::div[contains(@class,'col')]/following-sibling::div//del"));
+        //discountDateEnd
+        String[] discountDates = discountDate.split(" to ");
+        String dataDiscountDateEnd = discountDates[discountDates.length - 1];
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        LocalDateTime discountDateEnd = LocalDateTime.parse(dataDiscountDateEnd, formatter);
+        //currentDate
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDate = currentDateTime;
+
+        String unitPriceVer1 = WebUI.getElementText(By.xpath("//div[text()='Price:']/parent::div[contains(@class,'col')]/following-sibling::div"));
         String unitPriceVer2 = unitPriceVer1.replaceAll("[^0-9.]","");
         String unitPriceVer3 = "" + (int) Double.parseDouble(unitPriceVer2);
         Assert.assertEquals(unitPriceVer3, unitPrice, "Unit Price hien thi sai");
-        //discountPrice
-
-        String discountPriceVer1 = WebUI.getElementText(By.xpath("//div[text()='Discount Price:']/parent::div[contains(@class,'col')]/following-sibling::div//strong"));
-        String discountPriceVer2 = discountPriceVer1.replaceAll("[^0-9.]","");
-        String discountPriceVer3 = "" + (int) Double.parseDouble(discountPriceVer2);
-        String comparePrice = "" + (int) (Double.parseDouble(unitPriceVer2) - Double.parseDouble(unitPriceVer2) * Double.parseDouble(discount)/100 - (int) Double.parseDouble(discountPriceVer2));
-        Assert.assertEquals(comparePrice, "0", "Discount Price hien thi sai");
+        if(discountDateEnd.isAfter(currentDate)) {
+            //discountPrice
+            String discountPriceVer1 = WebUI.getElementText(By.xpath("//div[text()='Discount Price:']/parent::div[contains(@class,'col')]/following-sibling::div"));
+            String discountPriceVer2 = discountPriceVer1.replaceAll("[^0-9.]","");
+            String discountPriceVer3 = "" + (int) Double.parseDouble(discountPriceVer2);
+            String comparePrice = "" + (int) (Double.parseDouble(unitPriceVer2) - Double.parseDouble(unitPriceVer2) * Double.parseDouble(discount)/100 - (int) Double.parseDouble(discountPriceVer2));
+            Assert.assertEquals(comparePrice, "0", "Discount Price hien thi sai");
+        }
         //unit
         WebUI.verifyAssertTrueEqual(unitUI, "/" + unit, "Unit hien thi sai");
         Assert.assertTrue(DriverManager.getDriver().findElement(unitUI).getText().trim().contains(unit), "Unit hien thi sai");
@@ -170,4 +189,5 @@ public class AddProductPage extends CommonPage {
         WebUI.sleep(1);
         WebUI.verifyAssertTrueEqual(descriptionUI, description, "Description hien thi sai");
     }
+
 }
