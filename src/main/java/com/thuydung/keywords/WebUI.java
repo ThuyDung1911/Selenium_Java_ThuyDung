@@ -8,6 +8,7 @@ import com.thuydung.reports.AllureManager;
 import com.thuydung.reports.ExtentTestManager;
 import com.thuydung.utils.LogUtils;
 import io.qameta.allure.Step;
+import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -194,17 +195,17 @@ public class WebUI {
         //AllureReportManager.saveTextLog("Verify " + attribute + " is contains " + verifyText + " on " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Verify " + attribute + " is contains " + verifyText + " on " + by.toString());
     }
-    @Step("Verify attribute {1} is contains {2} on {0}")
-    public static void verifyAssertTrueContain(By by, String attribute, String verifyText, String message) {
+    @Step("Verify text is contains {1} on {0}")
+    public static void verifyAssertTrueTextContain(By by, String verifyText, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         LogUtils.info("Verify contain: " + verifyText);
-        Assert.assertTrue(DriverManager.getDriver().findElement(by).getAttribute(attribute).contains(verifyText), message);
+        Assert.assertTrue(DriverManager.getDriver().findElement(by).getText().contains(verifyText), message);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
-        //AllureReportManager.saveTextLog("Verify " + attribute + " is contains " + verifyText + " on " + by.toString());
-        ExtentTestManager.logMessage(Status.PASS, "Verify " + attribute + " is contains " + verifyText + " on " + by.toString());
+        //AllureReportManager.saveTextLog("Verify text is contains " + verifyText + " on " + by.toString());
+        ExtentTestManager.logMessage(Status.PASS, "Verify text is contains " + verifyText + " on " + by.toString());
     }
 
     @Step("Verify {0} is displayed")
@@ -546,6 +547,15 @@ public class WebUI {
         Assert.assertEquals(actual, expected, message);
         ExtentTestManager.logMessage(Status.PASS, "Verify result: " + expected + " is correct");
         LogUtils.info("Verify result: " + expected + " is correct");
+    }
+    @Step("Verify result {0} is contain {1}")
+    public static void verifyAssertContain(String actual, String key, String message) {
+        waitForPageLoaded();
+        sleep(STEP_TIME);
+        Assert.assertTrue(actual.contains(key), message);
+        //Assert.assertEquals(actual, key, message);
+        ExtentTestManager.logMessage(Status.PASS, "Verify result: " + actual + " is contain " + key);
+        LogUtils.info("Verify result: " + actual + " is contain " + key);
     }
 
 
