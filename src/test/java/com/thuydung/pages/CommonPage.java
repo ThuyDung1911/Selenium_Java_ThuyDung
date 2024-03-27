@@ -5,9 +5,11 @@ public class CommonPage {
     public ProfilePage profilePage;
     public OrderPage orderPage;
     public AddProductPage addProductPage;
+    public EditProductPage editProductPage;
     public ProductInfoPage productInfoPage;
     public RegisterPage registerPage;
     public HomePage homePage;
+    public DashboardPage dashboardPage;
 
     public LoginPage getLoginPage() {
         if (loginPage == null) {
@@ -54,5 +56,17 @@ public class CommonPage {
             homePage = new HomePage();
         }
         return homePage;
+    }
+    public EditProductPage getEditProductPage() {
+        if (editProductPage == null) {
+            editProductPage = new EditProductPage();
+        }
+        return editProductPage;
+    }
+    public DashboardPage getDashboardPage() {
+        if (dashboardPage == null) {
+            dashboardPage = new DashboardPage();
+        }
+        return dashboardPage;
     }
 }

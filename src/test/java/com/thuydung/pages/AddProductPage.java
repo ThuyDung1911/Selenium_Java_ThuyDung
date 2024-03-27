@@ -54,6 +54,7 @@ public class AddProductPage extends CommonPage {
     private By allCategoriesTabUI = By.xpath("//a[normalize-space()='All categories']");
     private By unitUI = By.xpath("//span[@class='opacity-70']");
     private By descriptionUI = By.xpath("//div[@class = 'mw-100 overflow-auto text-left aiz-editor-data']//p");
+    private By quantityUI = By.xpath("//span[@id='available-quantity']");
     int randomNumber = new Random().nextInt(1000000);
     private By menuAllProducts = By.xpath("//span[normalize-space()='All products']");
     private By newProduct = By.xpath("(//span[@class='text-muted text-truncate-2'])[1]");
@@ -184,6 +185,8 @@ public class AddProductPage extends CommonPage {
         //unit
         WebUI.verifyAssertTrueEqual(unitUI, "/" + unit, "Unit hien thi sai");
         Assert.assertTrue(DriverManager.getDriver().findElement(unitUI).getText().trim().contains(unit), "Unit hien thi sai");
+        //quantity
+        WebUI.verifyAssertTrueEqual(quantityUI, quantity, "Quantity hien thi sai");
         //description
         WebUI.scrollToElement(descriptionUI);
         WebUI.sleep(1);

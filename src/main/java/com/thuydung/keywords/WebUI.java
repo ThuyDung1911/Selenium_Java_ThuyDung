@@ -194,6 +194,18 @@ public class WebUI {
         //AllureReportManager.saveTextLog("Verify " + attribute + " is contains " + verifyText + " on " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Verify " + attribute + " is contains " + verifyText + " on " + by.toString());
     }
+    @Step("Verify attribute {1} is contains {2} on {0}")
+    public static void verifyAssertTrueContain(By by, String attribute, String verifyText, String message) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        LogUtils.info("Verify contain: " + verifyText);
+        Assert.assertTrue(DriverManager.getDriver().findElement(by).getAttribute(attribute).contains(verifyText), message);
+        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+            highLightElement(by);
+        }
+        //AllureReportManager.saveTextLog("Verify " + attribute + " is contains " + verifyText + " on " + by.toString());
+        ExtentTestManager.logMessage(Status.PASS, "Verify " + attribute + " is contains " + verifyText + " on " + by.toString());
+    }
 
     @Step("Verify {0} is displayed")
     public static void verifySoftAssertTrueIsDisplayed(By by, String message) {
@@ -316,6 +328,13 @@ public class WebUI {
         //AllureReportManager.saveTextLog("Key down Enter");
         LogUtils.info("Key down Enter");
         ExtentTestManager.logMessage("Key down Enter");
+    }
+    @Step("Key down Backspace")
+    public static void keydownBackspace() {
+        action.keyDown(Keys.BACK_SPACE).keyUp(Keys.BACK_SPACE).build().perform();
+        //AllureReportManager.saveTextLog("Key down Backspace");
+        LogUtils.info("Key down Backspace");
+        ExtentTestManager.logMessage("Key down Backspace");
     }
 
     @Step("Set text from split {1} on element {0}")
