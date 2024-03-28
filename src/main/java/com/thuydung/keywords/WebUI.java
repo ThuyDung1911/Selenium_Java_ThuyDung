@@ -8,7 +8,6 @@ import com.thuydung.reports.AllureManager;
 import com.thuydung.reports.ExtentTestManager;
 import com.thuydung.utils.LogUtils;
 import io.qameta.allure.Step;
-import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -19,6 +18,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.text.Normalizer;
 import java.time.Duration;
 import java.util.List;
 
@@ -28,6 +28,7 @@ public class WebUI {
     private final static int STEP_TIME = Integer.parseInt(PropertiesHelper.getValue("STEP_TIME"));
     private final static int PAGE_LOAD_TIMEOUT = Integer.parseInt(PropertiesHelper.getValue("PAGE_LOAD_TIMEOUT"));
     private static SoftAssert softAssert = new SoftAssert();
+
     public static void sleep(double second) {
         try {
             Thread.sleep((long) (second * 1000));
@@ -35,9 +36,11 @@ public class WebUI {
             throw new RuntimeException(e);
         }
     }
+
     public static void stopSoftAssertAll() {
         softAssert.assertAll();
     }
+
     @Step("Click element: {0}")
     public static void clickElement(By by) {
         waitForPageLoaded();
@@ -133,6 +136,7 @@ public class WebUI {
         //AllureReportManager.saveTextLog("Verify " + verifyText + " is display correct on " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display correct on " + by.toString());
     }
+
     @Step("Verify {1} is display correct on {0}")
     public static void verifyAssertTrueEqual(By by, String verifyText, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
@@ -145,6 +149,7 @@ public class WebUI {
         //AllureReportManager.saveTextLog("Verify " + verifyText + " is display correct on " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display correct on " + by.toString());
     }
+
     @Step("Verify {1} is display correct on {0}")
     public static void verifyAssertTrueEqualMessageHTML(By by, String verifyText, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
@@ -157,6 +162,7 @@ public class WebUI {
         //AllureReportManager.saveTextLog("Verify " + verifyText + " is display correct on " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display correct on " + by.toString());
     }
+
     @Step("Verify {1} is display incorrect on {0}")
     public static void verifySoftAssertFalseEqual(By by, String verifyText, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
@@ -169,6 +175,7 @@ public class WebUI {
         //AllureReportManager.saveTextLog("Verify " + verifyText + " is display incorrect on " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display incorrect on " + by.toString());
     }
+
     @Step("Verify {1} is display incorrect on {0}")
     public static void verifyAssertFalseEqual(By by, String verifyText, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
@@ -195,12 +202,33 @@ public class WebUI {
         //AllureReportManager.saveTextLog("Verify " + attribute + " is contains " + verifyText + " on " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Verify " + attribute + " is contains " + verifyText + " on " + by.toString());
     }
+
     @Step("Verify text is contains {1} on {0}")
     public static void verifyAssertTrueTextContain(By by, String verifyText, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         LogUtils.info("Verify contain: " + verifyText);
         Assert.assertTrue(DriverManager.getDriver().findElement(by).getText().contains(verifyText), message);
+        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+            highLightElement(by);
+        }
+        //AllureReportManager.saveTextLog("Verify text is contains " + verifyText + " on " + by.toString());
+        ExtentTestManager.logMessage(Status.PASS, "Verify text is contains " + verifyText + " on " + by.toString());
+    }
+
+    public static String removeAccent(String text) {
+        // Sử dụng Normalizer với Form.NFD để chuyển chuỗi về dạng chuẩn
+        String normalizedText = Normalizer.normalize(text, Normalizer.Form.NFD);
+        // Loại bỏ các ký tự không phải là chữ cái hoặc số và trả về kết quả
+        return normalizedText.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+    }
+
+    @Step("Verify text is contains {1} on {0} without accent")
+    public static void verifyAssertTrueTextContainWithoutAccent(By by, String verifyText, String message) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        LogUtils.info("Verify text " + by + " is contain: " + verifyText);
+        Assert.assertTrue(removeAccent(DriverManager.getDriver().findElement(by).getText()).toLowerCase().contains(verifyText), message);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
@@ -224,6 +252,7 @@ public class WebUI {
             softAssert.fail(message);
         }
     }
+
     @Step("Verify {0} is displayed")
     public static void verifyAssertTrueIsDisplayed(By by, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
@@ -240,13 +269,14 @@ public class WebUI {
             Assert.fail(message);
         }
     }
+
     @Step("Message HTML with value {0} invalid is displayed")
     public static void checkHTML5MessageWithValueInvalid(By by, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(by));
             LogUtils.info("Message HTML with value " + by + " invalid is displayed");
-            Assert.assertFalse((Boolean)((JavascriptExecutor) DriverManager.getDriver()).executeScript("return arguments[0].validity.valid;", DriverManager.getDriver().findElement(by)), message);
+            Assert.assertFalse((Boolean) ((JavascriptExecutor) DriverManager.getDriver()).executeScript("return arguments[0].validity.valid;", DriverManager.getDriver().findElement(by)), message);
             if (ConfigData.HIGHLIGHT_ELEMENT == true) {
                 highLightElement(by);
             }
@@ -284,6 +314,7 @@ public class WebUI {
         //AllureReportManager.saveTextLog("Verify attribute " + attribute + " is contains " + expectedValue + " on " + by.toString());
         ExtentTestManager.logMessage("Verify attribute " + attribute + " is contains " + expectedValue + " on " + by.toString());
     }
+
     @Step("Verify attribute {1} is contains {2} on {0}")
     public static void verifyAssertTrueAttribute(By by, String attribute, String expectedValue, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
@@ -330,6 +361,7 @@ public class WebUI {
         LogUtils.info("Key down Enter");
         ExtentTestManager.logMessage("Key down Enter");
     }
+
     @Step("Key down Backspace")
     public static void keydownBackspace() {
         action.keyDown(Keys.BACK_SPACE).keyUp(Keys.BACK_SPACE).build().perform();
@@ -540,6 +572,7 @@ public class WebUI {
         ExtentTestManager.logMessage(Status.PASS, "Verify result: " + expected + " is correct");
         LogUtils.info("Verify result: " + expected + " is correct");
     }
+
     @Step("Verify result {1} is correct")
     public static void verifyAssertEquals(Object actual, Object expected, String message) {
         waitForPageLoaded();
@@ -548,6 +581,7 @@ public class WebUI {
         ExtentTestManager.logMessage(Status.PASS, "Verify result: " + expected + " is correct");
         LogUtils.info("Verify result: " + expected + " is correct");
     }
+
     @Step("Verify result {0} is contain {1}")
     public static void verifyAssertContain(String actual, String key, String message) {
         waitForPageLoaded();
@@ -557,7 +591,15 @@ public class WebUI {
         ExtentTestManager.logMessage(Status.PASS, "Verify result: " + actual + " is contain " + key);
         LogUtils.info("Verify result: " + actual + " is contain " + key);
     }
-
+    @Step("Verify result {0} is equal {1}")
+    public static void verifyAssertEqual(String actual, String key, String message) {
+        waitForPageLoaded();
+        sleep(STEP_TIME);
+        //Assert.assertTrue(actual.equals(key), message);
+        Assert.assertEquals(actual, key, message);
+        ExtentTestManager.logMessage(Status.PASS, "Verify result: " + actual + " is equal " + key);
+        LogUtils.info("Verify result: " + actual + " is equal " + key);
+    }
 
 
     /**

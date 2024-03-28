@@ -10,6 +10,7 @@ public class CommonPage {
     public RegisterPage registerPage;
     public HomePage homePage;
     public DashboardPage dashboardPage;
+    public CartPage cartPage;
 
     public LoginPage getLoginPage() {
         if (loginPage == null) {
@@ -68,5 +69,11 @@ public class CommonPage {
             dashboardPage = new DashboardPage();
         }
         return dashboardPage;
+    }
+    public CartPage getCartPage() {
+        if (cartPage == null) {
+            cartPage = new CartPage();
+        }
+        return cartPage;
     }
 }

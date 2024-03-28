@@ -9,7 +9,7 @@ public class EditProductTest extends BaseTest {
     ExcelHelper excelEditProduct;
 
     //Edit product valid
-    @Test(priority = 1)
+    @Test(priority = 2)
     public void testEditProductValid() {
         excelLogin = new ExcelHelper();
         excelEditProduct = new ExcelHelper();
@@ -19,7 +19,7 @@ public class EditProductTest extends BaseTest {
         getEditProductPage().editProductValid(excelEditProduct.getCellData("productName", 1), excelEditProduct.getCellData("category", 1), excelEditProduct.getCellData("unit", 1), excelEditProduct.getCellData("weight", 1), excelEditProduct.getCellData("tags", 1), excelEditProduct.getCellData("unitPrice", 1), excelEditProduct.getCellData("discountDate", 1), excelEditProduct.getCellData("quantity", 1), excelEditProduct.getCellData("description", 1), excelEditProduct.getCellData("discount", 1), excelEditProduct.getCellData("image", 1));
     }
     //Edit product invalid
-    @Test(priority = 2)
+    @Test(priority = 1)
     public void testEditProductInvalid() {
         excelLogin = new ExcelHelper();
         excelEditProduct = new ExcelHelper();

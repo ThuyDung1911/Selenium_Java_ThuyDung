@@ -7,14 +7,14 @@ import org.openqa.selenium.By;
 public class OrderPage {
     private By selectProductNabati = By.xpath("(//a[contains(text(),'Nabati')])[1]");
     private By selectProduct1 = By.xpath("(//a[contains(text(),'Cosy')])[1]");
-    private By buttonAddToCart = By.xpath("//button[@class='btn btn-soft-primary mr-2 add-to-cart fw-600']");
-    private By popupAddToCartSucceeded = By.xpath("//h3[normalize-space()='Item added to your cart!']");
-    private By buttonCloseAddToCartPopup = By.xpath("//span[@class = 'la-2x']");
+    public static By buttonAddToCart = By.xpath("//button[@class='btn btn-soft-primary mr-2 add-to-cart fw-600']");
+    public static By popupAddToCartSucceeded = By.xpath("//h3[normalize-space()='Item added to your cart!']");
+    public static By buttonCloseAddToCartPopup = By.xpath("//span[@class = 'la-2x']");
     private By buttonBackToShopping = By.xpath("//button[normalize-space()='Back to shopping']");
     private By selectProduct2 = By.xpath("(//a[@class = 'd-block text-reset' ])[1]");
     private By buttonPlus = By.xpath("//button[contains(@data-type,'plus')]");
-    private By buttonCart = By.xpath("//i[@class='la la-shopping-cart la-2x opacity-80']");
-    private By viewProductOrderOnCart = By.xpath("//span[@class='fw-600 mb-1 text-truncate-2']");
+    public static By buttonCart = By.xpath("//i[@class='la la-shopping-cart la-2x opacity-80']");
+    public static By viewProductOrderOnCart = By.xpath("//span[@class='fw-600 mb-1 text-truncate-2']");
     private By buttonCheckoutOnCartPopup = By.xpath("//a[normalize-space()='Checkout']");
     private By buttonAddNewAddress = By.xpath("//div[@class='border p-3 rounded mb-3 c-pointer text-center bg-white h-100 d-flex flex-column justify-content-center']");
     private By verifyCheckedAddress = By.xpath("(//input[@name = 'address_id' ])[2]");
@@ -43,6 +43,7 @@ public class OrderPage {
     public void order(String noteForOrder, String email, String password) {
         new LoginPage().loginSuccessWithCustomerAccount(email, password);
         WebUI.waitForPageLoaded();
+        //Add product 1 to cart
         WebUI.setTextFromSplitString(DashboardPage.inputSearchProduct, PropertiesHelper.getValue("product_P01"));
         WebUI.waitForJQueryLoad();
         WebUI.sleep(3);
@@ -52,6 +53,7 @@ public class OrderPage {
         WebUI.scrollToElement(buttonAddToCart);
         WebUI.clickElement(buttonAddToCart);
         WebUI.verifyAssertTrueIsDisplayed(popupAddToCartSucceeded, "Add to cart is failed");
+        //Add product 2 to cart
         WebUI.clickElement(buttonBackToShopping);
         WebUI.waitForPageLoaded();
         WebUI.waitForJQueryLoad();
@@ -67,8 +69,10 @@ public class OrderPage {
         WebUI.clickElement(buttonAddToCart);
         WebUI.verifyAssertTrueIsDisplayed(popupAddToCartSucceeded, "Add to cart is failed");
         WebUI.clickElement(buttonCloseAddToCartPopup);
+        //View cart demo
         WebUI.clickElement(buttonCart);
         WebUI.verifyAssertTrueIsDisplayed(viewProductOrderOnCart, "My product is NOT displayed");
+        //Check out
         WebUI.clickElement(buttonCheckoutOnCartPopup);
         WebUI.scrollToElement(buttonSelectAddress);
         WebUI.clickElement(buttonSelectAddress);
