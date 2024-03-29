@@ -59,7 +59,8 @@ public class AddProductPage extends CommonPage {
     private By menuAllProducts = By.xpath("//span[normalize-space()='All products']");
     private By newProduct = By.xpath("(//span[@class='text-muted text-truncate-2'])[1]");
     private By inputSearchProduct = By.xpath("//input[@id='search']");
-
+    public static By discountPriceProduct = By.xpath("//div[text()='Discount Price:']/parent::div[contains(@class,'col')]/following-sibling::div");
+    public static By unitPriceProduct = By.xpath("//div[text()='Price:']/parent::div[contains(@class,'col')]/following-sibling::div");
     public void addProduct(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
         productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
@@ -170,13 +171,13 @@ public class AddProductPage extends CommonPage {
         LocalDateTime currentDateTime = LocalDateTime.now();
         LocalDateTime currentDate = currentDateTime;
 
-        String unitPriceVer1 = WebUI.getElementText(By.xpath("//div[text()='Price:']/parent::div[contains(@class,'col')]/following-sibling::div"));
+        String unitPriceVer1 = WebUI.getElementText(unitPriceProduct);
         String unitPriceVer2 = unitPriceVer1.replaceAll("[^0-9.]","");
         String unitPriceVer3 = "" + (int) Double.parseDouble(unitPriceVer2);
         Assert.assertEquals(unitPriceVer3, unitPrice, "Unit Price hien thi sai");
         if(discountDateEnd.isAfter(currentDate)) {
             //discountPrice
-            String discountPriceVer1 = WebUI.getElementText(By.xpath("//div[text()='Discount Price:']/parent::div[contains(@class,'col')]/following-sibling::div"));
+            String discountPriceVer1 = WebUI.getElementText(discountPriceProduct);
             String discountPriceVer2 = discountPriceVer1.replaceAll("[^0-9.]","");
             String discountPriceVer3 = "" + (int) Double.parseDouble(discountPriceVer2);
             String comparePrice = "" + (int) (Double.parseDouble(unitPriceVer2) - Double.parseDouble(unitPriceVer2) * Double.parseDouble(discount)/100 - (int) Double.parseDouble(discountPriceVer2));

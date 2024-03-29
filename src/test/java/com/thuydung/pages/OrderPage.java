@@ -49,7 +49,7 @@ public class OrderPage {
         WebUI.sleep(3);
         WebUI.clickElement(By.xpath("//div[@id='search-content']//div[contains(text(),'" + PropertiesHelper.getValue("product_P01") + "')]"));
         WebUI.waitForPageLoaded();
-        String productPrice1 = WebUI.getElementText(ProductInfoPage.productPrice).trim();
+        String productPrice1 = WebUI.getElementText(ProductInfoPage.totalProductPrice).trim();
         WebUI.scrollToElement(buttonAddToCart);
         WebUI.clickElement(buttonAddToCart);
         WebUI.verifyAssertTrueIsDisplayed(popupAddToCartSucceeded, "Add to cart is failed");
@@ -61,7 +61,7 @@ public class OrderPage {
         WebUI.waitForJQueryLoad();
         WebUI.sleep(3);
         WebUI.clickElement(By.xpath("//div[@id='search-content']//div[contains(text(),'" + PropertiesHelper.getValue("product_P02") + "')]"));
-        String productPrice2 = WebUI.getElementText(ProductInfoPage.productPrice).trim();
+        String productPrice2 = WebUI.getElementText(ProductInfoPage.totalProductPrice).trim();
         WebUI.clickElement(buttonPlus);
         String quantities = WebUI.getElementAttribute(quantity, "value").trim();
         WebUI.verifyAssertTrueAttribute(quantity, "value", "2", "number of failed products");

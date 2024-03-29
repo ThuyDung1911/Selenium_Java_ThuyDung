@@ -6,12 +6,37 @@ import org.testng.annotations.Test;
 
 public class CartTest extends BaseTest {
 
+//    @Test(priority = 1)
+//    public void testAddProductToCart() {
+//        getCartPage().testAddProductToCart(PropertiesHelper.getValue("product_P01"),"2");
+//    }
     @Test(priority = 1)
-    public void testAddProductToCart() {
-        getCartPage().testAddProductToCart(PropertiesHelper.getValue("product_P01"),"2");
+    public void testAddManyProductNoDuplicateToCart() {
+        getCartPage().testAddManyProductToCart(PropertiesHelper.getValue("product_P01"),"2", PropertiesHelper.getValue("product_P02"),"3");
     }
     @Test(priority = 2)
+    public void testAddManyProductDuplicateToCart() {
+        getCartPage().testAddManyProductToCart(PropertiesHelper.getValue("product_P01"),"2", PropertiesHelper.getValue("product_P01"),"3");
+    }
+    @Test(priority = 3)
     public void testCartEmpty() {
         getCartPage().testCartEmpty();
     }
+    @Test(priority = 4)
+    public void removeProductFromCart() {
+        getCartPage().testAddManyProductToCart(PropertiesHelper.getValue("product_P01"),"2", PropertiesHelper.getValue("product_P02"),"3");
+        getCartPage().removeProductFromCart(PropertiesHelper.getValue("product_P01"));
+    }
+    //check cart detail
+    @Test(priority = 5)
+    public void testCartDetail() {
+        getCartPage().testCartDetail(PropertiesHelper.getValue("product_P01"),"2");
+    }
+    //check update quantity product in cart
+
+    //check remove product from cart
+
+    //check remove all product from cart
+
+
 }

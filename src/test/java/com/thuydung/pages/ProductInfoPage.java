@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ProductInfoPage extends CommonPage {
     private By productName = By.xpath("//h1");
-    public static By productPrice = By.xpath("(//div[text()='Total Price:']/parent::div)/following-sibling::div//strong");
+    public static By totalProductPrice = By.xpath("(//div[text()='Total Price:']/parent::div)/following-sibling::div//strong");
     private By productUnit = By.xpath("//span[@class='opacity-70']");
     private By productDescription = By.xpath("//div[@class = 'mw-100 overflow-auto text-left aiz-editor-data']/p");
     private By selectProductName = By.xpath("(//div[contains(@class,'product-name')])[1]");
@@ -21,7 +21,7 @@ public class ProductInfoPage extends CommonPage {
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
         String name = WebUI.getElementText(By.xpath("//h1[contains(.,'" + product + "')]"));
-        String price = WebUI.getElementText(productPrice);
+        String price = WebUI.getElementText(totalProductPrice);
         String unit = WebUI.getElementText(productUnit);
         String unitProduct = unit.substring(1);
         String description = WebUI.getElementText(productDescription);

@@ -454,6 +454,11 @@ public class WebUI {
         LogUtils.info("Wait until the element " + by + " is visible");
         return getWebElement(by);
     }
+    public static boolean checkElementVisible(By by) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        return element.isDisplayed();
+    }
 
     @Step("Wait until the element {0} is invisible")
     public static void waitForElementInvisible(By by) {
@@ -591,6 +596,7 @@ public class WebUI {
         ExtentTestManager.logMessage(Status.PASS, "Verify result: " + actual + " is contain " + key);
         LogUtils.info("Verify result: " + actual + " is contain " + key);
     }
+
     @Step("Verify result {0} is equal {1}")
     public static void verifyAssertEqual(String actual, String key, String message) {
         waitForPageLoaded();

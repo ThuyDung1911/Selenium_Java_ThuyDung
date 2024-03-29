@@ -21,12 +21,18 @@ public class DashboardPage extends CommonPage {
     public void testSearchProduct(String keySearchProduct) {
         //String keyTempSearchProduct = keySearchProduct + " ";
         WebUI.openURL(PropertiesHelper.getValue("URL"));
-        WebUI.clickElement(LoginPage.closeAdvertisementPopup);
+        if(WebUI.getWebElement(LoginPage.closeAdvertisementPopup).isDisplayed()){
+            WebUI.clickElement(LoginPage.closeAdvertisementPopup);
+        }
+        if(WebUI.getWebElement(LoginPage.buttonOkCookies).isDisplayed()){
+            WebUI.clickElement(LoginPage.buttonOkCookies);
+        }
+        //WebUI.clickElement(LoginPage.closeAdvertisementPopup);
         WebUI.setTextFromSplitString(inputSearchProduct, keySearchProduct);
-        WebUI.setText(inputSearchProduct, " ");
-        //WebUI.setTextAndClear(inputSearchProduct, keyTempSearchProduct);
-        WebUI.clickElement(inputSearchProduct);
-        WebUI.keydownBackspace();
+//        WebUI.setText(inputSearchProduct, " ");
+//        //WebUI.setTextAndClear(inputSearchProduct, keyTempSearchProduct);
+//        WebUI.clickElement(inputSearchProduct);
+//        WebUI.keydownBackspace();
         WebUI.waitForJQueryLoad();
         WebUI.verifyAssertTrueIsDisplayed(divSearchResult, "Khối Search result KHONG xuat hien");
         keySearchProduct = keySearchProduct.toLowerCase();
@@ -60,6 +66,8 @@ public class DashboardPage extends CommonPage {
 
     public void testSearchProductHaveNotResult(String keySearchProduct) {
         testSearchProduct(keySearchProduct);
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(3);
         WebUI.verifyAssertTrueIsDisplayed(messageSearchNothing, "Ket qua tim kiem van xuat hien");
         WebUI.verifyAssertTrueEqual(messageSearchNothing, "Sorry, nothing found for \"" + keySearchProduct + "\"", "Message khong tim thay KHONG dung");
         WebUI.sleep(2);
