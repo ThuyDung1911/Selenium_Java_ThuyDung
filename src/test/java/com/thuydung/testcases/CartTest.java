@@ -33,9 +33,15 @@ public class CartTest extends BaseTest {
         getCartPage().testCartDetail(PropertiesHelper.getValue("product_P01"),"2");
     }
     //check update quantity product in cart
-
+    @Test(priority = 6)
+    public void testUpdateQuantityProductInCart() {
+        getCartPage().testUpdateQuantityProductInCart(PropertiesHelper.getValue("product_P01"),"5");
+    }
     //check remove product from cart
-
+    @Test(priority = 7)
+    public void testRemoveProductFromCart() {
+        getCartPage().testRemoveProductFromCart(PropertiesHelper.getValue("product_P01"));
+    }
     //check remove all product from cart
 
 

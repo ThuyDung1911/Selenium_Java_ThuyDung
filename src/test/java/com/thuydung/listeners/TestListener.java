@@ -27,6 +27,7 @@ public class TestListener implements ITestListener {
         PropertiesHelper.loadAllFiles();
         LogUtils.info("Start Testing " + result.getName());
         System.out.println("onStart: " + result.getStartDate());
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.thuydung.pages;
 
+import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.keywords.WebUI;
 import org.openqa.selenium.By;
@@ -10,10 +11,13 @@ public class CartPage extends CommonPage {
     By viewProductNameinPopupAddSucceed = By.xpath("//div[@id='addToCart-modal-body']//h6[contains(@class,'fw-600')]");
     By messageUpdateCart = By.xpath("//span[@data-notify='message']");
     By buttonViewCart = By.xpath("//a[normalize-space()='View cart']");
-    public void verifyProductInCart(String productName){
+    By viewQuantityInCart = By.xpath("//section[@id='cart-summary']//input[@type='number']");
+
+    public void verifyProductInCart(String productName) {
         By viewProductNameInCart = By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]");
         WebUI.verifyAssertTrueIsDisplayed(viewProductNameInCart, "Product is NOT displayed");
     }
+
     public void testAddProductToCart(String productName, String quantity) {
         By viewProductNameInCart = By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]");
         By resultSearchProduct = By.xpath("//div[@id='search-content']//div[contains(text(),'" + productName + "')]");
@@ -51,7 +55,8 @@ public class CartPage extends CommonPage {
         //Kiểm tra giá sản phẩm trong giỏ hàng
         WebUI.verifyAssertEqual(priceInCartVer2, productPriceVer2, "Price of product is NOT correct");
     }
-    public String getValuePrice(String price){
+
+    public String getValuePrice(String price) {
         String priceVer1 = price.replaceAll("[^0-9.]", "");
         String priceVer2 = "" + (int) Double.parseDouble(priceVer1);
         return priceVer2;
@@ -92,19 +97,42 @@ public class CartPage extends CommonPage {
         }
 
     }
+
     public void testCartDetail(String productName, String quantity) {
         By viewProductNameInCartDetail = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]");
-
         testAddOneProductToCart(productName, quantity);
         WebUI.clickElement(buttonViewCart);
         WebUI.waitForPageLoaded();
         WebUI.verifyAssertTrueIsDisplayed(viewProductNameInCartDetail, "Product is NOT displayed");
         WebUI.verifyAssertContain(WebUI.getElementText(viewProductNameInCartDetail), productName, "Product name is NOT correct");
+
+        WebUI.verifyAssertTrueIsDisplayed(viewQuantityInCart, "Quantity of product is NOT displayed");
+        String valueQuantity = WebUI.getElementAttribute(viewQuantityInCart, "value");
+        WebUI.verifyAssertEqual(valueQuantity, quantity, "Quantity of product is NOT correct");
     }
-    public void checkSubTotalPrice(){
+
+    public void testUpdateQuantityProductInCart(String productName, String quantity) {
+        By totalPriceInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//span[text()='Total']/following-sibling::span");
+        By priceInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//span[text()='Price']/following-sibling::span");
+        testCartDetail(productName, "1");
+        WebUI.setTextAndClear(viewQuantityInCart, quantity);
+        WebUI.clickElement(priceInCart);
+        int valuePriceInCart = (int) Double.parseDouble(WebUI.getElementText(priceInCart).replaceAll("[^0-9.]", ""));
+        //Double valueTotalPriceInCart = Double.parseDouble(WebUI.getElementText(totalPriceInCart).replaceAll("[^0-9.]", ""));
+        String caculatorPrice = valuePriceInCart * Integer.parseInt(quantity) + ".00";
+        WebUI.verifyAssertEqual(WebUI.getElementText(totalPriceInCart).replaceAll("[^0-9.]", ""), caculatorPrice, "Price of product is NOT correct");
+    }
+    public void testRemoveProductFromCart(String productName) {
+
+        testAddOneProductToCart(productName, "1");
 
     }
-    public void removeProductFromCart(String productName){
+
+    public void checkSubTotalPrice() {
+
+    }
+
+    public void removeProductFromCart(String productName) {
         By viewProductNameInCart = By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]");
         By buttonRemoveProduct = By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::a/following-sibling::span");
         WebUI.clickElement(buttonRemoveProduct);

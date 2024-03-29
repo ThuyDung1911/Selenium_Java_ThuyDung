@@ -495,7 +495,7 @@ public class WebUI {
         waitForElementVisible(by);
         sleep(STEP_TIME);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
-            highLightElement(by);
+            highLightElementFull(by);
         }
         LogUtils.info("Get attribute of element " + by);
         LogUtils.info("Attribute value: " + getWebElement(by).getAttribute(attributeName));
@@ -833,11 +833,19 @@ public class WebUI {
         }
     }
 
-    public static WebElement highLightElement(By by) {
+    public static WebElement highLightElementFull(By by) {
         if (DriverManager.getDriver() instanceof JavascriptExecutor) {
-            ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].style.border='2px solid red'", getWebElement(by));
+            ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].style.backgroundColor='skyblue'", getWebElement(by));
             sleep(ConfigData.HIGHLIGHT_TIMEOUT);
         }
         return getWebElement(by);
     }
+    public static WebElement highLightElement(By by) {
+        if (DriverManager.getDriver() instanceof JavascriptExecutor) {
+            ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].style.border='5px solid blue'", getWebElement(by));
+            sleep(ConfigData.HIGHLIGHT_TIMEOUT);
+        }
+        return getWebElement(by);
+    }
+
 }
