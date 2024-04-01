@@ -61,6 +61,7 @@ public class AddProductPage extends CommonPage {
     private By inputSearchProduct = By.xpath("//input[@id='search']");
     public static By discountPriceProduct = By.xpath("//div[text()='Discount Price:']/parent::div[contains(@class,'col')]/following-sibling::div");
     public static By unitPriceProduct = By.xpath("//div[text()='Price:']/parent::div[contains(@class,'col')]/following-sibling::div");
+
     public void addProduct(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
         productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
@@ -115,7 +116,7 @@ public class AddProductPage extends CommonPage {
         WebUI.verifyAssertTrueIsDisplayed(blockProductDescription, "Product description KHONG xuat hien");
         WebUI.setTextAndClear(inputDescription, description);
         WebUI.clickElement(buttonSavePublish); //Click button Save&Public
-        
+
 //        WebUI.clickElement(menuAllProducts);
 //        WebUI.waitForPageLoaded();
 //        WebUI.setTextAndClear(inputSearchProduct, productName, Keys.ENTER);
@@ -124,26 +125,29 @@ public class AddProductPage extends CommonPage {
 //        WebUI.waitForElementVisible(newProduct);
 //        nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
     }
+
     public void addProductValid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
         addProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
-        verifyNewProduct(nameProductVerify,category,unit,unitPrice,discountDate,quantity, description, discount);
+        verifyNewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount);
     }
+
     public void addProductInvalid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
         addProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
         WebUI.checkHTML5MessageWithValueInvalid(inputUnit, "Unit la truong bat buoc");
-        WebUI.verifyAssertTrueEqualMessageHTML(inputUnit, "Please fill out this field.","Messge Unit hien thi khong dung");
+        WebUI.verifyAssertTrueEqualMessageHTML(inputUnit, "Please fill out this field.", "Messge Unit hien thi khong dung");
         //WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         //verifyNewProduct(category, unit, Double.valueOf(unitPrice), description);
     }
+
     public void addProductValidWithDiscount(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
         addProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
-        verifyNewProduct(nameProductVerify,category,unit,unitPrice,discountDate,quantity, description, discount);
+        verifyNewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount);
     }
 
     public void verifyNewProduct(String nameProductVerify, String category, String unit, String unitPrice, String discountDate, String quantity, String description, String discount) {
@@ -172,15 +176,15 @@ public class AddProductPage extends CommonPage {
         LocalDateTime currentDate = currentDateTime;
 
         String unitPriceVer1 = WebUI.getElementText(unitPriceProduct);
-        String unitPriceVer2 = unitPriceVer1.replaceAll("[^0-9.]","");
+        String unitPriceVer2 = unitPriceVer1.replaceAll("[^0-9.]", "");
         String unitPriceVer3 = "" + (int) Double.parseDouble(unitPriceVer2);
         Assert.assertEquals(unitPriceVer3, unitPrice, "Unit Price hien thi sai");
-        if(discountDateEnd.isAfter(currentDate)) {
+        if (discountDateEnd.isAfter(currentDate)) {
             //discountPrice
             String discountPriceVer1 = WebUI.getElementText(discountPriceProduct);
-            String discountPriceVer2 = discountPriceVer1.replaceAll("[^0-9.]","");
+            String discountPriceVer2 = discountPriceVer1.replaceAll("[^0-9.]", "");
             String discountPriceVer3 = "" + (int) Double.parseDouble(discountPriceVer2);
-            String comparePrice = "" + (int) (Double.parseDouble(unitPriceVer2) - Double.parseDouble(unitPriceVer2) * Double.parseDouble(discount)/100 - (int) Double.parseDouble(discountPriceVer2));
+            String comparePrice = "" + (int) (Double.parseDouble(unitPriceVer2) - Double.parseDouble(unitPriceVer2) * Double.parseDouble(discount) / 100 - (int) Double.parseDouble(discountPriceVer2));
             Assert.assertEquals(comparePrice, "0", "Discount Price hien thi sai");
         }
         //unit

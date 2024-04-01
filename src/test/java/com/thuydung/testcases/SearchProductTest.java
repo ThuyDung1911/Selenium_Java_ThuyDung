@@ -7,7 +7,7 @@ public class SearchProductTest extends BaseTest {
     //Search product have result
     @Test(priority = 1)
     public void testSearchProductHaveResult() {
-        getDashboardPage().testSearchProductHaveResult("Gio qua Tet Thuy Dung CZRFANYB");
+        getDashboardPage().testSearchProductHaveResult("gio qua tet hdlvt");
     }
     //Search product have not result
     @Test(priority = 2)

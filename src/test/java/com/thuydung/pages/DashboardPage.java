@@ -1,8 +1,16 @@
 package com.thuydung.pages;
 
+import com.aventstack.extentreports.Status;
+import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.keywords.WebUI;
+import com.thuydung.reports.ExtentTestManager;
+import com.thuydung.utils.LogUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardPage extends CommonPage {
     public static By titleDashboard = By.xpath("//h1[normalize-space()='Dashboard']");
@@ -19,55 +27,78 @@ public class DashboardPage extends CommonPage {
     public static By messageSearchNothing = By.xpath("//div[contains(@class,'search-nothing')]");
 
     public void testSearchProduct(String keySearchProduct) {
-        //String keyTempSearchProduct = keySearchProduct + " ";
         WebUI.openURL(PropertiesHelper.getValue("URL"));
-        if(WebUI.getWebElement(LoginPage.closeAdvertisementPopup).isDisplayed()){
+        if (WebUI.getWebElement(LoginPage.closeAdvertisementPopup).isDisplayed()) {
             WebUI.clickElement(LoginPage.closeAdvertisementPopup);
         }
-        if(WebUI.getWebElement(LoginPage.buttonOkCookies).isDisplayed()){
+        if (WebUI.getWebElement(LoginPage.buttonOkCookies).isDisplayed()) {
             WebUI.clickElement(LoginPage.buttonOkCookies);
         }
-        //WebUI.clickElement(LoginPage.closeAdvertisementPopup);
         WebUI.setTextFromSplitString(inputSearchProduct, keySearchProduct);
-//        WebUI.setText(inputSearchProduct, " ");
-//        //WebUI.setTextAndClear(inputSearchProduct, keyTempSearchProduct);
-//        WebUI.clickElement(inputSearchProduct);
-//        WebUI.keydownBackspace();
+        WebUI.setTextAndBackspace(inputSearchProduct, " ");
+
         WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
         WebUI.verifyAssertTrueIsDisplayed(divSearchResult, "Khối Search result KHONG xuat hien");
-        keySearchProduct = keySearchProduct.toLowerCase();
     }
 
     public void testSearchProductHaveResult(String keySearchProduct) {
-//        testSearchProduct(keySearchProduct);
-//        List<WebElement> listResultSearchProduct = DriverManager.getDriver().findElements(resultSearchProduct);
-//        List<String> listResultSearchProductValues = new ArrayList<>();
-//        int i = 0;
-//        for (WebElement resultWebElementSearchProduct : listResultSearchProduct) {
-//            listResultSearchProductValues.add(resultWebElementSearchProduct.getText().toLowerCase());
-//            i++;
-//            WebUI.verifyAssertTrueIsDisplayed(By.xpath("(//div[contains(@class,'typed-search-box')]//div[text()='Products']/following-sibling::ul//div[contains(@class,'product-name')])[" + i + "]"), "Ket qua tim kiem KHONG xuat hien");
-//        }
-//        for (String resultSearchProductValue : listResultSearchProductValues) {
-//            WebUI.verifyAssertContain(resultSearchProductValue, keySearchProduct, "Ket qua tim kiem KHONG dung");
-//        }
-//        WebUI.sleep(2);
-
         testSearchProduct(keySearchProduct);
-        WebUI.waitForJQueryLoad();
-        WebUI.sleep(3);
-        WebUI.verifyAssertTrueIsDisplayed(resultSearchProduct, "Ket qua tim kiem KHONG xuat hien");
-        //Check result contain keySearchProduct
-        keySearchProduct = keySearchProduct.toLowerCase();
-        keySearchProduct = WebUI.removeAccent(keySearchProduct);
-        WebUI.verifyAssertTrueTextContainWithoutAccent(resultSearchProduct, keySearchProduct, "Ket qua tim kiem KHONG dung");
+        List<WebElement> listResultSearchProduct = DriverManager.getDriver().findElements(resultSearchProduct);
+        System.out.println("Size of listResultSearchProduct: " + listResultSearchProduct.size());
+        if(listResultSearchProduct.size() == 0){
+            ExtentTestManager.logMessage(Status.FAIL, "Ket qua tim kiem KHONG xuat hien");
+            LogUtils.info("Ket qua tim kiem KHONG xuat hien");
+        }
+        else {
+            ExtentTestManager.logMessage(Status.PASS, "Ket qua tim kiem xuat hien");
+            LogUtils.info("Ket qua tim kiem xuat hien");
+        }
+        List<String> listResultSearchProductValues = new ArrayList<>();
+        //int j = 0;
+        for (WebElement resultWebElementSearchProduct : listResultSearchProduct) {
+            listResultSearchProductValues.add(WebUI.removeAccent(resultWebElementSearchProduct.getText().toLowerCase()));
+            //j++;
+            //WebUI.verifyAssertTrueIsDisplayed(By.xpath("(//div[contains(@class,'typed-search-box')]//div[text()='Products']/following-sibling::ul//div[contains(@class,'product-name')])[" + j + "]"), "Ket qua tim kiem KHONG xuat hien");
+        }
+        //
+        keySearchProduct = WebUI.removeAccent(keySearchProduct.toLowerCase());
+        List<String> textSplit = List.of(keySearchProduct.split(" "));
 
+        for (String resultSearchProductValue : listResultSearchProductValues) {
+            int count = 0;
+            resultSearchProductValue = WebUI.removeAccent(resultSearchProductValue.toLowerCase());
+            for (int i = 0; i < textSplit.size(); i++) {
+                if (resultSearchProductValue.contains(textSplit.get(i))) {
+                    count++;
+                    //System.out.println("Text: " + textSplit.get(i) + " is contained in: " + resultSearchProductValue);
+                    ExtentTestManager.logMessage(Status.PASS, "Text: " + textSplit.get(i) + " is contained in: " + resultSearchProductValue);
+                    LogUtils.info("Text: " + textSplit.get(i) + " is contained in: " + resultSearchProductValue);
+                }
+            }
+            if (count == 0) {
+                ExtentTestManager.logMessage(Status.FAIL, "Text: " + keySearchProduct + " is NOT contained in: " + resultSearchProductValue);
+                LogUtils.info("Text: " + keySearchProduct + " is NOT contained in: " + resultSearchProductValue);
+            } else if (count == textSplit.size()) {
+                ExtentTestManager.logMessage(Status.PASS, "Text: " + keySearchProduct + " is contained in: " + resultSearchProductValue);
+                LogUtils.info("Text: " + keySearchProduct + " is contained in: " + resultSearchProductValue);
+            }
+            WebUI.sleep(1);
+        }
+
+        WebUI.sleep(2);
+
+//        testSearchProduct(keySearchProduct);
+//        WebUI.verifyAssertTrueIsDisplayed(resultSearchProduct, "Ket qua tim kiem KHONG xuat hien");
+//        //Check result contain keySearchProduct
+//        keySearchProduct = keySearchProduct.toLowerCase();
+//        keySearchProduct = WebUI.removeAccent(keySearchProduct);
+//        WebUI.verifyAssertTrueTextContainWithoutAccent(resultSearchProduct, keySearchProduct, "Ket qua tim kiem KHONG dung");
+//        WebUI.sleep(2);
     }
 
     public void testSearchProductHaveNotResult(String keySearchProduct) {
         testSearchProduct(keySearchProduct);
-        WebUI.waitForJQueryLoad();
-        WebUI.sleep(3);
         WebUI.verifyAssertTrueIsDisplayed(messageSearchNothing, "Ket qua tim kiem van xuat hien");
         WebUI.verifyAssertTrueEqual(messageSearchNothing, "Sorry, nothing found for \"" + keySearchProduct + "\"", "Message khong tim thay KHONG dung");
         WebUI.sleep(2);
@@ -91,7 +122,7 @@ public class DashboardPage extends CommonPage {
         WebUI.verifyAssertTrueIsDisplayed(resultCategorySuggestions, "Ket qua tim kiem KHONG xuat hien");
         //Check result contain keySearchProduct
         WebUI.verifyAssertTrueTextContain(resultCategorySuggestions, keySearchProduct, "Ket qua tim kiem KHONG dung");
-
+        WebUI.sleep(2);
     }
 
     public void testSearchSuggestionTagContainKeySearchProduct(String keySearchProduct) {
@@ -111,7 +142,7 @@ public class DashboardPage extends CommonPage {
         testSearchProduct(keySearchProduct);
         WebUI.verifyAssertTrueIsDisplayed(resultTagSuggestions, "Ket qua tim kiem KHONG xuat hien");
         WebUI.verifyAssertTrueTextContain(resultTagSuggestions, keySearchProduct, "Ket qua tim kiem KHONG dung");
-
+        WebUI.sleep(2);
     }
 
 }

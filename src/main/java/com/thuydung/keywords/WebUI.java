@@ -18,6 +18,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.Duration;
 import java.util.List;
@@ -361,6 +362,19 @@ public class WebUI {
         LogUtils.info("Key down Enter");
         ExtentTestManager.logMessage("Key down Enter");
     }
+    @Step("Set text {1} on element {0} and key down backspace")
+    public static void setTextAndBackspace(By by, String value) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        sleep(STEP_TIME);
+        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+            highLightElementFull(by);
+        }
+        getWebElement(by).sendKeys(value, Keys.BACK_SPACE);
+        ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
+        //AllureReportManager.saveTextLog("Set text " + value + " on " + by.toString() + " and key down backspace");
+        LogUtils.info("Set text " + value + " on " + by.toString() + " and key down backspace");
+    }
 
     @Step("Key down Backspace")
     public static void keydownBackspace() {
@@ -375,6 +389,9 @@ public class WebUI {
         WebUI.clearText(by);
         List<String> textSplit = List.of(text.split(" "));
         System.out.println("Length of text: " + textSplit.size());
+        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+            highLightElementFull(by);
+        }
         for (int i = 0; i < textSplit.size(); i++) {
             if (i > 0) {
                 WebUI.setText(by, " " + textSplit.get(i));
@@ -391,7 +408,9 @@ public class WebUI {
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         sleep(STEP_TIME);
         clearText(by);
-        highLightElement(by);
+        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+            highLightElementFull(by);
+        }
         getWebElement(by).sendKeys(value);
         ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
         LogUtils.info("Set text: " + value + " on " + by);
@@ -403,7 +422,7 @@ public class WebUI {
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         sleep(STEP_TIME);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
-            highLightElement(by);
+            highLightElementFull(by);
         }
         getWebElement(by).sendKeys(value);
         ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
@@ -412,7 +431,14 @@ public class WebUI {
 
     @Step("Set text on text box and press key")
     public static void setTextAndClear(By by, String value, Keys keys) {
-        waitForElementVisible(by).sendKeys(value, keys);
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        sleep(STEP_TIME);
+        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+            highLightElementFull(by);
+        }
+        getWebElement(by).sendKeys(value, keys);
+        //waitForElementVisible(by).sendKeys(value, keys);
         LogUtils.info("Set text " + value + " on " + by + " and press key " + keys.name());
 
         if (ExtentTestManager.getTest() != null) {
@@ -427,7 +453,7 @@ public class WebUI {
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         sleep(STEP_TIME);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
-            highLightElement(by);
+            highLightElementFull(by);
         }
         getWebElement(by).sendKeys(value, Keys.ENTER);
         ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
@@ -846,6 +872,9 @@ public class WebUI {
             sleep(ConfigData.HIGHLIGHT_TIMEOUT);
         }
         return getWebElement(by);
+    }
+    public static BigDecimal stringToBigDecimal(String numberString) {
+        return new BigDecimal(numberString);
     }
 
 }
