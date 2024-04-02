@@ -1,15 +1,22 @@
 package com.thuydung.pages;
 
+import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.keywords.WebUI;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class OrderPage {
     private By selectProductNabati = By.xpath("(//a[contains(text(),'Nabati')])[1]");
     private By selectProduct1 = By.xpath("(//a[contains(text(),'Cosy')])[1]");
     public static By buttonAddToCart = By.xpath("//button[@class='btn btn-soft-primary mr-2 add-to-cart fw-600']");
     public static By popupAddToCartSucceeded = By.xpath("//h3[normalize-space()='Item added to your cart!']");
-    public static By buttonCloseAddToCartPopup = By.xpath("//span[@class = 'la-2x']");
+    public static By buttonCloseAddToCartMessage = By.xpath("//span[@class = 'la-2x']");
     private By buttonBackToShopping = By.xpath("//button[normalize-space()='Back to shopping']");
     private By selectProduct2 = By.xpath("(//a[@class = 'd-block text-reset' ])[1]");
     private By buttonPlus = By.xpath("//button[contains(@data-type,'plus')]");
@@ -20,6 +27,7 @@ public class OrderPage {
     private By verifyCheckedAddress = By.xpath("(//input[@name = 'address_id' ])[2]");
     private By buttonProcessToCheckout = By.xpath("//a[normalize-space()='Proceed to Checkout']");
     private By buttonContinueToShipping = By.xpath("//a[normalize-space()='Continue to Shipping']");
+
     private By buttonContinueToDeliveryInfo = By.xpath("//button[normalize-space()='Continue to Delivery Info']");
     private By verifyProductNabatiAtStepCheckout = By.xpath("//span[@class='fs-14 opacity-60'][normalize-space()='Nabati']");
     private By verifyProductChocoPieAtStepCheckout = By.xpath("//span[@class='fs-14 opacity-60'][normalize-space()='ChocoPie']");
@@ -29,6 +37,7 @@ public class OrderPage {
     private By checkboxAgreeTermAndConditions = By.xpath("//span[@class='aiz-square-check']");
     private By buttonCompleteOrder = By.xpath("//button[normalize-space()='Complete Order']");
     private By messageOrderSuccess = By.xpath("//h1[normalize-space()='Thank You for Your Order!']");
+    public By messageOrder = By.xpath("//span[@data-notify='message']");
     private By quantityProduct = By.xpath("//input[@name='quantity']");
     private By titleNewAddress = By.xpath("//div[@id='new-address-modal']//h5[@id='exampleModalLabel']");
     private By inputYourAddress = By.xpath("//textarea[@placeholder='Your Address']");
@@ -68,7 +77,7 @@ public class OrderPage {
         WebUI.scrollToElement(buttonAddToCart);
         WebUI.clickElement(buttonAddToCart);
         WebUI.verifyAssertTrueIsDisplayed(popupAddToCartSucceeded, "Add to cart is failed");
-        WebUI.clickElement(buttonCloseAddToCartPopup);
+        WebUI.clickElement(buttonCloseAddToCartMessage);
         //View cart demo
         WebUI.clickElement(buttonCart);
         WebUI.verifyAssertTrueIsDisplayed(viewProductOrderOnCart, "My product is NOT displayed");
@@ -105,5 +114,92 @@ public class OrderPage {
         WebUI.waitForPageLoaded();
         WebUI.sleep(1);
     }
+    public List<String> getProductsNameInDeliveryInfoDisplay() {
+        By elementProductNames = By.xpath("//div[@class='card-body']//ul[@class='list-group list-group-flush']//span[contains(@class,'opacity-60')]");
+        List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNames);
+        List<String> valueProductNames = new ArrayList<>();
+        for (WebElement productName : productNames) {
+            valueProductNames.add(productName.getText());
+        }
+        return valueProductNames;
+    }
+    public void checkOutOrder(String noteForOrder) {
+        WebUI.clickElement(buttonContinueToShipping);
+        WebUI.waitForPageLoaded();
+        WebUI.clickElement(buttonContinueToDeliveryInfo);
+        WebUI.waitForPageLoaded();
+        //Check info order in display delivery info
+        List<String> productNamesInDisplayDeliveryInfo = getProductsNameInDeliveryInfoDisplay();
+        WebUI.clickElement(buttonCart);
+        WebUI.waitForJQueryLoad();
+        List<String> productNamesInCart = CartPage.getProductsNameInCart();
+        WebUI.verifyAssertEquals(productNamesInDisplayDeliveryInfo, productNamesInCart, "Danh sách sản phẩm không khớp với giỏ hàng.");
+        WebUI.clickElement(buttonContinueToPayment);
+        WebUI.waitForPageLoaded();
+        //Check info order in display payment
+        String quantityItemProductInCart = String.valueOf(CartPage.getQuantityItemProductInCart());
+        String quantityItemProductInDisplayPayment = WebUI.getElementText(By.xpath("//span[@class='badge badge-inline badge-primary']")).replaceAll("\\D", "");
+        WebUI.verifyAssertEquals(quantityItemProductInCart, quantityItemProductInDisplayPayment, "Số lượng sản phẩm không khớp.");
+
+        WebUI.setTextAndClear(inputAdditionalInfo, noteForOrder);
+        WebUI.scrollToElement(buttonCompleteOrder);
+        WebUI.clickElement(checkboxAgreeTermAndConditions);
+        WebUI.clickElement(buttonCompleteOrder);
+        WebUI.waitForPageLoaded();
+        WebUI.verifyAssertTrueIsDisplayed(messageOrder, "Đơn hàng thất bại");
+        WebUI.verifyAssertTrueEqual(messageOrder, "Your order has been placed successfully", "Thông báo đơn hàng thành công không đúng");
+        WebUI.verifyAssertTrueIsDisplayed(messageOrderSuccess, "Đơn hàng thất bại");
+        //Check order Summary in display confirmation order
+        //Check order Detail  in display confirmation order
+
+        //Check history order
+    }
+    public Map<String,Integer> getProductAndQuantityInDisplayPayment() {
+        By elementProductNames = By.xpath("//tbody//td[@class='product-name']");
+        By elementProductQuantities = By.xpath("//tbody//strong[@class='product-quantity']");
+        List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNames);
+        if (productNames.size() == 0) {
+            return new HashMap<>();
+        }
+        List<String> valueProductNames = new ArrayList<>();
+        for (WebElement productName : productNames) {
+
+            valueProductNames.add(productName.getText());
+        }
+        List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantities);
+        List<String> valueProductQuantities = new ArrayList<>();
+        for (WebElement productQuantity : productQuantities) {
+            valueProductQuantities.add(productQuantity.getText().replaceAll("\\D", ""));
+        }
+
+        Map<String,Integer> productAndQuantity = new HashMap<>();
+        for (int i = 0; i < valueProductNames.size(); i++) {
+            productAndQuantity.put(valueProductNames.get(i), Integer.parseInt(valueProductQuantities.get(i)));
+        }
+        return productAndQuantity;
+    }
+    public static Map<String, Integer> getCart() {
+        By elementProductNames = By.xpath("//div[contains(text(),'Cart Items')]/following-sibling::ul/li//span[contains(@class,'text-truncate')]");
+        By elementProductQuantities = By.xpath("//div[contains(text(),'Cart Items')]/following-sibling::ul/li//span[contains(@class,'text-truncate')]/following-sibling::span[contains(text(),'x')]");
+        List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNames);
+        if (productNames.size() == 0) {
+            return new HashMap<>();
+        }
+        List<String> valueProductNames = new ArrayList<>();
+        for (WebElement productName : productNames) {
+            valueProductNames.add(productName.getText());
+        }
+        List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantities);
+        List<String> valueProductQuantities = new ArrayList<>();
+        for (WebElement productQuantity : productQuantities) {
+            valueProductQuantities.add(productQuantity.getText().replaceAll("\\D", ""));
+        }
+        Map<String, Integer> cart = new HashMap<>();
+        for (int i = 0; i < valueProductNames.size(); i++) {
+            cart.put(valueProductNames.get(i), Integer.parseInt(valueProductQuantities.get(i)));
+        }
+        return cart;
+    }
+
 
 }

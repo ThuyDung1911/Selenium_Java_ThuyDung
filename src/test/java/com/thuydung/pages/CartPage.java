@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.util.*;
 
 import static com.thuydung.pages.OrderPage.buttonAddToCart;
+import static com.thuydung.pages.OrderPage.buttonCart;
 
 public class CartPage extends CommonPage {
     By messageCartEmptyInCartDetail = By.xpath("//section[@id='cart-summary']//h3[normalize-space()='Your Cart is empty']");
@@ -53,10 +54,23 @@ public class CartPage extends CommonPage {
         WebUI.clickElement(resultSearchProduct);
         WebUI.waitForPageLoaded();
 
-        //Nhập số lượng sản phẩm
+        //Lay số lượng sản phẩm ton kho
         int quantityAvailabel = Integer.parseInt(WebUI.getElementText(ProductInfoPage.quantityProductAvailable));
-        if (Integer.parseInt(quantity) > quantityAvailabel) {
-            System.out.println("Số lượng sản phẩm không đủ");
+        WebUI.clickElement(OrderPage.buttonCart);
+        int quantityProductInCart;
+        //Check so luong san pham da co trong gio hang
+        if (WebUI.checkElementExist(viewProductNameInCart)) {
+            WebUI.scrollToElementToBottom(By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::li[@class='list-group-item']"));
+            WebUI.hoverElement(By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::li[@class='list-group-item']"));
+            quantityProductInCart = getCart().get(productName);
+        } else {
+            quantityProductInCart = 0;
+        }
+        Map<String, Integer> currentCart = getCart();
+
+        //Nhập số lượng sản phẩm
+        if (Integer.parseInt(quantity) + quantityProductInCart > quantityAvailabel) {
+            System.out.println("Số lượng sản phẩm tồn kho không đủ. Không thể thêm sản phẩm vào giỏ hàng với số lượng: " + quantity);
             return;
         }
         WebUI.setTextAndClear(inputQuantity, quantity);
@@ -66,14 +80,6 @@ public class CartPage extends CommonPage {
         //Lấy tổng tiền sản phẩm trong trang chi tiết sản phẩm
         checkTotalPriceInDetailProduct(productPrice, quantity);
 
-        WebUI.clickElement(OrderPage.buttonCart);
-        if (WebUI.checkElementExist(viewProductNameInCart)) {
-            WebUI.scrollToElementToBottom(By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::li[@class='list-group-item']"));
-            WebUI.hoverElement(By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::li[@class='list-group-item']"));
-        }
-
-        Map<String, Integer> currentCart = getCart();
-
         //Thêm sản phẩm vào giỏ hàng
         WebUI.sleep(3);
         WebUI.scrollToElement(buttonAddToCart);
@@ -81,7 +87,7 @@ public class CartPage extends CommonPage {
 
         WebUI.verifyAssertTrueIsDisplayed(OrderPage.popupAddToCartSucceeded, "Thêm vào giỏ hàng không thành công");
         WebUI.verifyAssertTrueTextContain(viewProductNameInPopupAddSucceed, productName, "Tên sản phẩm không đúng");
-        WebUI.clickElement(OrderPage.buttonCloseAddToCartPopup);
+        WebUI.clickElement(OrderPage.buttonCloseAddToCartMessage);
 
         //Kiểm tra sản phẩm đã được thêm vào giỏ hàng
         WebUI.clickElement(OrderPage.buttonCart);
@@ -115,7 +121,8 @@ public class CartPage extends CommonPage {
         checkSubTotalPriceInCartDetail();
         WebUI.sleep(2);
     }
-    public void checkQuantityAvailabel(String productName, String quantity) {
+
+    public void checkQuantityAddToCart(String productName, String quantity) {
         By resultSearchProduct = By.xpath("//div[@id='search-content']//div[contains(text(),'" + productName + "')]");
         By viewProductNameInCart = By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]");
         By viewPriceInCart = By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/following-sibling::span[contains(text(),'$')]");
@@ -132,14 +139,136 @@ public class CartPage extends CommonPage {
         WebUI.clickElement(resultSearchProduct);
         WebUI.waitForPageLoaded();
 
-        //Nhập số lượng sản phẩm
+        //Lay số lượng sản phẩm ton kho
         int quantityAvailabel = Integer.parseInt(WebUI.getElementText(ProductInfoPage.quantityProductAvailable));
+        WebUI.clickElement(OrderPage.buttonCart);
+        int quantityProductInCart;
+        //Check so luong san pham da co trong gio hang
+        if (WebUI.checkElementExist(viewProductNameInCart)) {
+            WebUI.scrollToElementToBottom(By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::li[@class='list-group-item']"));
+            WebUI.hoverElement(By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::li[@class='list-group-item']"));
+            quantityProductInCart = getCart().get(productName);
+        } else {
+            quantityProductInCart = 0;
+        }
+        //Nhập số lượng sản phẩm
+        WebUI.setTextAndClear(inputQuantity, quantity);
         WebUI.clickElement(buttonAddToCart);
-        if (Integer.parseInt(quantity) > quantityAvailabel) {
+        WebUI.waitForJQueryLoad();
+        if (Integer.parseInt(quantity) + quantityProductInCart > quantityAvailabel) {
             //Check total price in detail product (over quantity available = max quantity available * price)
             //checkTotalPriceInDetailProduct(convertCurrencyToBigDecimal(WebUI.getElementText(totalPriceInDetailProduct)), String.valueOf(quantityAvailabel));
-            WebUI.verifyAssertTrueIsDisplayed(messageOverQuantityAvailable,"Message khong xuat hien");
-            WebUI.verifyAssertTrueEqual(messageOverQuantityAvailable,"This item is out of stock!","Message khong dung");
+            WebUI.verifyAssertTrueIsDisplayed(messageOverQuantityAvailable, "Message thong bao qua so luong khong xuat hien");
+            WebUI.verifyAssertTrueEqual(messageOverQuantityAvailable, "This item is out of stock!", "Message thong bao qua so luong khong dung");
+        } else {
+            WebUI.verifyAssertTrueIsDisplayed(OrderPage.popupAddToCartSucceeded, "Thêm vào giỏ hàng không thành công");
+            WebUI.verifyAssertTrueTextContain(viewProductNameInPopupAddSucceed, productName, "Tên sản phẩm không đúng");
+        }
+        WebUI.clickElement(OrderPage.buttonCloseAddToCartMessage);
+    }
+
+    public void checkQuantityUpdateCart(String productName, String quantity) {
+        By resultSearchProduct = By.xpath("//div[@id='search-content']//div[contains(text(),'" + productName + "')]");
+        By priceInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//span[text()='Price']/following-sibling::span");
+        By viewQuantityInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//input[contains(@name,'quantity')]");
+        //Tìm kiếm sản phẩm
+        getDashboardPage().testSearchProductHaveResult(productName);
+        //Kiem tra kết quả tìm kiếm có sản phẩm cần tìm không
+        List<WebElement> listResultSearchProduct = DriverManager.getDriver().findElements(resultSearchProduct);
+        if (listResultSearchProduct.isEmpty()) {
+            ExtentTestManager.logMessage(Status.FAIL, "Sản phẩm: " + productName + " không có trong kết quả tìm kiếm.");
+            LogUtils.info("Sản phẩm: " + productName + " không có trong kết quả tìm kiếm.");
+            return;
+        }
+        productName = WebUI.getElementText(resultSearchProduct);
+        WebUI.clickElement(resultSearchProduct);
+        WebUI.waitForPageLoaded();
+
+        //Lay số lượng sản phẩm ton kho
+        int quantityAvailabel = Integer.parseInt(WebUI.getElementText(ProductInfoPage.quantityProductAvailable));
+        WebUI.clickElement(buttonCart);
+        WebUI.waitForJQueryLoad();
+        WebUI.clickElement(buttonViewCart);
+        WebUI.waitForPageLoaded();
+        String currentQuantityInCart = WebUI.getElementText(viewQuantityInCart);
+        //Nhập số lượng sản phẩm
+        WebUI.setTextAndClear(viewQuantityInCart, quantity);
+        WebUI.clickElement(priceInCart);
+        WebUI.waitForJQueryLoad();
+        WebUI.verifyAssertTrueEqual(viewQuantityInCart, currentQuantityInCart, "Hệ thống cho phép cập nhập số lượng sản phẩm trong giỏ hàng nhiều hơn số lượng sản phẩm tồn kho");
+    }
+
+    public void checkQuantityAvailabelFail(String productName) {
+        By resultSearchProduct = By.xpath("//div[@id='search-content']//div[contains(text(),'" + productName + "')]");
+        By viewProductNameInCart = By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]");
+        By viewPriceInCart = By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/following-sibling::span[contains(text(),'$')]");
+        //Tìm kiếm sản phẩm
+        getDashboardPage().testSearchProductHaveResult(productName);
+        //Kiem tra kết quả tìm kiếm có sản phẩm cần tìm không
+        List<WebElement> listResultSearchProduct = DriverManager.getDriver().findElements(resultSearchProduct);
+        if (listResultSearchProduct.isEmpty()) {
+            ExtentTestManager.logMessage(Status.FAIL, "Sản phẩm: " + productName + " không có trong kết quả tìm kiếm.");
+            LogUtils.info("Sản phẩm: " + productName + " không có trong kết quả tìm kiếm.");
+            return;
+        }
+        productName = WebUI.getElementText(resultSearchProduct);
+        WebUI.clickElement(resultSearchProduct);
+        WebUI.waitForPageLoaded();
+
+        //Lay số lượng sản phẩm ton kho
+        int quantityAvailabel = Integer.parseInt(WebUI.getElementText(ProductInfoPage.quantityProductAvailable));
+        WebUI.clickElement(OrderPage.buttonCart);
+        int quantityProductInCart;
+        //Check so luong san pham da co trong gio hang
+        if (WebUI.checkElementExist(viewProductNameInCart)) {
+            WebUI.scrollToElementToBottom(By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::li[@class='list-group-item']"));
+            WebUI.hoverElement(By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::li[@class='list-group-item']"));
+            quantityProductInCart = getCart().get(productName) == null ? 0 : getCart().get(productName);
+        } else {
+            quantityProductInCart = 0;
+        }
+        //Nhập số lượng sản phẩm
+        String quantity = String.valueOf(quantityAvailabel + 1);
+        WebUI.setTextAndClear(inputQuantity, quantity);
+        WebUI.clickElement(buttonAddToCart);
+        WebUI.waitForJQueryLoad();
+        WebUI.verifyAssertTrueIsDisplayed(messageOverQuantityAvailable, "Message thong bao qua so luong khong xuat hien");
+        WebUI.verifyAssertTrueEqual(messageOverQuantityAvailable, "This item is out of stock!", "Message thong bao qua so luong khong dung");
+
+//        if (Integer.parseInt(quantity) + quantityProductInCart > quantityAvailabel) {
+//            //Check total price in detail product (over quantity available = max quantity available * price)
+//            //checkTotalPriceInDetailProduct(convertCurrencyToBigDecimal(WebUI.getElementText(totalPriceInDetailProduct)), String.valueOf(quantityAvailabel));
+//            WebUI.verifyAssertTrueIsDisplayed(messageOverQuantityAvailable,"Message thong bao qua so luong khong xuat hien");
+//            WebUI.verifyAssertTrueEqual(messageOverQuantityAvailable,"This item is out of stock!","Message thong bao qua so luong khong dung");
+//            //WebUI.verifyElementVisible(OrderPage.popupAddToCartSucceeded, "Message thong bao them vao gio hang voi so luong san pham qua luong ton kho khong xuat hien");
+//
+//            //WebUI.verifyAssertFalseIsDisplayed(OrderPage.popupAddToCartSucceeded, "Message thong bao them vao gio hang voi so luong san pham qua luong ton kho thanh cong xuat hien");
+//        }
+//        else {
+//            WebUI.verifyAssertTrueIsDisplayed(OrderPage.popupAddToCartSucceeded, "Thêm vào giỏ hàng không thành công");
+//            WebUI.verifyAssertTrueTextContain(viewProductNameInPopupAddSucceed, productName, "Tên sản phẩm không đúng");
+//            //WebUI.verifyAssertFalseIsDisplayed(messageOverQuantityAvailable,"Message thong bao qua so luong xuat hien du so luong them vao gio hang hop le");
+//        }
+        WebUI.clickElement(OrderPage.buttonCloseAddToCartMessage);
+        String quantity2 = String.valueOf(quantityAvailabel - quantityProductInCart);
+        WebUI.setTextAndClear(inputQuantity, quantity2);
+        WebUI.clickElement(buttonAddToCart);
+        WebUI.waitForJQueryLoad();
+        if (Integer.parseInt(quantity2) + quantityProductInCart > quantityAvailabel) {
+            //Check total price in detail product (over quantity available = max quantity available * price)
+            //checkTotalPriceInDetailProduct(convertCurrencyToBigDecimal(WebUI.getElementText(totalPriceInDetailProduct)), String.valueOf(quantityAvailabel));
+
+            WebUI.verifyAssertFalseIsDisplayed(OrderPage.popupAddToCartSucceeded, "Message thong bao them vao gio hang voi so luong san pham qua luong ton kho thanh cong xuat hien");
+            WebUI.verifyAssertTrueIsDisplayed(messageOverQuantityAvailable, "Message thong bao qua so luong khong xuat hien");
+            WebUI.verifyAssertTrueEqual(messageOverQuantityAvailable, "This item is out of stock!", "Message thong bao qua so luong khong dung");
+            //WebUI.verifyElementVisible(OrderPage.popupAddToCartSucceeded, "Message thong bao them vao gio hang voi so luong san pham qua luong ton kho khong xuat hien");
+
+        } else {
+
+            WebUI.verifyAssertFalseIsDisplayed(messageOverQuantityAvailable, "Message thong bao qua so luong xuat hien du so luong them vao gio hang hop le");
+
+            WebUI.verifyAssertTrueIsDisplayed(OrderPage.popupAddToCartSucceeded, "Thêm vào giỏ hàng không thành công");
+            WebUI.verifyAssertTrueTextContain(viewProductNameInPopupAddSucceed, productName, "Tên sản phẩm không đúng");
         }
     }
 
@@ -187,7 +316,7 @@ public class CartPage extends CommonPage {
         WebUI.verifyAssertEquals(subTotalPrice, valueSubTotalPriceInCart.setScale(2, RoundingMode.HALF_UP), "Tổng tiền sản phẩm trong giỏ hàng không đúng");
     }
 
-    public Map<String, Integer> getCart() {
+    public static Map<String, Integer> getCart() {
         By elementProductNames = By.xpath("//div[contains(text(),'Cart Items')]/following-sibling::ul/li//span[contains(@class,'text-truncate')]");
         By elementProductQuantities = By.xpath("//div[contains(text(),'Cart Items')]/following-sibling::ul/li//span[contains(@class,'text-truncate')]/following-sibling::span[contains(text(),'x')]");
         List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNames);
@@ -209,6 +338,25 @@ public class CartPage extends CommonPage {
         }
         return cart;
     }
+    public static List<String> getProductsNameInCart() {
+        By elementProductNames = By.xpath("//div[contains(text(),'Cart Items')]/following-sibling::ul/li//span[contains(@class,'text-truncate')]");
+        List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNames);
+        List<String> valueProductNames = new ArrayList<>();
+        for (WebElement productName : productNames) {
+            valueProductNames.add(productName.getText());
+        }
+        return valueProductNames;
+    }
+    public static int getQuantityItemProductInCart() {
+        By elementProductNames = By.xpath("//div[contains(text(),'Cart Items')]/following-sibling::ul/li//span[contains(@class,'text-truncate')]");
+        List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNames);
+        List<String> valueProductNames = new ArrayList<>();
+        for (WebElement productName : productNames) {
+            valueProductNames.add(productName.getText());
+        }
+        return valueProductNames.size();
+    }
+
 
     /**
      * Chuyển đổi tiền tệ sang BigDecimal
@@ -294,9 +442,30 @@ public class CartPage extends CommonPage {
     }
 
     public void updateQuantityProductInCart(String productName, String quantity) {
+        By resultSearchProduct = By.xpath("//div[@id='search-content']//div[contains(text(),'" + productName + "')]");
         By priceInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//span[text()='Price']/following-sibling::span");
         By viewQuantityInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//input[contains(@name,'quantity')]");
+        //Tìm kiếm sản phẩm
+        getDashboardPage().testSearchProductHaveResult(productName);
+        //Kiem tra kết quả tìm kiếm có sản phẩm cần tìm không
+        List<WebElement> listResultSearchProduct = DriverManager.getDriver().findElements(resultSearchProduct);
+        if (listResultSearchProduct.isEmpty()) {
+            ExtentTestManager.logMessage(Status.FAIL, "Sản phẩm: " + productName + " không có trong kết quả tìm kiếm.");
+            LogUtils.info("Sản phẩm: " + productName + " không có trong kết quả tìm kiếm.");
+            return;
+        }
+        productName = WebUI.getElementText(resultSearchProduct);
+        WebUI.clickElement(resultSearchProduct);
+        WebUI.waitForPageLoaded();
 
+        //Lay số lượng sản phẩm ton kho
+        int quantityAvailabel = Integer.parseInt(WebUI.getElementText(ProductInfoPage.quantityProductAvailable));
+        if (Integer.parseInt(quantity) > quantityAvailabel) {
+            System.out.println("Số lượng sản phẩm tồn kho không đủ. Không thể thêm sản phẩm vào giỏ hàng với số lượng: " + quantity);
+            return;
+        }
+        WebUI.clickElement(By.xpath("//button[normalize-space()='Buy Now']"));
+        WebUI.waitForPageLoaded();
         WebUI.setTextAndClear(viewQuantityInCart, quantity);
         WebUI.clickElement(priceInCart);
         WebUI.waitForJQueryLoad();

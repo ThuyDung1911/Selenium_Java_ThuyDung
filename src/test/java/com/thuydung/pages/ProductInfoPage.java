@@ -12,7 +12,7 @@ public class ProductInfoPage extends CommonPage {
     private By productUnit = By.xpath("//span[@class='opacity-70']");
     private By productDescription = By.xpath("//div[@class = 'mw-100 overflow-auto text-left aiz-editor-data']/p");
     private By selectProductName = By.xpath("(//div[contains(@class,'product-name')])[1]");
-    public  static By quantityProductAvailable = By.xpath("//span[@id='available-quantity']");
+    public static By quantityProductAvailable = By.xpath("//span[@id='available-quantity']");
     public ArrayList<String> productInfo(String product) {
         WebUI.setTextFromSplitString(DashboardPage.inputSearchProduct, product);
         WebUI.waitForPageLoaded();

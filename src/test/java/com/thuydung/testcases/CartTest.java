@@ -51,9 +51,9 @@ public class CartTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P01"), "2");
+//        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P01"), "2");
         //getCartPage().addProductToCart(PropertiesHelper.getValue("product_P02"), "3");
-        getCartPage().updateQuantityProductInCart(PropertiesHelper.getValue("product_P01"), "1");
+        getCartPage().updateQuantityProductInCart(PropertiesHelper.getValue("product_P01"), "1000");
     }
 
     //check remove product from cart
@@ -121,10 +121,28 @@ public class CartTest extends BaseTest {
         getCartPage().removeProductFromCartDetail(PropertiesHelper.getValue("product_P01"));
     }
     //check add product over quantity
-    @Test(priority = 8, description = "Kiem tra khi them san pham vuot qua so luong")
-    public void testAddProductOverQuantity() {
-        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P01"), "100");
+    @Test(priority = 8, description = "Kiem tra khi them san pham vao gio hang vuot qua so luong")
+    public void testAddProductToCartOverQuantity() {
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        getCartPage().checkQuantityAddToCart(PropertiesHelper.getValue("product_P01"), "301");
     }
+    @Test(priority = 8, description = "Kiem tra khi cap nhat san pham vao gio hang vuot qua so luong")
+    public void testUpdateCartOverQuantity() {
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        getCartPage().checkQuantityUpdateCart(PropertiesHelper.getValue("product_P01"), "301");
+    }
+    //check add product continuously
+//    @Test(priority = 9, description = "Kiem tra khi them san pham lien tuc")
+//    public void testAddProductToCartContinuously() {
+//        ExcelHelper excel = new ExcelHelper();
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+//        getCartPage().checkQuantityAvailabelFail(PropertiesHelper.getValue("product_P01"));
+//    }
 
 
 
