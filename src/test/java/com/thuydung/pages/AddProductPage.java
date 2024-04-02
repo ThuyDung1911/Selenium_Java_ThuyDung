@@ -191,7 +191,7 @@ public class AddProductPage extends CommonPage {
         WebUI.verifyAssertTrueEqual(unitUI, "/" + unit, "Unit hien thi sai");
         Assert.assertTrue(DriverManager.getDriver().findElement(unitUI).getText().trim().contains(unit), "Unit hien thi sai");
         //quantity
-        WebUI.verifyAssertTrueEqual(quantityUI, quantity, "Quantity hien thi sai");
+        WebUI.verifyAssertTrueEqual(ProductInfoPage.quantityProductAvailable, quantity, "Quantity hien thi sai");
         //description
         WebUI.scrollToElement(descriptionUI);
         WebUI.sleep(1);

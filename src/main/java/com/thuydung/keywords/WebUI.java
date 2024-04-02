@@ -86,9 +86,6 @@ public class WebUI {
     public static void scrollToElementToBottom(By by) {
         JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
         js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
-        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
-            highLightElement(by);
-        }
         LogUtils.info("Scroll to element " + by);
     }
 
@@ -345,7 +342,7 @@ public class WebUI {
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         sleep(STEP_TIME);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
-            highLightElement(by);
+            highLightElementFull(by);
         }
         WebUI.clickElement(by);
         DriverManager.getDriver().findElement(by).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));

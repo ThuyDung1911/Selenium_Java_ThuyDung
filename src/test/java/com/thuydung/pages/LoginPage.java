@@ -69,7 +69,6 @@ public class LoginPage extends CommonPage {
     public void loginFailWithIncorrectPassword(String email, String password) {
         openLoginPage();
         WebUI.setTextAndClear(inputEmail, email);
-        WebUI.clearText(inputPassword);
         WebUI.setTextAndClear(inputPassword, password);
         WebUI.clickElement(buttonSubmitLogin);
         WebUI.verifyAssertTrueIsDisplayed(messageAccDoesNotExist, "Không hiển thị thông báo lỗi.");
@@ -80,7 +79,6 @@ public class LoginPage extends CommonPage {
     public void loginSuccessWithCustomerAccount(String email, String password) {
         openLoginPage();
         WebUI.setTextAndClear(inputEmail, email);
-        WebUI.clearText(inputPassword);
         WebUI.setTextAndClear(inputPassword, password);
         WebUI.clickElement(buttonSubmitLogin);
         WebUI.waitForElementVisible(DashboardPage.titleDashboard);
@@ -92,7 +90,6 @@ public class LoginPage extends CommonPage {
     public void loginSuccessWithSellerAccount(String email, String password) {
         openLoginPage();
         WebUI.setTextAndClear(inputEmail, email);
-        WebUI.clearText(inputPassword);
         WebUI.setTextAndClear(inputPassword, password);
         WebUI.clickElement(buttonSubmitLogin);
         WebUI.waitForElementVisible(DashboardPage.titleDashboard);
