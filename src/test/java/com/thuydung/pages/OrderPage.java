@@ -3,13 +3,15 @@ package com.thuydung.pages;
 import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.keywords.WebUI;
+import com.thuydung.requests.Cart;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import static com.thuydung.pages.CartPage.convertCurrencyToBigDecimal;
 
 public class OrderPage {
     private By selectProductNabati = By.xpath("(//a[contains(text(),'Nabati')])[1]");
@@ -46,7 +48,7 @@ public class OrderPage {
     private By quantity = By.xpath("//input[@name='quantity']");
     private By paymentPage = By.xpath("//h3[normalize-space()='Any additional info?']");
 
-    private By subTotalPrice = By.xpath("(//th[text()='Subtotal'])/following-sibling::td//span");
+    private static By subTotalPriceInDisplayPayment = By.xpath("(//th[text()='Subtotal'])/following-sibling::td//span");
     private By totalPrice = By.xpath("(//span[text()='Total']/parent::th)/following-sibling::td//span");
 
     public void order(String noteForOrder, String email, String password) {
@@ -100,7 +102,7 @@ public class OrderPage {
 
         int sumPrice = priceOfProduct1 + priceOfProduct2;
 
-        int subTotal = Integer.parseInt(WebUI.getElementText(subTotalPrice).replace("$", "").replace(",", "").split("\\.")[0]);
+        int subTotal = Integer.parseInt(WebUI.getElementText(subTotalPriceInDisplayPayment).replace("$", "").replace(",", "").split("\\.")[0]);
 
         System.out.println("Total of Product 1: " + priceOfProduct1);
         System.out.println("Total of Product 2: " + priceOfProduct2);
@@ -140,6 +142,14 @@ public class OrderPage {
         String quantityItemProductInCart = String.valueOf(CartPage.getQuantityItemProductInCart());
         String quantityItemProductInDisplayPayment = WebUI.getElementText(By.xpath("//span[@class='badge badge-inline badge-primary']")).replaceAll("\\D", "");
         WebUI.verifyAssertEquals(quantityItemProductInCart, quantityItemProductInDisplayPayment, "Số lượng sản phẩm không khớp.");
+        Cart infoProductsInDisplayPayment = getInfoProductsInDisplayPayment();
+        WebUI.clickElement(buttonCart);
+        Cart infoProductsInCart = CartPage.getCartDropdown();
+        WebUI.verifyAssertEquals(infoProductsInDisplayPayment.getName(), infoProductsInCart.getName(), "Tên sản phẩm không khớp.");
+        WebUI.verifyAssertEquals(infoProductsInDisplayPayment.getQuantity(), infoProductsInCart.getQuantity(), "Số lượng sản phẩm không khớp.");
+        WebUI.verifyAssertEquals(infoProductsInDisplayPayment.getPrice(), infoProductsInCart.getPrice(), "Giá sản phẩm không khớp.");
+        checkSubTotalPriceInDisplayPayment();
+        //Check totalPrice in display payment
 
         WebUI.setTextAndClear(inputAdditionalInfo, noteForOrder);
         WebUI.scrollToElement(buttonCompleteOrder);
@@ -154,52 +164,69 @@ public class OrderPage {
 
         //Check history order
     }
-    public Map<String,Integer> getProductAndQuantityInDisplayPayment() {
+
+    /**
+     * Check subtotal price in display payment
+     */
+    public static void checkSubTotalPriceInDisplayPayment() {
         By elementProductNames = By.xpath("//tbody//td[@class='product-name']");
+        By elementTotalProductPrices = By.xpath("//tbody//td[contains(@class,'product-total')]");
         By elementProductQuantities = By.xpath("//tbody//strong[@class='product-quantity']");
+
         List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNames);
-        if (productNames.size() == 0) {
-            return new HashMap<>();
-        }
-        List<String> valueProductNames = new ArrayList<>();
-        for (WebElement productName : productNames) {
 
-            valueProductNames.add(productName.getText());
+        List<WebElement> totalProductPrices = DriverManager.getDriver().findElements(elementTotalProductPrices);
+        List<BigDecimal> valueTotalProductPrices = new ArrayList<>();
+        for (WebElement totalProductPrice : totalProductPrices) {
+            valueTotalProductPrices.add(convertCurrencyToBigDecimal(totalProductPrice.getText()));
         }
-        List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantities);
-        List<String> valueProductQuantities = new ArrayList<>();
-        for (WebElement productQuantity : productQuantities) {
-            valueProductQuantities.add(productQuantity.getText().replaceAll("\\D", ""));
+        BigDecimal subTotalPrice = BigDecimal.ZERO;
+        for (int i = 0; i < valueTotalProductPrices.size(); i++) {
+               subTotalPrice = subTotalPrice.add(valueTotalProductPrices.get(i));
         }
+        BigDecimal valueSubTotalPrice = convertCurrencyToBigDecimal(WebUI.getElementText(subTotalPriceInDisplayPayment));
+        WebUI.verifyAssertEquals(subTotalPrice, valueSubTotalPrice, "Subtotal price không đúng");
 
-        Map<String,Integer> productAndQuantity = new HashMap<>();
-        for (int i = 0; i < valueProductNames.size(); i++) {
-            productAndQuantity.put(valueProductNames.get(i), Integer.parseInt(valueProductQuantities.get(i)));
-        }
-        return productAndQuantity;
     }
-    public static Map<String, Integer> getCart() {
-        By elementProductNames = By.xpath("//div[contains(text(),'Cart Items')]/following-sibling::ul/li//span[contains(@class,'text-truncate')]");
-        By elementProductQuantities = By.xpath("//div[contains(text(),'Cart Items')]/following-sibling::ul/li//span[contains(@class,'text-truncate')]/following-sibling::span[contains(text(),'x')]");
+
+    /**
+     * Get info products in display payment
+     * @return
+     */
+    public static Cart getInfoProductsInDisplayPayment() {
+        By elementProductNames = By.xpath("//tbody//td[@class='product-name']");
+        By elementTotalProductPrices = By.xpath("//tbody//td[contains(@class,'product-total')]");
+        By elementProductQuantities = By.xpath("//tbody//strong[@class='product-quantity']");
+
         List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNames);
         if (productNames.size() == 0) {
-            return new HashMap<>();
+            return new Cart();
         }
         List<String> valueProductNames = new ArrayList<>();
         for (WebElement productName : productNames) {
             valueProductNames.add(productName.getText());
         }
+
         List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantities);
-        List<String> valueProductQuantities = new ArrayList<>();
+        List<Integer> valueProductQuantities = new ArrayList<>();
         for (WebElement productQuantity : productQuantities) {
-            valueProductQuantities.add(productQuantity.getText().replaceAll("\\D", ""));
+            valueProductQuantities.add(Integer.parseInt(productQuantity.getText().replaceAll("\\D", "")));
         }
-        Map<String, Integer> cart = new HashMap<>();
+        List<WebElement> totalProductPrices = DriverManager.getDriver().findElements(elementTotalProductPrices);
+        List<BigDecimal> valueTotalProductPrices = new ArrayList<>();
+        for (WebElement totalProductPrice : totalProductPrices) {
+            valueTotalProductPrices.add(convertCurrencyToBigDecimal(totalProductPrice.getText()));
+        }
+        Cart cart = new Cart();
         for (int i = 0; i < valueProductNames.size(); i++) {
-            cart.put(valueProductNames.get(i), Integer.parseInt(valueProductQuantities.get(i)));
+            cart.setName(valueProductNames.get(i));
+            cart.setQuantity(valueProductQuantities.get(i));
+            cart.setPrice(valueTotalProductPrices.get(i).divide(BigDecimal.valueOf(valueProductQuantities.get(i))));
         }
         return cart;
     }
+
+
 
 
 }

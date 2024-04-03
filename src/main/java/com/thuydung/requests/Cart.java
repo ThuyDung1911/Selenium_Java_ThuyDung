@@ -1,25 +1,36 @@
 package com.thuydung.requests;
 
+import java.math.BigDecimal;
+
 public class Cart {
     private String name;
-    private String price;
-    private String quantity;
+    private BigDecimal price;
+    private int quantity;
 
-    public Cart(String name, String price, String quantity) {
+    public Cart() {
+    }
+    public Cart(String name, BigDecimal price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
-
     public String getName() {
         return name;
     }
-
-    public String getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
-
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
 }
