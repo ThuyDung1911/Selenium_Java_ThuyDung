@@ -58,18 +58,19 @@ public class CartPage extends CommonPage {
         //Lay số lượng sản phẩm ton kho
         int quantityAvailabel = Integer.parseInt(WebUI.getElementText(ProductInfoPage.quantityProductAvailable));
         WebUI.clickElement(OrderPage.buttonCart);
+        Cart currentCart = getCartDropdown();
         int quantityProductInCart;
         //Check so luong san pham da co trong gio hang
         if (WebUI.checkElementExist(viewProductNameInCart)) {
             WebUI.scrollToElementToBottom(By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::li[@class='list-group-item']"));
             WebUI.hoverElement(By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::li[@class='list-group-item']"));
             //quantityProductInCart = getCart().get(productName);
-            quantityProductInCart = getCartDropdown().getQuantity();
+            quantityProductInCart = getCartDropdown().getQuantityByName(productName);
+            //quantityProductInCart = getCartDropdown().getQuantity();
         } else {
             quantityProductInCart = 0;
         }
         //Map<String, Integer> currentCart = getCart();
-        Cart currentCart = getCartDropdown();
         //Nhập số lượng sản phẩm
         if (Integer.parseInt(quantity) + quantityProductInCart > quantityAvailabel) {
             System.out.println("Số lượng sản phẩm tồn kho không đủ. Không thể thêm sản phẩm vào giỏ hàng với số lượng: " + quantity);
@@ -96,20 +97,13 @@ public class CartPage extends CommonPage {
         WebUI.waitForJQueryLoad();
         WebUI.verifyAssertTrueIsDisplayed(viewProductNameInCart, "Sản phẩm KHÔNG có trong giỏ hàng");
         WebUI.scrollToElementToBottom(By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::li[@class='list-group-item']"));
-//        boolean checkProductNameExsist = false;
-//        for itemProductName : getCartDropdown().getName() {
-//
-//        }
+
+
         if (currentCart.getName() == productName) {
-            currentCart.setQuantity(currentCart.getQuantity() + Integer.parseInt(quantity));
+            currentCart.setQuantityByName(productName, currentCart.getQuantity() + Integer.parseInt(quantity));
         } else {
-            currentCart.setQuantity(Integer.parseInt(quantity));
+            currentCart.setQuantityByName(productName, Integer.parseInt(quantity));
         }
-//        if (currentCart.containsKey(productName)) {
-//            currentCart.put(productName, currentCart.get(productName) + Integer.parseInt(quantity));
-//        } else {
-//            currentCart.put(productName, Integer.parseInt(quantity));
-//        }
 //        Map<String, Integer> afterCart = getCart();
         Cart afterCartDropdown = getCartDropdown();
 //        WebUI.verifyAssertEquals(currentCart, afterCart, "Thông tin tên, số lượng sản phẩm trong giỏ hàng không đúng");
@@ -493,6 +487,7 @@ public class CartPage extends CommonPage {
         }
         return cartDetail;
     }
+
     public Cart getCartDetail1() {
         List<WebElement> productNames = DriverManager.getDriver().findElements(By.xpath("//section[@id='cart-summary']//li//span[@class='fs-14 opacity-60']"));
         if (productNames.size() == 0) {

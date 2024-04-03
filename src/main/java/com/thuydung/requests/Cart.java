@@ -32,5 +32,19 @@ public class Cart {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+    public int getQuantityByName(String itemName) {
+        if (itemName.equals(this.name)) {
+            return this.quantity;
+        } else {
+            return 0; // or throw an exception if the item with the given name is not found
+        }
+    }
+    public void setQuantityByName(String itemName, int newQuantity) {
+        if (itemName.equals(this.name)) {
+            this.quantity = newQuantity;
+        }
+    }
+
+
 
 }
