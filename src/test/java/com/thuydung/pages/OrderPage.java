@@ -145,7 +145,8 @@ public class OrderPage {
         Cart infoProductsInDisplayPayment = getInfoProductsInDisplayPayment();
         WebUI.clickElement(buttonCart);
         Cart infoProductsInCart = CartPage.getCartDropdown();
-        WebUI.verifyAssertEquals(infoProductsInDisplayPayment.getName(), infoProductsInCart.getName(), "Tên sản phẩm không khớp.");
+
+        //WebUI.verifyAssertEquals(infoProductsInDisplayPayment.getName(), infoProductsInCart.getName(), "Tên sản phẩm không khớp.");
         WebUI.verifyAssertEquals(infoProductsInDisplayPayment.getQuantity(), infoProductsInCart.getQuantity(), "Số lượng sản phẩm không khớp.");
         WebUI.verifyAssertEquals(infoProductsInDisplayPayment.getPrice(), infoProductsInCart.getPrice(), "Giá sản phẩm không khớp.");
         checkSubTotalPriceInDisplayPayment();

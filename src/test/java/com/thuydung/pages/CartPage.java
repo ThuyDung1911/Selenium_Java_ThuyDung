@@ -58,7 +58,6 @@ public class CartPage extends CommonPage {
         //Lay số lượng sản phẩm ton kho
         int quantityAvailabel = Integer.parseInt(WebUI.getElementText(ProductInfoPage.quantityProductAvailable));
         WebUI.clickElement(OrderPage.buttonCart);
-        Cart currentCart = getCartDropdown();
         int quantityProductInCart;
         //Check so luong san pham da co trong gio hang
         if (WebUI.checkElementExist(viewProductNameInCart)) {
@@ -71,16 +70,18 @@ public class CartPage extends CommonPage {
             quantityProductInCart = 0;
         }
         //Map<String, Integer> currentCart = getCart();
+        Cart currentCart = getCartDropdown();
         //Nhập số lượng sản phẩm
         if (Integer.parseInt(quantity) + quantityProductInCart > quantityAvailabel) {
             System.out.println("Số lượng sản phẩm tồn kho không đủ. Không thể thêm sản phẩm vào giỏ hàng với số lượng: " + quantity);
             return;
         }
         WebUI.setTextAndClear(inputQuantity, quantity);
+        WebUI.waitForJQueryLoad();
         //Lấy đơn giá bán sản phẩm ở trang chi tiết sản phẩm
         BigDecimal productPrice = getPriceInDetailProduct();
 
-        //Lấy tổng tiền sản phẩm trong trang chi tiết sản phẩm
+        //Check tổng tiền sản phẩm trong trang chi tiết sản phẩm
         checkTotalPriceInDetailProduct(productPrice, quantity);
 
         //Thêm sản phẩm vào giỏ hàng
@@ -97,18 +98,19 @@ public class CartPage extends CommonPage {
         WebUI.waitForJQueryLoad();
         WebUI.verifyAssertTrueIsDisplayed(viewProductNameInCart, "Sản phẩm KHÔNG có trong giỏ hàng");
         WebUI.scrollToElementToBottom(By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::li[@class='list-group-item']"));
+        WebUI.hoverElement(By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//span[contains(text(),'" + productName + "')]/ancestor::li[@class='list-group-item']"));
 
-
-        if (currentCart.getName() == productName) {
+        if (productName.equals(currentCart.getName())) {
             currentCart.setQuantityByName(productName, currentCart.getQuantity() + Integer.parseInt(quantity));
         } else {
-            currentCart.setQuantityByName(productName, Integer.parseInt(quantity));
+            currentCart = new Cart(productName, productPrice, Integer.parseInt(quantity));
+            //currentCart.setQuantityByName(productName, Integer.parseInt(quantity));
         }
 //        Map<String, Integer> afterCart = getCart();
         Cart afterCartDropdown = getCartDropdown();
 //        WebUI.verifyAssertEquals(currentCart, afterCart, "Thông tin tên, số lượng sản phẩm trong giỏ hàng không đúng");
         WebUI.verifyAssertEquals(currentCart.getName(), afterCartDropdown.getName(), "Thông tin tên sản phẩm trong giỏ hàng không đúng");
-        //WebUI.verifyAssertEquals(currentCart.getQuantity(), afterCartDropdown.getQuantity(), "Thông tin số lượng sản phẩm trong giỏ hàng không đúng");
+        WebUI.verifyAssertEquals(currentCart.getQuantity(), afterCartDropdown.getQuantity(), "Thông tin số lượng sản phẩm trong giỏ hàng không đúng");
         WebUI.verifyAssertEquals(currentCart.getPrice(), afterCartDropdown.getPrice(), "Thông tin đơn giá sản phẩm trong giỏ hàng không đúng");
         //WebUI.verifyAssertEquals(currentCart, afterCartDropdown, "Thông tin tên, số lượng, đơn giá sản phẩm trong giỏ hàng không đúng");
         //Lay đơn giá sản phẩm trong giỏ hàng
@@ -124,11 +126,10 @@ public class CartPage extends CommonPage {
         WebUI.clickElement(buttonViewCart);
         WebUI.waitForPageLoaded();
 //        Map<String, Integer> cartDetail = getCartDetail();
-        Cart cartDetail = getCartDetail1();
-
-        WebUI.verifyAssertEquals(cartDetail.getName(), afterCartDropdown.getName(), "Thông tin tên, số lượng, đơn giá sản phẩm trong giỏ hàng chi tiết không đúng");
-        WebUI.verifyAssertEquals(cartDetail.getQuantity(), afterCartDropdown.getQuantity(), "Thông tin tên, số lượng, đơn giá sản phẩm trong giỏ hàng chi tiết không đúng");
-        WebUI.verifyAssertEquals(cartDetail.getPrice(), afterCartDropdown.getPrice(), "Thông tin tên, số lượng, đơn giá sản phẩm trong giỏ hàng chi tiết không đúng");
+        Cart cartDetail = getCartDetail();
+        WebUI.verifyAssertEquals(cartDetail.getName(), afterCartDropdown.getName(), "Thông tin tên sản phẩm trong giỏ hàng chi tiết không đúng");
+        WebUI.verifyAssertEquals(cartDetail.getQuantity(), afterCartDropdown.getQuantity(), "Thông tin số lượng sản phẩm trong giỏ hàng chi tiết không đúng");
+        WebUI.verifyAssertEquals(cartDetail.getPrice(), afterCartDropdown.getPrice(), "Thông tin đơn giá sản phẩm trong giỏ hàng chi tiết không đúng");
 
         //Kiểm tra giá sản phẩm trong giỏ hàng chi tiết
         checkSubTotalPriceInCartDetail();
@@ -184,6 +185,7 @@ public class CartPage extends CommonPage {
         By resultSearchProduct = By.xpath("//div[@id='search-content']//div[contains(text(),'" + productName + "')]");
         By priceInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//span[text()='Price']/following-sibling::span");
         By viewQuantityInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//input[contains(@name,'quantity')]");
+        By viewProductNameInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]");
         //Tìm kiếm sản phẩm
         getDashboardPage().testSearchProductHaveResult(productName);
         //Kiem tra kết quả tìm kiếm có sản phẩm cần tìm không
@@ -203,6 +205,11 @@ public class CartPage extends CommonPage {
         WebUI.waitForJQueryLoad();
         WebUI.clickElement(buttonViewCart);
         WebUI.waitForPageLoaded();
+        Cart currentCart = getCartDetail();
+        if(!productName.equals(currentCart.getName())){
+            System.out.println("Không có sản phẩm trong giỏ hàng");
+            return;
+        }
         String currentQuantityInCart = WebUI.getElementText(viewQuantityInCart);
         //Nhập số lượng sản phẩm
         WebUI.setTextAndClear(viewQuantityInCart, quantity);
@@ -335,7 +342,7 @@ public class CartPage extends CommonPage {
         By elementProductPrices = By.xpath("//div[contains(text(),'Cart Items')]/following-sibling::ul/li//span[contains(@class,'text-truncate')]/following-sibling::span[contains(text(),'$')]");
 
         List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNames);
-        if (productNames.size() == 0) {
+        if (productNames.isEmpty()) {
             return new Cart();
         }
         List<String> valueProductNames = new ArrayList<>();
@@ -467,7 +474,7 @@ public class CartPage extends CommonPage {
 
     }
 
-    public Map<String, Integer> getCartDetail() {
+    public Map<String, Integer> getCartDetail2() {
         List<WebElement> productNames = DriverManager.getDriver().findElements(By.xpath("//section[@id='cart-summary']//li//span[@class='fs-14 opacity-60']"));
         if (productNames.size() == 0) {
             return new HashMap<>();
@@ -488,9 +495,9 @@ public class CartPage extends CommonPage {
         return cartDetail;
     }
 
-    public Cart getCartDetail1() {
+    public Cart getCartDetail() {
         List<WebElement> productNames = DriverManager.getDriver().findElements(By.xpath("//section[@id='cart-summary']//li//span[@class='fs-14 opacity-60']"));
-        if (productNames.size() == 0) {
+        if (productNames.isEmpty()) {
             return new Cart();
         }
         List<String> valueProductNames = new ArrayList<>();
@@ -500,7 +507,7 @@ public class CartPage extends CommonPage {
         List<WebElement> productQuantities = DriverManager.getDriver().findElements(By.xpath("//section[@id='cart-summary']//li//input[contains(@name,'quantity')]"));
         List<Integer> valueProductQuantities = new ArrayList<>();
         for (WebElement productQuantity : productQuantities) {
-            valueProductQuantities.add(Integer.parseInt(productQuantity.getText().replaceAll("\\D", "")));
+            valueProductQuantities.add(Integer.parseInt(productQuantity.getAttribute("value")));
         }
         List<WebElement> productPrices = DriverManager.getDriver().findElements(By.xpath("//section[@id='cart-summary']//li//span[text()='Price']/following-sibling::span"));
         List<BigDecimal> valueProductPrices = new ArrayList<>();
