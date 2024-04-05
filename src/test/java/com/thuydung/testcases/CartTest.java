@@ -80,8 +80,8 @@ public class CartTest extends BaseTest {
 
     @Test(priority = 2, description = "Kiem tra khi them san pham da ton tai trong gio hang vao gio hang")
     public void testAddProductsDuplicateToCartWithNoAccount() {
-        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P01"), "2");
         getCartPage().addProductToCart(PropertiesHelper.getValue("product_P02"), "3");
+        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P01"), "2");
         getCartPage().addProductToCart(PropertiesHelper.getValue("product_P02"), "4");
     }
 
