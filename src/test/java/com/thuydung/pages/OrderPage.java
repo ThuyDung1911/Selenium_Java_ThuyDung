@@ -6,12 +6,10 @@ import com.thuydung.keywords.WebUI;
 import com.thuydung.requests.Cart;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WindowType;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.thuydung.pages.CartPage.convertCurrencyToBigDecimal;
 
@@ -57,6 +55,23 @@ public class OrderPage {
     static By elementProductNamesInDisplayPayment = By.xpath("//tbody//td[@class='product-name']");
     static By elementTotalProductPricesInDisplayPayment = By.xpath("//tbody//td[contains(@class,'product-total')]");
     static By elementProductQuantitiesInDisplayPayment = By.xpath("//tbody//strong[@class='product-quantity']");
+    By elementProductNamesInDisplayConfirm = By.xpath("//h5[normalize-space()='Order Details']/following-sibling::div/table//td[2]/a");
+    By elementProductQuantitiesInDisplayConfirm = By.xpath("//h5[normalize-space()='Order Details']/following-sibling::div/table//td[4]");
+    By elementProductPricesInDisplayConfirm = By.xpath("//h5[normalize-space()='Order Details']/following-sibling::div/table//td[6]");
+    By elementSubTotalInDisplayConfirm = By.xpath("//table//th[text()='Subtotal']/following-sibling::td/span");
+    By elementPriceShippingInDisplayConfirm = By.xpath("//table//th[text()='Shipping']/following-sibling::td/span");
+    By elementPriceTaxInDisplayConfirm = By.xpath("//table//th[text()='Tax']/following-sibling::td/span");
+    By elementCouponDiscountInDisplayConfirm = By.xpath("//table//th[text()='Coupon Discount']/following-sibling::td/span");
+    By elementTotalInDisplayConfirm = By.xpath("//table//span[text()='Total']/ancestor::th/following-sibling::td//span");
+    By elementNameInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Name')]/following-sibling::td");
+    By elementEmailInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Email')]/following-sibling::td");
+    By elementOrderDateInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Order date')]/following-sibling::td");
+    By elementShippingAddressInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Shipping address')]/following-sibling::td");
+    By elementPaymentMethodInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Payment method')]/following-sibling::td");
+    By elementOrderStatusInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Order status')]/following-sibling::td");
+    By elementTotalOrderAmountInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Total order amount')]/following-sibling::td");
+    By elementShippingInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Shipping')]/following-sibling::td");
+
     public void order(String noteForOrder, String email, String password) {
         new LoginPage().loginSuccessWithCustomerAccount(email, password);
         WebUI.waitForPageLoaded();
@@ -134,10 +149,10 @@ public class OrderPage {
 
     public void checkOutOrder(String noteForOrder) {
         WebUI.clickElement(buttonCart);
-        Map<String,Cart> currentCart = CartPage.getCartDropdown();
+        Map<String, Cart> currentCart = CartPage.getCartDropdown();
         WebUI.openURL("https://cms.anhtester.com/checkout");
         WebUI.waitForPageLoaded();
-        if(currentCart.isEmpty()){
+        if (currentCart.isEmpty()) {
             WebUI.verifyAssertTrueIsDisplayed(messageOrder, "Không có sản phẩm trong giỏ hàng");
             WebUI.verifyAssertTrueEqual(messageOrder, "Your Cart is empty", "Thông báo không có sản phẩm trong giỏ hàng không đúng");
             return;
@@ -152,6 +167,7 @@ public class OrderPage {
         WebUI.waitForJQueryLoad();
         List<String> productNamesInCart = CartPage.getProductsNameInCart();
         WebUI.verifyAssertEquals(productNamesInDisplayDeliveryInfo, productNamesInCart, "Danh sách sản phẩm không khớp với giỏ hàng.");
+
         WebUI.clickElement(buttonContinueToPayment);
         WebUI.waitForPageLoaded();
         //Check info order in display payment
@@ -181,35 +197,200 @@ public class OrderPage {
 
         checkSubTotalPriceInDisplayPayment();
         //Check totalPrice in display payment
-        BigDecimal valueSubTotalPriceInDisplayPayment = convertCurrencyToBigDecimal(WebUI.getElementText(subTotalPriceInDisplayPayment));
-        BigDecimal valuePriceTaxInDisplayPayment = convertCurrencyToBigDecimal(WebUI.getElementText(priceTaxInDisplayPayment));
-        BigDecimal valuePriceTotalShippingInDisplayPayment = convertCurrencyToBigDecimal(WebUI.getElementText(priceTotalShippingInDisplayPayment));
-        BigDecimal valuePriceTotalInDisplayPayment = convertCurrencyToBigDecimal(WebUI.getElementText(priceTotalInDisplayPayment));
-        BigDecimal valuePriceTotal = valueSubTotalPriceInDisplayPayment.add(valuePriceTaxInDisplayPayment).add(valuePriceTotalShippingInDisplayPayment);
-        WebUI.verifyAssertEquals(valuePriceTotalInDisplayPayment, valuePriceTotal, "Tổng giá tiền không khớp.");
+        checkTotalPriceInDisplayPayment();
 
         WebUI.setTextAndClear(inputAdditionalInfo, noteForOrder);
         WebUI.scrollToElement(buttonCompleteOrder);
         WebUI.clickElement(checkboxAgreeTermAndConditions);
         WebUI.clickElement(buttonCompleteOrder);
         WebUI.waitForPageLoaded();
+        //Check order success
         WebUI.verifyAssertTrueIsDisplayed(messageOrder, "Đơn hàng thất bại");
         WebUI.verifyAssertTrueEqual(messageOrder, "Your order has been placed successfully", "Thông báo đơn hàng thành công không đúng");
         WebUI.verifyAssertTrueIsDisplayed(messageOrderSuccess, "Đơn hàng thất bại");
         //Check order Summary in display confirmation order
+        checkOrderSummary();
         //Check order Detail  in display confirmation order
+        Map<String, Cart> infoProductsInDisplayConfirm = getInfoOrderDetailInDisplayConfirm();
+        for (int i = 0; i < infoProductsInDisplayConfirm.size(); i++) {
+            WebUI.verifyAssertEquals(infoProductsInDisplayConfirm.get(valueProductNames.get(i)).getName(), infoProductsInCart.get(valueProductNames.get(i)).getName(), "Tên sản phẩm không khớp.");
+            WebUI.verifyAssertEquals(infoProductsInDisplayConfirm.get(valueProductNames.get(i)).getQuantity(), infoProductsInCart.get(valueProductNames.get(i)).getQuantity(), "Số lượng sản phẩm không khớp.");
+            WebUI.verifyAssertEquals(infoProductsInDisplayConfirm.get(valueProductNames.get(i)).getPrice(), infoProductsInCart.get(valueProductNames.get(i)).getPrice(), "Giá sản phẩm không khớp.");
+        }
+        checkSubTotalPriceInDisplayConfirm(); //check cả subtotal, total, history order
+        //checkTotalPriceInDisplayConfirm();
 
         //Check history order
+//        By elementOrderCodeInDisplayConfirm = By.xpath("//h2[contains(text(),'Order Code')]/span");
+//        String orderCode = WebUI.getElementText(elementOrderCodeInDisplayConfirm);
+//        checkHistoryOrder(orderCode);
+
+
+    }
+
+    public void checkHistoryOrder(String orderCode) {
+        String orderDateInOrderSummary = WebUI.getElementText(elementOrderDateInOrderSummary);
+        String orderDateInOrderSummaryFormat = orderDateInOrderSummary.split(" ")[0];
+        String orderStatusInOrderSummary = WebUI.getElementText(elementOrderStatusInOrderSummary) + " *";
+        By elementTotalOrderInOrderDetail = By.xpath("//span[text()='" + orderCode + "']/ancestor::div[@class='card-body']//table//span[text()='Total']/ancestor::th/following-sibling::td//span");
+        String totalOrderInOrderDetail = WebUI.getElementText(elementTotalOrderInOrderDetail);
+        String mainWindow = DriverManager.getDriver().getWindowHandle();
+        DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
+        WebUI.openURL("https://cms.anhtester.com/purchase_history");
+        WebUI.waitForPageLoaded();
+        By elementOrderCodeInHistoryOrder = By.xpath("//a[normalize-space()='" + orderCode + "']");
+        By elementOrderDateInHistoryOrder = By.xpath("//a[normalize-space()='" + orderCode + "']/ancestor::tr/td[2]");
+        By elementTotalOrderAmountInHistoryOrder = By.xpath("//a[normalize-space()='" + orderCode + "']/ancestor::tr/td[3]");
+        By elementOrderStatusInHistoryOrder = By.xpath("//a[normalize-space()='" + orderCode + "']/ancestor::tr/td[4]");
+        WebUI.verifyAssertTrueIsDisplayed(elementOrderCodeInHistoryOrder, "Không xuất hiện đơn hàng vừa tạo trong lịch sử đơn hàng.");
+        WebUI.verifyAssertTrueEqual(elementOrderDateInHistoryOrder, orderDateInOrderSummaryFormat, "Ngày tạo đơn hàng không khớp.");
+
+        WebUI.verifyAssertTrueEqual(elementTotalOrderAmountInHistoryOrder, totalOrderInOrderDetail, "Tổng giá trị đơn hàng không khớp.");
+//        System.out.println(WebUI.getElementText(elementOrderStatusInHistoryOrder));
+        WebUI.verifyAssertTrueEqual(elementOrderStatusInHistoryOrder, orderStatusInOrderSummary, "Trạng thái đơn hàng không khớp.");
+
+
+        //Check order detail in history order
+        WebUI.clickElement(elementOrderCodeInHistoryOrder);
+
+
+
+        DriverManager.getDriver().switchTo().window(mainWindow);
+
+    }
+
+    public void checkOrderDetail(String orderCode) {
+
+    }
+
+    public void checkOrderSummary() {
+        String mainWindow = DriverManager.getDriver().getWindowHandle();
+        DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
+        WebUI.openURL("https://cms.anhtester.com/profile");
+        WebUI.waitForPageLoaded();
+        String nameInCustomerProfile = WebUI.getElementAttribute(ProfilePage.inputName, "value");
+        String emailInCustomerProfile = WebUI.getElementAttribute(ProfilePage.inputEmail, "value");
+
+        DriverManager.getDriver().close();
+
+        DriverManager.getDriver().switchTo().window(mainWindow);
+        WebUI.verifyAssertTrueEqual(elementNameInOrderSummary, nameInCustomerProfile, "Tên khách hàng không khớp");
+        WebUI.verifyAssertTrueEqual(elementEmailInOrderSummary, emailInCustomerProfile, "Email khách hàng không khớp");
+
+
+    }
+
+    public Map<String, Cart> getInfoOrderDetailInDisplayConfirm() {
+        List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInDisplayConfirm);
+        List<String> valueProductNames = new ArrayList<>();
+        for (WebElement productName : productNames) {
+            valueProductNames.add(productName.getText());
+        }
+        List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantitiesInDisplayConfirm);
+        List<Integer> valueProductQuantities = new ArrayList<>();
+        for (WebElement productQuantity : productQuantities) {
+            valueProductQuantities.add(Integer.parseInt(productQuantity.getText()));
+        }
+        List<WebElement> productPrices = DriverManager.getDriver().findElements(elementProductPricesInDisplayConfirm);
+        List<BigDecimal> valueProductPrices = new ArrayList<>();
+        for (WebElement productPrice : productPrices) {
+            valueProductPrices.add(convertCurrencyToBigDecimal(productPrice.getText()));
+        }
+        //check product name, quantity, price
+        Map<String, Cart> infoProductsInDisplayConfirm = new HashMap<>();
+        for (int i = 0; i < valueProductNames.size(); i++) {
+            Cart cart = new Cart();
+            cart.setName(valueProductNames.get(i));
+            cart.setQuantity(valueProductQuantities.get(i));
+            cart.setPrice(valueProductPrices.get(i).divide(BigDecimal.valueOf(valueProductQuantities.get(i))));
+            infoProductsInDisplayConfirm.put(valueProductNames.get(i), cart);
+        }
+        return infoProductsInDisplayConfirm;
+    }
+
+    public void checkSubTotalPriceInDisplayConfirm() {
+        By elementOrderDetailInDisplayConfirm = By.xpath("//div[@class='card-body']");
+        List<WebElement> orders = DriverManager.getDriver().findElements(elementOrderDetailInDisplayConfirm);
+        //Map<String, Cart> infoProductsInDisplayConfirm = getInfoOrderDetailInDisplayConfirm();
+        BigDecimal totalOrderAmount = BigDecimal.ZERO;
+        for (int i = 1; i <= orders.size(); i++) {
+            BigDecimal totalOrder = BigDecimal.ZERO;
+            By elementOrderCodeInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/span");
+            String orderCode = WebUI.getElementText(elementOrderCodeInOrderDetail);
+            By elementProductNamesInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/ancestor::div[@class='card-body']//h5[normalize-space()='Order Details']/following-sibling::div/table//td[2]/a");
+            By elementSubTotalInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/ancestor::div[@class='card-body']//table//th[text()='Subtotal']/following-sibling::td/span");
+            By elementTaxInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/ancestor::div[@class='card-body']//table//th[text()='Tax']/following-sibling::td/span");
+            By elementShippingInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/ancestor::div[@class='card-body']//table//th[text()='Shipping']/following-sibling::td/span");
+            By elementCouponDiscountInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/ancestor::div[@class='card-body']//table//th[text()='Coupon Discount']/following-sibling::td/span");
+            By elementTotalInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/ancestor::div[@class='card-body']//table//span[text()='Total']/ancestor::th/following-sibling::td//span");
+            By elementProductPricesInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/ancestor::div[@class='card-body']//h5[normalize-space()='Order Details']/following-sibling::div/table//td[6]");
+//            By elementProductQuantitiesInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/ancestor::div[@class='card-body']//h5[normalize-space()='Order Details']/following-sibling::div/table//td[4]");
+//            List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantitiesInOrderDetail);
+//            List<Integer> valueProductQuantities = new ArrayList<>();
+//            for (WebElement productQuantity : productQuantities) {
+//                valueProductQuantities.add(Integer.parseInt(productQuantity.getText()));
+//            }
+
+            List<WebElement> productPrices = DriverManager.getDriver().findElements(elementProductPricesInOrderDetail);
+            List<BigDecimal> valueProductPrices = new ArrayList<>();
+            for (WebElement productPrice : productPrices) {
+                valueProductPrices.add(convertCurrencyToBigDecimal(productPrice.getText()));
+            }
+
+            List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInOrderDetail);
+            List<String> valueProductNames = new ArrayList<>();
+            for (WebElement productName : productNames) {
+                valueProductNames.add(productName.getText());
+            }
+            BigDecimal valueSubTotalInDisplayConfirm = convertCurrencyToBigDecimal(WebUI.getElementText(elementSubTotalInOrderDetail));
+
+            BigDecimal valueSubTotal = BigDecimal.ZERO;
+            for (int j = 0; j < valueProductNames.size(); j++) {
+                valueSubTotal = valueSubTotal.add(valueProductPrices.get(j));
+            }
+
+//            for (int j = 0; j < infoProductsInDisplayConfirm.size(); j++) {
+//                valueSubTotal = valueSubTotal.add(infoProductsInDisplayConfirm.get(valueProductNames.get(j)).getPrice().multiply(BigDecimal.valueOf(infoProductsInDisplayConfirm.get(valueProductNames.get(j)).getQuantity())));
+//            }
+
+            WebUI.verifyAssertEquals(valueSubTotalInDisplayConfirm, valueSubTotal, "Subtotal của order code: " + orderCode + " không đúng tại màn confirm đơn hàng.");
+            BigDecimal valueTaxInOrderDetail = convertCurrencyToBigDecimal(WebUI.getElementText(elementTaxInOrderDetail));
+            BigDecimal valueShippingInOrderDetail = convertCurrencyToBigDecimal(WebUI.getElementText(elementShippingInOrderDetail));
+            BigDecimal valueCouponDiscountInOrderDetail = convertCurrencyToBigDecimal(WebUI.getElementText(elementCouponDiscountInOrderDetail));
+            BigDecimal valueTotalInOrderDetail = convertCurrencyToBigDecimal(WebUI.getElementText(elementTotalInOrderDetail));
+            totalOrder = totalOrder.add(valueSubTotal).add(valueTaxInOrderDetail).add(valueShippingInOrderDetail).subtract(valueCouponDiscountInOrderDetail);
+            WebUI.verifyAssertEquals(valueTotalInOrderDetail, totalOrder, "Tổng giá tiền của order code: " + orderCode + " không đúng tại màn confirm đơn hàng.");
+            totalOrderAmount = totalOrderAmount.add(totalOrder);
+            //check history order
+            checkHistoryOrder(orderCode);
+        }
+        //check total order amount
+        WebUI.verifyAssertEquals(convertCurrencyToBigDecimal(WebUI.getElementText(elementTotalOrderAmountInOrderSummary)), totalOrderAmount, "Tổng giá tiền không đúng tại màn confirm đơn hàng.");
+    }
+
+    public void checkTotalPriceInDisplayConfirm() {
+        BigDecimal valueSubTotalInDisplayConfirm = convertCurrencyToBigDecimal(WebUI.getElementText(elementSubTotalInDisplayConfirm));
+        BigDecimal valuePriceShippingInDisplayConfirm = convertCurrencyToBigDecimal(WebUI.getElementText(elementPriceShippingInDisplayConfirm));
+        BigDecimal valuePriceTaxInDisplayConfirm = convertCurrencyToBigDecimal(WebUI.getElementText(elementPriceTaxInDisplayConfirm));
+        BigDecimal valueCouponDiscountInDisplayConfirm = convertCurrencyToBigDecimal(WebUI.getElementText(elementCouponDiscountInDisplayConfirm));
+        BigDecimal valueTotalInDisplayConfirm = convertCurrencyToBigDecimal(WebUI.getElementText(elementTotalInDisplayConfirm));
+        BigDecimal valueTotal = valueSubTotalInDisplayConfirm.add(valuePriceShippingInDisplayConfirm).add(valuePriceTaxInDisplayConfirm).subtract(valueCouponDiscountInDisplayConfirm);
+        WebUI.verifyAssertEquals(valueTotalInDisplayConfirm, valueTotal, "Tổng giá tiền không đúng tại màn confirm đơn hàng.");
+    }
+
+    public void checkTotalPriceInDisplayPayment() {
+        BigDecimal valueSubTotalPriceInDisplayPayment = convertCurrencyToBigDecimal(WebUI.getElementText(subTotalPriceInDisplayPayment));
+        BigDecimal valuePriceTaxInDisplayPayment = convertCurrencyToBigDecimal(WebUI.getElementText(priceTaxInDisplayPayment));
+        BigDecimal valuePriceTotalShippingInDisplayPayment = convertCurrencyToBigDecimal(WebUI.getElementText(priceTotalShippingInDisplayPayment));
+        BigDecimal valuePriceTotalInDisplayPayment = convertCurrencyToBigDecimal(WebUI.getElementText(priceTotalInDisplayPayment));
+        BigDecimal valuePriceTotal = valueSubTotalPriceInDisplayPayment.add(valuePriceTaxInDisplayPayment).add(valuePriceTotalShippingInDisplayPayment);
+        WebUI.verifyAssertEquals(valuePriceTotalInDisplayPayment, valuePriceTotal, "Tổng giá tiền ở trang thanh toán không khớp.");
     }
 
     /**
      * Check subtotal price in display payment
      */
     public static void checkSubTotalPriceInDisplayPayment() {
-
-
-        List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInDisplayPayment);
-
         List<WebElement> totalProductPrices = DriverManager.getDriver().findElements(elementTotalProductPricesInDisplayPayment);
         List<BigDecimal> valueTotalProductPrices = new ArrayList<>();
         for (WebElement totalProductPrice : totalProductPrices) {
@@ -219,6 +400,20 @@ public class OrderPage {
         for (int i = 0; i < valueTotalProductPrices.size(); i++) {
             subTotalPrice = subTotalPrice.add(valueTotalProductPrices.get(i));
         }
+//        Map<String, Cart> infoProductsInDisplayPayment = getInfoProductsInDisplayPayment();
+//        List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInDisplayPayment);
+//        if (productNames.size() == 0) {
+//            return;
+//        }
+//        List<String> valueProductNames = new ArrayList<>();
+//        for (WebElement productName : productNames) {
+//            valueProductNames.add(productName.getText());
+//        }
+//
+//        BigDecimal subTotalPrice = BigDecimal.ZERO;
+//        for (int i = 0; i < infoProductsInDisplayPayment.size(); i++) {
+//            subTotalPrice = subTotalPrice.add(infoProductsInDisplayPayment.get(valueProductNames.get(i)).getPrice().multiply(BigDecimal.valueOf(infoProductsInDisplayPayment.get(valueProductNames.get(i)).getQuantity())));
+//        }
         BigDecimal valueSubTotalPrice = convertCurrencyToBigDecimal(WebUI.getElementText(subTotalPriceInDisplayPayment));
         WebUI.verifyAssertEquals(subTotalPrice, valueSubTotalPrice, "Subtotal price không đúng");
 
@@ -230,24 +425,21 @@ public class OrderPage {
      * @return
      */
     public static Map<String, Cart> getInfoProductsInDisplayPayment() {
-        By elementProductNames = By.xpath("//tbody//td[@class='product-name']");
-        By elementTotalProductPrices = By.xpath("//tbody//td[contains(@class,'product-total')]");
-        By elementProductQuantities = By.xpath("//tbody//strong[@class='product-quantity']");
-
-        List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInDisplayPayment);
-        if (productNames.size() == 0) {
+        List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantitiesInDisplayPayment);
+        if (productQuantities.size() == 0) {
             return new HashMap<>();
         }
+        List<Integer> valueProductQuantities = new ArrayList<>();
+        for (WebElement productQuantity : productQuantities) {
+            valueProductQuantities.add(Integer.parseInt(productQuantity.getText().replaceAll("\\D", "")));
+        }
+
+        List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInDisplayPayment);
         List<String> valueProductNames = new ArrayList<>();
         for (WebElement productName : productNames) {
             valueProductNames.add(productName.getText());
         }
 
-        List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantitiesInDisplayPayment);
-        List<Integer> valueProductQuantities = new ArrayList<>();
-        for (WebElement productQuantity : productQuantities) {
-            valueProductQuantities.add(Integer.parseInt(productQuantity.getText().replaceAll("\\D", "")));
-        }
         List<WebElement> totalProductPrices = DriverManager.getDriver().findElements(elementTotalProductPricesInDisplayPayment);
         List<BigDecimal> valueTotalProductPrices = new ArrayList<>();
         for (WebElement totalProductPrice : totalProductPrices) {

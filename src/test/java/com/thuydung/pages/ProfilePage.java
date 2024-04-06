@@ -1,6 +1,5 @@
 package com.thuydung.pages;
 
-import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.ExcelHelper;
 import com.thuydung.keywords.WebUI;
 import org.openqa.selenium.By;
@@ -8,8 +7,8 @@ import org.openqa.selenium.Keys;
 
 public class ProfilePage extends CommonPage{
     private By menuManageProfile = By.xpath("(//span[normalize-space()='Manage Profile'])[1]/ancestor::li");
-    private By titleManageProfile = By.xpath("//h1[normalize-space()='Manage Profile']");
-    private By inputName = By.xpath("//input[@placeholder='Your name']");
+    public By titleManageProfile = By.xpath("//h1[normalize-space()='Manage Profile']");
+    public static By inputName = By.xpath("//input[@placeholder='Your name']");
     private By inputPhone = By.xpath("//input[@placeholder='Your Phone']");
     private By selectAvatar = By.xpath("//div[@class='form-control file-amount']");
     private By inputPassword = By.xpath("//input[@placeholder='New Password']");
@@ -17,7 +16,7 @@ public class ProfilePage extends CommonPage{
     private By buttonUpdateProfile = By.xpath("//button[normalize-space()='Update Profile']");
     private By messageNotPermitted = By.xpath("//span[@data-notify='message' and normalize-space() = 'Sorry! the action is not permitted in demo']");
     private By titleChangeEmail = By.xpath("//h5[normalize-space()='Change your email']");
-    private By inputEmail = By.xpath("//input[@placeholder='Your Email']");
+    public static By inputEmail = By.xpath("//input[@placeholder='Your Email']");
     private By buttonVerifyEmail = By.xpath("//button[@class='btn btn-outline-secondary new-email-verification']");
     private By buttonUpdateEmail = By.xpath("//button[normalize-space()='Update Email']");
     private By messageUpdate = By.xpath("//span[@data-notify='message']");

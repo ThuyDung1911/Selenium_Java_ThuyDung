@@ -21,6 +21,8 @@ public class OrderTest extends BaseTest {
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
+        getCartPage().addProductToCart("Cosy Thuy Dung GBNXJUZQ", "2");
+//        getCartPage().addProductToCart("Tiramisu", "1");
         getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
     }
     // Checkout order without product
@@ -30,5 +32,9 @@ public class OrderTest extends BaseTest {
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
+    }
+    @Test(priority = 4)
+    public void checkOrderSummary() {
+        getOrderPage().checkOrderSummary();
     }
 }

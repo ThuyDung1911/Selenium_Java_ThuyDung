@@ -78,10 +78,9 @@ public class CartPage extends CommonPage {
             return;
         }
         WebUI.setTextAndClear(inputQuantity, quantity);
-        WebUI.waitForJQueryLoad();
         //Lấy đơn giá bán sản phẩm ở trang chi tiết sản phẩm
         BigDecimal productPrice = getPriceInDetailProduct();
-
+        WebUI.waitForJQueryLoad();
         //Check tổng tiền sản phẩm trong trang chi tiết sản phẩm
         checkTotalPriceInDetailProduct(productPrice, quantity);
 

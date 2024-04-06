@@ -16,8 +16,9 @@ import java.util.Random;
 
 public class AddProductPage extends CommonPage {
     private String nameProductVerify;
-    private By menuProduct = By.xpath("//span[normalize-space()='Products']");
+    private By menuProduct = By.xpath("//*[@id='main-menu']/li[2]/a/span[1]");
     private By submenuAddProduct = By.xpath("(//span[normalize-space()='Add New Product'])[1]");
+    By submenuProducts = By.xpath("//*[@id=\"main-menu\"]/li[2]/ul/li[1]/a/span");
     private By titleAddNewProduct = By.xpath("//h5[normalize-space()='Add New Product']");
     private By blockProductInf = By.xpath("//h5[normalize-space()='Product Information']");
     private By inputProductName = By.xpath("//input[@placeholder='Product Name']");
@@ -62,7 +63,7 @@ public class AddProductPage extends CommonPage {
     public static By discountPriceProduct = By.xpath("//div[text()='Discount Price:']/parent::div[contains(@class,'col')]/following-sibling::div");
     public static By unitPriceProduct = By.xpath("//div[text()='Price:']/parent::div[contains(@class,'col')]/following-sibling::div");
 
-    public void addProduct(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
+    public void addProductWithRoleAdmin(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
         productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         WebUI.clickElement(menuProduct);
@@ -126,24 +127,100 @@ public class AddProductPage extends CommonPage {
 //        nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
     }
 
+    public void addProductWithRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
+        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        PropertiesHelper.setValue("product_P01", productName);
+        WebUI.clickElement(menuProduct);
+        WebUI.waitForPageLoaded();
+        WebUI.clickElement(submenuProducts);
+        WebUI.waitForPageLoaded();
+        WebUI.clickElement(By.xpath("//div[normalize-space()='Add New Product']/ancestor::a/parent::div"));
+        WebUI.waitForPageLoaded();
+        WebUI.verifyElementVisible(titleAddNewProduct, "Tieu de Add New Product KHONG xuat hien");
+        //Product Information
+        WebUI.verifyElementVisible(blockProductInf, "Product Information block KHONG xuat hien");
+        WebUI.setTextAndClear(inputProductName, productName);
+        WebUI.clickElement(selectCategory);
+        WebUI.setTextEnter(inputSearchCategory, category);
+        WebUI.clickElement(selectBrand);
+        WebUI.setTextEnter(inputSearchBrand, "CMS brand 01");
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
+        WebUI.setTextAndClear(inputUnit, unit);
+        WebUI.setTextAndClear(inputWeight, String.valueOf(weight));
+        WebUI.setTextAndClear(inputTags, tags);
+        //Product Images
+        WebUI.verifyAssertTrueIsDisplayed(blockProductImages, "Product Images block KHONG xuat hien");
+        WebUI.clickElement(selectChooseGalleryImages);
+        WebUI.clickElement(uploadNewImageTab);
+        DriverManager.getDriver().findElement(inputGalleryImages).sendKeys(SystemHelper.getCurrentDir() + "DataTest\\" + imgName);
+        WebUI.clickElement(selectFileTab);
+        LogUtils.info(imgName);
+        LogUtils.info(SystemHelper.splitString(imgName, "[.]"));
+        String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
+        WebUI.setTextEnter(inputSearchImg, imageName);
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
+        WebUI.clickElement(selectGalleryImages);
+        WebUI.clickElement(buttonAddFileImages);
+        WebUI.clickElement(selectChooseThumbnailImages);
+        WebUI.setTextEnter(inputSearchImg, imageName);
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
+        WebUI.clickElement(selectThumbnailImages);
+        WebUI.clickElement(buttonAddFileImages);
+        //Product price + stock
+        WebUI.verifyAssertTrueIsDisplayed(blockProductPrice, "Product price block KHONG xuat hien");
+        WebUI.setTextAndClear(inputUnitPrice, String.valueOf(unitPrice));
+        WebUI.setTextAndClear(selectDate, discountDate);
+        WebUI.clickElement(buttonSelectDiscountDate);
+        WebUI.setTextAndClear(inputDiscount, String.valueOf(discount));
+        WebUI.clickElement(selectUnitDiscount);
+        WebUI.clickElement(selectUnitDiscountPercent);
+        WebUI.setTextAndClear(inputQuantity, String.valueOf(quantity));
+        WebUI.setTextAndClear(inputSKU, String.valueOf(randomNumber));
+        //Product Description
+        WebUI.verifyAssertTrueIsDisplayed(blockProductDescription, "Product description KHONG xuat hien");
+        WebUI.setTextAndClear(inputDescription, description);
+        WebUI.clickElement(By.xpath("//button[text()='Upload Product']")); //Click button Save&Public
+
+//        WebUI.clickElement(menuAllProducts);
+//        WebUI.waitForPageLoaded();
+//        WebUI.setTextAndClear(inputSearchProduct, productName, Keys.ENTER);
+//        WebUI.waitForJQueryLoad();
+//        WebUI.sleep(2);
+//        WebUI.waitForElementVisible(newProduct);
+//        nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
+    }
+
     public void addProductValid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
-        addProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
+        addProductWithRoleAdmin(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
         verifyNewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount);
     }
+    public void addProductValidRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
+        addProductWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
+        WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
+        WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
+        nameProductVerify = DriverManager.getDriver().findElement(By.xpath("(//tr/td[2]/a)[1]")).getText();
+        verifyNewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount);
+    }
 
     public void addProductInvalid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
-        addProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
+        addProductWithRoleAdmin(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
         WebUI.checkHTML5MessageWithValueInvalid(inputUnit, "Unit la truong bat buoc");
         WebUI.verifyAssertTrueEqualMessageHTML(inputUnit, "Please fill out this field.", "Messge Unit hien thi khong dung");
-        //WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
-        //verifyNewProduct(category, unit, Double.valueOf(unitPrice), description);
+    }
+    public void addProductInvalidRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
+        addProductWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
+        WebUI.checkHTML5MessageWithValueInvalid(inputUnit, "Unit la truong bat buoc");
+        WebUI.verifyAssertTrueEqualMessageHTML(inputUnit, "Please fill out this field.", "Messge Unit hien thi khong dung");
     }
 
     public void addProductValidWithDiscount(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
-        addProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
+        addProductWithRoleAdmin(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
