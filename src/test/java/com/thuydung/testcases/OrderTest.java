@@ -138,7 +138,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().openPaymentInfoFromURL();
     }
     @Test(priority = 16, description = "Kiem tra thong tin don hang tai trang Payment so voi gio hang")
-    public void testCheckSummaryInPaymentInfo() {
+    public void testInfoOrderInPaymentInfo() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -216,6 +216,30 @@ public class OrderTest extends BaseTest {
         LoginPage loginPage = new LoginPage();
         loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
         getOrderPage().testClickInPrivacyPolicy();
+    }
+    @Test(priority = 26, description = "Kiem tra khi truy cap trang Confirm Order tu URL")
+    public void testOpenConfirmOrderFromURL() {
+        excelLogin = new ExcelHelper();
+        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
+        getOrderPage().testOpenConfirmOrderFromURL();
+    }
+    @Test(priority = 27, description = "kiem tra khi truy cap trang Confirm Order tu trang Shipping Info")
+    public void testOpenConfirmOrderFromShippingInfo() {
+        excelLogin = new ExcelHelper();
+        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        //getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
+        getOrderPage().testOpenConfirmOrderFromShippingInfo();
+    }
+    @Test(priority = 28, description = "Kiem tra khi dat don hang thanh cong")
+    public void testAddOrderSuccess() {
+        excelLogin = new ExcelHelper();
+        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
+        getOrderPage().testAddOrderSuccess();
     }
 
 
