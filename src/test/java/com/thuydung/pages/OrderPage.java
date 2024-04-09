@@ -45,7 +45,8 @@ public class OrderPage {
     private By buttonContinueToDeliveryInfo = By.xpath("//button[normalize-space()='Continue to Delivery Info']");
     private By buttonContinueToPayment = By.xpath("//button[normalize-space()='Continue to Payment']");
     private By inputAdditionalInfo = By.xpath("//textarea[@placeholder='Type your text']");
-    private By checkboxAgreeTermAndConditions = By.xpath("//span[@class='aiz-square-check']");
+    private By checkAgreeTermAndConditions = By.xpath("//span[@class='aiz-square-check']");
+    private By checkboxAgreeTermAndConditions = By.xpath("//input[@id='agree_checkbox']");
     private By buttonCompleteOrder = By.xpath("//button[normalize-space()='Complete Order']");
     private By messageOrderSuccess = By.xpath("//h1[normalize-space()='Thank You for Your Order!']");
     public By messageNoti = By.xpath("//span[@data-notify='message']");
@@ -483,6 +484,9 @@ public class OrderPage {
         return valuePriceTotal;
     }
     public void applyCouponDiscount(String couponCode) {
+        if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/checkout/payment_select")) {
+            openPaymentInfoFromShippingInfoDisplay();
+        }
         By inputCouponDiscount = By.xpath("//input[@name='code']");
         By buttonApplyCoupon = By.xpath("//button[@id='coupon-apply']");
         WebUI.setTextAndClear(inputCouponDiscount, couponCode);
@@ -498,7 +502,7 @@ public class OrderPage {
     public void testApplyCouponDiscountInvalid(String couponCode) {
         applyCouponDiscount(couponCode);
         WebUI.verifyAssertTrueIsDisplayed(messageNoti, "Khong xuat hien thong bao");
-        WebUI.verifyAssertTrueEqual(messageNoti, "Coupon code is invalid", "Thong bao khong chinh xac");
+        WebUI.verifyAssertTrueEqual(messageNoti, "Invalid coupon!", "Thong bao khong chinh xac");
     }
     public void testTotalPriceInPaymentInfoWithNoDiscountCoupon() {
         openPaymentInfoFromShippingInfoDisplay();
@@ -517,8 +521,7 @@ public class OrderPage {
     public void selectAgreeTerms() {
         openPaymentInfoFromShippingInfoDisplay();
         WebUI.scrollToElement(buttonCompleteOrder);
-        WebUI.waitForElementClickable(checkboxAgreeTermAndConditions);
-        WebUI.clickElement(checkboxAgreeTermAndConditions);
+        WebUI.clickElement(checkAgreeTermAndConditions);
         }
     public void testSelectAgreeTerms() {
         selectAgreeTerms();
@@ -528,16 +531,18 @@ public class OrderPage {
     }
     public void testNotSelectAgreeTerms() {
         openPaymentInfoFromShippingInfoDisplay();
-        WebUI.scrollToElement(checkboxAgreeTermAndConditions);
+        WebUI.scrollToElement(checkAgreeTermAndConditions);
         WebUI.clickElement(buttonCompleteOrder);
         WebUI.verifyAssertTrueIsDisplayed(messageNoti, "Khong xuat hien thong bao");
         WebUI.verifyAssertTrueEqual(messageNoti, "You need to agree with our policies", "Thong bao khong chinh xac");
     }
     public void choosePaymentMethodCashOnDelivery() {
-        //openPaymentInfoFromShippingInfoDisplay();
+        if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/checkout/payment_select")) {
+            openPaymentInfoFromShippingInfoDisplay();
+        }
         if (!DriverManager.getDriver().findElement(checkboxAgreeTermAndConditions).isSelected()) {
-            WebUI.scrollToElement(checkboxAgreeTermAndConditions);
-            WebUI.clickElement(checkboxAgreeTermAndConditions);
+            WebUI.scrollToElement(checkAgreeTermAndConditions);
+            WebUI.clickElement(checkAgreeTermAndConditions);
         }
         By buttonCashOnDelivery = By.xpath("//span[contains(text(),'Cash on Delivery')]/ancestor::div[@class='col-6 col-md-4']");
         WebUI.clickElement(buttonCashOnDelivery);
@@ -551,14 +556,14 @@ public class OrderPage {
     }
     public void addAdditaionalInfo(String noteForOrder) {
         if (!DriverManager.getDriver().findElement(checkboxAgreeTermAndConditions).isSelected()) {
-            WebUI.scrollToElement(checkboxAgreeTermAndConditions);
-            WebUI.clickElement(checkboxAgreeTermAndConditions);
+            WebUI.scrollToElement(checkAgreeTermAndConditions);
+            WebUI.clickElement(checkAgreeTermAndConditions);
         }
         WebUI.setTextAndClear(inputAdditionalInfo, noteForOrder);
     }
     public void testClickInTermsAndConditions() {
         openPaymentInfoFromShippingInfoDisplay();
-        WebUI.scrollToElement(checkboxAgreeTermAndConditions);
+        WebUI.scrollToElement(checkAgreeTermAndConditions);
         By linkTermsAndConditions = By.xpath("//a[contains(text(),'terms and conditions')]");
         WebUI.clickElement(linkTermsAndConditions);
         WebUI.waitForPageLoaded();
@@ -567,7 +572,7 @@ public class OrderPage {
     }
     public void testClickInPrivacyPolicy() {
         openPaymentInfoFromShippingInfoDisplay();
-        WebUI.scrollToElement(checkboxAgreeTermAndConditions);
+        WebUI.scrollToElement(checkAgreeTermAndConditions);
         By linkPrivacyPolicy= By.xpath("//a[contains(text(),'privacy policy')]");
         WebUI.clickElement(linkPrivacyPolicy);
         WebUI.waitForPageLoaded();
@@ -722,7 +727,7 @@ public class OrderPage {
         //applyCouponDiscount("DUNG1");
 
         choosePaymentMethodCashOnDelivery();
-        //addAdditaionalInfo(noteForOrder);
+        addAdditaionalInfo(noteForOrder);
 
         WebUI.scrollToElement(buttonCompleteOrder);
         //WebUI.waitForJQueryLoad();

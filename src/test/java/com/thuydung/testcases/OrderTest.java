@@ -155,6 +155,7 @@ public class OrderTest extends BaseTest {
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
         loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
         getOrderPage().testApplyCouponDiscountValid("DUNG1");
     }
     @Test(priority = 18, description = "Kiem tra khi apply discount coupon khong hop le")
