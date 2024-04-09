@@ -11,7 +11,14 @@ public class CommonPage {
     public HomePage homePage;
     public DashboardPage dashboardPage;
     public CartPage cartPage;
+    public CouponPage couponPage;
 
+    public CouponPage getCouponPage() {
+        if (couponPage == null) {
+            couponPage = new CouponPage();
+        }
+        return couponPage;
+    }
     public LoginPage getLoginPage() {
         if (loginPage == null) {
             loginPage = new LoginPage();

@@ -1,7 +1,8 @@
 package com.thuydung.testcases;
 
-import com.thuydung.helpers.ExcelHelper;
 import com.thuydung.common.BaseTest;
+import com.thuydung.helpers.ExcelHelper;
+import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.pages.LoginPage;
 import org.testng.annotations.Test;
 
@@ -153,18 +154,28 @@ public class OrderTest extends BaseTest {
     public void testApplyDiscountCouponValid() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        getCouponPage().addCouponValid("COUPON2024", "100000", "10000", "5000000", "04/09/2024 - 06/09/2024");
+        getLoginPage().logOutRoleAdmin();
+        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
         getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
-        getOrderPage().testApplyCouponDiscountValid("DUNG1");
+        getOrderPage().testApplyCouponDiscountValid(PropertiesHelper.getValue("COUPON_VALID"));
     }
-    @Test(priority = 18, description = "Kiem tra khi apply discount coupon khong hop le")
-    public void testApplyDiscountCouponInvalid() {
+
+    @Test(priority = 18, description = "Kiem tra khi apply discount coupon khong ton tai")
+    public void testApplyDiscountCouponNotExist() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
         loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getOrderPage().testApplyCouponDiscountInvalid("DUNG2");
+        getOrderPage().testApplyCouponDiscountNotExist("DUNG3");
+    }
+    @Test(priority = 19, description = "Kiem tra khi apply discount coupon da het han")
+    public void testApplyCouponDiscountExpried() {
+        excelLogin = new ExcelHelper();
+        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
+        LoginPage loginPage = new LoginPage();
+        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        getOrderPage().testApplyCouponDiscountExpired("DUNG2");
     }
     @Test(priority = 19, description = "Kiem tra thong tin tong tien khi khong co discount tai trang Payment")
     public void testCheckTotalPriceInPaymentInfo() {

@@ -499,7 +499,12 @@ public class OrderPage {
         WebUI.verifyAssertTrueEqual(messageNoti, "Coupon has been applied", "Thong bao khong chinh xac");
         WebUI.verifyAssertTrueIsDisplayed(priceCouponDiscountInDisplayPayment, "Khong hien thi gia tri Coupon Discount");
     }
-    public void testApplyCouponDiscountInvalid(String couponCode) {
+    public void testApplyCouponDiscountExpired(String couponCode) {
+        applyCouponDiscount(couponCode);
+        WebUI.verifyAssertTrueIsDisplayed(messageNoti, "Khong xuat hien thong bao");
+        WebUI.verifyAssertTrueEqual(messageNoti, "Coupon expired!", "Thong bao khong chinh xac");
+    }
+    public void testApplyCouponDiscountNotExist(String couponCode) {
         applyCouponDiscount(couponCode);
         WebUI.verifyAssertTrueIsDisplayed(messageNoti, "Khong xuat hien thong bao");
         WebUI.verifyAssertTrueEqual(messageNoti, "Invalid coupon!", "Thong bao khong chinh xac");

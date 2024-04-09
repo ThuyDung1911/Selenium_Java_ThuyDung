@@ -23,11 +23,19 @@ public class LoginPage extends CommonPage {
 
     public void openLoginPage() {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
-        WebUI.clickElement(closeAdvertisementPopup);
-        WebUI.clickElement(buttonOkCookies);
+        if (WebUI.getWebElement(LoginPage.closeAdvertisementPopup).isDisplayed()) {
+            WebUI.clickElement(LoginPage.closeAdvertisementPopup);
+        }
+        if (WebUI.getWebElement(LoginPage.buttonOkCookies).isDisplayed()) {
+            WebUI.clickElement(LoginPage.buttonOkCookies);
+        }
         WebUI.clickElement(buttonLogin);
         WebUI.waitForPageLoaded();
         WebUI.verifyAssertTrueIsDisplayed(titleLoginPage, "Trang đăng nhập KHÔNG được hiển thị");
+    }
+    public void logOutRoleAdmin() {
+        WebUI.clickElement(LoginPage.roleUser);
+        WebUI.clickElement(By.xpath("//div[contains(@class,'dropdown-menu')]//span[text()='Logout']"));
     }
 
     public void openHomePage() {
