@@ -20,7 +20,7 @@ import static com.thuydung.pages.OrderPage.buttonCart;
 
 public class CartPage extends CommonPage {
     static By messageCartEmptyInCartDetail = By.xpath("//section[@id='cart-summary']//h3[normalize-space()='Your Cart is empty']");
-    By messageCartEmptyInCart = By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//div[contains(@class,'dropdown-menu')]//h3[normalize-space()='Your Cart is empty']");
+    public static By messageCartEmptyInCart = By.xpath("//div[contains(@class,'nav-cart-box dropdown')]//div[contains(@class,'dropdown-menu')]//h3[normalize-space()='Your Cart is empty']");
     By inputQuantity = By.xpath("//input[@name='quantity']");
     By viewProductNameInPopupAddSucceed = By.xpath("//div[@id='addToCart-modal-body']//h6[contains(@class,'fw-600')]");
     By messageUpdateCart = By.xpath("//span[@data-notify='message']");

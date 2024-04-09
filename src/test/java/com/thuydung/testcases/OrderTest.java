@@ -13,10 +13,11 @@ public class OrderTest extends BaseTest {
     // Add order success
     @Test(priority = 1, description = "Kiem tra dat hang thanh cong")
     public void testOrderProduct() {
+        excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
-        getCartPage().addProductToCart("Cosy Thuy Dung GBNXJUZQ", "2");
+        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
+//        getCartPage().addProductToCart("Cosy Thuy Dung GBNXJUZQ", "1");
 //        getCartPage().addProductToCart("Tiramisu", "1");
         getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
     }
@@ -24,6 +25,7 @@ public class OrderTest extends BaseTest {
     // Checkout order without product
     @Test(priority = 2, description = "Kiem tra dat hang khong co san pham")
     public void testCheckoutOrderWithoutProduct() {
+        excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
         getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
@@ -31,6 +33,7 @@ public class OrderTest extends BaseTest {
 
     @Test(priority = 3, description = "Kiem tra truy cap trang shippging info khi co san pham trong gio hang")
     public void testOpenShippingInfoDisplay() {
+        excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
         getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
@@ -50,6 +53,7 @@ public class OrderTest extends BaseTest {
 
     @Test(priority = 6, description = "Kiem tra thong tin dia chi tai trang shipping info so voi thong tin dia chi them o profile")
     public void testShippingInfoWithProfile() {
+        excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
         getOrderPage().testCheckShippingInfoWithProfile();

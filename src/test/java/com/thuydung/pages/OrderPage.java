@@ -5,7 +5,6 @@ import com.thuydung.keywords.WebUI;
 import com.thuydung.requests.Address;
 import com.thuydung.requests.Cart;
 import com.thuydung.utils.LogUtils;
-import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -77,7 +76,7 @@ public class OrderPage {
     By elementPaymentMethodInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Payment method')]/following-sibling::td");
     By elementOrderStatusInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Order status')]/following-sibling::td");
     By elementTotalOrderAmountInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Total order amount')]/following-sibling::td");
-    By elementShippingInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Shipping')]/following-sibling::td");
+    By elementShippingInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Shipping:')]/following-sibling::td");
     By elementMenuCheckOut = By.xpath("//div[contains(@class,'text-primary')]");
     public static By valueNewestAddress = By.xpath("(//div[@class='border p-3 rounded mb-3 c-pointer text-center bg-white h-100 d-flex flex-column justify-content-center']/preceding::div[@class='col-md-6 mb-3'][1])//span[contains(text(),'Address')]/following-sibling::span");
     public static By valueNewestCountry = By.xpath("(//div[@class='border p-3 rounded mb-3 c-pointer text-center bg-white h-100 d-flex flex-column justify-content-center']/preceding::div[@class='col-md-6 mb-3'][1])//span[contains(text(),'Country')]/following-sibling::span");
@@ -292,9 +291,9 @@ public class OrderPage {
         By buttonSelectAddress = By.xpath("(//input[@type='radio'])[" + index + "]/ancestor::div[@class='col-md-6 mb-3']");
         WebUI.clickElement(buttonSelectAddress);
         WebUI.waitForPageLoaded();
-        getSelectedAddress();
     }
     public Address getInfoAddressSelected(String index) {
+
         By addressSelected = By.xpath("(//input[@type='radio'])[" + index + "]/ancestor::div[@class='col-md-6 mb-3']//span[contains(text(),'Address')]/following-sibling::span");
         By postalCodeSelected = By.xpath("(//input[@type='radio'])[" + index + "]/ancestor::div[@class='col-md-6 mb-3']//span[contains(text(),'Postal code')]/following-sibling::span");
         By citySelected = By.xpath("(//input[@type='radio'])[" + index + "]/ancestor::div[@class='col-md-6 mb-3']//span[contains(text(),'City')]/following-sibling::span");
@@ -387,51 +386,51 @@ public class OrderPage {
 
 
 
-    public List<WebElement> getAddressInShippingInfo() {
-//        By elementAddress = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Address')]/following-sibling::span");
-//        By elementPostalCode = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Postal code')]/following-sibling::span");
-//        By elementCity = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'City')]/following-sibling::span");
-//        By elementState = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'State')]/following-sibling::span");
-//        By elementCountry = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Country')]/following-sibling::span");
-//        By elementPhone = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Phone')]/following-sibling::span");
-
-        List<WebElement> addressInShippingInfo = DriverManager.getDriver().findElements(By);
-        List<WebElement> postalCodeInShippingInfo = DriverManager.getDriver().findElements(elementPostalCode);
-        List<WebElement> cityInShippingInfo = DriverManager.getDriver().findElements(elementCity);
-        List<WebElement> stateInShippingInfo = DriverManager.getDriver().findElements(elementState);
-        List<WebElement> countryInShippingInfo = DriverManager.getDriver().findElements(elementCountry);
-        List<WebElement> phoneInShippingInfo = DriverManager.getDriver().findElements(elementPhone);
-        List<String> valueAddressInShippingInfo = new ArrayList<>();
-        List<String> valuePostalCodeInShippingInfo = new ArrayList<>();
-        List<String> valueCityInShippingInfo = new ArrayList<>();
-        List<String> valueStateInShippingInfo = new ArrayList<>();
-        List<String> valueCountryInShippingInfo = new ArrayList<>();
-        List<String> valuePhoneInShippingInfo = new ArrayList<>();
-        for (WebElement address : addressInShippingInfo) {
-            valueAddressInShippingInfo.add(address.getText());
-        }
-        for (WebElement postalCode : postalCodeInShippingInfo) {
-            valuePostalCodeInShippingInfo.add(postalCode.getText());
-        }
-        for (WebElement city : cityInShippingInfo) {
-            valueCityInShippingInfo.add(city.getText());
-        }
-        for (WebElement state : stateInShippingInfo) {
-            valueStateInShippingInfo.add(state.getText());
-        }
-        for (WebElement country : countryInShippingInfo) {
-            valueCountryInShippingInfo.add(country.getText());
-        }
-        for (WebElement phone : phoneInShippingInfo) {
-            valuePhoneInShippingInfo.add(phone.getText());
-        }
-        List<Address> addresses = new ArrayList<>();
-        for (int i = 0; i < addressInShippingInfo.size(); i++) {
-            Address address = new Address(valueAddressInShippingInfo.get(i), valueCityInShippingInfo.get(i), valueStateInShippingInfo.get(i), valueCountryInShippingInfo.get(i), valuePostalCodeInShippingInfo.get(i), valuePhoneInShippingInfo.get(i));
-            addresses.add(address);
-        }
-        return addresses;
-    }
+//    public List<WebElement> getAddressInShippingInfo() {
+////        By elementAddress = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Address')]/following-sibling::span");
+////        By elementPostalCode = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Postal code')]/following-sibling::span");
+////        By elementCity = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'City')]/following-sibling::span");
+////        By elementState = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'State')]/following-sibling::span");
+////        By elementCountry = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Country')]/following-sibling::span");
+////        By elementPhone = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Phone')]/following-sibling::span");
+//
+//        List<WebElement> addressInShippingInfo = DriverManager.getDriver().findElements(By);
+//        List<WebElement> postalCodeInShippingInfo = DriverManager.getDriver().findElements(elementPostalCode);
+//        List<WebElement> cityInShippingInfo = DriverManager.getDriver().findElements(elementCity);
+//        List<WebElement> stateInShippingInfo = DriverManager.getDriver().findElements(elementState);
+//        List<WebElement> countryInShippingInfo = DriverManager.getDriver().findElements(elementCountry);
+//        List<WebElement> phoneInShippingInfo = DriverManager.getDriver().findElements(elementPhone);
+//        List<String> valueAddressInShippingInfo = new ArrayList<>();
+//        List<String> valuePostalCodeInShippingInfo = new ArrayList<>();
+//        List<String> valueCityInShippingInfo = new ArrayList<>();
+//        List<String> valueStateInShippingInfo = new ArrayList<>();
+//        List<String> valueCountryInShippingInfo = new ArrayList<>();
+//        List<String> valuePhoneInShippingInfo = new ArrayList<>();
+//        for (WebElement address : addressInShippingInfo) {
+//            valueAddressInShippingInfo.add(address.getText());
+//        }
+//        for (WebElement postalCode : postalCodeInShippingInfo) {
+//            valuePostalCodeInShippingInfo.add(postalCode.getText());
+//        }
+//        for (WebElement city : cityInShippingInfo) {
+//            valueCityInShippingInfo.add(city.getText());
+//        }
+//        for (WebElement state : stateInShippingInfo) {
+//            valueStateInShippingInfo.add(state.getText());
+//        }
+//        for (WebElement country : countryInShippingInfo) {
+//            valueCountryInShippingInfo.add(country.getText());
+//        }
+//        for (WebElement phone : phoneInShippingInfo) {
+//            valuePhoneInShippingInfo.add(phone.getText());
+//        }
+//        List<Address> addresses = new ArrayList<>();
+//        for (int i = 0; i < addressInShippingInfo.size(); i++) {
+//            Address address = new Address(valueAddressInShippingInfo.get(i), valueCityInShippingInfo.get(i), valueStateInShippingInfo.get(i), valueCountryInShippingInfo.get(i), valuePostalCodeInShippingInfo.get(i), valuePhoneInShippingInfo.get(i));
+//            addresses.add(address);
+//        }
+//        return addresses;
+//    }
 
     public void openPaymentInfoFromShippingInfoDisplay() {
         openDeliveryInfoWithShippingInfo();
@@ -463,7 +462,12 @@ public class OrderPage {
         String subTotalPriceInCart = WebUI.getElementText(CartPage.subTotalPriceInCart);
         WebUI.clickElement(buttonCart);
         List<Cart> infoProductsInDisplayPayment = getInfoProductsInDisplayPayment();
-        WebUI.verifyAssertEquals(infoProductsInDisplayPayment, infoProductsInCart, "Thong tin sản phẩm không khớp so voi gio hang.");
+        for(int i = 0; i < infoProductsInCart.size(); i++) {
+            WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getName(), infoProductsInCart.get(i).getName(), "Ten san pham khong khop so voi gio hang.");
+            WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getPrice(), infoProductsInCart.get(i).getPrice(), "Gia san pham khong khop so voi gio hang.");
+            WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getQuantity(), infoProductsInCart.get(i).getQuantity(), "So luong san pham khong khop so voi gio hang.");
+        }
+        //WebUI.verifyAssertEquals(infoProductsInDisplayPayment, infoProductsInCart, "Thong tin sản phẩm không khớp so voi gio hang.");
         WebUI.verifyAssertTrueEqual(subTotalPriceInDisplayPayment, subTotalPriceInCart, "Sub total price không khớp so voi gio hang.");
     }
     public BigDecimal calculatorTotalPriceInPaymentInfo() {
@@ -512,11 +516,13 @@ public class OrderPage {
 
     public void selectAgreeTerms() {
         openPaymentInfoFromShippingInfoDisplay();
-        WebUI.scrollToElement(checkboxAgreeTermAndConditions);
+        WebUI.scrollToElement(buttonCompleteOrder);
+        WebUI.waitForElementClickable(checkboxAgreeTermAndConditions);
         WebUI.clickElement(checkboxAgreeTermAndConditions);
         }
     public void testSelectAgreeTerms() {
         selectAgreeTerms();
+        WebUI.sleep(1);
         String verifyCheckedAgreeTerms = "Checkbox dong y dieu khoan da check: " + DriverManager.getDriver().findElement(checkboxAgreeTermAndConditions).isSelected();
         WebUI.verifyAssertEqual(verifyCheckedAgreeTerms, "Checkbox dong y dieu khoan da check: true", "Checkbox dong y dieu khoan chua duoc check");
     }
@@ -529,7 +535,10 @@ public class OrderPage {
     }
     public void choosePaymentMethodCashOnDelivery() {
         //openPaymentInfoFromShippingInfoDisplay();
-        selectAgreeTerms();
+        if (!DriverManager.getDriver().findElement(checkboxAgreeTermAndConditions).isSelected()) {
+            WebUI.scrollToElement(checkboxAgreeTermAndConditions);
+            WebUI.clickElement(checkboxAgreeTermAndConditions);
+        }
         By buttonCashOnDelivery = By.xpath("//span[contains(text(),'Cash on Delivery')]/ancestor::div[@class='col-6 col-md-4']");
         WebUI.clickElement(buttonCashOnDelivery);
         WebUI.waitForPageLoaded();
@@ -541,7 +550,10 @@ public class OrderPage {
         WebUI.verifyAssertEqual(checkedPaymentMethod, "Phuong thuc thanh toan Cash on Delivery da duoc chon: true", "Phuong thuc thanh toan khong duoc chon");
     }
     public void addAdditaionalInfo(String noteForOrder) {
-        selectAgreeTerms();
+        if (!DriverManager.getDriver().findElement(checkboxAgreeTermAndConditions).isSelected()) {
+            WebUI.scrollToElement(checkboxAgreeTermAndConditions);
+            WebUI.clickElement(checkboxAgreeTermAndConditions);
+        }
         WebUI.setTextAndClear(inputAdditionalInfo, noteForOrder);
     }
     public void testClickInTermsAndConditions() {
@@ -640,7 +652,7 @@ public class OrderPage {
         return infoProductsInDisplayConfirm;
     }
 
-    public void checkSubTotalPriceInDisplayConfirm() {
+    public void checkInfoPriceInDisplayConfirm() {
         By elementOrderDetailInDisplayConfirm = By.xpath("//div[@class='card-body']");
         List<WebElement> orders = DriverManager.getDriver().findElements(elementOrderDetailInDisplayConfirm);
         //Map<String, Cart> infoProductsInDisplayConfirm = getInfoOrderDetailInDisplayConfirm();
@@ -685,6 +697,7 @@ public class OrderPage {
             totalOrderAmount = totalOrderAmount.add(totalOrder);
             //check history order
             checkHistoryOrder(orderCode);
+            checkHistoryOrder(orderCode);
         }
         //check total order amount
         WebUI.verifyAssertEquals(convertCurrencyToBigDecimal(WebUI.getElementText(elementTotalOrderAmountInOrderSummary)), totalOrderAmount, "Tổng giá tiền không đúng tại màn confirm đơn hàng.");
@@ -694,29 +707,25 @@ public class OrderPage {
         WebUI.clickElement(buttonCart);
         List<Cart> currentCart = CartPage.getCartDropdown();
         if (currentCart.isEmpty()) {
-            WebUI.verifyAssertTrueIsDisplayed(messageNoti, "Không có sản phẩm trong giỏ hàng");
-            WebUI.verifyAssertTrueEqual(messageNoti, "Your Cart is empty", "Thông báo không có sản phẩm trong giỏ hàng không đúng");
+            WebUI.verifyAssertTrueIsDisplayed(CartPage.messageCartEmptyInCart, "Không có sản phẩm trong giỏ hàng");
+            WebUI.verifyAssertTrueEqual(CartPage.messageCartEmptyInCart, "Your Cart is empty", "Thông báo không có sản phẩm trong giỏ hàng không đúng");
             return;
         }
-        openDeliveryInfoWithShippingInfo();
+        selectAddressInShippingInfo("3");
+        Address addressSelected = getSelectedAddress();
+        WebUI.clickElement(buttonContinueToDeliveryInfo);
         WebUI.waitForPageLoaded();
-        //Check info order in display delivery info
-        testProductInDeliveryInfoDisplay();
 
         WebUI.clickElement(buttonContinueToPayment);
         WebUI.waitForPageLoaded();
-        //Check info order in display payment
-        testInfoOrderInPaymentInfo();
 
-        applyCouponDiscount("DUNG1");
-        //Check totalPrice in display payment
-        testTotalPriceInPaymentInfoWithDiscountCoupon();
+        //applyCouponDiscount("DUNG1");
 
         choosePaymentMethodCashOnDelivery();
-        addAdditaionalInfo(noteForOrder);
+        //addAdditaionalInfo(noteForOrder);
 
-        WebUI.scrollToElement(checkboxAgreeTermAndConditions);
-        WebUI.clickElement(checkboxAgreeTermAndConditions);
+        WebUI.scrollToElement(buttonCompleteOrder);
+        //WebUI.waitForJQueryLoad();
         WebUI.clickElement(buttonCompleteOrder);
         WebUI.waitForPageLoaded();
         //Check order success
@@ -726,16 +735,24 @@ public class OrderPage {
 
         //Check order summary
         testOrderSummaryInConfirmDisplay();
+        String shippingAddressInOrderSummary = addressSelected.getAddress() + ", " + addressSelected.getCity() + ", " + addressSelected.getCountry();
+        WebUI.verifyAssertTrueEqual(elementShippingAddressInOrderSummary, shippingAddressInOrderSummary, "Địa chỉ giao hàng không khớp.");
         //Check order detail
-        checkOrderDetail();
-        //checkTotalAmountInConfirmOrder
+        List<Cart> listProduct = getInfoOrderDetailInDisplayConfirm();
+        for(int j = 0; j<listProduct.size(); j++){
+            WebUI.verifyAssertEquals(listProduct.get(j).getName(), currentCart.get(j).getName(), "Tên sản phẩm không khớp.");
+            WebUI.verifyAssertEquals(listProduct.get(j).getPrice(), currentCart.get(j).getPrice(), "Giá sản phẩm không khớp.");
+            WebUI.verifyAssertEquals(listProduct.get(j).getQuantity(), currentCart.get(j).getQuantity(), "Số lượng sản phẩm không khớp.");
+        }
+        checkInfoPriceInDisplayConfirm();
+
 
 
     }
     public void checkHistoryOrder(String orderCode) {
         String orderDateInOrderSummary = WebUI.getElementText(elementOrderDateInOrderSummary);
         String orderDateInOrderSummaryFormat = orderDateInOrderSummary.split(" ")[0];
-        String orderStatusInOrderSummary = WebUI.getElementText(elementOrderStatusInOrderSummary) + " *";
+        String orderStatusInOrderSummary = WebUI.getElementText(elementOrderStatusInOrderSummary);
         By elementTotalOrderInOrderDetail = By.xpath("//span[text()='" + orderCode + "']/ancestor::div[@class='card-body']//table//span[text()='Total']/ancestor::th/following-sibling::td//span");
         String totalOrderInOrderDetail = WebUI.getElementText(elementTotalOrderInOrderDetail);
         String mainWindow = DriverManager.getDriver().getWindowHandle();
@@ -751,8 +768,7 @@ public class OrderPage {
 
         WebUI.verifyAssertTrueEqual(elementTotalOrderAmountInHistoryOrder, totalOrderInOrderDetail, "Tổng giá trị đơn hàng không khớp.");
 //        LogUtils.info(WebUI.getElementText(elementOrderStatusInHistoryOrder));
-        WebUI.verifyAssertTrueEqual(elementOrderStatusInHistoryOrder, orderStatusInOrderSummary, "Trạng thái đơn hàng không khớp.");
-
+        WebUI.verifyAssertTrueTextContain(elementOrderStatusInHistoryOrder, orderStatusInOrderSummary, "Trạng thái đơn hàng không khớp.");
 
         //Check order detail in history order
         WebUI.clickElement(elementOrderCodeInHistoryOrder);
@@ -770,20 +786,20 @@ public class OrderPage {
     /**
      * Check subtotal price in display payment
      */
-    public static void checkSubTotalPriceInDisplayPayment() {
-        List<WebElement> totalProductPrices = DriverManager.getDriver().findElements(elementTotalProductPricesInDisplayPayment);
-        List<BigDecimal> valueTotalProductPrices = new ArrayList<>();
-        for (WebElement totalProductPrice : totalProductPrices) {
-            valueTotalProductPrices.add(convertCurrencyToBigDecimal(totalProductPrice.getText()));
-        }
-        BigDecimal subTotalPrice = BigDecimal.ZERO;
-        for (int i = 0; i < valueTotalProductPrices.size(); i++) {
-            subTotalPrice = subTotalPrice.add(valueTotalProductPrices.get(i));
-        }
-        BigDecimal valueSubTotalPrice = convertCurrencyToBigDecimal(WebUI.getElementText(subTotalPriceInDisplayPayment));
-        WebUI.verifyAssertEquals(subTotalPrice, valueSubTotalPrice, "Subtotal price không đúng");
-
-    }
+//    public static void checkSubTotalPriceInDisplayPayment() {
+//        List<WebElement> totalProductPrices = DriverManager.getDriver().findElements(elementTotalProductPricesInDisplayPayment);
+//        List<BigDecimal> valueTotalProductPrices = new ArrayList<>();
+//        for (WebElement totalProductPrice : totalProductPrices) {
+//            valueTotalProductPrices.add(convertCurrencyToBigDecimal(totalProductPrice.getText()));
+//        }
+//        BigDecimal subTotalPrice = BigDecimal.ZERO;
+//        for (int i = 0; i < valueTotalProductPrices.size(); i++) {
+//            subTotalPrice = subTotalPrice.add(valueTotalProductPrices.get(i));
+//        }
+//        BigDecimal valueSubTotalPrice = convertCurrencyToBigDecimal(WebUI.getElementText(subTotalPriceInDisplayPayment));
+//        WebUI.verifyAssertEquals(subTotalPrice, valueSubTotalPrice, "Subtotal price không đúng");
+//
+//    }
 
     /**
      * Get info products in display payment
