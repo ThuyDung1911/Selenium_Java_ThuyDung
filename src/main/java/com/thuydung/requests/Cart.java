@@ -32,11 +32,7 @@ public class Cart {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    public void addProductToCart(String name, BigDecimal price, int quantity) {
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-    }
+
 
 
 
