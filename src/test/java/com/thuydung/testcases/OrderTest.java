@@ -250,12 +250,21 @@ public class OrderTest extends BaseTest {
         getOrderPage().testOpenConfirmOrderFromShippingInfo();
     }
     @Test(priority = 28, description = "Kiem tra khi dat don hang thanh cong")
-    public void testAddOrderSuccess() {
+    public void testMessageOrderSuccess() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
         getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
-        getOrderPage().testAddOrderSuccess();
+        getOrderPage().testMessageOrderSuccess();
+    }
+
+    @Test(priority = 1, description = "Kiem tra luong dat hang thanh cong")
+    public void testFlowOrderSuccess() {
+        excelLogin = new ExcelHelper();
+        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
+        getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
     }
 
 

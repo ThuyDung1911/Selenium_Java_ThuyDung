@@ -25,8 +25,7 @@ public class DashboardPage extends CommonPage {
     public static By resultCategorySuggestions = By.xpath("//div[contains(@class,'typed-search-box')]//div[text()='Category Suggestions']/following-sibling::ul//a");
     public static By resultTagSuggestions = By.xpath("//div[contains(@class,'typed-search-box')]//div[text()='Popular Suggestions']/following-sibling::ul//a");
     public static By messageSearchNothing = By.xpath("//div[contains(@class,'search-nothing')]");
-
-    public void testSearchProduct(String keySearchProduct) {
+    public void searchProduct(String keySearchProduct) {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         if (WebUI.getWebElement(LoginPage.closeAdvertisementPopup).isDisplayed()) {
             WebUI.clickElement(LoginPage.closeAdvertisementPopup);
@@ -36,9 +35,11 @@ public class DashboardPage extends CommonPage {
         }
         WebUI.setTextFromSplitString(inputSearchProduct, keySearchProduct);
         WebUI.setTextAndBackspace(inputSearchProduct, " ");
-
         WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
+    }
+    public void testSearchProduct(String keySearchProduct) {
+        searchProduct(keySearchProduct);
         WebUI.verifyAssertTrueIsDisplayed(divSearchResult, "Khối Search result KHONG xuat hien");
     }
 
