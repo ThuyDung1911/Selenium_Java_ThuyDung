@@ -1,6 +1,7 @@
 package com.thuydung.pages;
 
 import com.thuydung.drivers.DriverManager;
+import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.keywords.WebUI;
 import com.thuydung.requests.Address;
 import com.thuydung.requests.Cart;
@@ -147,13 +148,6 @@ public class OrderPage {
 
     public void testCheckShippingInfoWithProfile() {
         openShippingInfoFromURL();
-
-//        By elementAddress = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Address')]/following-sibling::span");
-//        By elementPostalCode = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Postal code')]/following-sibling::span");
-//        By elementCity = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'City')]/following-sibling::span");
-//        By elementState = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'State')]/following-sibling::span");
-//        By elementCountry = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Country')]/following-sibling::span");
-//        By elementPhone = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Phone')]/following-sibling::span");
 
         //Shipping Info
         List<WebElement> addressInShippingInfo = DriverManager.getDriver().findElements(elementAddress);
@@ -384,7 +378,11 @@ public class OrderPage {
         if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/checkout/delivery_info")) {
             openDeliveryInfoWithShippingInfo();
         }
-        WebUI.clickElement(By.xpath("//span[text()='" + shippingMethod + "']/ancestor::div[@class='col-6']"));
+        By buttonSelectShippingMethod = By.xpath("//span[text()='" + shippingMethod + "']/ancestor::div[@class='col-6']");
+        List<WebElement> shippingMethods = DriverManager.getDriver().findElements(buttonSelectShippingMethod);
+        for (int i = 1; i <= shippingMethods.size(); i++) {
+            WebUI.clickElement(By.xpath("(//span[text()='" + shippingMethod + "']/ancestor::div[@class='col-6'])[" + i + "]"));
+        }
         WebUI.waitForPageLoaded();
     }
 
@@ -394,53 +392,6 @@ public class OrderPage {
         String checkedShippingMethod = "Shipping Method " + shippingMethod + " da duoc chon: " + DriverManager.getDriver().findElement(verifyCheckedShippingMethod).isSelected();
         WebUI.verifyAssertEqual(checkedShippingMethod, "Shipping Method " + shippingMethod + " da duoc chon: true", "Phương thức vận chuyển không được chọn");
     }
-
-
-//    public List<WebElement> getAddressInShippingInfo() {
-////        By elementAddress = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Address')]/following-sibling::span");
-////        By elementPostalCode = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Postal code')]/following-sibling::span");
-////        By elementCity = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'City')]/following-sibling::span");
-////        By elementState = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'State')]/following-sibling::span");
-////        By elementCountry = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Country')]/following-sibling::span");
-////        By elementPhone = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Phone')]/following-sibling::span");
-//
-//        List<WebElement> addressInShippingInfo = DriverManager.getDriver().findElements(By);
-//        List<WebElement> postalCodeInShippingInfo = DriverManager.getDriver().findElements(elementPostalCode);
-//        List<WebElement> cityInShippingInfo = DriverManager.getDriver().findElements(elementCity);
-//        List<WebElement> stateInShippingInfo = DriverManager.getDriver().findElements(elementState);
-//        List<WebElement> countryInShippingInfo = DriverManager.getDriver().findElements(elementCountry);
-//        List<WebElement> phoneInShippingInfo = DriverManager.getDriver().findElements(elementPhone);
-//        List<String> valueAddressInShippingInfo = new ArrayList<>();
-//        List<String> valuePostalCodeInShippingInfo = new ArrayList<>();
-//        List<String> valueCityInShippingInfo = new ArrayList<>();
-//        List<String> valueStateInShippingInfo = new ArrayList<>();
-//        List<String> valueCountryInShippingInfo = new ArrayList<>();
-//        List<String> valuePhoneInShippingInfo = new ArrayList<>();
-//        for (WebElement address : addressInShippingInfo) {
-//            valueAddressInShippingInfo.add(address.getText());
-//        }
-//        for (WebElement postalCode : postalCodeInShippingInfo) {
-//            valuePostalCodeInShippingInfo.add(postalCode.getText());
-//        }
-//        for (WebElement city : cityInShippingInfo) {
-//            valueCityInShippingInfo.add(city.getText());
-//        }
-//        for (WebElement state : stateInShippingInfo) {
-//            valueStateInShippingInfo.add(state.getText());
-//        }
-//        for (WebElement country : countryInShippingInfo) {
-//            valueCountryInShippingInfo.add(country.getText());
-//        }
-//        for (WebElement phone : phoneInShippingInfo) {
-//            valuePhoneInShippingInfo.add(phone.getText());
-//        }
-//        List<Address> addresses = new ArrayList<>();
-//        for (int i = 0; i < addressInShippingInfo.size(); i++) {
-//            Address address = new Address(valueAddressInShippingInfo.get(i), valueCityInShippingInfo.get(i), valueStateInShippingInfo.get(i), valueCountryInShippingInfo.get(i), valuePostalCodeInShippingInfo.get(i), valuePhoneInShippingInfo.get(i));
-//            addresses.add(address);
-//        }
-//        return addresses;
-//    }
 
     public void openPaymentInfoFromShippingInfoDisplay() {
         openDeliveryInfoWithShippingInfo();
@@ -479,7 +430,6 @@ public class OrderPage {
             WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getPrice(), infoProductsInCart.get(i).getPrice(), "Gia san pham khong khop so voi gio hang.");
             WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getQuantity(), infoProductsInCart.get(i).getQuantity(), "So luong san pham khong khop so voi gio hang.");
         }
-        //WebUI.verifyAssertEquals(infoProductsInDisplayPayment, infoProductsInCart, "Thong tin sản phẩm không khớp so voi gio hang.");
         WebUI.verifyAssertTrueEqual(subTotalPriceInDisplayPayment, subTotalPriceInCart, "Sub total price không khớp so voi gio hang.");
     }
 
@@ -651,6 +601,7 @@ public class OrderPage {
         DriverManager.getDriver().close();
 
         DriverManager.getDriver().switchTo().window(mainWindow);
+        WebUI.scrollToElement(By.xpath("//h5[text()='Order Summary']/parent::div"));
         WebUI.verifyAssertTrueEqual(elementNameInOrderSummary, nameInCustomerProfile, "Tên khách hàng không khớp");
         WebUI.verifyAssertTrueEqual(elementEmailInOrderSummary, emailInCustomerProfile, "Email khách hàng không khớp");
         WebUI.verifyAssertTrueEqual(elementOrderStatusInOrderSummary, "Pending", "Trạng thái đơn hàng không khớp");
@@ -658,6 +609,7 @@ public class OrderPage {
         WebUI.verifyAssertTrueEqual(elementPaymentMethodInOrderSummary, "Cash on Delivery", "Phuong thuc thanh toan khong khop");
 
     }
+
     public OrderSummary getOrderSummaryInConfirmDisplay() {
         if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/checkout/order-confirmed")) {
             openConfirmOrderFromShippingInfo();
@@ -678,6 +630,7 @@ public class OrderPage {
         OrderSummary orderSummary = new OrderSummary(orderDateInOrderSummary, nameInOrderSummary, emailInOrderSummary, orderStatusInOrderSummary, shippingMethodInOrderSummary, paymentMethodInOrderSummary, shippingAddress, shippingCity, shippingState, shippingCountry, shippingPostalCode, shippingPhone);
         return orderSummary;
     }
+
     public OrderSummary getOrderSummaryInHistoryOrder() {
         By elementOrderDateInHistoryOrder = By.xpath("//h5[text()='Order Summary']/ancestor::div[@class='card']//td[text()='Order date:']/following-sibling::td");
         By elementNameInHistoryOrder = By.xpath("//h5[text()='Order Summary']/ancestor::div[@class='card']//td[text()='Customer:']/following-sibling::td");
@@ -703,7 +656,6 @@ public class OrderPage {
         OrderSummary orderSummary = new OrderSummary(valueOrderDateInHistoryOrder, valueNameInHistoryOrder, valueEmailInHistoryOrder, valueOrderStatusInHistoryOrder, valueShippingMethodInHistoryOrder, valuePaymentMethodInHistoryOrder, valueShippingAddress, valueShippingCity, valueShippingState, valueShippingCountry, valueShippingPostalCode, valueShippingPhone);
         return orderSummary;
     }
-
 
 
     public List<Cart> getInfoOrderDetailInDisplayConfirm() {
@@ -808,6 +760,8 @@ public class OrderPage {
         for (int i = 1; i <= orders.size(); i++) {
             BigDecimal totalOrder = BigDecimal.ZERO;
             By elementOrderCodeInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/span");
+            By divOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/ancestor::div[@class='card-body']");
+            WebUI.scrollToElement(divOrderDetail);
             String orderCode = WebUI.getElementText(elementOrderCodeInOrderDetail);
             By elementProductNamesInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/ancestor::div[@class='card-body']//h5[normalize-space()='Order Details']/following-sibling::div/table//td[2]/a");
             By elementSubTotalInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/ancestor::div[@class='card-body']//table//th[text()='Subtotal']/following-sibling::td/span");
@@ -844,6 +798,7 @@ public class OrderPage {
             WebUI.verifyAssertEquals(valueTotalInOrderDetail, totalOrder, "Tổng giá tiền của order code: " + orderCode + " không đúng tại màn confirm đơn hàng.");
             totalOrderAmount = totalOrderAmount.add(totalOrder);
         }
+        WebUI.scrollToElement(By.xpath("//h5[text()='Order Summary']/parent::div"));
         //check total order amount
         WebUI.verifyAssertEquals(convertCurrencyToBigDecimal(WebUI.getElementText(elementTotalOrderAmountInOrderSummary)), totalOrderAmount, "Tổng giá tiền không đúng tại màn confirm đơn hàng.");
     }
@@ -880,6 +835,30 @@ public class OrderPage {
         return orderAmount;
     }
 
+    public void cancelOrder(String orderCode) {
+        if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/purchase_history")) {
+            WebUI.openURL("https://cms.anhtester.com/purchase_history");
+        }
+        By buttonCancelOrder = By.xpath("//a[text()='" + orderCode + "']/ancestor::tr//a[@title='Cancel']");
+        WebUI.clickElement(buttonCancelOrder);
+        WebUI.waitForJQueryLoad();
+        By confirmCancelOrder = By.xpath("//a[@id='delete-link']");
+        WebUI.clickElement(confirmCancelOrder);
+        WebUI.waitForPageLoaded();
+    }
+    public void testCancelOrder(String orderCode) {
+        cancelOrder(orderCode);
+        WebUI.verifyAssertTrueIsDisplayed(messageNoti, "Khong xuat hien thong bao");
+        WebUI.verifyAssertTrueEqual(messageNoti, "Order has been canceled successfully", "Thong bao khong chinh xac");
+        By elementOrderStatusInHistoryOrder = By.xpath("//a[normalize-space()='" + orderCode + "']/ancestor::tr/td[4]");
+        WebUI.verifyAssertTrueTextContain(elementOrderStatusInHistoryOrder, "Cancelled", "Trang thai don hang khong chinh xac");
+        By viewOrderDetail = By.xpath("//a[normalize-space()='" + orderCode + "']/ancestor::tr//a[@title='Order Details']");
+        WebUI.clickElement(viewOrderDetail);
+        WebUI.waitForPageLoaded();
+        By elementOrderStatusInOrderDetail = By.xpath("//h5[text()='Order Summary']/ancestor::div[@class='card']//td[text()='Order status:']/following-sibling::td");
+        WebUI.verifyAssertTrueTextContain(elementOrderStatusInOrderDetail, "Cancelled", "Trang thai don hang khong chinh xac");
+    }
+
     public void checkOutOrder(String noteForOrder) {
         WebUI.clickElement(buttonCart);
         List<Cart> currentCart = CartPage.getCartDropdown();
@@ -898,7 +877,7 @@ public class OrderPage {
         WebUI.clickElement(buttonContinueToPayment);
         WebUI.waitForPageLoaded();
 
-        //applyCouponDiscount();
+        applyCouponDiscount(PropertiesHelper.getValue("COUPON_VALID"));
 
         choosePaymentMethodCashOnDelivery();
         addAdditaionalInfo(noteForOrder);
@@ -911,9 +890,21 @@ public class OrderPage {
         testMessageOrderSuccess();
         //Check order summary
         testOrderSummaryInConfirmDisplay();
-        String shippingAddressInOrderSummary = addressSelected.getAddress() + ", " + addressSelected.getCity() + ", " + addressSelected.getCountry();
-        WebUI.verifyAssertTrueEqual(elementShippingAddressInOrderSummary, shippingAddressInOrderSummary, "Địa chỉ giao hàng không khớp.");
+
+        String valueShippingAddressInOrderSummaryConfirm = WebUI.getElementText(elementShippingAddressInOrderSummary);
+        String shippingAddressInOrderSummaryConfirm = valueShippingAddressInOrderSummaryConfirm.split(", ")[0];
+        String shippingCityInOrderSummaryConfirm = valueShippingAddressInOrderSummaryConfirm.split(", ")[1];
+        String shippingCountryInOrderSummaryConfirm = valueShippingAddressInOrderSummaryConfirm.split(", ")[2];
+
+        WebUI.verifyAssertEquals(shippingAddressInOrderSummaryConfirm, addressSelected.getAddress(), "Địa chỉ giao hàng không khớp.");
+        WebUI.verifyAssertEquals(shippingCityInOrderSummaryConfirm, addressSelected.getCity(), "Thành phố giao hàng không khớp.");
+        WebUI.verifyAssertEquals(shippingCountryInOrderSummaryConfirm, addressSelected.getCountry(), "Quốc gia giao hàng không khớp.");
+
+//        String shippingAddressInOrderSummary = addressSelected.getAddress() + ", " + addressSelected.getCity() + ", " + addressSelected.getCountry();
+//        WebUI.verifyAssertTrueEqual(elementShippingAddressInOrderSummary, shippingAddressInOrderSummary, "Địa chỉ giao hàng không khớp.");
+
         //Check order detail
+        WebUI.scrollToElement(By.xpath("//h5[text()='Order Summary']/parent::div"));
         List<Cart> listProduct = getInfoOrderDetailInDisplayConfirm();
         for (int j = 0; j < listProduct.size(); j++) {
             WebUI.verifyAssertEquals(listProduct.get(j).getName(), currentCart.get(j).getName(), "Tên sản phẩm không khớp.");
@@ -921,13 +912,10 @@ public class OrderPage {
             WebUI.verifyAssertEquals(listProduct.get(j).getQuantity(), currentCart.get(j).getQuantity(), "Số lượng sản phẩm không khớp.");
         }
         checkInfoPriceInConfirmDisplay();
-        checkHistoryOrder();
-
-
-
+        checkHistoryOrder(noteForOrder);
     }
 
-    public void checkHistoryOrder() {
+    public void checkHistoryOrder(String noteForOrder) {
         By elementOrderDetailInDisplayConfirm = By.xpath("//div[@class='card-body']");
         List<WebElement> orders = DriverManager.getDriver().findElements(elementOrderDetailInDisplayConfirm);
         for (int i = 1; i <= orders.size(); i++) {
@@ -943,8 +931,9 @@ public class OrderPage {
             String orderStatusInOrderSummary = WebUI.getElementText(elementOrderStatusInOrderSummary);
             By elementTotalOrderInOrderDetail = By.xpath("//span[text()='" + orderCode + "']/ancestor::div[@class='card-body']//table//span[text()='Total']/ancestor::th/following-sibling::td//span");
             String totalOrderInOrderDetail = WebUI.getElementText(elementTotalOrderInOrderDetail);
-
-//            String mainWindow = DriverManager.getDriver().getWindowHandle();
+            String mainWindow = DriverManager.getDriver().getWindowHandle();
+            By divOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/ancestor::div[@class='card-body']");
+            WebUI.scrollToElement(divOrderDetail);
             DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
             WebUI.openURL("https://cms.anhtester.com/purchase_history");
             WebUI.waitForPageLoaded();
@@ -959,8 +948,12 @@ public class OrderPage {
             WebUI.verifyAssertTrueTextContain(elementOrderStatusInHistoryOrder, orderStatusInOrderSummary, "Trạng thái đơn hàng không khớp.");
 
             //Check order detail in history order
-            WebUI.clickElement(elementOrderCodeInHistoryOrder);
+            By viewOrderDetail = By.xpath("//a[normalize-space()='" + orderCode + "']/ancestor::tr//a[@title='Order Details']");
+            WebUI.clickElement(viewOrderDetail);
             WebUI.waitForPageLoaded();
+
+//            WebUI.clickElement(elementOrderCodeInHistoryOrder);
+//            WebUI.waitForPageLoaded();
             By elementOrderIDInOrderHistoryDetail = By.xpath("//h1[contains(text(), 'Order Id')]");
             WebUI.verifyAssertTrueIsDisplayed(elementOrderIDInOrderHistoryDetail, "Không hiển thị chi tiết đơn hàng ứng với order code: " + orderCode + " trong lịch sử đơn hàng");
             WebUI.verifyAssertTrueEqual(elementOrderIDInOrderHistoryDetail, "Order Id: " + orderCode, "Mã đơn hàng không khớp.");
@@ -994,13 +987,17 @@ public class OrderPage {
             WebUI.verifyAssertEquals(orderSummaryInHistoryOrder.getCity(), orderSummaryInConfirmDisplay.getCity(), "Địa chỉ City giao hàng không khớp.");
             WebUI.verifyAssertEquals(orderSummaryInHistoryOrder.getCountry(), orderSummaryInConfirmDisplay.getCountry(), "Địa chỉ Country giao hàng không khớp.");
 
+            //check additional info in order summary
+            By elementAdditionalInfoInOrderSummary = By.xpath("//td[text()='Additional Info']/following-sibling::td");
+            WebUI.verifyAssertTrueEqual(elementAdditionalInfoInOrderSummary, noteForOrder, "Thông tin thêm không khớp.");
+
             //check total order amount
 //            By elementTotalOrderAmountInHistoryOrderDetail = By.xpath("//td[text()='Total order amount:']/following-sibling::td");
 //            String valueTotalOrderAmount = WebUI.getElementText(elementTotalOrderAmountInHistoryOrderDetail);
 //            valueTotalOrderAmount = convertCurrencyToBigDecimal(valueTotalOrderAmount).toString();
-//            WebUI.verifyAssertEquals(valueTotalOrderAmount,orderAmountInHistoryOrder.getTotal() , "Tổng giá tiền không đúng tại summary lich su đơn hàng.");
+//            WebUI.verifyAssertEquals(valueTotalOrderAmount,orderAmountInHistoryOrder.getTotal() , "Tổng giá tiền không đúng tại phần order summary trong trang lich sử đơn hàng.");
 
-//            DriverManager.getDriver().switchTo().window(mainWindow);
+            DriverManager.getDriver().switchTo().window(mainWindow);
         }
     }
 
