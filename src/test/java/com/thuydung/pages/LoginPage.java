@@ -8,7 +8,6 @@ public class LoginPage extends CommonPage {
 
     public static By closeAdvertisementPopup = By.xpath("//i[@class='la la-close fs-20']");
     public static By buttonLogin = By.xpath("//a[normalize-space() = 'Login' and @class = 'text-reset d-inline-block opacity-60 py-2']");
-    public static By buttonCopyAdminAcc = By.xpath("//button[normalize-space()='Copy']");
     public static By buttonSubmitLogin = By.xpath("//button[normalize-space()='Login']");
     public static By titleLoginPage = By.xpath("//h1[normalize-space() = 'Login to your account.']");
     public static By messageRequiredEmail = By.xpath("//strong[contains(text(),'The email field is required when phone is not present.')]");
@@ -20,7 +19,6 @@ public class LoginPage extends CommonPage {
     public static By logoAnhTesterPage = By.xpath("//img[@alt='Active eCommerce CMS']");
     public static By roleUser = By.xpath("//span[contains(@class,'avatar')]/following-sibling::span//descendant::span[contains(@class,'small')]");
     public static By buttonOkCookies = By.xpath("//button[normalize-space()='Ok. I Understood']");
-
     public void openLoginPage() {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         if (WebUI.getWebElement(LoginPage.closeAdvertisementPopup).isDisplayed()) {
@@ -35,7 +33,7 @@ public class LoginPage extends CommonPage {
     }
     public void logOutRoleAdmin() {
         WebUI.clickElement(LoginPage.roleUser);
-        WebUI.clickElement(By.xpath("//div[contains(@class,'dropdown-menu')]//span[text()='Logout']"));
+        WebUI.clickElement(HomePage.buttonLogoutWithRoleAdmin);
     }
 
     public void openHomePage() {

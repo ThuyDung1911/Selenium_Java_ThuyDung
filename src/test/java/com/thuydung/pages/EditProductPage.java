@@ -7,8 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
 public class EditProductPage extends CommonPage{
-    private By menuProduct = By.xpath("//span[normalize-space()='Products']");
-    private By menuAllProducts = By.xpath("//span[normalize-space()='All products']");
+    private By menuProduct = By.xpath("//ul[@id='main-menu']//span[text()='Products']");
+    private By submenuAllProducts = By.xpath("//ul[@id='main-menu']//span[normalize-space()='All products']");
     private By inputSearchProduct = By.xpath("//input[@id='search']");
     private By btnEditProduct = By.xpath("(//a[@title='Edit'])[1]");
     private By titleEditProduct = By.xpath("//h1[normalize-space()='Edit Product']");
@@ -17,24 +17,15 @@ public class EditProductPage extends CommonPage{
     private By inputSearchDropdown = By.xpath("//div[@class='dropdown-menu show']//input[@aria-label='Search']");
     private By selectBrand = By.xpath("//button[@data-id='brand_id']");
     private By inputWeight = By.xpath("//input[@name='weight']");
-    private By inputUnit = By.xpath("//input[@placeholder='Unit (e.g. KG, Pc etc)']");
-    private By inputTags = By.xpath("//span[@data-placeholder='Type to add a tag']");
+    private By inputUnit = By.xpath("//input[@name='unit']");
+    private By inputTags = By.xpath("//tags[@role='tagslist']/span");
     private By messageEditProduct = By.xpath("//span[@data-notify='message']");
-    private By blockProductPrice = By.xpath("//h5[normalize-space()='Product price + stock']");
-    private By inputUnitPrice = By.xpath("//input[@placeholder='Unit price']");
-    private By inputDiscount = By.xpath("//input[@placeholder='Discount']");
-    private By selectDate = By.xpath("//input[@placeholder='Select Date']");
-    private By buttonSelectDiscountDate = By.xpath("//button[@class='applyBtn btn btn-sm btn-primary']");
-    private By selectUnitDiscount = By.xpath("(//div[@class='filter-option-inner-inner'][normalize-space()='Flat'])[1]");
-    private By selectUnitDiscountPercent = By.xpath("//span[normalize-space()='Percent']");
-    private By inputQuantity = By.xpath("//input[@placeholder='Quantity']");
-    private By inputSKU = By.xpath("//input[@placeholder='SKU']");
     private By buttonUpdateProduct = By.xpath("//button[normalize-space()='Update Product']");
     public void editProduct(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String image) {
         String nameProductNeedEdit = productName;
         WebUI.clickElement(menuProduct);
-        WebUI.waitForPageLoaded();
-        WebUI.clickElement(menuAllProducts);
+        WebUI.waitForJQueryLoad();
+        WebUI.clickElement(submenuAllProducts);
         WebUI.waitForPageLoaded();
         WebUI.setTextAndClear(inputSearchProduct, nameProductNeedEdit, Keys.ENTER);
         WebUI.waitForPageLoaded();
@@ -65,11 +56,9 @@ public class EditProductPage extends CommonPage{
 //        WebUI.setTextAndClear(inputQuantity, String.valueOf(quantity));
         //WebUI.setTextAndClear(inputSKU, String.valueOf(randomNumber));
         WebUI.clickElement(buttonUpdateProduct);
-
     }
     //Edit product valid
     public void editProductValid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String image) {
-        editProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, image);
         productName = productName + " " + ConfigData.AUTHOR + " Update " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
         editProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, image);
         //Verify message
