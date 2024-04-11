@@ -16,10 +16,8 @@ public class RegisterPage extends CommonPage {
     public By buttonRegister = By.xpath("//button[normalize-space()='Create Account']");
     public By messageRequiredPassword = By.xpath("//strong[contains(text(),'The password field is required.')]");
     public By messageRequiredFullName = By.xpath("//strong[normalize-space()='The name field is required.']");
-    public By messageRequiredCheckbox = By.xpath("//input[@type='checkbox' and @required]");
     public By messageRequiredPasswordCharacter = By.xpath("//strong[normalize-space()='The password must be at least 6 characters.']");
     public By messageRequiredConfirmPasswordMatch = By.xpath("//strong[normalize-space()='The password confirmation does not match.']");
-    public By linkLogin = By.xpath("//a[normalize-space()='Log In']");
     public By messageNotiRegister= By.xpath("//span[@data-notify='message']");
     private By errorMessage = By.xpath("//h1[normalize-space()='Something went wrong!']");
     public void registerAccount(String fullname, String email, String password, String confirm_password) {
