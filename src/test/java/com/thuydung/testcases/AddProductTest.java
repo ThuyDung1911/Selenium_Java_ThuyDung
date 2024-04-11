@@ -33,26 +33,26 @@ public class AddProductTest extends BaseTest {
         getAddProductPage().addProductInvalid(excelAddProduct.getCellData("productName",3), excelAddProduct.getCellData("category",3), excelAddProduct.getCellData("unit",3), excelAddProduct.getCellData("weight",3), excelAddProduct.getCellData("tags",3), excelAddProduct.getCellData("unitPrice",3), excelAddProduct.getCellData("discountDate",3), excelAddProduct.getCellData("quantity",3), excelAddProduct.getCellData("description",3), excelAddProduct.getCellData("discount",3), excelAddProduct.getCellData("image",3));
 
     }
-//    @Test(priority = 2)
-//    public void testAddProductValidWithRoleSeller() {
-//        excelLogin = new ExcelHelper();
-//        excelAddProduct = new ExcelHelper();
-//        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-//        excelAddProduct.setExcelFile("DataTest/AddProduct.xlsx", "AddProduct");
-//        getLoginPage().loginSuccessWithSellerAccount("dungtest@yopmail.com", "123456");
-//        getAddProductPage().addProductValidRoleSeller(excelAddProduct.getCellData("productName",1), excelAddProduct.getCellData("category",1), excelAddProduct.getCellData("unit",1), excelAddProduct.getCellData("weight",1), excelAddProduct.getCellData("tags",1), excelAddProduct.getCellData("unitPrice",1), excelAddProduct.getCellData("discountDate",1), excelAddProduct.getCellData("quantity",1), excelAddProduct.getCellData("description",1), excelAddProduct.getCellData("discount",1), excelAddProduct.getCellData("image",1));
-//
-//    }
-//    @Test(priority = 2)
-//    public void testAddProductInvalidWithRoleSeller() {
-//        excelLogin = new ExcelHelper();
-//        excelAddProduct = new ExcelHelper();
-//        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-//        excelAddProduct.setExcelFile("DataTest/AddProduct.xlsx", "AddProduct");
-//        getLoginPage().loginSuccessWithSellerAccount("dungtest@yopmail.com", "123456");
-//        getAddProductPage().addProductInvalidRoleSeller(excelAddProduct.getCellData("productName",3), excelAddProduct.getCellData("category",3), excelAddProduct.getCellData("unit",3), excelAddProduct.getCellData("weight",3), excelAddProduct.getCellData("tags",3), excelAddProduct.getCellData("unitPrice",3), excelAddProduct.getCellData("discountDate",3), excelAddProduct.getCellData("quantity",3), excelAddProduct.getCellData("description",3), excelAddProduct.getCellData("discount",3), excelAddProduct.getCellData("image",3));
-//
-//    }
+    @Test(priority = 2)
+    public void testAddProductValidWithRoleSeller() {
+        excelLogin = new ExcelHelper();
+        excelAddProduct = new ExcelHelper();
+        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
+        excelAddProduct.setExcelFile("DataTest/AddProduct.xlsx", "AddProduct");
+        getLoginPage().loginSuccessWithSellerAccount("dungtest@yopmail.com", "123456");
+        getAddProductPage().addProductValidRoleSeller(excelAddProduct.getCellData("productName",1), excelAddProduct.getCellData("category",1), excelAddProduct.getCellData("unit",1), excelAddProduct.getCellData("weight",1), excelAddProduct.getCellData("tags",1), excelAddProduct.getCellData("unitPrice",1), excelAddProduct.getCellData("discountDate",1), excelAddProduct.getCellData("quantity",1), excelAddProduct.getCellData("description",1), excelAddProduct.getCellData("discount",1), excelAddProduct.getCellData("image",1));
+
+    }
+    @Test(priority = 2)
+    public void testAddProductInvalidWithRoleSeller() {
+        excelLogin = new ExcelHelper();
+        excelAddProduct = new ExcelHelper();
+        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
+        excelAddProduct.setExcelFile("DataTest/AddProduct.xlsx", "AddProduct");
+        getLoginPage().loginSuccessWithSellerAccount("dungtest@yopmail.com", "123456");
+        getAddProductPage().addProductInvalidRoleSeller(excelAddProduct.getCellData("productName",3), excelAddProduct.getCellData("category",3), excelAddProduct.getCellData("unit",3), excelAddProduct.getCellData("weight",3), excelAddProduct.getCellData("tags",3), excelAddProduct.getCellData("unitPrice",3), excelAddProduct.getCellData("discountDate",3), excelAddProduct.getCellData("quantity",3), excelAddProduct.getCellData("description",3), excelAddProduct.getCellData("discount",3), excelAddProduct.getCellData("image",3));
+
+    }
     //Add product valid have discount
     @Test(priority = 3)
     public void testAddProductValidWithDiscount() {

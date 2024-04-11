@@ -67,7 +67,6 @@ public class OrderPage {
     public static By valueNewestPhone = By.xpath("//div[@onclick='add_new_address()']/parent::div/preceding-sibling::div[1]//span[contains(text(),'Phone')]/following-sibling::span");
     public static By iconEllipsisInCardAddressNewest = By.xpath("//div[@onclick='add_new_address()']/parent::div/preceding-sibling::div[1]//i[@class='la la-ellipsis-v']");
     public static By buttonEditInCardAddressNewest = By.xpath("//div[@onclick='add_new_address()']/parent::div/preceding-sibling::div[1]//i[@class='la la-ellipsis-v']/parent::button/following-sibling::div[contains(@class, 'dropdown-menu')]/a[normalize-space()='Edit']");
-
     public static By inputAddYourAddress = By.xpath("//textarea[@name='address']");
     public static By inputAddYourAddressEdit = By.xpath("//div[@id='edit-address-modal']//textarea[@name='address']");
     public static By selectAddCountry = By.xpath("//div[@id='new-address-modal']//select[@data-placeholder='Select your country']/parent::div");
@@ -90,12 +89,12 @@ public class OrderPage {
     public static By buttonSaveNewAddressEdit = By.xpath("//div[@id='edit-address-modal']//button[normalize-space()='Save']");
     By priceCouponDiscountInDisplayPayment = By.xpath("(//th[text()='Coupon Discount'])/following-sibling::td//span");
     By buttonCouponDiscount = By.xpath("//button[contains(@id,'coupon')]");
-    By elementAddress = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Address')]/following-sibling::span");
-    By elementPostalCode = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Postal code')]/following-sibling::span");
-    By elementCity = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'City')]/following-sibling::span");
-    By elementState = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'State')]/following-sibling::span");
-    By elementCountry = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Country')]/following-sibling::span");
-    By elementPhone = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Phone')]/following-sibling::span");
+    By elementAddress = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Address')]/following-sibling::span");
+    By elementPostalCode = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Postal code')]/following-sibling::span");
+    By elementCity = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'City')]/following-sibling::span");
+    By elementState = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'State')]/following-sibling::span");
+    By elementCountry = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Country')]/following-sibling::span");
+    By elementPhone = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Phone')]/following-sibling::span");
 
     public void openShippingInfoFromURL() {
         WebUI.openURL("https://cms.anhtester.com/checkout");
@@ -259,26 +258,26 @@ public class OrderPage {
         if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/checkout")) {
             openShippingInfoFromURL();
         }
-        //By elementAddress = By.xpath("//div[contains(@class,'row gutters')]//span[contains(text(),'Address')]/following-sibling::span");
+        //By elementAddress = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Address')]/following-sibling::span");
         List<WebElement> addressInShippingInfo = DriverManager.getDriver().findElements(elementAddress);
         int size = addressInShippingInfo.size();
         if (Integer.parseInt(index) > size) {
             LogUtils.info("Không tồn tại địa chỉ thứ " + index + " trong Shipping Info");
             return;
         }
-        By buttonSelectAddress = By.xpath("(//input[@type='radio'])[" + index + "]/ancestor::div[@class='col-md-6 mb-3']");
+        By buttonSelectAddress = By.xpath("(//input[@name='address_id'])[" + index + "]/following-sibling::span");
         WebUI.clickElement(buttonSelectAddress);
         WebUI.waitForPageLoaded();
     }
 
     public Address getInfoAddressSelected(String index) {
 
-        By addressSelected = By.xpath("(//input[@type='radio'])[" + index + "]/ancestor::div[@class='col-md-6 mb-3']//span[contains(text(),'Address')]/following-sibling::span");
-        By postalCodeSelected = By.xpath("(//input[@type='radio'])[" + index + "]/ancestor::div[@class='col-md-6 mb-3']//span[contains(text(),'Postal code')]/following-sibling::span");
-        By citySelected = By.xpath("(//input[@type='radio'])[" + index + "]/ancestor::div[@class='col-md-6 mb-3']//span[contains(text(),'City')]/following-sibling::span");
-        By stateSelected = By.xpath("(//input[@type='radio'])[" + index + "]/ancestor::div[@class='col-md-6 mb-3']//span[contains(text(),'State')]/following-sibling::span");
-        By countrySelected = By.xpath("(//input[@type='radio'])[" + index + "]/ancestor::div[@class='col-md-6 mb-3']//span[contains(text(),'Country')]/following-sibling::span");
-        By phoneSelected = By.xpath("(//input[@type='radio'])[" + index + "]/ancestor::div[@class='col-md-6 mb-3']//span[contains(text(),'Phone')]/following-sibling::span");
+        By addressSelected = By.xpath("(//input[@name='address_id'])[" + index + "]/following-sibling::span//span[contains(text(),'Address')]/following-sibling::span");
+        By postalCodeSelected = By.xpath("(//input[@name='address_id'])[" + index + "]/following-sibling::span//span[contains(text(),'Postal code')]/following-sibling::span");
+        By citySelected = By.xpath("(//input[@name='address_id'])[" + index + "]/following-sibling::span//span[contains(text(),'City')]/following-sibling::span");
+        By stateSelected = By.xpath("(//input[@name='address_id'])[" + index + "]/following-sibling::span//span[contains(text(),'State')]/following-sibling::span");
+        By countrySelected = By.xpath("(//input[@name='address_id'])[" + index + "]/following-sibling::span//span[contains(text(),'Country')]/following-sibling::span");
+        By phoneSelected = By.xpath("(//input[@name='address_id'])[" + index + "]/following-sibling::span//span[contains(text(),'Phone')]/following-sibling::span");
         Address selectedAddress = new Address(WebUI.getElementText(addressSelected), WebUI.getElementText(citySelected), WebUI.getElementText(stateSelected), WebUI.getElementText(countrySelected), WebUI.getElementText(postalCodeSelected), WebUI.getElementText(phoneSelected));
         return selectedAddress;
     }
@@ -823,6 +822,7 @@ public class OrderPage {
         WebUI.clickElement(confirmCancelOrder);
         WebUI.waitForPageLoaded();
     }
+
     public void testCancelOrder(String orderCode) {
         cancelOrder(orderCode);
         WebUI.verifyAssertTrueIsDisplayed(messageNoti, "Khong xuat hien thong bao");
@@ -892,6 +892,7 @@ public class OrderPage {
         checkHistoryOrder(noteForOrder);
 
     }
+
     public void checkOrderExistInAdmin(String orderCode) {
         WebUI.openURL("https://cms.anhtester.com/admin/all_orders");
         WebUI.waitForPageLoaded();
@@ -904,6 +905,7 @@ public class OrderPage {
         WebUI.verifyAssertTrueIsDisplayed(elementOrderCodeInAdmin, "Không xuất hiện đơn hàng trong admin.");
         WebUI.verifyAssertTrueTextContain(elementOrderCodeInAdmin, orderCode, "Mã đơn hàng không khớp.");
     }
+
     public void checkHistoryOrder(String noteForOrder) {
         By elementOrderDetailInDisplayConfirm = By.xpath("//div[@class='card-body']");
         List<WebElement> orders = DriverManager.getDriver().findElements(elementOrderDetailInDisplayConfirm);
@@ -981,11 +983,11 @@ public class OrderPage {
             By elementAdditionalInfoInOrderSummary = By.xpath("//td[text()='Additional Info']/following-sibling::td");
             WebUI.verifyAssertTrueEqual(elementAdditionalInfoInOrderSummary, noteForOrder, "Thông tin thêm không khớp.");
 
-            //check total order amount
-//            By elementTotalOrderAmountInHistoryOrderDetail = By.xpath("//td[text()='Total order amount:']/following-sibling::td");
-//            String valueTotalOrderAmount = WebUI.getElementText(elementTotalOrderAmountInHistoryOrderDetail);
-//            valueTotalOrderAmount = convertCurrencyToBigDecimal(valueTotalOrderAmount).toString();
-//            WebUI.verifyAssertEquals(valueTotalOrderAmount,orderAmountInHistoryOrder.getTotal() , "Tổng giá tiền không đúng tại phần order summary trong trang lich sử đơn hàng.");
+//            check total order amount
+            By elementTotalOrderAmountInHistoryOrderDetail = By.xpath("//td[text()='Total order amount:']/following-sibling::td");
+            String valueTotalOrderAmount = WebUI.getElementText(elementTotalOrderAmountInHistoryOrderDetail);
+            valueTotalOrderAmount = convertCurrencyToBigDecimal(valueTotalOrderAmount).toString();
+            WebUI.verifyAssertEquals(valueTotalOrderAmount, orderAmountInHistoryOrder.getTotal(), "Tổng giá tiền không đúng tại phần order summary trong trang lich sử đơn hàng.");
 
             DriverManager.getDriver().switchTo().window(mainWindow);
 
@@ -1001,55 +1003,10 @@ public class OrderPage {
         WebUI.setTextAndClear(LoginPage.inputPassword, excel.getCellData("password", 5));
         WebUI.clickElement(LoginPage.buttonSubmitLogin);
         WebUI.waitForPageLoaded();
-        for(int j = 0; j < valueOrderCode.size(); j++) {
+        for (int j = 0; j < valueOrderCode.size(); j++) {
             checkOrderExistInAdmin(valueOrderCode.get(j));
         }
 
-    }
-
-
-    /**
-     * Get info products in display payment
-     *
-     * @return
-     */
-    public static Map<String, Cart> getInfoProductsInDisplayPaymentMap() {
-        List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantitiesInDisplayPayment);
-        if (productQuantities.size() == 0) {
-            return new HashMap<>();
-        }
-        List<Integer> valueProductQuantities = new ArrayList<>();
-        for (WebElement productQuantity : productQuantities) {
-            valueProductQuantities.add(Integer.parseInt(productQuantity.getText().replaceAll("\\D", "")));
-        }
-
-        List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInDisplayPayment);
-        List<String> valueProductNames = new ArrayList<>();
-        for (WebElement productName : productNames) {
-            valueProductNames.add(productName.getText());
-        }
-
-        List<WebElement> totalProductPrices = DriverManager.getDriver().findElements(elementTotalProductPricesInDisplayPayment);
-        List<BigDecimal> valueTotalProductPrices = new ArrayList<>();
-        for (WebElement totalProductPrice : totalProductPrices) {
-            valueTotalProductPrices.add(convertCurrencyToBigDecimal(totalProductPrice.getText()));
-        }
-
-        Map<String, Cart> infoProductsInDisplayPayment = new HashMap<>();
-        for (int i = 0; i < valueProductNames.size(); i++) {
-            Cart cart = new Cart();
-            String name = valueProductNames.get(i);
-            String quantity = " × " + valueProductQuantities.get(i);
-            int position = name.indexOf(quantity);
-            if (position != -1) {
-                name = name.substring(0, position);
-            }
-            cart.setName(name);
-            cart.setQuantity(valueProductQuantities.get(i));
-            cart.setPrice(valueTotalProductPrices.get(i).divide(BigDecimal.valueOf(valueProductQuantities.get(i))));
-            infoProductsInDisplayPayment.put(name, cart);
-        }
-        return infoProductsInDisplayPayment;
     }
 
     public static List<Cart> getInfoProductsInDisplayPayment() {
@@ -1074,6 +1031,11 @@ public class OrderPage {
             valueTotalProductPrices.add(convertCurrencyToBigDecimal(totalProductPrice.getText()));
         }
 
+        List<Cart> infoProductsInDisplayPayment = getCartsInDisplayPayment(valueProductNames, valueProductQuantities, valueTotalProductPrices);
+        return infoProductsInDisplayPayment;
+    }
+
+    private static List<Cart> getCartsInDisplayPayment(List<String> valueProductNames, List<Integer> valueProductQuantities, List<BigDecimal> valueTotalProductPrices) {
         List<Cart> infoProductsInDisplayPayment = new ArrayList<>();
         for (int i = 0; i < valueProductNames.size(); i++) {
             Cart cart = new Cart();

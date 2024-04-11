@@ -18,7 +18,7 @@ public class AddProductPage extends CommonPage {
     private String nameProductVerify;
     private By menuProduct = By.xpath("//*[@id='main-menu']/li[2]/a/span[1]");
     private By submenuAddProduct = By.xpath("(//span[normalize-space()='Add New Product'])[1]");
-    By submenuProducts = By.xpath("//*[@id=\"main-menu\"]/li[2]/ul/li[1]/a/span");
+    By submenuProducts = By.xpath("//*[@id='main-menu']/li[2]/ul/li[1]/a/span");
     private By titleAddNewProduct = By.xpath("//h5[normalize-space()='Add New Product']");
     private By blockProductInf = By.xpath("//h5[normalize-space()='Product Information']");
     private By inputProductName = By.xpath("//input[@placeholder='Product Name']");
@@ -118,13 +118,6 @@ public class AddProductPage extends CommonPage {
         WebUI.setTextAndClear(inputDescription, description);
         WebUI.clickElement(buttonSavePublish); //Click button Save&Public
 
-//        WebUI.clickElement(menuAllProducts);
-//        WebUI.waitForPageLoaded();
-//        WebUI.setTextAndClear(inputSearchProduct, productName, Keys.ENTER);
-//        WebUI.waitForJQueryLoad();
-//        WebUI.sleep(2);
-//        WebUI.waitForElementVisible(newProduct);
-//        nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
     }
 
     public void addProductWithRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
@@ -184,13 +177,6 @@ public class AddProductPage extends CommonPage {
         WebUI.setTextAndClear(inputDescription, description);
         WebUI.clickElement(By.xpath("//button[text()='Upload Product']")); //Click button Save&Public
 
-//        WebUI.clickElement(menuAllProducts);
-//        WebUI.waitForPageLoaded();
-//        WebUI.setTextAndClear(inputSearchProduct, productName, Keys.ENTER);
-//        WebUI.waitForJQueryLoad();
-//        WebUI.sleep(2);
-//        WebUI.waitForElementVisible(newProduct);
-//        nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
     }
 
     public void addProductValid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
