@@ -59,14 +59,14 @@ public class OrderPage {
     By elementTotalOrderAmountInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Total order amount')]/following-sibling::td");
     By elementShippingMethodInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Shipping:')]/following-sibling::td");
     By elementMenuCheckOut = By.xpath("//div[contains(@class,'text-primary')]");
-    public static By valueNewestAddress = By.xpath("(//div[@class='border p-3 rounded mb-3 c-pointer text-center bg-white h-100 d-flex flex-column justify-content-center']/preceding::div[@class='col-md-6 mb-3'][1])//span[contains(text(),'Address')]/following-sibling::span");
-    public static By valueNewestCountry = By.xpath("(//div[@class='border p-3 rounded mb-3 c-pointer text-center bg-white h-100 d-flex flex-column justify-content-center']/preceding::div[@class='col-md-6 mb-3'][1])//span[contains(text(),'Country')]/following-sibling::span");
-    public static By valueNewestState = By.xpath("(//div[@class='border p-3 rounded mb-3 c-pointer text-center bg-white h-100 d-flex flex-column justify-content-center']/preceding::div[@class='col-md-6 mb-3'][1])//span[contains(text(),'State')]/following-sibling::span");
-    public static By valueNewestCity = By.xpath("(//div[@class='border p-3 rounded mb-3 c-pointer text-center bg-white h-100 d-flex flex-column justify-content-center']/preceding::div[@class='col-md-6 mb-3'][1])//span[contains(text(),'City')]/following-sibling::span");
-    public static By valueNewestPostalCode = By.xpath("(//div[@class='border p-3 rounded mb-3 c-pointer text-center bg-white h-100 d-flex flex-column justify-content-center']/preceding::div[@class='col-md-6 mb-3'][1])//span[contains(text(),'Postal code')]/following-sibling::span");
-    public static By valueNewestPhone = By.xpath("(//div[@class='border p-3 rounded mb-3 c-pointer text-center bg-white h-100 d-flex flex-column justify-content-center']/preceding::div[@class='col-md-6 mb-3'][1])//span[contains(text(),'Phone')]/following-sibling::span");
-    public static By iconEllipsisInCardAddressNewest = By.xpath("(//div[@class='border p-3 rounded mb-3 c-pointer text-center bg-white h-100 d-flex flex-column justify-content-center']/preceding::div[@class='col-md-6 mb-3'][1])//i[@class='la la-ellipsis-v']");
-    public static By buttonEditInCardAddressNewest = By.xpath("(//div[@class='border p-3 rounded mb-3 c-pointer text-center bg-white h-100 d-flex flex-column justify-content-center']/preceding::div[@class='col-md-6 mb-3'][1])//i[@class='la la-ellipsis-v']/parent::button/following-sibling::div[contains(@class, 'dropdown-menu')]/a[normalize-space()='Edit']");
+    public static By valueNewestAddress = By.xpath("//div[@onclick='add_new_address()']/parent::div/preceding-sibling::div[1]//span[contains(text(),'Address')]/following-sibling::span");
+    public static By valueNewestCountry = By.xpath("//div[@onclick='add_new_address()']/parent::div/preceding-sibling::div[1]//span[contains(text(),'Country')]/following-sibling::span");
+    public static By valueNewestState = By.xpath("//div[@onclick='add_new_address()']/parent::div/preceding-sibling::div[1]//span[contains(text(),'State')]/following-sibling::span");
+    public static By valueNewestCity = By.xpath("//div[@onclick='add_new_address()']/parent::div/preceding-sibling::div[1]//span[contains(text(),'City')]/following-sibling::span");
+    public static By valueNewestPostalCode = By.xpath("//div[@onclick='add_new_address()']/parent::div/preceding-sibling::div[1]//span[contains(text(),'Postal code')]/following-sibling::span");
+    public static By valueNewestPhone = By.xpath("//div[@onclick='add_new_address()']/parent::div/preceding-sibling::div[1]//span[contains(text(),'Phone')]/following-sibling::span");
+    public static By iconEllipsisInCardAddressNewest = By.xpath("//div[@onclick='add_new_address()']/parent::div/preceding-sibling::div[1]//i[@class='la la-ellipsis-v']");
+    public static By buttonEditInCardAddressNewest = By.xpath("//div[@onclick='add_new_address()']/parent::div/preceding-sibling::div[1]//i[@class='la la-ellipsis-v']/parent::button/following-sibling::div[contains(@class, 'dropdown-menu')]/a[normalize-space()='Edit']");
 
     public static By inputAddYourAddress = By.xpath("//textarea[@name='address']");
     public static By inputAddYourAddressEdit = By.xpath("//div[@id='edit-address-modal']//textarea[@name='address']");
