@@ -30,7 +30,7 @@ public class OrderPage {
     public static By popupAddToCartSucceeded = By.xpath("//h3[normalize-space()='Item added to your cart!']");
     public static By buttonCloseAddToCartMessage = By.xpath("//span[@class = 'la-2x']");
     public static By buttonCart = By.xpath("//div[@id='cart_items']");
-    private By buttonCheckoutOnCartPopup = By.xpath("//a[normalize-space()='Checkout']");
+    private By buttonCheckoutOnCartPopup = By.xpath("//div[@id='cart_items']//a[normalize-space()='Checkout']");
     private By buttonContinueToDeliveryInfo = By.xpath("//button[normalize-space()='Continue to Delivery Info']");
     private By buttonContinueToPayment = By.xpath("//button[normalize-space()='Continue to Payment']");
     private By inputAdditionalInfo = By.xpath("//textarea[@placeholder='Type your text']");
@@ -43,7 +43,7 @@ public class OrderPage {
     public static By priceTaxInDisplayPayment = By.xpath("(//th[text()='Tax'])/following-sibling::td//span");
     By priceTotalShippingInDisplayPayment = By.xpath("(//th[text()='Total Shipping'])/following-sibling::td//span");
     By priceTotalInDisplayPayment = By.xpath(" //tr[@class='cart-total']//strong");
-    By elementProductNamesInDeliveryInfoDisplay = By.xpath("//div[@class='card-body']//ul[@class='list-group list-group-flush']//span[contains(@class,'opacity-60')]");
+    By elementProductNamesInDeliveryInfoDisplay = By.xpath("//div[@class='card-body']//img[contains(@class,'img-fit')]/parent::span/following-sibling::span");
     static By elementProductNamesInDisplayPayment = By.xpath("//tbody//td[@class='product-name']");
     static By elementTotalProductPricesInDisplayPayment = By.xpath("//tbody//td[contains(@class,'product-total')]");
     static By elementProductQuantitiesInDisplayPayment = By.xpath("//tbody//strong[@class='product-quantity']");
