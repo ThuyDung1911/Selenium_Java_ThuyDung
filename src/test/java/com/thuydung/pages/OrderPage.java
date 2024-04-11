@@ -1,6 +1,7 @@
 package com.thuydung.pages;
 
 import com.thuydung.drivers.DriverManager;
+import com.thuydung.helpers.ExcelHelper;
 import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.keywords.WebUI;
 import com.thuydung.requests.Address;
@@ -22,29 +23,14 @@ import java.util.Map;
 import static com.thuydung.pages.CartPage.convertCurrencyToBigDecimal;
 
 public class OrderPage {
-    private By buttonAddNewAddress = By.xpath("//div[@class='border p-3 rounded mb-3 c-pointer text-center bg-white h-100 d-flex flex-column justify-content-center']");
-    private By verifyCheckedAddress = By.xpath("(//input[@name = 'address_id' ])[2]");
-    private By buttonProcessToCheckout = By.xpath("//a[normalize-space()='Proceed to Checkout']");
-    private By selectProduct2 = By.xpath("(//a[@class = 'd-block text-reset' ])[1]");
-    private By selectProductNabati = By.xpath("(//a[contains(text(),'Nabati')])[1]");
-    private By selectProduct1 = By.xpath("(//a[contains(text(),'Cosy')])[1]");
-    private By verifyProductNabatiAtStepCheckout = By.xpath("//span[@class='fs-14 opacity-60'][normalize-space()='Nabati']");
-    private By verifyProductChocoPieAtStepCheckout = By.xpath("//span[@class='fs-14 opacity-60'][normalize-space()='ChocoPie']");
-    private By quantityProduct = By.xpath("//input[@name='quantity']");
+    private By buttonAddNewAddress = By.xpath("//div[@onclick='add_new_address()']");
     private By titleNewAddress = By.xpath("//div[@id='new-address-modal']//h5[@id='exampleModalLabel']");
     private By titleNewAddressEdit = By.xpath("//div[@id='edit-address-modal']//h5[@id='exampleModalLabel']");
-    private By inputYourAddress = By.xpath("//textarea[@placeholder='Your Address']");
-    private By selectCountry = By.xpath("//div[contains(text(),'Select your country')]");
-
-    public static By buttonAddToCart = By.xpath("//button[@class='btn btn-soft-primary mr-2 add-to-cart fw-600']");
+    public static By buttonAddToCart = By.xpath("//button[@onclick='addToCart()']");
     public static By popupAddToCartSucceeded = By.xpath("//h3[normalize-space()='Item added to your cart!']");
     public static By buttonCloseAddToCartMessage = By.xpath("//span[@class = 'la-2x']");
-    private By buttonBackToShopping = By.xpath("//button[normalize-space()='Back to shopping']");
-    private By buttonPlus = By.xpath("//button[contains(@data-type,'plus')]");
-    public static By buttonCart = By.xpath("//i[@class='la la-shopping-cart la-2x opacity-80']");
-    public static By viewProductOrderOnCart = By.xpath("//span[@class='fw-600 mb-1 text-truncate-2']");
+    public static By buttonCart = By.xpath("//div[@id='cart_items']");
     private By buttonCheckoutOnCartPopup = By.xpath("//a[normalize-space()='Checkout']");
-    private By buttonContinueToShipping = By.xpath("//a[normalize-space()='Continue to Shipping']");
     private By buttonContinueToDeliveryInfo = By.xpath("//button[normalize-space()='Continue to Delivery Info']");
     private By buttonContinueToPayment = By.xpath("//button[normalize-space()='Continue to Payment']");
     private By inputAdditionalInfo = By.xpath("//textarea[@placeholder='Type your text']");
@@ -53,14 +39,10 @@ public class OrderPage {
     private By buttonCompleteOrder = By.xpath("//button[normalize-space()='Complete Order']");
     private By messageOrderSuccess = By.xpath("//h1[normalize-space()='Thank You for Your Order!']");
     public By messageNoti = By.xpath("//span[@data-notify='message']");
-    private By buttonSelectAddressTest = By.xpath("(//span[@class='aiz-rounded-check flex-shrink-0 mt-1'])[1]");
-    private By quantity = By.xpath("//input[@name='quantity']");
-    private By paymentPage = By.xpath("//h3[normalize-space()='Any additional info?']");
     private static By subTotalPriceInDisplayPayment = By.xpath("(//th[text()='Subtotal'])/following-sibling::td//span");
     public static By priceTaxInDisplayPayment = By.xpath("(//th[text()='Tax'])/following-sibling::td//span");
     By priceTotalShippingInDisplayPayment = By.xpath("(//th[text()='Total Shipping'])/following-sibling::td//span");
     By priceTotalInDisplayPayment = By.xpath(" //tr[@class='cart-total']//strong");
-    By elementProductNamesInCartDropdown = By.xpath("//div[contains(text(),'Cart Items')]/following-sibling::ul/li//span[contains(@class,'text-truncate')]");
     By elementProductNamesInDeliveryInfoDisplay = By.xpath("//div[@class='card-body']//ul[@class='list-group list-group-flush']//span[contains(@class,'opacity-60')]");
     static By elementProductNamesInDisplayPayment = By.xpath("//tbody//td[@class='product-name']");
     static By elementTotalProductPricesInDisplayPayment = By.xpath("//tbody//td[contains(@class,'product-total')]");
@@ -68,11 +50,6 @@ public class OrderPage {
     By elementProductNamesInDisplayConfirm = By.xpath("//h5[normalize-space()='Order Details']/following-sibling::div/table//td[2]/a");
     By elementProductQuantitiesInDisplayConfirm = By.xpath("//h5[normalize-space()='Order Details']/following-sibling::div/table//td[4]");
     By elementProductPricesInDisplayConfirm = By.xpath("//h5[normalize-space()='Order Details']/following-sibling::div/table//td[6]");
-    By elementSubTotalInDisplayConfirm = By.xpath("//table//th[text()='Subtotal']/following-sibling::td/span");
-    By elementPriceShippingInDisplayConfirm = By.xpath("//table//th[text()='Shipping']/following-sibling::td/span");
-    By elementPriceTaxInDisplayConfirm = By.xpath("//table//th[text()='Tax']/following-sibling::td/span");
-    By elementCouponDiscountInDisplayConfirm = By.xpath("//table//th[text()='Coupon Discount']/following-sibling::td/span");
-    By elementTotalInDisplayConfirm = By.xpath("//table//span[text()='Total']/ancestor::th/following-sibling::td//span");
     By elementNameInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Name')]/following-sibling::td");
     By elementEmailInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Email')]/following-sibling::td");
     By elementOrderDateInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Order date')]/following-sibling::td");
@@ -913,15 +890,28 @@ public class OrderPage {
         }
         checkInfoPriceInConfirmDisplay();
         checkHistoryOrder(noteForOrder);
-    }
 
+    }
+    public void checkOrderExistInAdmin(String orderCode) {
+        WebUI.openURL("https://cms.anhtester.com/admin/all_orders");
+        WebUI.waitForPageLoaded();
+        By elementSearchOrderCode = By.xpath("//input[@id='search']");
+        By buttonFilter = By.xpath("//button[normalize-space()='Filter']");
+        WebUI.setTextAndClear(elementSearchOrderCode, orderCode);
+        WebUI.clickElement(buttonFilter);
+        WebUI.waitForPageLoaded();
+        By elementOrderCodeInAdmin = By.xpath("//td[2]");
+        WebUI.verifyAssertTrueIsDisplayed(elementOrderCodeInAdmin, "Không xuất hiện đơn hàng trong admin.");
+        WebUI.verifyAssertTrueTextContain(elementOrderCodeInAdmin, orderCode, "Mã đơn hàng không khớp.");
+    }
     public void checkHistoryOrder(String noteForOrder) {
         By elementOrderDetailInDisplayConfirm = By.xpath("//div[@class='card-body']");
         List<WebElement> orders = DriverManager.getDriver().findElements(elementOrderDetailInDisplayConfirm);
+        List<String> valueOrderCode = new ArrayList<>();
         for (int i = 1; i <= orders.size(); i++) {
             By elementOrderCodeInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/span");
             String orderCode = WebUI.getElementText(elementOrderCodeInOrderDetail);
-
+            valueOrderCode.add(orderCode);
             List<Cart> listProduct = getInfoOrderDetailInDisplayConfirmWithOrderCode(orderCode);
             OrderAmount orderAmountInOrderDetail = getOrderAmountInOrderDetail(orderCode);
             OrderSummary orderSummaryInConfirmDisplay = getOrderSummaryInConfirmDisplay();
@@ -998,7 +988,23 @@ public class OrderPage {
 //            WebUI.verifyAssertEquals(valueTotalOrderAmount,orderAmountInHistoryOrder.getTotal() , "Tổng giá tiền không đúng tại phần order summary trong trang lich sử đơn hàng.");
 
             DriverManager.getDriver().switchTo().window(mainWindow);
+
         }
+
+        WebUI.clickElement(DashboardPage.buttonLogout);
+        WebUI.waitForPageLoaded();
+        WebUI.clickElement(LoginPage.buttonLogin);
+        WebUI.waitForPageLoaded();
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        WebUI.setTextAndClear(LoginPage.inputEmail, excel.getCellData("email", 5));
+        WebUI.setTextAndClear(LoginPage.inputPassword, excel.getCellData("password", 5));
+        WebUI.clickElement(LoginPage.buttonSubmitLogin);
+        WebUI.waitForPageLoaded();
+        for(int j = 0; j < valueOrderCode.size(); j++) {
+            checkOrderExistInAdmin(valueOrderCode.get(j));
+        }
+
     }
 
 

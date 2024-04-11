@@ -29,7 +29,7 @@ public class OrderTest extends BaseTest {
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
         getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
-//        getCartPage().addProductToCart("Cosy Thuy Dung GBNXJUZQ", "1");
+        getCartPage().addProductToCart("Cosy Thuy Dung GBNXJUZQ", "1");
 //        getCartPage().addProductToCart("Tiramisu", "1");
         getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
     }

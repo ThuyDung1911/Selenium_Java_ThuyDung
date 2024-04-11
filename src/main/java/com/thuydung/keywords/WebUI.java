@@ -518,7 +518,7 @@ public class WebUI {
         waitForElementVisible(by);
         sleep(STEP_TIME);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
-            highLightElementFull(by);
+            highLightElement(by);
         }
         LogUtils.info("Get attribute of element " + by);
         LogUtils.info("Attribute value: " + getWebElement(by).getAttribute(attributeName));
