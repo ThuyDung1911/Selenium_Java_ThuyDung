@@ -19,9 +19,14 @@ import org.testng.asserts.SoftAssert;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.Normalizer;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.Duration;
 import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 
 public class WebUI {
     private static Actions action = new Actions(DriverManager.getDriver());
@@ -873,5 +878,29 @@ public class WebUI {
     public static BigDecimal stringToBigDecimal(String numberString) {
         return new BigDecimal(numberString);
     }
+    public static long randomNumber(int minNumDigits, int maxNumDigits) {
+        long min = (long) Math.pow(10, minNumDigits - 1);
+        long max = (long) Math.pow(10, maxNumDigits) - 1;
+        Random random = new Random();
+        long randomNumber = min + random.nextInt((int) (max - min + 1));
+        return randomNumber;
+    }
+    /**
+     * Chuyển đổi tiền tệ sang BigDecimal
+     *
+     * @param amount String: Số tiền
+     * @return BigDecimal: Số tiền
+     */
+    public static BigDecimal convertCurrencyToBigDecimal(String amount) {
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
+        try {
+            Number number = format.parse(amount);
+            return new BigDecimal(number.toString()).setScale(2, RoundingMode.HALF_UP);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+        }
+    }
+
 
 }

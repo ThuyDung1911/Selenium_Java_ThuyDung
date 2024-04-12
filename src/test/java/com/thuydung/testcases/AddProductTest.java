@@ -21,6 +21,15 @@ public class AddProductTest extends BaseTest {
         getLoginPage().loginSuccessAdminPage(excelLogin.getCellData("email", 5), excelLogin.getCellData("password", 5));
         getAddProductPage().addProductValid(data.get("productName"), data.get("category"), data.get("unit"), data.get("weight"), data.get("tags"), data.get("unitPrice"), data.get("discountDate"), data.get("quantity"), data.get("description"), data.get("discount"), data.get("image"));
     }
+    @Test(priority = 1, dataProvider = "data_provider_add_product", dataProviderClass = DataProviderAddProduct.class)
+    public void testAddProductVariantValid(Hashtable<String, String> data) {
+        excelLogin = new ExcelHelper();
+        excelAddProduct = new ExcelHelper();
+        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
+        excelAddProduct.setExcelFile("DataTest/AddProduct.xlsx", "AddProduct");
+        getLoginPage().loginSuccessAdminPage(excelLogin.getCellData("email", 5), excelLogin.getCellData("password", 5));
+        getAddProductPage().addProductVariantValid(data.get("productName"), data.get("category"), data.get("unit"), data.get("weight"), data.get("tags"), data.get("unitPrice"), data.get("discountDate"), data.get("quantity"), data.get("description"), data.get("discount"), data.get("image"));
+    }
 
     //Add new product invalid
     @Test(priority = 2)
