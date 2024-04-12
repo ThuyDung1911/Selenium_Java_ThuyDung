@@ -12,6 +12,7 @@ import org.testng.Assert;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Random;
 
 public class AddProductPage extends CommonPage {
@@ -59,6 +60,7 @@ public class AddProductPage extends CommonPage {
     private By newProduct = By.xpath("(//div[@class='card']//img/parent::div/following-sibling::div/span)[1]");
     public static By discountPriceProduct = By.xpath("//div[text()='Discount Price:']/parent::div/following-sibling::div");
     public static By unitPriceProduct = By.xpath("//div[text()='Price:']/parent::div/following-sibling::div");
+    private By blockProductVariation = By.xpath("//h5[normalize-space()='Product Variation']");
 
     public void openAddProductPage() {
         WebUI.clickElement(menuProduct);
@@ -79,7 +81,6 @@ public class AddProductPage extends CommonPage {
         WebUI.setTextEnter(inputSearchCategory, category);
         WebUI.clickElement(selectBrand);
         WebUI.setTextEnter(inputSearchBrand, "CMS brand 01");
-
         WebUI.setTextAndClear(inputUnit, unit);
         WebUI.setTextAndClear(inputWeight, String.valueOf(weight));
         WebUI.setTextAndClear(inputTags, tags);
@@ -89,8 +90,6 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(uploadNewImageTab);
         DriverManager.getDriver().findElement(inputGalleryImages).sendKeys(SystemHelper.getCurrentDir() + "DataTest\\" + imgName);
         WebUI.clickElement(selectFileTab);
-        LogUtils.info(imgName);
-        LogUtils.info(SystemHelper.splitString(imgName, "[.]"));
         String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
         WebUI.setTextEnter(inputSearchImg, imageName);
         WebUI.waitForJQueryLoad();
@@ -103,7 +102,61 @@ public class AddProductPage extends CommonPage {
         WebUI.sleep(2);
         WebUI.clickElement(selectThumbnailImages);
         WebUI.clickElement(buttonAddFileImages);
+        ////No Product Variation
         //Product price + stock
+        addProductPriceAndStockNoVariation(unitPrice, discountDate, discount, quantity);
+        //Product Description  
+        WebUI.verifyAssertTrueIsDisplayed(blockProductDescription, "Product description KHONG xuat hien");
+        WebUI.setTextAndClear(inputDescription, description);
+        WebUI.clickElement(buttonSavePublish); //Click button Save&Public
+
+    }
+
+    public void addProductVariationColor(List<String> color) {
+        WebUI.openURL("https://cms.anhtester.com/admin/products/create");
+        WebUI.verifyAssertTrueIsDisplayed(blockProductVariation, "Product variation block KHONG xuat hien");
+        By toggleInputColor = By.xpath("//input[@name='colors_active']");
+        By toggleColor = By.xpath("//input[@name='colors_active']/parent::label");
+        By selectColor = By.xpath("//button[@data-id='colors']");
+        By inputSearchDropDown = By.xpath("//div[@class='dropdown-menu show']//input[@aria-label='Search']");
+        WebUI.clickElement(toggleColor);
+        WebUI.clickElement(selectColor);
+        for (String colorName : color) {
+            WebUI.setTextAndClear(inputSearchDropDown, colorName);
+            WebUI.waitForJQueryLoad();
+            WebUI.sleep(2);
+            WebUI.clickElement(By.xpath("//div[@class='dropdown-menu show']//span[text()='" + colorName + "']"));
+        }
+        WebUI.clickElement(selectColor);
+
+    }
+    public void addProductVariationAtribute(List<String> attribute, List<String> attributeValue) {
+        WebUI.openURL("https://cms.anhtester.com/admin/products/create");
+        WebUI.verifyAssertTrueIsDisplayed(blockProductVariation, "Product variation block KHONG xuat hien");
+
+        By inputSearchDropDown = By.xpath("//div[@class='dropdown-menu show']//input[@aria-label='Search']");
+        By selectAttribute = By.xpath("//button[@data-id='choice_attributes']");
+        for(String attributeName : attribute){
+            WebUI.clickElement(selectAttribute);
+            WebUI.setTextAndClear(inputSearchDropDown, attributeName);
+            WebUI.waitForJQueryLoad();
+            WebUI.sleep(2);
+            WebUI.clickElement(By.xpath("//div[@class='dropdown-menu show']//span[text()='" + attributeName + "']"));
+            WebUI.waitForJQueryLoad();
+            WebUI.clickElement(selectAttribute);
+            By selectAtributeValue = By.xpath("//input[@name='choice[]'][@value='" + attributeName + "']");
+            WebUI.clickElement(selectAtributeValue);
+            for (String attributeNameValue : attributeValue) {
+                WebUI.setTextAndClear(inputSearchDropDown, attributeNameValue);
+                WebUI.waitForJQueryLoad();
+                WebUI.sleep(2);
+                WebUI.clickElement(By.xpath("//div[@class='dropdown-menu show']//span[text()='" + attributeNameValue + "']"));
+            }
+            WebUI.clickElement(selectAtributeValue);
+        }
+
+    }
+    public void addProductPriceAndStockNoVariation(String unitPrice, String discountDate, String discount, String quantity) {
         WebUI.verifyAssertTrueIsDisplayed(blockProductPrice, "Product price block KHONG xuat hien");
         WebUI.setTextAndClear(inputUnitPrice, String.valueOf(unitPrice));
         WebUI.setTextAndClear(selectDate, discountDate);
@@ -113,10 +166,17 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(selectUnitDiscountPercent);
         WebUI.setTextAndClear(inputQuantity, String.valueOf(quantity));
         WebUI.setTextAndClear(inputSKU, String.valueOf(randomNumber));
-        //Product Description  
-        WebUI.verifyAssertTrueIsDisplayed(blockProductDescription, "Product description KHONG xuat hien");
-        WebUI.setTextAndClear(inputDescription, description);
-        WebUI.clickElement(buttonSavePublish); //Click button Save&Public
+
+    }
+    public void addProductPriceAndStockVariation(String unitPrice, String discountDate, String discount, List<String> unitPriceVariation, List<String> SKUVariation, List<String> quantityVArition) {
+        WebUI.verifyAssertTrueIsDisplayed(blockProductPrice, "Product price block KHONG xuat hien");
+        WebUI.setTextAndClear(inputUnitPrice, String.valueOf(unitPrice));
+        WebUI.setTextAndClear(selectDate, discountDate);
+        WebUI.clickElement(buttonSelectDiscountDate);
+        WebUI.setTextAndClear(inputDiscount, String.valueOf(discount));
+        WebUI.clickElement(selectUnitDiscount);
+        WebUI.clickElement(selectUnitDiscountPercent);
+        //Nen dung List<String> hay dung gi?
 
     }
 
@@ -240,6 +300,7 @@ public class AddProductPage extends CommonPage {
         WebUI.sleep(1);
         WebUI.verifyAssertTrueEqual(descriptionUI, description, "Description hien thi sai");
     }
+
     public void addProductValidRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
         addProductWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
