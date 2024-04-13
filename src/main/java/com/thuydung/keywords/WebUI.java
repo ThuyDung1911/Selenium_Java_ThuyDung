@@ -135,9 +135,21 @@ public class WebUI {
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
-        LogUtils.info("Verify " + verifyText + " is display correct on " + by.toString());
-        //AllureReportManager.saveTextLog("Verify " + verifyText + " is display correct on " + by.toString());
-        ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display correct on " + by.toString());
+        boolean result = DriverManager.getDriver().findElement(by).getText().trim().equals(verifyText);
+        if (!result) {
+            LogUtils.error("Verify " + verifyText + " is not display correct on " + by.toString());
+            ExtentTestManager.logMessage(Status.FAIL, "Verify " + verifyText + " is not display correct on " + by.toString());
+            ExtentTestManager.addScreenShot(Status.FAIL, message);
+//            softAssert.fail("Fail, NOT match: " + actual.toString() + " != " + expected.toString());
+        } else {
+            ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display correct on " + by.toString());
+            LogUtils.info("Verify " + verifyText + " is display correct on " + by.toString());
+        }
+
+
+//        LogUtils.info("Verify " + verifyText + " is display correct on " + by.toString());
+//        //AllureReportManager.saveTextLog("Verify " + verifyText + " is display correct on " + by.toString());
+//        ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display correct on " + by.toString());
     }
 
     @Step("Verify {1} is display correct on {0}")
@@ -364,6 +376,7 @@ public class WebUI {
         LogUtils.info("Key down Enter");
         ExtentTestManager.logMessage("Key down Enter");
     }
+
     @Step("Set text {1} on element {0} and key down backspace")
     public static void setTextAndBackspace(By by, String value) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
@@ -482,6 +495,7 @@ public class WebUI {
         LogUtils.info("Wait until the element " + by + " is visible");
         return getWebElement(by);
     }
+
     public static boolean checkElementVisible(By by) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
@@ -601,9 +615,21 @@ public class WebUI {
     public static void verifySoftAssertEquals(Object actual, Object expected, String message) {
         waitForPageLoaded();
         sleep(STEP_TIME);
+        boolean result = actual.equals(expected);
         softAssert.assertEquals(actual, expected, message);
-        ExtentTestManager.logMessage(Status.PASS, "Verify result: " + expected + " is correct");
-        LogUtils.info("Verify result: " + expected + " is correct");
+        if (!result) {
+            LogUtils.error("Fail, NOT match: " + actual.toString() + " != " + expected.toString());
+            ExtentTestManager.logMessage(Status.FAIL, "Fail, NOT match: " + actual.toString() + " != " + expected.toString());
+            ExtentTestManager.addScreenShot(Status.FAIL, message);
+            //softAssert.fail("Fail, NOT match: " + actual.toString() + " != " + expected.toString());
+        } else {
+            ExtentTestManager.logMessage(Status.PASS, "Verify result: " + expected + " is correct");
+            LogUtils.info("Verify result: " + expected + " is correct");
+        }
+
+//        softAssert.assertEquals(actual, expected, message);
+//        ExtentTestManager.logMessage(Status.PASS, "Verify result: " + expected + " is correct");
+//        LogUtils.info("Verify result: " + expected + " is correct");
     }
 
     @Step("Verify result {1} is correct")
@@ -868,6 +894,7 @@ public class WebUI {
         }
         return getWebElement(by);
     }
+
     public static WebElement highLightElement(By by) {
         if (DriverManager.getDriver() instanceof JavascriptExecutor) {
             ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].style.border='5px solid blue'", getWebElement(by));
@@ -875,9 +902,11 @@ public class WebUI {
         }
         return getWebElement(by);
     }
+
     public static BigDecimal stringToBigDecimal(String numberString) {
         return new BigDecimal(numberString);
     }
+
     public static long randomNumber(int minNumDigits, int maxNumDigits) {
         long min = (long) Math.pow(10, minNumDigits - 1);
         long max = (long) Math.pow(10, maxNumDigits) - 1;
@@ -885,6 +914,7 @@ public class WebUI {
         long randomNumber = min + random.nextInt((int) (max - min + 1));
         return randomNumber;
     }
+
     /**
      * Chuyển đổi tiền tệ sang BigDecimal
      *

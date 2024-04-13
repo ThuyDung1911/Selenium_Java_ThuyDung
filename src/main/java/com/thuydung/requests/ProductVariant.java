@@ -1,18 +1,17 @@
 package com.thuydung.requests;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class ProductVariant {
     private String variantName;
-    private String variantPrice;
+    BigDecimal variantPrice;
     private String variantSKU;
     private String variantQuantity;
 
     public ProductVariant() {
 
     }
-    public ProductVariant(String variantName, String variantPrice, String variantSKU, String variantQuantity) {
+    public ProductVariant(String variantName, BigDecimal variantPrice, String variantSKU, String variantQuantity) {
         this.variantName = variantName;
         this.variantPrice = variantPrice;
         this.variantSKU = variantSKU;
@@ -27,11 +26,11 @@ public class ProductVariant {
         this.variantName = variantName;
     }
 
-    public String getVariantPrice() {
+    public BigDecimal getVariantPrice() {
         return variantPrice;
     }
 
-    public void setVariantPrice(String variantPrice) {
+    public void setVariantPrice(BigDecimal variantPrice) {
         this.variantPrice = variantPrice;
     }
 

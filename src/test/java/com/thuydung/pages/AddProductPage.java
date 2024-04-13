@@ -63,9 +63,14 @@ public class AddProductPage extends CommonPage {
     private By descriptionUI = By.xpath("//div[@id='tab_default_1']//p");
     int randomNumber = new Random().nextInt(1000000);
     private By newProduct = By.xpath("(//div[@class='card']//img/parent::div/following-sibling::div/span)[1]");
-    public static By discountPriceProduct = By.xpath("//div[text()='Discount Price:']/parent::div/following-sibling::div");
-    public static By unitPriceProduct = By.xpath("//div[text()='Price:']/parent::div/following-sibling::div");
+    public static By discountPriceProductInProductDetail = By.xpath("//div[text()='Discount Price:']/parent::div/following-sibling::div");
+    public static By unitPriceProductInProductDetail = By.xpath("//div[text()='Price:']/parent::div/following-sibling::div");
+    By totalPriceInDetailProduct = By.xpath("//strong[@id='chosen_price']");
     private By blockProductVariation = By.xpath("//h5[normalize-space()='Product Variation']");
+    By valueVariant = By.xpath("//tr[@class='variant']//label");
+    By valueVariantPrice = By.xpath("//tr[@class='variant']//input[contains(@name,'price')]");
+    By valueVariantSKU = By.xpath("//tr[@class='variant']//input[contains(@name,'sku')]");
+    By valueVariantQuantity = By.xpath("//tr[@class='variant']//input[contains(@name,'qty')]");
 
     public void openAddProductPage() {
         WebUI.clickElement(menuProduct);
@@ -334,21 +339,22 @@ public class AddProductPage extends CommonPage {
     }
 
     public List<ProductVariant> getInfoProductVariant() {
-        By valueVariant = By.xpath("//tr[@class='variant']//label");
-        By valueVariantPrice = By.xpath("//tr[@class='variant']//input[contains(@name,'price')]");
-        By valueVariantSKU = By.xpath("//tr[@class='variant']//input[contains(@name,'sku')]");
-        By valueVariantQuantity = By.xpath("//tr[@class='variant']//input[contains(@name,'qty')]");
+//        By valueVariant = By.xpath("//tr[@class='variant']//label");
+//        By valueVariantPrice = By.xpath("//tr[@class='variant']//input[contains(@name,'price')]");
+//        By valueVariantSKU = By.xpath("//tr[@class='variant']//input[contains(@name,'sku')]");
+//        By valueVariantQuantity = By.xpath("//tr[@class='variant']//input[contains(@name,'qty')]");
         List<WebElement> elementValueVariants = DriverManager.getDriver().findElements(valueVariant);
         List<WebElement> elementValueVariantPrices = DriverManager.getDriver().findElements(valueVariantPrice);
         List<WebElement> elementValueVariantSKUs = DriverManager.getDriver().findElements(valueVariantSKU);
         List<WebElement> elementValueVariantQuantities = DriverManager.getDriver().findElements(valueVariantQuantity);
+
         List<String> valueElementValueVariants = new ArrayList<>();
         for (WebElement elementValueVariant : elementValueVariants) {
             valueElementValueVariants.add(elementValueVariant.getText());
         }
-        List<String> valueElementValueVariantPrices = new ArrayList<>();
+        List<BigDecimal> valueElementValueVariantPrices = new ArrayList<>();
         for (WebElement elementValueVariantPrice : elementValueVariantPrices) {
-            valueElementValueVariantPrices.add(elementValueVariantPrice.getAttribute("value"));
+            valueElementValueVariantPrices.add(new BigDecimal(elementValueVariantPrice.getAttribute("value")));
         }
         List<String> valueElementValueVariantSKUs = new ArrayList<>();
         for (WebElement elementValueVariantSKU : elementValueVariantSKUs) {
@@ -360,9 +366,9 @@ public class AddProductPage extends CommonPage {
         }
         List<ProductVariant> productVariants = new ArrayList<>();
         for (int i = 0; i < valueElementValueVariants.size(); i++) {
-            ProductVariant productVariant = new ProductVariant("","","","");
+            ProductVariant productVariant = new ProductVariant();
             String variantName = valueElementValueVariants.get(i);
-            String variantPrice = valueElementValueVariantPrices.get(i);
+            BigDecimal variantPrice = valueElementValueVariantPrices.get(i);
             String variantSKU = valueElementValueVariantSKUs.get(i);
             String variantQuantity = valueElementValueVariantQuantities.get(i);
             productVariant.setVariantName(variantName);
@@ -375,13 +381,46 @@ public class AddProductPage extends CommonPage {
     }
 
     public void verifyNewProductVariant(String nameProductVerify, String category, String unit, String discountDate, String description, String discount) {
-//        if(!DriverManager.getDriver().getCurrentUrl().contains("https://cms.anhtester.com/admin/products/admin")){
-//            System.out.println("Khong o trang product vua tao nen khong lay duoc thong tin product");
-//            return;
-//        }
         WebUI.clickElement(By.xpath("(//a[@title='Edit'])[1]"));
         WebUI.waitForPageLoaded();
-        List<ProductVariant> infoProductVariant = getInfoProductVariant();
+        WebUI.waitForElementVisible(valueVariant);
+        WebUI.waitForElementVisible(valueVariantPrice);
+        WebUI.waitForElementVisible(valueVariantSKU);
+        WebUI.waitForElementVisible(valueVariantQuantity);
+        List<WebElement> elementValueVariants = DriverManager.getDriver().findElements(valueVariant);
+        List<WebElement> elementValueVariantPrices = DriverManager.getDriver().findElements(valueVariantPrice);
+        List<WebElement> elementValueVariantSKUs = DriverManager.getDriver().findElements(valueVariantSKU);
+        List<WebElement> elementValueVariantQuantities = DriverManager.getDriver().findElements(valueVariantQuantity);
+
+        List<String> valueElementValueVariants = new ArrayList<>();
+        for (WebElement elementValueVariant : elementValueVariants) {
+            valueElementValueVariants.add(elementValueVariant.getText());
+        }
+        List<BigDecimal> valueElementValueVariantPrices = new ArrayList<>();
+        for (WebElement elementValueVariantPrice : elementValueVariantPrices) {
+            valueElementValueVariantPrices.add(new BigDecimal(elementValueVariantPrice.getAttribute("value")));
+        }
+        List<String> valueElementValueVariantSKUs = new ArrayList<>();
+        for (WebElement elementValueVariantSKU : elementValueVariantSKUs) {
+            valueElementValueVariantSKUs.add(elementValueVariantSKU.getAttribute("value"));
+        }
+        List<String> valueElementValueVariantQuantities = new ArrayList<>();
+        for (WebElement elementValueVariantQuantity : elementValueVariantQuantities) {
+            valueElementValueVariantQuantities.add(elementValueVariantQuantity.getAttribute("value"));
+        }
+        List<ProductVariant> infoProductVariant = new ArrayList<>();
+        for (int i = 0; i < valueElementValueVariants.size(); i++) {
+            ProductVariant productVariant = new ProductVariant();
+            String variantName = valueElementValueVariants.get(i);
+            BigDecimal variantPrice = valueElementValueVariantPrices.get(i);
+            String variantSKU = valueElementValueVariantSKUs.get(i);
+            String variantQuantity = valueElementValueVariantQuantities.get(i);
+            productVariant.setVariantName(variantName);
+            productVariant.setVariantPrice(variantPrice);
+            productVariant.setVariantSKU(variantSKU);
+            productVariant.setVariantQuantity(variantQuantity);
+            infoProductVariant.add(productVariant);
+        }
 
         DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
         WebUI.openURL(PropertiesHelper.getValue("URL"));
@@ -439,34 +478,66 @@ public class AddProductPage extends CommonPage {
         }
         String valueVariantName = valueSelectedColor + "-" + valueSelectedSize + "-" + valueSelectedQuality;
         //get price variant
-        BigDecimal valueInfoVariantPrice = BigDecimal.ZERO;
-        BigDecimal valueInfoVariantQuantity = BigDecimal.ZERO;
-        for (int i = 0; i < infoProductVariant.size(); i++) {
-            if (infoProductVariant.get(i).getVariantName().equals(valueVariantName)) {
-                String infoVariantPrice = infoProductVariant.get(i).getVariantPrice();
-                valueInfoVariantPrice = WebUI.convertCurrencyToBigDecimal(infoVariantPrice);
+        BigDecimal infoVariantPrice = BigDecimal.ZERO;
+        String infoVariantQuantity = "";
+        BigDecimal minValueInfoVariantPrice = infoProductVariant.get(0).getVariantPrice();
+        BigDecimal maxValueInfoVariantPrice = infoProductVariant.get(0).getVariantPrice();
+        for (int j = 0; j < infoProductVariant.size(); j++) {
+            if (infoProductVariant.get(j).getVariantPrice().compareTo(minValueInfoVariantPrice) < 0) {
+                minValueInfoVariantPrice = infoProductVariant.get(j).getVariantPrice();
+            }
+            if (infoProductVariant.get(j).getVariantPrice().compareTo(maxValueInfoVariantPrice) > 0) {
+                maxValueInfoVariantPrice = infoProductVariant.get(j).getVariantPrice();
+            }
+            if (infoProductVariant.get(j).getVariantName().equals(valueVariantName)) {
+                infoVariantPrice = infoProductVariant.get(j).getVariantPrice();
                 //quantity
-                String infoVariantQuantity = infoProductVariant.get(i).getVariantQuantity();
-                valueInfoVariantQuantity = WebUI.convertCurrencyToBigDecimal(infoVariantQuantity);
+                infoVariantQuantity = infoProductVariant.get(j).getVariantQuantity();
             }
         }
-//
-//        BigDecimal unitPriceVer3 = WebUI.convertCurrencyToBigDecimal(WebUI.getElementText(unitPriceProduct));
-//        Assert.assertEquals(unitPriceVer3, valueInfoVariantPrice, "Unit Price hien thi sai");
-//        if (discountDateEnd.isAfter(currentDate)) {
-//            //discountPrice
-//            BigDecimal discountPriceVer3 = WebUI.convertCurrencyToBigDecimal(WebUI.getElementText(discountPriceProduct));
-//            BigDecimal comparePrice = unitPriceVer3.subtract(unitPriceVer3.multiply(WebUI.convertCurrencyToBigDecimal(discount)).divide(new BigDecimal(100)));
-//            WebUI.verifyAssertEquals(discountPriceVer3, comparePrice, "Discount Price hien thi sai");
-//        }
+        //unitPrice hien thi o trang product detail (hien thi khoang tu min - max)
+        String unitPriceInProductDetail = WebUI.getElementText(unitPriceProductInProductDetail);
+        String minUnitPriceInProductDetail = unitPriceInProductDetail.split("-")[0].trim();
+        String maxUnitPriceInProductDetail = unitPriceInProductDetail.split("-")[1].split("/g")[0].trim();
+        BigDecimal minValueUnitPriceInProductDetail = WebUI.convertCurrencyToBigDecimal(minUnitPriceInProductDetail);
+        BigDecimal maxValueUnitPriceInProductDetail = WebUI.convertCurrencyToBigDecimal(maxUnitPriceInProductDetail);
+        WebUI.verifySoftAssertEquals(minValueUnitPriceInProductDetail, minValueInfoVariantPrice, "Min Unit Price hien thi sai");
+        WebUI.verifySoftAssertEquals(maxValueUnitPriceInProductDetail, maxValueInfoVariantPrice, "Max Unit Price hien thi sai");
+//        WebUI.verifyAssertEquals(minValueUnitPriceInProductDetail, minValueInfoVariantPrice, "Min Unit Price hien thi sai");
+//        WebUI.verifyAssertEquals(maxValueUnitPriceInProductDetail, maxValueInfoVariantPrice, "Max Unit Price hien thi sai");
+
+
+        if (discountDateEnd.isAfter(currentDate)) {
+            //discountPrice
+            String discountPriceInProductDetail = WebUI.getElementText(discountPriceProductInProductDetail);
+            String minDiscountPriceInProductDetail = discountPriceInProductDetail.split("-")[0].trim();
+            String maxDiscountPriceInProductDetail = discountPriceInProductDetail.split("-")[1].split("/g")[0].trim();
+            BigDecimal minDiscountPriceCheck = minValueInfoVariantPrice.subtract(minValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100)));
+            BigDecimal maxDiscountPriceCheck = maxValueInfoVariantPrice.subtract(maxValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100)));
+            WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(minDiscountPriceInProductDetail), minDiscountPriceCheck, "Min Discount Price hien thi sai");
+            WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(maxDiscountPriceInProductDetail), maxDiscountPriceCheck, "Max Discount Price hien thi sai");
+
+//            WebUI.verifyAssertEquals(WebUI.convertCurrencyToBigDecimal(minDiscountPriceInProductDetail), minDiscountPriceCheck, "Min Discount Price hien thi sai");
+//            WebUI.verifyAssertEquals(WebUI.convertCurrencyToBigDecimal(maxDiscountPriceInProductDetail), maxDiscountPriceCheck, "Max Discount Price hien thi sai");
+        }
 
         //quantity
-        WebUI.verifyAssertEquals(WebUI.getElementText(ProductInfoPage.quantityProductAvailable), String.valueOf(valueInfoVariantQuantity), "Quantity hien thi sai");
-        //WebUI.verifyAssertTrueEqual(ProductInfoPage.quantityProductAvailable, String.valueOf(valueInfoVariantQuantity), "Quantity hien thi sai");
+        WebUI.verifyAssertEquals(WebUI.getElementText(ProductInfoPage.quantityProductAvailable), infoVariantQuantity, "Quantity hien thi sai");
         //description
         WebUI.scrollToElement(descriptionUI);
         WebUI.sleep(1);
-        WebUI.verifyAssertTrueEqual(descriptionUI, description, "Description hien thi sai");
+        WebUI.verifySoftAssertTrueEqual(descriptionUI, description, "Description hien thi sai");
+        //Total price in detail product
+        String totalPriceInProductDetail = WebUI.getElementText(totalPriceInDetailProduct);
+        BigDecimal valueUnitPriceInProductDetail = WebUI.convertCurrencyToBigDecimal(totalPriceInProductDetail);
+        BigDecimal valueUnitPriceCheck;
+        if (discountDateEnd.isAfter(currentDate)) {
+            BigDecimal discountPrice = infoVariantPrice.subtract(infoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100)));
+            valueUnitPriceCheck = discountPrice;
+        } else {
+            valueUnitPriceCheck = infoVariantPrice;
+        }
+        WebUI.verifySoftAssertEquals(valueUnitPriceInProductDetail, valueUnitPriceCheck, "Unit Price hien thi sai");
     }
 
     public void addProductInvalid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
@@ -500,13 +571,13 @@ public class AddProductPage extends CommonPage {
         LocalDateTime currentDateTime = LocalDateTime.now();
         LocalDateTime currentDate = currentDateTime;
 
-        String unitPriceVer1 = WebUI.getElementText(unitPriceProduct);
+        String unitPriceVer1 = WebUI.getElementText(unitPriceProductInProductDetail);
         String unitPriceVer2 = unitPriceVer1.replaceAll("[^0-9.]", "");
         String unitPriceVer3 = "" + (int) Double.parseDouble(unitPriceVer2);
         Assert.assertEquals(unitPriceVer3, unitPrice, "Unit Price hien thi sai");
         if (discountDateEnd.isAfter(currentDate)) {
             //discountPrice
-            String discountPriceVer1 = WebUI.getElementText(discountPriceProduct);
+            String discountPriceVer1 = WebUI.getElementText(discountPriceProductInProductDetail);
             String discountPriceVer2 = discountPriceVer1.replaceAll("[^0-9.]", "");
             String discountPriceVer3 = "" + (int) Double.parseDouble(discountPriceVer2);
             String comparePrice = "" + (int) (Double.parseDouble(unitPriceVer2) - Double.parseDouble(unitPriceVer2) * Double.parseDouble(discount) / 100 - (int) Double.parseDouble(discountPriceVer2));

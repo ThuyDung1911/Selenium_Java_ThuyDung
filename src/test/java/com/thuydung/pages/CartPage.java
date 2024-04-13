@@ -239,12 +239,12 @@ public class CartPage extends CommonPage {
     public BigDecimal getPriceInDetailProduct() {
         //Lấy đơn giá bán sản phẩm ở trang chi tiết sản phẩm
         BigDecimal productPrice;
-        if (WebUI.checkElementExist(AddProductPage.discountPriceProduct)) {
-            productPrice = convertCurrencyToBigDecimal(WebUI.getElementText(AddProductPage.discountPriceProduct));
-            WebUI.clickElement(AddProductPage.discountPriceProduct);
+        if (WebUI.checkElementExist(AddProductPage.discountPriceProductInProductDetail)) {
+            productPrice = convertCurrencyToBigDecimal(WebUI.getElementText(AddProductPage.discountPriceProductInProductDetail));
+            WebUI.clickElement(AddProductPage.discountPriceProductInProductDetail);
         } else {
-            productPrice = convertCurrencyToBigDecimal(WebUI.getElementText(AddProductPage.unitPriceProduct));
-            WebUI.clickElement(AddProductPage.unitPriceProduct);
+            productPrice = convertCurrencyToBigDecimal(WebUI.getElementText(AddProductPage.unitPriceProductInProductDetail));
+            WebUI.clickElement(AddProductPage.unitPriceProductInProductDetail);
         }
         return productPrice;
     }
