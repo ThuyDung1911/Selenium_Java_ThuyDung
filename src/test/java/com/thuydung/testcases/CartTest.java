@@ -6,20 +6,19 @@ import com.thuydung.helpers.PropertiesHelper;
 import org.testng.annotations.Test;
 
 public class CartTest extends BaseTest {
-    @Test(priority = 0, description = "Kiem tra them 1 san pham vao gio hang")
-    public void testAddProductToCartWithCustomerAccount() {
+    //de cart empty xong thi test
+    @Test(priority = 1, description = "Kiem tra them san pham khong co variant vao gio hang")
+    public void testAddProductNoVariantToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
     }
-
-    @Test(priority = 1, description = "Kiem tra khi them nhieu san pham chua ton tai trong gio hang vao gio hang")
-    public void testAddProductsToCartWithCustomerAccount() {
+    @Test(priority = 1, description = "Kiem tra them san pham co variant vao gio hang")
+    public void testAddProductVariantToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
         getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "2");
     }
 
@@ -28,45 +27,55 @@ public class CartTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P01"), "2");
-        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P02"), "3");
-        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P02"), "4");
+        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
+        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "3");
+        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "4");
     }
 
-    //check remove product from cart
-    @Test(priority = 4, description = "Kiem tra khi xoa san pham khoi gio hang")
-    public void testRemoveProductFromCartWithCustomerAccount() {
+    @Test(priority = 3, description = "Kiem tra khi them nhieu san pham chua ton tai trong gio hang vao gio hang")
+    public void testAddProductsToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-//        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P01"), "2");
-//        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P02"), "3");
-        getCartPage().removeProductFromCart(PropertiesHelper.getValue("product_P01"));
-
+        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P01"), "2");
     }
 
     //check update quantity product in cart
-    @Test(priority = 5, description = "Kiem tra khi cap nhat so luong san pham trong gio hang")
+    @Test(priority = 2, description = "Kiem tra khi cap nhat so luong san pham trong gio hang")
     public void testUpdateQuantityProductInCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-//        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P01"), "2");
+//        getCartPage().addProductToCart("Cosy Thuy Dung HGRRAWZE", "2");
         //getCartPage().addProductToCart(PropertiesHelper.getValue("product_P02"), "3");
-        getCartPage().updateQuantityProductInCart(PropertiesHelper.getValue("product_P01"), "1000");
+        getCartPage().updateQuantityProductInCart("Cosy Thuy Dung HGRRAWZE", "10");
     }
 
     //check remove product from cart
-    @Test(priority = 6, description = "Kiem tra khi xoa san pham khoi gio hang")
+    @Test(priority = 3, description = "Kiem tra khi xoa san pham khoi gio hang chi tiet")
     public void testRemoveProductFromCartDetailWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
 
-        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P01"), "2");
+        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "2");
 //        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P02"), "3");
-        getCartPage().removeProductFromCartDetail(PropertiesHelper.getValue("product_P01"));
+        getCartPage().removeProductFromCartDetail("Cosy Thuy Dung OOTVUJLN");
     }
+    @Test(priority = 4, description = "Kiem tra khi xoa san pham khoi gio hang dropdown")
+    public void testRemoveProductFromCartWithCustomerAccount() {
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "2");
+//        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P02"), "3");
+        getCartPage().removeProductFromCart("Cosy Thuy Dung OOTVUJLN");
+
+    }
+
+
+
+
     @Test(priority = 0, description = "Kiem tra them 1 san pham vao gio hang")
     public void testAddProductToCartWithNoAccount() {
         getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");

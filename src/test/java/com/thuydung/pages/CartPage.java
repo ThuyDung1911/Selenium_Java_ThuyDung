@@ -48,9 +48,6 @@ public class CartPage extends CommonPage {
      */
     public void addProductToCart(String productName, String quantity) {
         By resultSearchProduct = By.xpath("//div[@id='search-content']//div[contains(text(),'" + productName + "')]");
-        By viewProductNameInCart = By.xpath("//div[@id='cart_items']//span[contains(text(),'" + productName + "')]");
-        By viewPriceInCart = By.xpath("//div[@id='cart_items']//span[contains(text(),'" + productName + "')]/following-sibling::span[2]");
-
         //Tìm kiếm sản phẩm
         getDashboardPage().testSearchProductHaveResult(productName);
         //Kiem tra kết quả tìm kiếm có sản phẩm cần tìm không
@@ -121,7 +118,6 @@ public class CartPage extends CommonPage {
         WebUI.verifyAssertEquals(valueTotalPriceInDetailProduct, checkTotalPriceCheck, "Tổng tiền sản phẩm không đúng");
 
         //Thêm sản phẩm vào giỏ hàng
-//        WebUI.sleep(3);
         WebUI.scrollToElement(buttonAddToCart);
         WebUI.clickElement(buttonAddToCart);
 
@@ -178,7 +174,7 @@ public class CartPage extends CommonPage {
         }
         //Check subtotal price in cart dropdown
         checkSubTotalPriceInCart();
-
+        WebUI.clickElement(buttonCart);
         WebUI.sleep(2);
     }
 
@@ -295,6 +291,7 @@ public class CartPage extends CommonPage {
         List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantitiesInCartDropDown);
         BigDecimal subTotalPrice = BigDecimal.ZERO;
         if (productNames.isEmpty()) {
+            System.out.println("Giỏ hàng trống");
             WebUI.verifyAssertTrueIsDisplayed(messageCartEmptyInCart, "Message khong xuat hien");
             return;
         }
@@ -441,7 +438,9 @@ public class CartPage extends CommonPage {
     public void removeProductFromCart(String productName) {
         By viewProductNameInCart = By.xpath("//div[@id='cart_items']//span[contains(text(),'" + productName + "')]");
         By buttonRemoveProduct = By.xpath("//div[@id='cart_items']//span[contains(text(),'" + productName + "')]/ancestor::a/following-sibling::span");
-        WebUI.clickElement(OrderPage.buttonCart);
+        if(!WebUI.checkElementVisible(By.xpath("//div[@id='cart_items']"))){
+            WebUI.clickElement(OrderPage.buttonCart);
+        }
         List<WebElement> productNames = WebUI.getWebElements(viewProductNameInCart);
         if (productNames.isEmpty()) {
             System.out.println("San pham nay khong xoa duoc khoi gio hang vi khong co san pham nay trong gio hang");
@@ -537,8 +536,6 @@ public class CartPage extends CommonPage {
 
     public void updateQuantityProductInCart(String productName, String quantity) {
         By resultSearchProduct = By.xpath("//div[@id='search-content']//div[contains(text(),'" + productName + "')]");
-        By priceInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//span[text()='Price']/following-sibling::span");
-        By viewQuantityInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//input[contains(@name,'quantity')]");
         //Tìm kiếm sản phẩm
         getDashboardPage().testSearchProductHaveResult(productName);
         //Kiem tra kết quả tìm kiếm có sản phẩm cần tìm không
@@ -549,6 +546,9 @@ public class CartPage extends CommonPage {
             return;
         }
         productName = WebUI.getElementText(resultSearchProduct);
+        By priceInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//span[text()='Price']/following-sibling::span");
+        By viewQuantityInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//input[contains(@name,'quantity')]");
+
         WebUI.clickElement(resultSearchProduct);
         WebUI.waitForPageLoaded();
 

@@ -4,7 +4,6 @@ import com.thuydung.constants.ConfigData;
 import com.thuydung.keywords.WebUI;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 
 public class EditProductPage extends CommonPage{
     private By menuProduct = By.xpath("//ul[@id='main-menu']//span[text()='Products']");
@@ -22,18 +21,17 @@ public class EditProductPage extends CommonPage{
     private By messageEditProduct = By.xpath("//span[@data-notify='message']");
     private By buttonUpdateProduct = By.xpath("//button[normalize-space()='Update Product']");
     public void editProduct(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String image) {
-        String nameProductNeedEdit = productName;
         WebUI.clickElement(menuProduct);
         WebUI.waitForJQueryLoad();
         WebUI.clickElement(submenuAllProducts);
         WebUI.waitForPageLoaded();
-        WebUI.setTextAndClear(inputSearchProduct, nameProductNeedEdit, Keys.ENTER);
-        WebUI.waitForPageLoaded();
-        WebUI.clickElement(btnEditProduct);
+        WebUI.clickElement(By.xpath("(//a[@title='Edit'])[1]"));
         WebUI.waitForPageLoaded();
         WebUI.verifyElementVisible(titleEditProduct, "Tieu de Edit Product KHONG xuat hien");
         //Product Information
-        WebUI.setTextAndClear(inputProductName, productName);
+        String nameProductNeedEdit = productName + " " + ConfigData.AUTHOR + " Update " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+
+        WebUI.setTextAndClear(inputProductName, nameProductNeedEdit);
         WebUI.clickElement(selectCategory);
         WebUI.setTextEnter(inputSearchDropdown, category);
         WebUI.clickElement(selectBrand);
@@ -59,7 +57,6 @@ public class EditProductPage extends CommonPage{
     }
     //Edit product valid
     public void editProductValid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String image) {
-        productName = productName + " " + ConfigData.AUTHOR + " Update " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
         editProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, image);
         //Verify message
         WebUI.verifyAssertTrueIsDisplayed(messageEditProduct, "Message Edit Product KHONG xuat hien");
