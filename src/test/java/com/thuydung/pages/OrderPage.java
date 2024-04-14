@@ -16,9 +16,7 @@ import org.openqa.selenium.WindowType;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.thuydung.pages.CartPage.convertCurrencyToBigDecimal;
 
@@ -402,7 +400,7 @@ public class OrderPage {
         WebUI.clickElement(buttonCart);
         List<Cart> infoProductsInDisplayPayment = getInfoProductsInDisplayPayment();
         for (int i = 0; i < infoProductsInCart.size(); i++) {
-            WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getName(), infoProductsInCart.get(i).getName(), "Ten san pham khong khop so voi gio hang.");
+            WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getNameProduct(), infoProductsInCart.get(i).getNameProduct(), "Ten san pham khong khop so voi gio hang.");
             WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getPrice(), infoProductsInCart.get(i).getPrice(), "Gia san pham khong khop so voi gio hang.");
             WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getQuantity(), infoProductsInCart.get(i).getQuantity(), "So luong san pham khong khop so voi gio hang.");
         }
@@ -654,7 +652,7 @@ public class OrderPage {
         List<Cart> infoProductsInDisplayConfirm = new ArrayList<>();
         for (int i = 0; i < valueProductNames.size(); i++) {
             Cart cart = new Cart();
-            cart.setName(valueProductNames.get(i));
+            cart.setNameProduct(valueProductNames.get(i));
             cart.setQuantity(valueProductQuantities.get(i));
             cart.setPrice(valueProductPrices.get(i).divide(BigDecimal.valueOf(valueProductQuantities.get(i))));
             infoProductsInDisplayConfirm.add(cart);
@@ -686,7 +684,7 @@ public class OrderPage {
         List<Cart> infoProductsInDisplayConfirm = new ArrayList<>();
         for (int i = 0; i < valueProductNames.size(); i++) {
             Cart cart = new Cart();
-            cart.setName(valueProductNames.get(i));
+            cart.setNameProduct(valueProductNames.get(i));
             cart.setQuantity(valueProductQuantities.get(i));
             cart.setPrice(valueProductPrices.get(i).divide(BigDecimal.valueOf(valueProductQuantities.get(i))));
             infoProductsInDisplayConfirm.add(cart);
@@ -720,7 +718,7 @@ public class OrderPage {
         List<Cart> infoProductsInDisplayConfirm = new ArrayList<>();
         for (int i = 0; i < valueProductNames.size(); i++) {
             Cart cart = new Cart();
-            cart.setName(valueProductNames.get(i));
+            cart.setNameProduct(valueProductNames.get(i));
             cart.setQuantity(valueProductQuantities.get(i));
             cart.setPrice(valueProductPrices.get(i).divide(BigDecimal.valueOf(valueProductQuantities.get(i))));
             infoProductsInDisplayConfirm.add(cart);
@@ -884,7 +882,7 @@ public class OrderPage {
         WebUI.scrollToElement(By.xpath("//h5[text()='Order Summary']/parent::div"));
         List<Cart> listProduct = getInfoOrderDetailInDisplayConfirm();
         for (int j = 0; j < listProduct.size(); j++) {
-            WebUI.verifyAssertEquals(listProduct.get(j).getName(), currentCart.get(j).getName(), "Tên sản phẩm không khớp.");
+            WebUI.verifyAssertEquals(listProduct.get(j).getNameProduct(), currentCart.get(j).getNameProduct(), "Tên sản phẩm không khớp.");
             WebUI.verifyAssertEquals(listProduct.get(j).getPrice(), currentCart.get(j).getPrice(), "Giá sản phẩm không khớp.");
             WebUI.verifyAssertEquals(listProduct.get(j).getQuantity(), currentCart.get(j).getQuantity(), "Số lượng sản phẩm không khớp.");
         }
@@ -956,7 +954,7 @@ public class OrderPage {
             OrderSummary orderSummaryInHistoryOrder = getOrderSummaryInHistoryOrder();
 
             for (int j = 0; j < listProduct.size(); j++) {
-                WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getName(), listProduct.get(j).getName(), "Tên sản phẩm không khớp.");
+                WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getNameProduct(), listProduct.get(j).getNameProduct(), "Tên sản phẩm không khớp.");
                 WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getPrice(), listProduct.get(j).getPrice(), "Giá sản phẩm không khớp.");
                 WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getQuantity(), listProduct.get(j).getQuantity(), "Số lượng sản phẩm không khớp.");
             }
@@ -1045,7 +1043,7 @@ public class OrderPage {
             if (position != -1) {
                 name = name.substring(0, position);
             }
-            cart.setName(name);
+            cart.setNameProduct(name);
             cart.setQuantity(valueProductQuantities.get(i));
             cart.setPrice(valueTotalProductPrices.get(i).divide(BigDecimal.valueOf(valueProductQuantities.get(i))));
             infoProductsInDisplayPayment.add(cart);

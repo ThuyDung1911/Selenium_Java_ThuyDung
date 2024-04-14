@@ -3,19 +3,27 @@ package com.thuydung.requests;
 import java.math.BigDecimal;
 
 public class Cart {
-    private String name;
+    private String nameProduct;
+    private String nameVariant;
     private BigDecimal price;
     private int quantity;
 
     public Cart() {
     }
-    public Cart(String name, BigDecimal price, int quantity) {
-        this.name = name;
+    public Cart(String nameProduct, String nameVariant, BigDecimal price, int quantity) {
+        this.nameProduct = nameProduct;
+        this.nameVariant = nameVariant;
         this.price = price;
         this.quantity = quantity;
     }
-    public String getName() {
-        return name;
+    public String getNameVariant() {
+        return nameVariant;
+    }
+    public void setNameVariant(String nameVariant) {
+        this.nameVariant = nameVariant;
+    }
+    public String getNameProduct() {
+        return nameProduct;
     }
     public BigDecimal getPrice() {
         return price;
@@ -23,8 +31,8 @@ public class Cart {
     public int getQuantity() {
         return quantity;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setNameProduct(String nameProduct) {
+        this.nameProduct = nameProduct;
     }
     public void setPrice(BigDecimal price) {
         this.price = price;

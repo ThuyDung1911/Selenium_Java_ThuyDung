@@ -57,7 +57,7 @@ public class AddProductPage extends CommonPage {
     private By inputSKU = By.xpath("//input[@placeholder='SKU']");
     By inputVat = By.xpath("//input[@placeholder='Tax']");
     private By selectUnitVat = By.xpath("//h5[normalize-space()='Vat & TAX']/ancestor::div[@class='card']//select[@name='tax_type[]']/following-sibling::button");
-    private By selectUnitVatPercent = By.xpath("//h5[text()='Vat & TAX']/parent::div/following-sibling::div//span[normalize-space()='Percent']");
+    private By selectUnitVatFlat = By.xpath("//h5[text()='Vat & TAX']/parent::div/following-sibling::div//span[normalize-space()='Flat']");
     private By blockProductDescription = By.xpath("//h5[normalize-space()='Product Description']");
     private By inputDescription = By.xpath("//textarea[@name='description']/following-sibling::div//div[contains(@class,'note-editable')]");
     private By buttonSavePublish = By.xpath("//button[normalize-space()='Save & Publish']");
@@ -125,8 +125,8 @@ public class AddProductPage extends CommonPage {
         //vat
         WebUI.setTextAndClear(inputVat, vat);
         WebUI.clickElement(selectUnitVat);
-        WebUI.waitForElementVisible(selectUnitVatPercent);
-        WebUI.clickElement(selectUnitVatPercent);
+        WebUI.waitForElementVisible(selectUnitVatFlat);
+        WebUI.clickElement(selectUnitVatFlat);
         WebUI.clickElement(buttonSavePublish); //Click button Save&Public
 
     }
@@ -165,7 +165,8 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(buttonAddFileImages);
         ////Product Variation
         addProductVariationColor(List.of("AliceBlue", "Amethyst"));
-        addProductVariationAttribute(List.of("Size", "Quality"));
+        addProductVariationAttribute(List.of("Size"));
+        addProductVariationAttribute(List.of("Quality"));
         addProductVariationAttributeValue("Size", List.of("22", "23"));
         addProductVariationAttributeValue("Quality", List.of("Real", "Remake"));
         //Product price + stock
@@ -177,7 +178,7 @@ public class AddProductPage extends CommonPage {
         WebUI.scrollToElement(inputVat);
         WebUI.setTextAndClear(inputVat, vat);
         WebUI.clickElement(selectUnitVat);
-        WebUI.clickElement(selectUnitVatPercent);
+        WebUI.clickElement(selectUnitVatFlat);
         WebUI.clickElement(buttonSavePublish); //Click button Save&Public
 
     }
@@ -464,32 +465,7 @@ public class AddProductPage extends CommonPage {
         LocalDateTime currentDate = currentDateTime;
 
         //get value variant selected
-        By optionSize = By.xpath("//div[contains(normalize-space(),'Size:')]/parent::div[contains(@class,'col')]/following-sibling::div//input[@type='radio'][contains(@name,'attribute')]");
-        By optionQuality = By.xpath("//div[contains(normalize-space(),'Quality:')]/parent::div[contains(@class,'col')]/following-sibling::div//input[@type='radio'][contains(@name,'attribute')]");
-        By optionColor = By.xpath("//input[@type='radio'][contains(@name,'color')]");
-
-        List<WebElement> elementOptionSize = DriverManager.getDriver().findElements(optionSize);
-        List<WebElement> elementOptionQuality = DriverManager.getDriver().findElements(optionQuality);
-        List<WebElement> elementOptionColor = DriverManager.getDriver().findElements(optionColor);
-        String valueSelectedSize = "";
-        String valueSelectedQuality = "";
-        String valueSelectedColor = "";
-        for (WebElement elementOption : elementOptionSize) {
-            if (elementOption.isSelected()) {
-                valueSelectedSize = elementOption.getAttribute("value");
-            }
-        }
-        for (WebElement elementOption : elementOptionQuality) {
-            if (elementOption.isSelected()) {
-                valueSelectedQuality = elementOption.getAttribute("value");
-            }
-        }
-        for (WebElement elementOption : elementOptionColor) {
-            if (elementOption.isSelected()) {
-                valueSelectedColor = elementOption.getAttribute("value");
-            }
-        }
-        String valueVariantName = valueSelectedColor + "-" + valueSelectedSize + "-" + valueSelectedQuality;
+        String valueVariantName = getVariantNameSelected();
         //get price variant
         BigDecimal infoVariantPrice = BigDecimal.ZERO;
         String infoVariantQuantity = "";
@@ -514,8 +490,10 @@ public class AddProductPage extends CommonPage {
         String maxUnitPriceInProductDetail = unitPriceInProductDetail.split("-")[1].split("/g")[0].trim();
         BigDecimal minValueUnitPriceInProductDetail = WebUI.convertCurrencyToBigDecimal(minUnitPriceInProductDetail);
         BigDecimal maxValueUnitPriceInProductDetail = WebUI.convertCurrencyToBigDecimal(maxUnitPriceInProductDetail);
-        BigDecimal minValueInfoVariantPriceCheck = minValueInfoVariantPrice.add(minValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(vat)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal maxValueInfoVariantPriceCheck = maxValueInfoVariantPrice.add(maxValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(vat)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
+//        BigDecimal minValueInfoVariantPriceCheck = minValueInfoVariantPrice.add(minValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(vat)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
+//        BigDecimal maxValueInfoVariantPriceCheck = maxValueInfoVariantPrice.add(maxValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(vat)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal minValueInfoVariantPriceCheck = minValueInfoVariantPrice.add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal maxValueInfoVariantPriceCheck = maxValueInfoVariantPrice.add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
         WebUI.verifySoftAssertEquals(minValueUnitPriceInProductDetail, minValueInfoVariantPriceCheck, "Min Unit Price hien thi sai");
         WebUI.verifySoftAssertEquals(maxValueUnitPriceInProductDetail, maxValueInfoVariantPriceCheck, "Max Unit Price hien thi sai");
 
@@ -524,8 +502,8 @@ public class AddProductPage extends CommonPage {
             String discountPriceInProductDetail = WebUI.getElementText(discountPriceProductInProductDetail);
             String minDiscountPriceInProductDetail = discountPriceInProductDetail.split("-")[0].trim();
             String maxDiscountPriceInProductDetail = discountPriceInProductDetail.split("-")[1].split("/g")[0].trim();
-            BigDecimal minDiscountPriceCheck = minValueInfoVariantPriceCheck.subtract(minValueInfoVariantPriceCheck.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100)));
-            BigDecimal maxDiscountPriceCheck = maxValueInfoVariantPriceCheck.subtract(maxValueInfoVariantPriceCheck.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100)));
+            BigDecimal minDiscountPriceCheck = minValueInfoVariantPrice.subtract(minValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
+            BigDecimal maxDiscountPriceCheck = maxValueInfoVariantPrice.subtract(maxValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
 
             WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(minDiscountPriceInProductDetail), minDiscountPriceCheck, "Min Discount Price hien thi sai");
             WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(maxDiscountPriceInProductDetail), maxDiscountPriceCheck, "Max Discount Price hien thi sai");
@@ -541,13 +519,50 @@ public class AddProductPage extends CommonPage {
         //Total price in detail product
         String totalPriceInProductDetail = WebUI.getElementText(totalPriceInDetailProduct);
         BigDecimal valueUnitPriceInProductDetail = WebUI.convertCurrencyToBigDecimal(totalPriceInProductDetail);
-        BigDecimal valueUnitPriceCheck = infoVariantPrice.add(infoVariantPrice.multiply(WebUI.stringToBigDecimal(vat)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
+//        BigDecimal valueUnitPriceCheck = infoVariantPrice.add(infoVariantPrice.multiply(WebUI.stringToBigDecimal(vat)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal valueUnitPriceCheck = infoVariantPrice.add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
 
         if (discountDateEnd.isAfter(currentDate)) {
-            BigDecimal discountPrice = valueUnitPriceCheck.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100));
+            BigDecimal discountPrice = infoVariantPrice.subtract(infoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).add(WebUI.stringToBigDecimal(vat));
             valueUnitPriceCheck = discountPrice;
         }
         WebUI.verifySoftAssertEquals(valueUnitPriceInProductDetail, valueUnitPriceCheck, "Unit Price hien thi sai");
+    }
+    public static String getVariantNameSelected() {
+        //get value variant selected
+        By optionSize = By.xpath("//div[contains(normalize-space(),'Size:')]/parent::div[contains(@class,'col')]/following-sibling::div//input[@type='radio'][contains(@name,'attribute')]");
+        By optionQuality = By.xpath("//div[contains(normalize-space(),'Quality:')]/parent::div[contains(@class,'col')]/following-sibling::div//input[@type='radio'][contains(@name,'attribute')]");
+        By optionColor = By.xpath("//input[@type='radio'][contains(@name,'color')]");
+        String valueVariantName = "";
+        if (WebUI.checkElementExist(optionColor)) {
+            List<WebElement> elementOptionColor = DriverManager.getDriver().findElements(optionColor);
+            for (WebElement elementOption : elementOptionColor) {
+                if (elementOption.isSelected()) {
+                    String valueSelectedColor = elementOption.getAttribute("value");
+                    valueVariantName += valueSelectedColor;
+                }
+            }
+        }
+        if (WebUI.checkElementExist(optionSize)) {
+            List<WebElement> elementOptionSize = DriverManager.getDriver().findElements(optionSize);
+            for (WebElement elementOption : elementOptionSize) {
+                if (elementOption.isSelected()) {
+                    String valueSelectedSize = elementOption.getAttribute("value");
+                    valueVariantName += "-" + valueSelectedSize;
+                }
+            }
+        }
+        if (WebUI.checkElementExist(optionQuality)) {
+            List<WebElement> elementOptionQuality = DriverManager.getDriver().findElements(optionQuality);
+            for (WebElement elementOption : elementOptionQuality) {
+                if (elementOption.isSelected()) {
+                    String valueSelectedQuality = elementOption.getAttribute("value");
+                    valueVariantName += "-" + valueSelectedQuality;
+                }
+            }
+        }
+
+        return valueVariantName;
     }
 
     public void addProductInvalid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
@@ -583,12 +598,14 @@ public class AddProductPage extends CommonPage {
 
         String unitPriceVer1 = WebUI.getElementText(unitPriceProductInProductDetail); //Hien thi tren trang view product
         BigDecimal unitPriceVer2 = WebUI.convertCurrencyToBigDecimal(unitPriceVer1);
-        BigDecimal unitPriceCheck = WebUI.stringToBigDecimal(unitPrice).add(WebUI.stringToBigDecimal(unitPrice).multiply(WebUI.stringToBigDecimal(vat)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
+        //BigDecimal unitPriceCheck = WebUI.stringToBigDecimal(unitPrice).add(WebUI.stringToBigDecimal(unitPrice).multiply(WebUI.stringToBigDecimal(vat)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal unitPriceCheck = WebUI.stringToBigDecimal(unitPrice).add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
         WebUI.verifyAssertEquals(unitPriceVer2, unitPriceCheck, "Unit Price hien thi sai");
         if (discountDateEnd.isAfter(currentDate)) {
             //discountPrice
             String discountPriceVer1 = WebUI.getElementText(discountPriceProductInProductDetail);
             BigDecimal discountPriceVer2 = WebUI.convertCurrencyToBigDecimal(discountPriceVer1);
+//            BigDecimal discountPriceCheck = unitPriceCheck.subtract(unitPriceCheck.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
             BigDecimal discountPriceCheck = unitPriceCheck.subtract(unitPriceCheck.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
             WebUI.verifyAssertEquals(discountPriceVer2, discountPriceCheck, "Discount Price hien thi sai");
         }

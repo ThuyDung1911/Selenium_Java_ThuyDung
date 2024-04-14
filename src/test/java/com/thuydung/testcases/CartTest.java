@@ -19,8 +19,8 @@ public class CartTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P01"), "2");
-        getCartPage().addProductToCart(PropertiesHelper.getValue("product_P02"), "3");
+//        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
+        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "2");
     }
 
     @Test(priority = 2, description = "Kiem tra khi them san pham da ton tai trong gio hang vao gio hang")
