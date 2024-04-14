@@ -92,7 +92,7 @@ public class ProfilePage extends CommonPage{
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         if(password!= confirmPassword) {
             //
-            WebUI.clickElement(DashboardPage.buttonLogout);
+            WebUI.clickElement(DashboardPage.buttonLogoutRoleCustomer);
             WebUI.waitForPageLoaded();
             WebUI.clickElement(HomePage.linkLogin);
             WebUI.waitForPageLoaded();
@@ -108,7 +108,7 @@ public class ProfilePage extends CommonPage{
             WebUI.verifyAssertTrueIsDisplayed(LoginPage.messageAccDoesNotExist, "Đăng nhập vào hệ thống thành công với password mới: " + confirmPassword);
         }
         else {
-            WebUI.clickElement(DashboardPage.buttonLogout);
+            WebUI.clickElement(DashboardPage.buttonLogoutRoleCustomer);
             WebUI.waitForPageLoaded();
             WebUI.clickElement(HomePage.linkLogin);
             WebUI.waitForPageLoaded();

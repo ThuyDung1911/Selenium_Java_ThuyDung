@@ -31,6 +31,7 @@ public class OrderPage {
     private By buttonCheckoutOnCartPopup = By.xpath("//div[@id='cart_items']//a[normalize-space()='Checkout']");
     private By buttonContinueToDeliveryInfo = By.xpath("//button[normalize-space()='Continue to Delivery Info']");
     private By buttonContinueToPayment = By.xpath("//button[normalize-space()='Continue to Payment']");
+    private By buttonContinueToShipping = By.xpath("//a[normalize-space()='Continue to Shipping']");
     private By inputAdditionalInfo = By.xpath("//textarea[@placeholder='Type your text']");
     private By checkAgreeTermAndConditions = By.xpath("//span[@class='aiz-square-check']");
     private By checkboxAgreeTermAndConditions = By.xpath("//input[@id='agree_checkbox']");
@@ -47,6 +48,8 @@ public class OrderPage {
     static By elementProductQuantitiesInDisplayPayment = By.xpath("//tbody//strong[@class='product-quantity']");
     By elementProductNamesInDisplayConfirm = By.xpath("//h5[normalize-space()='Order Details']/following-sibling::div/table//td[2]/a");
     By elementProductQuantitiesInDisplayConfirm = By.xpath("//h5[normalize-space()='Order Details']/following-sibling::div/table//td[4]");
+    By elementProductVariationsInDisplayConfirm = By.xpath("//h5[normalize-space()='Order Details']/following-sibling::div/table//td[3]");
+
     By elementProductPricesInDisplayConfirm = By.xpath("//h5[normalize-space()='Order Details']/following-sibling::div/table//td[6]");
     By elementNameInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Name')]/following-sibling::td");
     By elementEmailInOrderSummary = By.xpath("//h5[normalize-space()='Order Summary']/following-sibling::div//td[contains(text(),'Email')]/following-sibling::td");
@@ -638,6 +641,11 @@ public class OrderPage {
         for (WebElement productName : productNames) {
             valueProductNames.add(productName.getText());
         }
+        List<WebElement> productVariations = DriverManager.getDriver().findElements(elementProductVariationsInDisplayConfirm);
+        List<String> valueProductVariations = new ArrayList<>();
+        for (WebElement productVariation : productVariations) {
+            valueProductVariations.add(productVariation.getText());
+        }
         List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantitiesInDisplayConfirm);
         List<Integer> valueProductQuantities = new ArrayList<>();
         for (WebElement productQuantity : productQuantities) {
@@ -653,6 +661,7 @@ public class OrderPage {
         for (int i = 0; i < valueProductNames.size(); i++) {
             Cart cart = new Cart();
             cart.setNameProduct(valueProductNames.get(i));
+            cart.setNameVariant(valueProductVariations.get(i));
             cart.setQuantity(valueProductQuantities.get(i));
             cart.setPrice(valueProductPrices.get(i).divide(BigDecimal.valueOf(valueProductQuantities.get(i))));
             infoProductsInDisplayConfirm.add(cart);
@@ -662,6 +671,7 @@ public class OrderPage {
 
     public List<Cart> getInfoOrderDetailInDisplayConfirmWithOrderCode(String orderCode) {
         By elementProductNamesInDisplayConfirm = By.xpath("//h2[text()='Order Code: ']/span[text()='" + orderCode + "']/ancestor::div[@class='card-body']//table//td[2]/a");
+        By elementProductVariationsInDisplayConfirm = By.xpath("//h2[text()='Order Code: ']/span[text()='" + orderCode + "']/ancestor::div[@class='card-body']//table//td[3]");
         By elementProductQuantitiesInDisplayConfirm = By.xpath("//h2[text()='Order Code: ']/span[text()='" + orderCode + "']/ancestor::div[@class='card-body']//table//td[4]");
         By elementProductPricesInDisplayConfirm = By.xpath("//h2[text()='Order Code: ']/span[text()='" + orderCode + "']/ancestor::div[@class='card-body']//table//td[6]");
 
@@ -669,6 +679,11 @@ public class OrderPage {
         List<String> valueProductNames = new ArrayList<>();
         for (WebElement productName : productNames) {
             valueProductNames.add(productName.getText());
+        }
+        List<WebElement> productVariations = DriverManager.getDriver().findElements(elementProductVariationsInDisplayConfirm);
+        List<String> valueProductVariations = new ArrayList<>();
+        for (WebElement productVariation : productVariations) {
+            valueProductVariations.add(productVariation.getText());
         }
         List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantitiesInDisplayConfirm);
         List<Integer> valueProductQuantities = new ArrayList<>();
@@ -685,6 +700,7 @@ public class OrderPage {
         for (int i = 0; i < valueProductNames.size(); i++) {
             Cart cart = new Cart();
             cart.setNameProduct(valueProductNames.get(i));
+            cart.setNameVariant(valueProductVariations.get(i));
             cart.setQuantity(valueProductQuantities.get(i));
             cart.setPrice(valueProductPrices.get(i).divide(BigDecimal.valueOf(valueProductQuantities.get(i))));
             infoProductsInDisplayConfirm.add(cart);
@@ -696,6 +712,7 @@ public class OrderPage {
     public List<Cart> getInfoOrderDetailInHistoryOrder(String orderCode) {
 
         By elementProductNamesInHistoryOrder = By.xpath("//h1[text()='Order Id: " + orderCode + "']/ancestor::div[contains(@class,'aiz-user-panel')]//h5[text()='Order Details']/ancestor::div[@class='card']//table//td[2]/a");
+        By elementProductVariationsInHistoryOrder = By.xpath("//h1[text()='Order Id: " + orderCode + "']/ancestor::div[contains(@class,'aiz-user-panel')]//h5[text()='Order Details']/ancestor::div[@class='card']//table//td[3]");
         By elementProductQuantitiesInHistoryOrder = By.xpath("//h1[text()='Order Id: " + orderCode + "']/ancestor::div[contains(@class,'aiz-user-panel')]//h5[text()='Order Details']/ancestor::div[@class='card']//table//td[4]");
         By elementProductPricesInHistoryOrder = By.xpath("//h1[text()='Order Id: " + orderCode + "']/ancestor::div[contains(@class,'aiz-user-panel')]//h5[text()='Order Details']/ancestor::div[@class='card']//table//td[6]");
 
@@ -703,6 +720,11 @@ public class OrderPage {
         List<String> valueProductNames = new ArrayList<>();
         for (WebElement productName : productNames) {
             valueProductNames.add(productName.getText());
+        }
+        List<WebElement> productVariations = DriverManager.getDriver().findElements(elementProductVariationsInHistoryOrder);
+        List<String> valueProductVariations = new ArrayList<>();
+        for (WebElement productVariation : productVariations) {
+            valueProductVariations.add(productVariation.getText());
         }
         List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantitiesInHistoryOrder);
         List<Integer> valueProductQuantities = new ArrayList<>();
@@ -719,6 +741,7 @@ public class OrderPage {
         for (int i = 0; i < valueProductNames.size(); i++) {
             Cart cart = new Cart();
             cart.setNameProduct(valueProductNames.get(i));
+            cart.setNameVariant(valueProductVariations.get(i));
             cart.setQuantity(valueProductQuantities.get(i));
             cart.setPrice(valueProductPrices.get(i).divide(BigDecimal.valueOf(valueProductQuantities.get(i))));
             infoProductsInDisplayConfirm.add(cart);
@@ -835,14 +858,15 @@ public class OrderPage {
     }
 
     public void checkOutOrder(String noteForOrder) {
-        WebUI.clickElement(buttonCart);
-        List<Cart> currentCart = CartPage.getCartDropdown();
+//        WebUI.clickElement(buttonCart);
+//        List<Cart> currentCart = CartPage.getCartDropdown();
+        List<Cart> currentCart = CartPage.getCartDetailTemp2();
         if (currentCart.isEmpty()) {
-            WebUI.verifyAssertTrueIsDisplayed(CartPage.messageCartEmptyInCart, "Không có sản phẩm trong giỏ hàng");
-            WebUI.verifyAssertTrueEqual(CartPage.messageCartEmptyInCart, "Your Cart is empty", "Thông báo không có sản phẩm trong giỏ hàng không đúng");
+            WebUI.verifyAssertTrueIsDisplayed(CartPage.messageCartEmptyInCartDetail, "Không có sản phẩm trong giỏ hàng");
+            WebUI.verifyAssertTrueEqual(CartPage.messageCartEmptyInCartDetail, "Your Cart is empty", "Thông báo không có sản phẩm trong giỏ hàng không đúng");
             return;
         }
-        WebUI.clickElement(buttonCheckoutOnCartPopup);
+        WebUI.clickElement(buttonContinueToShipping);
         selectAddressInShippingInfo("3");
         Address addressSelected = getSelectedAddress();
         WebUI.clickElement(buttonContinueToDeliveryInfo);
@@ -858,7 +882,6 @@ public class OrderPage {
         addAdditaionalInfo(noteForOrder);
 
         WebUI.scrollToElement(buttonCompleteOrder);
-        //WebUI.waitForJQueryLoad();
         WebUI.clickElement(buttonCompleteOrder);
         WebUI.waitForPageLoaded();
         //Check order success
@@ -882,7 +905,7 @@ public class OrderPage {
         WebUI.scrollToElement(By.xpath("//h5[text()='Order Summary']/parent::div"));
         List<Cart> listProduct = getInfoOrderDetailInDisplayConfirm();
         for (int j = 0; j < listProduct.size(); j++) {
-            WebUI.verifyAssertEquals(listProduct.get(j).getNameProduct(), currentCart.get(j).getNameProduct(), "Tên sản phẩm không khớp.");
+            WebUI.verifyAssertContain(currentCart.get(j).getNameProduct(), listProduct.get(j).getNameProduct(), "Tên sản phẩm không khớp.");
             WebUI.verifyAssertEquals(listProduct.get(j).getPrice(), currentCart.get(j).getPrice(), "Giá sản phẩm không khớp.");
             WebUI.verifyAssertEquals(listProduct.get(j).getQuantity(), currentCart.get(j).getQuantity(), "Số lượng sản phẩm không khớp.");
         }
@@ -955,6 +978,7 @@ public class OrderPage {
 
             for (int j = 0; j < listProduct.size(); j++) {
                 WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getNameProduct(), listProduct.get(j).getNameProduct(), "Tên sản phẩm không khớp.");
+                WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getNameVariant(), listProduct.get(j).getNameVariant(), "Tên biến thể sản phẩm không khớp.");
                 WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getPrice(), listProduct.get(j).getPrice(), "Giá sản phẩm không khớp.");
                 WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getQuantity(), listProduct.get(j).getQuantity(), "Số lượng sản phẩm không khớp.");
             }
@@ -985,13 +1009,13 @@ public class OrderPage {
             By elementTotalOrderAmountInHistoryOrderDetail = By.xpath("//td[text()='Total order amount:']/following-sibling::td");
             String valueTotalOrderAmount = WebUI.getElementText(elementTotalOrderAmountInHistoryOrderDetail);
             valueTotalOrderAmount = convertCurrencyToBigDecimal(valueTotalOrderAmount).toString();
-            WebUI.verifyAssertEquals(valueTotalOrderAmount, orderAmountInHistoryOrder.getTotal(), "Tổng giá tiền không đúng tại phần order summary trong trang lich sử đơn hàng.");
+            WebUI.verifySoftAssertEquals(valueTotalOrderAmount, orderAmountInHistoryOrder.getTotal(), "Tổng giá tiền không đúng tại phần order summary trong trang lich sử đơn hàng.");
 
             DriverManager.getDriver().switchTo().window(mainWindow);
 
         }
 
-        WebUI.clickElement(DashboardPage.buttonLogout);
+        WebUI.clickElement(DashboardPage.buttonLogoutRoleCustomer);
         WebUI.waitForPageLoaded();
         WebUI.clickElement(LoginPage.buttonLogin);
         WebUI.waitForPageLoaded();

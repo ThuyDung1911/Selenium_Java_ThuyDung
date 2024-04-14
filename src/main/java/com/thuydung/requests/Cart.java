@@ -6,6 +6,7 @@ public class Cart {
     private String nameProduct;
     private String nameVariant;
     private BigDecimal price;
+    private BigDecimal vat;
     private int quantity;
 
     public Cart() {
@@ -15,6 +16,19 @@ public class Cart {
         this.nameVariant = nameVariant;
         this.price = price;
         this.quantity = quantity;
+    }
+    public Cart(String nameProduct, String nameVariant, BigDecimal price, int quantity, BigDecimal vat) {
+        this.nameProduct = nameProduct;
+        this.nameVariant = nameVariant;
+        this.price = price;
+        this.quantity = quantity;
+        this.vat = vat;
+    }
+    public BigDecimal getVat() {
+        return vat;
+    }
+    public void setVat(BigDecimal vat) {
+        this.vat = vat;
     }
     public String getNameVariant() {
         return nameVariant;

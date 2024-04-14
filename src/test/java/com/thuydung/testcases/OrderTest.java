@@ -19,11 +19,11 @@ public class OrderTest extends BaseTest {
         getCouponPage().addCouponValid("COUPON2024", "100000", "10000", "5000000", "04/09/2024 - 06/09/2024");
         getLoginPage().logOutRoleAdmin();
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
+        getCartPage().addProductToCart("Cosy Thuy Dung Update VFYJWRFN", "1");
         getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
     }
     // Add order success
-    @Test(priority = 1, description = "Kiem tra dat hang thanh cong khi coupon het han")
+    @Test(priority = 2, description = "Kiem tra dat hang thanh cong khi coupon het han")
     public void testOrderProduct() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");

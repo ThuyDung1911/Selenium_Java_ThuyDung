@@ -69,12 +69,11 @@ public class CartPage extends CommonPage {
             valueVariantName = AddProductPage.getVariantNameSelected();
         }
 
-        //Lấy đơn giá bán sản phẩm ở trang chi tiết sản phẩm = tong tien khi mua 1 san pham
+        //Lấy đơn giá bán sản phẩm ở trang chi tiết sản phẩm = tong tien khi mua 1 san pham (bao gom ca tax)
         BigDecimal productPrice = WebUI.convertCurrencyToBigDecimal(WebUI.getElementText(totalPriceInDetailProduct));
 
         //Lay số lượng sản phẩm ton kho
         int quantityAvailable = Integer.parseInt(WebUI.getElementText(ProductInfoPage.quantityProductAvailable));
-
         String mainWindow = DriverManager.getDriver().getWindowHandle();
         DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
         WebUI.openURL("https://cms.anhtester.com/cart");
@@ -364,7 +363,7 @@ public class CartPage extends CommonPage {
         }
         return cart;
     }
-    public List<Cart> getCartDetailTemp() {
+    public static List<Cart> getCartDetailTemp() {
         List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInCartDetail);
         if (productNames.isEmpty()) {
             return new ArrayList<>();
@@ -394,6 +393,41 @@ public class CartPage extends CommonPage {
             cart.setNameProduct(valueProductNames.get(i));
             cart.setQuantity(valueProductQuantities.get(i));
             cart.setPrice(valueProductPrices.get(i).add(valueProductTaxes.get(i)));
+            cartDetailTemp.add(cart);
+        }
+        return cartDetailTemp;
+    }
+    public static List<Cart> getCartDetailTemp2() {
+        List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInCartDetail);
+        if (productNames.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<WebElement> productQuantities = DriverManager.getDriver().findElements(elementProductQuantitiesInCartDetail);
+        List<Integer> valueProductQuantities = new ArrayList<>();
+        for (WebElement productQuantity : productQuantities) {
+            valueProductQuantities.add(Integer.parseInt(productQuantity.getAttribute("value")));
+        }
+        List<WebElement> productPrices = DriverManager.getDriver().findElements(elementProductPricesInCartDetail);
+        List<BigDecimal> valueProductPrices = new ArrayList<>();
+        for (WebElement productPrice : productPrices) {
+            valueProductPrices.add(convertCurrencyToBigDecimal(productPrice.getText()));
+        }
+        List<WebElement> productTaxes = DriverManager.getDriver().findElements(elementProductTaxesInCartDetail);
+        List<BigDecimal> valueProductTaxes = new ArrayList<>();
+        for (WebElement productTax : productTaxes) {
+            valueProductTaxes.add(convertCurrencyToBigDecimal(productTax.getText()));
+        }
+        List<String> valueProductNames = new ArrayList<>();
+        for (WebElement productName : productNames) {
+            valueProductNames.add(productName.getText());
+        }
+        List<Cart> cartDetailTemp = new ArrayList<>();
+        for (int i = 0; i < valueProductNames.size(); i++) {
+            Cart cart = new Cart();
+            cart.setNameProduct(valueProductNames.get(i));
+            cart.setQuantity(valueProductQuantities.get(i));
+            cart.setPrice(valueProductPrices.get(i));
+            cart.setVat(valueProductTaxes.get(i));
             cartDetailTemp.add(cart);
         }
         return cartDetailTemp;
@@ -520,6 +554,7 @@ public class CartPage extends CommonPage {
             cart.setNameVariant(valueVariantNames.get(i));
             cart.setQuantity(valueProductQuantities.get(i));
             cart.setPrice(valueProductPrices.get(i).add(valueProductTaxes.get(i)).setScale(2, RoundingMode.HALF_UP));
+            cart.setVat(valueProductTaxes.get(i));
             if (valueVariantNames.get(i) == "") {
                 String key = valueProductNames.get(i);
                 cartDetail.put(key, cart);
