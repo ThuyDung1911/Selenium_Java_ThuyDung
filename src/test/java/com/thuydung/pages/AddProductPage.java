@@ -23,9 +23,11 @@ import java.util.Random;
 
 public class AddProductPage extends CommonPage {
     private String nameProductVerify;
-    private By menuProduct = By.xpath("//ul[@id='main-menu']//span[text()='Products']");
+    private By menuProduct = By.xpath("(//ul[@id='main-menu']//span[text()='Products'])[1]");
     private By submenuAddProduct = By.xpath("//ul[@id='main-menu']//span[normalize-space()='Add New Product']");
-    private By submenuProducts = By.xpath("//ul[@id='main-menu']//span[normalize-space()='All products']");
+    private By submenuAllProducts = By.xpath("//ul[@id='main-menu']//span[normalize-space()='All products']");
+    private By submenuProducts = By.xpath("(//ul[@id='main-menu']//span[text()='Products'])[2]");
+
     private By titleAddNewProduct = By.xpath("//h5[normalize-space()='Add New Product']");
     private By blockProductInf = By.xpath("//h5[normalize-space()='Product Information']");
     private By inputProductName = By.xpath("//input[@placeholder='Product Name']");
@@ -163,7 +165,7 @@ public class AddProductPage extends CommonPage {
         WebUI.sleep(2);
         WebUI.clickElement(selectThumbnailImages);
         WebUI.clickElement(buttonAddFileImages);
-        ////Product Variation
+        //Product Variation
         addProductVariationColor(List.of("AliceBlue", "Amethyst"));
         addProductVariationAttribute(List.of("Size"));
         addProductVariationAttribute(List.of("Quality"));
@@ -277,7 +279,7 @@ public class AddProductPage extends CommonPage {
         }
     }
 
-    public void addProductWithRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
+    public void addProductWithRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
         productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         WebUI.clickElement(menuProduct);
@@ -332,6 +334,11 @@ public class AddProductPage extends CommonPage {
         //Product Description
         WebUI.verifyAssertTrueIsDisplayed(blockProductDescription, "Product description KHONG xuat hien");
         WebUI.setTextAndClear(inputDescription, description);
+        //Vat
+        WebUI.scrollToElement(inputVat);
+        WebUI.setTextAndClear(inputVat, vat);
+        WebUI.clickElement(selectUnitVat);
+        WebUI.waitForElementVisible(selectUnitVatFlat);
         WebUI.clickElement(By.xpath("//button[text()='Upload Product']")); //Click button Save&Public
 
     }
@@ -528,6 +535,7 @@ public class AddProductPage extends CommonPage {
         }
         WebUI.verifySoftAssertEquals(valueUnitPriceInProductDetail, valueUnitPriceCheck, "Unit Price hien thi sai");
     }
+
     public static String getVariantNameSelected() {
         //get value variant selected
         By optionSize = By.xpath("//div[contains(normalize-space(),'Size:')]/parent::div[contains(@class,'col')]/following-sibling::div//input[@type='radio'][contains(@name,'attribute')]");
@@ -606,7 +614,7 @@ public class AddProductPage extends CommonPage {
             String discountPriceVer1 = WebUI.getElementText(discountPriceProductInProductDetail);
             BigDecimal discountPriceVer2 = WebUI.convertCurrencyToBigDecimal(discountPriceVer1);
 //            BigDecimal discountPriceCheck = unitPriceCheck.subtract(unitPriceCheck.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
-            BigDecimal discountPriceCheck = unitPriceCheck.subtract(unitPriceCheck.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
+            BigDecimal discountPriceCheck = WebUI.stringToBigDecimal(unitPrice).subtract(WebUI.stringToBigDecimal(unitPrice).multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
             WebUI.verifyAssertEquals(discountPriceVer2, discountPriceCheck, "Discount Price hien thi sai");
         }
         //unit
@@ -621,15 +629,15 @@ public class AddProductPage extends CommonPage {
     }
 
     public void addProductValidRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
-        addProductWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
+        addProductWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         nameProductVerify = DriverManager.getDriver().findElement(By.xpath("(//tr/td[2]/a)[1]")).getText();
-        verifyNewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount,vat);
+        verifyNewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount, vat);
     }
 
-    public void addProductInvalidRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName) {
-        addProductWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName);
+    public void addProductInvalidRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
+        addProductWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
         WebUI.checkHTML5MessageWithValueInvalid(inputUnit, "Unit la truong bat buoc");
         WebUI.verifyAssertTrueEqualMessageHTML(inputUnit, "Please fill out this field.", "Messge Unit hien thi khong dung");
     }

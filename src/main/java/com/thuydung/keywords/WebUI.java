@@ -894,6 +894,13 @@ public class WebUI {
         }
         return getWebElement(by);
     }
+    public static WebElement highLightElementFull2(By by) {
+        if (DriverManager.getDriver() instanceof JavascriptExecutor) {
+            ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].style.backgroundColor='green'", getWebElement(by));
+            sleep(ConfigData.HIGHLIGHT_TIMEOUT);
+        }
+        return getWebElement(by);
+    }
 
     public static WebElement highLightElement(By by) {
         if (DriverManager.getDriver() instanceof JavascriptExecutor) {

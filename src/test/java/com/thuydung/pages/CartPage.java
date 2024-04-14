@@ -114,9 +114,11 @@ public class CartPage extends CommonPage {
             return;
         }
         WebUI.setTextAndClear(inputQuantity, quantity);
-        WebUI.waitForJQueryLoad();
+        WebUI.clickElement(totalPriceInDetailProduct);
         //Check tổng tiền sản phẩm trong trang chi tiết sản phẩm
-//        checkTotalPriceInDetailProduct(productPrice, quantity);//can check khi co quantity > 1
+        BigDecimal valueTotalPriceInDetailProduct = convertCurrencyToBigDecimal(WebUI.getElementText(totalPriceInDetailProduct)); //Tien hien thi tren trang detail product
+        BigDecimal checkTotalPriceCheck = productPrice.multiply(WebUI.stringToBigDecimal(quantity)).setScale(2, RoundingMode.HALF_UP); //Tien tinh dua tren don gia va so luong
+        WebUI.verifyAssertEquals(valueTotalPriceInDetailProduct, checkTotalPriceCheck, "Tổng tiền sản phẩm không đúng");
 
         //Thêm sản phẩm vào giỏ hàng
 //        WebUI.sleep(3);

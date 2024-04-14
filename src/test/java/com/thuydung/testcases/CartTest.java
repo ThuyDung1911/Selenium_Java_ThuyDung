@@ -19,7 +19,7 @@ public class CartTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-//        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
+        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
         getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "2");
     }
 

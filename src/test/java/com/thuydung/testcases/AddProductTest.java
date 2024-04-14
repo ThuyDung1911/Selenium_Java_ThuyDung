@@ -12,7 +12,7 @@ public class AddProductTest extends BaseTest {
     ExcelHelper excelAddProduct;
 
     //Add new product valid in Admin page (Admin role)
-    @Test(priority = 1, dataProvider = "data_provider_add_product", dataProviderClass = DataProviderAddProduct.class)
+    @Test(priority = 1, dataProvider = "data_provider_add_product", dataProviderClass = DataProviderAddProduct.class, description = "Kiem tra them san pham moi khong co variant hop le voi role admin")
     public void testAddProductValid(Hashtable<String, String> data) {
         excelLogin = new ExcelHelper();
         excelAddProduct = new ExcelHelper();
@@ -21,7 +21,7 @@ public class AddProductTest extends BaseTest {
         getLoginPage().loginSuccessAdminPage(excelLogin.getCellData("email", 5), excelLogin.getCellData("password", 5));
         getAddProductPage().addProductValid(data.get("productName"), data.get("category"), data.get("unit"), data.get("weight"), data.get("tags"), data.get("unitPrice"), data.get("discountDate"), data.get("quantity"), data.get("description"), data.get("discount"), data.get("image"), data.get("vat"));
     }
-    @Test(priority = 1, dataProvider = "data_provider_add_product", dataProviderClass = DataProviderAddProduct.class)
+    @Test(priority = 1, dataProvider = "data_provider_add_product", dataProviderClass = DataProviderAddProduct.class, description = "Kiem tra them san pham moi co variant hop le voi role admin")
     public void testAddProductVariantValid(Hashtable<String, String> data) {
         excelLogin = new ExcelHelper();
         excelAddProduct = new ExcelHelper();
@@ -59,7 +59,7 @@ public class AddProductTest extends BaseTest {
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelAddProduct.setExcelFile("DataTest/AddProduct.xlsx", "AddProduct");
         getLoginPage().loginSuccessWithSellerAccount("dungtest@yopmail.com", "123456");
-        getAddProductPage().addProductInvalidRoleSeller(excelAddProduct.getCellData("productName",3), excelAddProduct.getCellData("category",3), excelAddProduct.getCellData("unit",3), excelAddProduct.getCellData("weight",3), excelAddProduct.getCellData("tags",3), excelAddProduct.getCellData("unitPrice",3), excelAddProduct.getCellData("discountDate",3), excelAddProduct.getCellData("quantity",3), excelAddProduct.getCellData("description",3), excelAddProduct.getCellData("discount",3), excelAddProduct.getCellData("image",3));
+        getAddProductPage().addProductInvalidRoleSeller(excelAddProduct.getCellData("productName",3), excelAddProduct.getCellData("category",3), excelAddProduct.getCellData("unit",3), excelAddProduct.getCellData("weight",3), excelAddProduct.getCellData("tags",3), excelAddProduct.getCellData("unitPrice",3), excelAddProduct.getCellData("discountDate",3), excelAddProduct.getCellData("quantity",3), excelAddProduct.getCellData("description",3), excelAddProduct.getCellData("discount",3), excelAddProduct.getCellData("image",3), excelAddProduct.getCellData("vat",3));
 
     }
     //Add product valid have discount
