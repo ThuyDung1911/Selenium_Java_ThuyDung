@@ -438,9 +438,7 @@ public class CartPage extends CommonPage {
     public void removeProductFromCart(String productName) {
         By viewProductNameInCart = By.xpath("//div[@id='cart_items']//span[contains(text(),'" + productName + "')]");
         By buttonRemoveProduct = By.xpath("//div[@id='cart_items']//span[contains(text(),'" + productName + "')]/ancestor::a/following-sibling::span");
-        if(!WebUI.checkElementVisible(By.xpath("//div[@id='cart_items']"))){
-            WebUI.clickElement(OrderPage.buttonCart);
-        }
+        WebUI.clickElement(OrderPage.buttonCart);
         List<WebElement> productNames = WebUI.getWebElements(viewProductNameInCart);
         if (productNames.isEmpty()) {
             System.out.println("San pham nay khong xoa duoc khoi gio hang vi khong co san pham nay trong gio hang");
@@ -535,6 +533,7 @@ public class CartPage extends CommonPage {
 
 
     public void updateQuantityProductInCart(String productName, String quantity) {
+
         By resultSearchProduct = By.xpath("//div[@id='search-content']//div[contains(text(),'" + productName + "')]");
         //Tìm kiếm sản phẩm
         getDashboardPage().testSearchProductHaveResult(productName);
@@ -546,24 +545,59 @@ public class CartPage extends CommonPage {
             return;
         }
         productName = WebUI.getElementText(resultSearchProduct);
-        By priceInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//span[text()='Price']/following-sibling::span");
-        By viewQuantityInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]/ancestor::li//input[contains(@name,'quantity')]");
-
         WebUI.clickElement(resultSearchProduct);
         WebUI.waitForPageLoaded();
-
-        //Lay số lượng sản phẩm ton kho
-        int quantityAvailabel = Integer.parseInt(WebUI.getElementText(ProductInfoPage.quantityProductAvailable));
-        if (Integer.parseInt(quantity) > quantityAvailabel) {
-            System.out.println("Số lượng sản phẩm tồn kho không đủ. Không thể thêm sản phẩm vào giỏ hàng với số lượng: " + quantity);
-            return;
+        By elementCheckVariantSize = By.xpath("//form[@id='option-choice-form']//div[text()='Quantity:']/ancestor::div[contains(@class,'row')]/preceding-sibling::div//div[contains(text(),'Size:')]");
+        By elementCheckVariantColor = By.xpath("//form[@id='option-choice-form']//div[text()='Quantity:']/ancestor::div[contains(@class,'row')]/preceding-sibling::div//div[contains(text(),'Color:')]");
+        By elementCheckVariantQuality = By.xpath("//form[@id='option-choice-form']//div[text()='Quantity:']/ancestor::div[contains(@class,'row')]/preceding-sibling::div//div[contains(text(),'Quality:')]");
+        String valueVariantName = "";
+        if (WebUI.checkElementExist(elementCheckVariantSize) || WebUI.checkElementExist(elementCheckVariantColor) || WebUI.checkElementExist(elementCheckVariantQuality)) {
+            //variant da chon o trang detail product
+            valueVariantName = AddProductPage.getVariantNameSelected();
         }
 
-        WebUI.clickElement(buttonBuyNow);
+        //Lay số lượng sản phẩm ton kho
+        int quantityAvailable = Integer.parseInt(WebUI.getElementText(ProductInfoPage.quantityProductAvailable));
+
+        DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
+        WebUI.openURL("https://cms.anhtester.com/cart");
         WebUI.waitForPageLoaded();
+        Map<String, Cart> currentCart = getCartDetail();
+
+
+        String key;
+        if(valueVariantName != "") {
+            key = productName + " - " + valueVariantName;
+        }
+        else {
+            key = productName;
+        }
+        By viewProductNameInCartDetail = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + key + "')]");
+        //lay so luong san pham o cart detail
+        int quantityProductInCart;
+        if (WebUI.checkElementExist(viewProductNameInCartDetail)) {
+            WebUI.scrollToElement(viewProductNameInCartDetail);
+            WebUI.hoverElement(viewProductNameInCartDetail);
+
+            quantityProductInCart = currentCart.get(key).getQuantity();
+        } else {
+            System.out.println("Không có sản phẩm trong giỏ hàng");
+            return;
+        }
+        String valueQuantityProductInCart = String.valueOf(quantityProductInCart);
+        By viewQuantityInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + key + "')]/ancestor::li//input[contains(@name,'quantity')]");
+        By priceInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + key + "')]/ancestor::li//span[text()='Price']/following-sibling::span");
         WebUI.setTextAndClear(viewQuantityInCart, quantity);
         WebUI.clickElement(priceInCart);
         WebUI.waitForJQueryLoad();
+        String valueQuantityInCart = WebUI.getElementAttribute(viewQuantityInCart, "value");
+        if (Integer.parseInt(quantity) > quantityAvailable) {
+            System.out.println("Số lượng sản phẩm tồn kho không đủ. Không thể cập nhập số lượng sản phẩm trong giỏ hàng với số lượng: " + quantity);
+            WebUI.verifyAssertEquals(valueQuantityInCart, valueQuantityProductInCart, "Số lượng sản phẩm trong giỏ hàng không đúng");
+        }
+        else {
+            WebUI.verifyAssertEquals(valueQuantityInCart, quantity, "Số lượng sản phẩm trong giỏ hàng không đúng");
+        }
         checkSubTotalPriceInCartDetail();
         WebUI.clickElement(OrderPage.buttonCart);
         WebUI.waitForJQueryLoad();
