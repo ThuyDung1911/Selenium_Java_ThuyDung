@@ -52,6 +52,7 @@ public class WebUI {
         waitForPageLoaded();
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        wait.until(ExpectedConditions.elementToBeClickable(by));
         sleep(STEP_TIME);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
@@ -286,7 +287,7 @@ public class WebUI {
     }
 
     @Step("Message HTML with value {0} invalid is displayed")
-    public static void checkHTML5MessageWithValueInvalid(By by, String message) {
+    public static void  checkHTML5MessageWithValueInvalid(By by, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(by));
