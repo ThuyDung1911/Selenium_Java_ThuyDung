@@ -10,7 +10,7 @@ public class EditProductTest extends BaseTest {
 
     //Edit product valid
     @Test(priority = 2)
-    public void testEditProductValid() {
+    public void TC_EditProductValid() {
         excelLogin = new ExcelHelper();
         excelEditProduct = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
@@ -20,7 +20,7 @@ public class EditProductTest extends BaseTest {
     }
     //Edit product invalid
     @Test(priority = 1)
-    public void testEditProductInvalid() {
+    public void TC_EditProductInvalid() {
         excelLogin = new ExcelHelper();
         excelEditProduct = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");

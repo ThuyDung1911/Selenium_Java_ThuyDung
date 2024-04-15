@@ -66,8 +66,8 @@ public class EditProductPage extends CommonPage{
     public void editProductInvalid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String image) {
         editProduct(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, image);
         //Verify
-        WebUI.checkHTML5MessageWithValueInvalid(inputProductName, "Product name la truong bat buoc");
-        WebUI.verifyAssertTrueEqualMessageHTML(inputProductName, "Please fill out this field.","Messge Product name hien thi khong dung");
+        WebUI.checkHTML5MessageWithValueInvalid(inputUnit, "Unit la truong bat buoc");
+        WebUI.verifyAssertTrueEqualMessageHTML(inputUnit, "Please fill out this field.","Messge Product name hien thi khong dung");
     }
 
 

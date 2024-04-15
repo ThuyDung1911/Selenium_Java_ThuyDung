@@ -41,9 +41,6 @@ public class ProfileTest extends BaseTest {
         excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
         getProfilePage().updateInfoBasicProfileCustomerNoMatchPassword(excelUpdateProfile.getCellData("name", 4), excelUpdateProfile.getCellData("phone", 4), excelUpdateProfile.getCellData("photo", 4), excelUpdateProfile.getCellData("password", 4), excelUpdateProfile.getCellData("confirm password", 4));
-//        getLoginPage().loginFailWithIncorrectPassword(excelLogin.getCellData("email", 4), excelUpdateProfile.getCellData("password", 4));
-//        getLoginPage().loginFailWithIncorrectPassword(excelLogin.getCellData("email", 4), excelLogin.getCellData("corfirm password", 4));
-//        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelUpdateProfile.getCellData("password", 4));
 
     }
 
@@ -56,7 +53,6 @@ public class ProfileTest extends BaseTest {
         excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
         getProfilePage().updateInfoBasicProfileCustomerPasswordLessCharacter(excelUpdateProfile.getCellData("name", 5), excelUpdateProfile.getCellData("phone", 5), excelUpdateProfile.getCellData("photo", 5), excelUpdateProfile.getCellData("password", 5), excelUpdateProfile.getCellData("confirm password", 5));
-        //getProfilePage().updateInfoBasicValidProfileCustomer(excelUpdateProfile.getCellData("name", 1), excelUpdateProfile.getCellData("phone", 1), excelUpdateProfile.getCellData("photo", 1), excelUpdateProfile.getCellData("password", 1), excelUpdateProfile.getCellData("confirm password", 1));
     }
     // Update Info Basic Valid Customer
     @Test(priority = 5)
@@ -113,7 +109,7 @@ public class ProfileTest extends BaseTest {
 
     //Add New Address Customer Valid
     @Test(priority = 10)
-    public void testAddNewAddressValid() {
+    public void TC_AddNewAddressValid() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -125,7 +121,7 @@ public class ProfileTest extends BaseTest {
 
     //Add New Address Customer without Address
     @Test(priority = 11)
-    public void testAddNewAddressWithoutAddress() {
+    public void TC_AddNewAddressWithoutAddress() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -137,7 +133,7 @@ public class ProfileTest extends BaseTest {
 
     //Add New Address Customer without Country
     @Test(priority = 12)
-    public void testAddNewAddressWithoutCountry() {
+    public void TC_AddNewAddressWithoutCountry() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -149,7 +145,7 @@ public class ProfileTest extends BaseTest {
 
     //Add New Address Customer without State
     @Test(priority = 13)
-    public void testAddNewAddressWithoutState() {
+    public void TC_AddNewAddressWithoutState() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -161,7 +157,7 @@ public class ProfileTest extends BaseTest {
 
     //Add New Address Customer without City
     @Test(priority = 14)
-    public void testAddNewAddressWithoutCity() {
+    public void TC_AddNewAddressWithoutCity() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -173,7 +169,7 @@ public class ProfileTest extends BaseTest {
 
     //Add New Address Customer without Postal Code
     @Test(priority = 15)
-    public void testAddNewAddressWithoutPostalCode() {
+    public void TC_AddNewAddressWithoutPostalCode() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -185,7 +181,7 @@ public class ProfileTest extends BaseTest {
 
     //Add New Address Customer without Phone
     @Test(priority = 16)
-    public void testAddNewAddressWithoutPhone() {
+    public void TC_AddNewAddressWithoutPhone() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -197,7 +193,7 @@ public class ProfileTest extends BaseTest {
 
     // Edit Address Customer Valid
     @Test(priority = 17)
-    public void testEditAddressValid() {
+    public void TC_EditAddressValid() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -209,7 +205,7 @@ public class ProfileTest extends BaseTest {
 
     // Edit Address Customer without Address
     @Test(priority = 18)
-    public void testEditAddressWithoutAddress() {
+    public void TC_EditAddressWithoutAddress() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -221,7 +217,7 @@ public class ProfileTest extends BaseTest {
 
     // Edit Address Customer without Country
     @Test(priority = 19)
-    public void testEditAddressWithoutCountry() {
+    public void TC_EditAddressWithoutCountry() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -233,7 +229,7 @@ public class ProfileTest extends BaseTest {
 
     // Edit Address Customer without State
     @Test(priority = 20)
-    public void testEditAddressWithoutState() {
+    public void TC_EditAddressWithoutState() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -245,7 +241,7 @@ public class ProfileTest extends BaseTest {
 
     // Edit Address Customer without City
     @Test(priority = 21)
-    public void testEditAddressWithoutCity() {
+    public void TC_EditAddressWithoutCity() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -257,7 +253,7 @@ public class ProfileTest extends BaseTest {
 
     // Edit Address Customer without Postal Code
     @Test(priority = 22)
-    public void testEditAddressWithoutPostalCode() {
+    public void TC_EditAddressWithoutPostalCode() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -269,7 +265,7 @@ public class ProfileTest extends BaseTest {
 
     // Edit Address Customer without Phone
     @Test(priority = 23)
-    public void testEditAddressWithoutPhone() {
+    public void TC_EditAddressWithoutPhone() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();

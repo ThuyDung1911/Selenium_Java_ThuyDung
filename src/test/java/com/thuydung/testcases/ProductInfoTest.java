@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class ProductInfoTest extends BaseTest {
 
     @Test(priority = 1)
-    public void testGetProductInfo() {
+    public void TC_GetProductInfo() {
         getLoginPage().openHomePage();
 
         ExcelHelper excelHelper = new ExcelHelper();

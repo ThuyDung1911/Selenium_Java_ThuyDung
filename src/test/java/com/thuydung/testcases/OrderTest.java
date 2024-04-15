@@ -13,7 +13,7 @@ public class OrderTest extends BaseTest {
     public ExcelHelper excelUpdateProfile;
 
     @Test(priority = 1, description = "Kiem tra luong dat hang thanh cong khi co coupon")
-    public void testFlowOrderSuccess() {
+    public void TC_FlowOrderSuccess() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getCouponPage().addCouponValid("COUPON2024", "100000", "10000", "5000000", "04/09/2024 - 06/09/2024");
@@ -24,7 +24,7 @@ public class OrderTest extends BaseTest {
     }
     // Add order success
     @Test(priority = 2, description = "Kiem tra dat hang thanh cong khi coupon het han")
-    public void testOrderProduct() {
+    public void TC_OrderProduct() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
@@ -37,7 +37,7 @@ public class OrderTest extends BaseTest {
 
     // Checkout order without product
     @Test(priority = 2, description = "Kiem tra dat hang khong co san pham")
-    public void testCheckoutOrderWithoutProduct() {
+    public void TC_CheckoutOrderWithoutProduct() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
@@ -45,7 +45,7 @@ public class OrderTest extends BaseTest {
     }
 
     @Test(priority = 3, description = "Kiem tra truy cap trang shippging info khi co san pham trong gio hang")
-    public void testOpenShippingInfoDisplay() {
+    public void TC_OpenShippingInfoDisplay() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
@@ -54,18 +54,18 @@ public class OrderTest extends BaseTest {
     }
 
     @Test(priority = 4, description = "Kiem tra truy cap trang shippging info khi khong co san pham trong gio hang")
-    public void testCheckOutOrder() {
+    public void TC_CheckOutOrder() {
         getLoginPage().loginSuccessWithCustomerAccount("dungtest@gmail.com", "123456");
         getOrderPage().testOpenShippingInfoWithoutCartEmpty();
     }
 
     @Test(priority = 5, description = "Kiem tra truy cap trang shippging info khi chua dang nhap")
-    public void testOpenShippingInfoWithoutLogin() {
+    public void TC_OpenShippingInfoWithoutLogin() {
         getOrderPage().testOpenShippingInfoWithoutLogin();
     }
 
     @Test(priority = 6, description = "Kiem tra thong tin dia chi tai trang shipping info so voi thong tin dia chi them o profile")
-    public void testShippingInfoWithProfile() {
+    public void TC_ShippingInfoWithProfile() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
@@ -74,7 +74,7 @@ public class OrderTest extends BaseTest {
     }
 
     @Test(priority = 7, description = "Kiem tra khi them dia chi tai man shipping info")
-    public void testAddNewAddressInShippingInfo() {
+    public void TC_AddNewAddressInShippingInfo() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -86,7 +86,7 @@ public class OrderTest extends BaseTest {
     }
 
     @Test(priority = 8, description = "Kiem tra khi sua dia chi tai man shipping info")
-    public void testEditAddressInShippingInfo() {
+    public void TC_EditAddressInShippingInfo() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelUpdateProfile = new ExcelHelper();
@@ -97,7 +97,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testEditAddressInShippingInfo(excelUpdateProfile.getCellData("address", 1), excelUpdateProfile.getCellData("country", 1), excelUpdateProfile.getCellData("state", 1), excelUpdateProfile.getCellData("city", 1), excelUpdateProfile.getCellData("postal code", 1), excelUpdateProfile.getCellData("phone", 1));
     }
     @Test(priority = 9, description = "Kiem tra khi chon dia chi trong shipping info")
-    public void testSelectAddressInShippingInfo() {
+    public void TC_SelectAddressInShippingInfo() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -106,12 +106,12 @@ public class OrderTest extends BaseTest {
         getOrderPage().testSelectAddressInShippingInfoWithAddress("3");
     }
     @Test(priority = 10, description = "Kiem tra truy cap trang delivery info tu trang shipping info khi khong co dia chi")
-    public void testOpenDeliveryInfoWithoutProductInCart() {
+    public void TC_OpenDeliveryInfoWithoutProductInCart() {
         getLoginPage().loginSuccessWithCustomerAccount("dungtest2@gmail.com", "123456");
         getOrderPage().testOpenDeliveryInfoWithoutAddress();
     }
     @Test(priority = 11, description = "Kiem tra truy cap trang delivery info tu URL")
-    public void testOpenDeliveryInfoFromURL() {
+    public void TC_OpenDeliveryInfoFromURL() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -119,7 +119,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testOpenDeliveryInfoWithURL();
     }
     @Test(priority = 12, description  = "Kiem tra truy cap trang delivery info tu trang shipping info")
-    public void testOpenDeliveryInfoFromShippingInfo() {
+    public void TC_OpenDeliveryInfoFromShippingInfo() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -127,7 +127,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testOpenDeliveryInfoWithShippingInfo();
     }
     @Test(priority = 12, description = "Kiem tra thong tin danh sach san pham tai trang delivery info")
-    public void testCheckProductInDeliveryInfoDisplay() {
+    public void TC_CheckProductInDeliveryInfoDisplay() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -135,7 +135,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testProductInDeliveryInfoDisplay();
     }
     @Test(priority = 13, description = "Kiem tra khi chon phuong thuc van chuyen")
-    public void testSelectShippingMethod() {
+    public void TC_SelectShippingMethod() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -143,7 +143,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testSelectShippingMethod("Home Delivery");
     }
     @Test(priority = 14, description = "Kiem tra khi truy cap trang Payment tu trang Shipping Info")
-    public void testOpenPaymentInfo() {
+    public void TC_OpenPaymentInfo() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -151,7 +151,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testOpenPaymentInfoFromShippingInfoDisplay();
     }
     @Test(priority = 15, description = "Kiem tra khi truy cap trang Payment tu URL")
-    public void testOpenPaymentInfoFromURL() {
+    public void TC_OpenPaymentInfoFromURL() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -159,7 +159,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().openPaymentInfoFromURL();
     }
     @Test(priority = 16, description = "Kiem tra thong tin don hang tai trang Payment so voi gio hang")
-    public void testInfoOrderInPaymentInfo() {
+    public void TC_InfoOrderInPaymentInfo() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -167,7 +167,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testInfoOrderInPaymentInfo();
     }
     @Test(priority = 17, description = "Kiem tra khi apply discount coupon hop le")
-    public void testApplyDiscountCouponValid() {
+    public void TC_ApplyDiscountCouponValid() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getCouponPage().addCouponValid("COUPON2024", "100000", "10000", "5000000", "04/09/2024 - 06/09/2024");
@@ -178,7 +178,7 @@ public class OrderTest extends BaseTest {
     }
 
     @Test(priority = 18, description = "Kiem tra khi apply discount coupon khong ton tai")
-    public void testApplyDiscountCouponNotExist() {
+    public void TC_ApplyDiscountCouponNotExist() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -187,7 +187,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testApplyCouponDiscountNotExist("DUNG3");
     }
     @Test(priority = 19, description = "Kiem tra khi apply discount coupon da het han")
-    public void testApplyCouponDiscountExpried() {
+    public void TC_ApplyCouponDiscountExpried() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -196,7 +196,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testApplyCouponDiscountExpired("DUNG2");
     }
     @Test(priority = 19, description = "Kiem tra thong tin tong tien khi khong co discount tai trang Payment")
-    public void testCheckTotalPriceInPaymentInfo() {
+    public void TC_CheckTotalPriceInPaymentInfo() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -205,7 +205,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testTotalPriceInPaymentInfoWithNoDiscountCoupon();
     }
     @Test(priority = 20, description = "Kiem tra thong tin tong tien khi co discount tai trang Payment")
-    public void testCheckTotalPriceInPaymentInfoWithDiscountCoupon() {
+    public void TC_CheckTotalPriceInPaymentInfoWithDiscountCoupon() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -213,7 +213,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testTotalPriceInPaymentInfoWithDiscountCoupon();
     }
     @Test(priority = 21, description = "Kiem tra khi chon dong y dieu khoan")
-    public void testSelectAgreeTerms() {
+    public void TC_SelectAgreeTerms() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -221,7 +221,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testSelectAgreeTerms();
     }
     @Test(priority = 22, description = "Kiem tra khi khong chon dong y dieu khoan")
-    public void testNotSelectAgreeTerms() {
+    public void TC_NotSelectAgreeTerms() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -229,7 +229,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testNotSelectAgreeTerms();
     }
     @Test(priority = 23, description = "Kiem tra khi chon phuong thuc thanh toan Cash on Delivery")
-    public void testSelectPaymentMethodCashOnDelivery() {
+    public void TC_SelectPaymentMethodCashOnDelivery() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -237,7 +237,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testChoosePaymentMethodCashOnDelivery();
     }
     @Test(priority = 24, description = "Kiem tra khi an vao link Terms and Conditions")
-    public void testClickInTermsAndConditions() {
+    public void TC_ClickInTermsAndConditions() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -245,7 +245,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testClickInTermsAndConditions();
     }
     @Test(priority = 25, description = "Kiem tra khi an vao link Privacy Policy")
-    public void testClickInPrivacyPolicy() {
+    public void TC_ClickInPrivacyPolicy() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -253,7 +253,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testClickInPrivacyPolicy();
     }
     @Test(priority = 26, description = "Kiem tra khi truy cap trang Confirm Order tu URL")
-    public void testOpenConfirmOrderFromURL() {
+    public void TC_OpenConfirmOrderFromURL() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
@@ -261,7 +261,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testOpenConfirmOrderFromURL();
     }
     @Test(priority = 27, description = "kiem tra khi truy cap trang Confirm Order tu trang Shipping Info")
-    public void testOpenConfirmOrderFromShippingInfo() {
+    public void TC_OpenConfirmOrderFromShippingInfo() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
@@ -269,7 +269,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testOpenConfirmOrderFromShippingInfo();
     }
     @Test(priority = 28, description = "Kiem tra khi dat don hang thanh cong")
-    public void testMessageOrderSuccess() {
+    public void TC_MessageOrderSuccess() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
@@ -277,7 +277,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testMessageOrderSuccess();
     }
     @Test(priority = 29, description = "Kiem tra khi huy don hang")
-    public void testCancelOrder() {
+    public void TC_CancelOrder() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
