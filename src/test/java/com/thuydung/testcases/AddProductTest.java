@@ -118,6 +118,8 @@ public class AddProductTest extends BaseTest {
         getLoginPage().loginSuccessWithSellerAccount("dungtest@yopmail.com", "123456");
         getAddProductPage().addProductInvalidRoleSeller(excelAddProduct.getCellData("productName",3), excelAddProduct.getCellData("category",3), excelAddProduct.getCellData("unit",3), excelAddProduct.getCellData("weight",3), excelAddProduct.getCellData("tags",3), excelAddProduct.getCellData("unitPrice",3), excelAddProduct.getCellData("discountDate",3), excelAddProduct.getCellData("quantity",3), excelAddProduct.getCellData("description",3), excelAddProduct.getCellData("discount",3), excelAddProduct.getCellData("image",3), excelAddProduct.getCellData("vat",1));
     }
+
+
     //    @Test(priority = 1, dataProvider = "data_provider_add_product", dataProviderClass = DataProviderAddProduct.class, description = "Kiem tra them san pham moi khong co variant hop le voi role admin")
 //    public void TC_AddProductNoVariantValidRoleAdmin(Hashtable<String, String> data) {
 //        excelLogin = new ExcelHelper();

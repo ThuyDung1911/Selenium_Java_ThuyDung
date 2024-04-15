@@ -430,6 +430,7 @@ public class AddProductPage extends CommonPage {
         WebUI.waitForElementVisible(valueVariantPrice);
         WebUI.waitForElementVisible(valueVariantSKU);
         WebUI.waitForElementVisible(valueVariantQuantity);
+        WebUI.sleep(5);
         List<WebElement> elementValueVariants = DriverManager.getDriver().findElements(valueVariant);
         List<WebElement> elementValueVariantPrices = DriverManager.getDriver().findElements(valueVariantPrice);
         List<WebElement> elementValueVariantSKUs = DriverManager.getDriver().findElements(valueVariantSKU);
