@@ -1,6 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="SuiteOrderProduct" verbose="1">
-    <test name="Order">
+<suite name="SuiteOrderTest" verbose="1">
+    <listeners>
+        <listener class-name="com.thuydung.listeners.TestListener"></listener>
+    </listeners>
+    <test name="Verify Order Test" parallel="none">
         <classes>
             <class name="com.thuydung.testcases.OrderTest"/>
         </classes>

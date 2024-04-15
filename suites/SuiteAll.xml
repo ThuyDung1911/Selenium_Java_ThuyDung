@@ -1,8 +1,21 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="All Tests" verbose="1">
+    <listeners>
+        <listener class-name="com.thuydung.listeners.TestListener"></listener>
+    </listeners>
     <test name="LoginTest" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.LoginTest"/>
+        </classes>
+    </test>
+    <test name="RegisterTest" parallel="methods">
+        <classes>
+            <class name="com.thuydung.testcases.RegisterTest"/>
+        </classes>
+    </test>
+    <test name="ProfileTest" parallel="none">
+        <classes>
+            <class name="com.thuydung.testcases.ProfileTest"/>
         </classes>
     </test>
     <test name="AddProductTest" parallel="none">
@@ -10,19 +23,24 @@
             <class name="com.thuydung.testcases.AddProductTest"/>
         </classes>
     </test>
-    <test name="ProductInfoTest" parallel="none">
+    <test name="EditProductTest" parallel="none">
         <classes>
-            <class name="com.thuydung.testcases.ProductInfoTest"/>
+            <class name="com.thuydung.testcases.AddProductTest"/>
+        </classes>
+    </test>
+    <test name="SearchProductTest" parallel="none">
+        <classes>
+            <class name="com.thuydung.testcases.AddProductTest"/>
+        </classes>
+    </test>
+    <test name="CartTest" parallel="none">
+        <classes>
+            <class name="com.thuydung.testcases.CartTest"/>
         </classes>
     </test>
     <test name="OrderTest" parallel="none">
         <classes>
             <class name="com.thuydung.testcases.OrderTest"/>
-        </classes>
-    </test>
-    <test name="ProfileTest" parallel="none">
-        <classes>
-            <class name="com.thuydung.testcases.ProfileTest"/>
         </classes>
     </test>
 </suite>
