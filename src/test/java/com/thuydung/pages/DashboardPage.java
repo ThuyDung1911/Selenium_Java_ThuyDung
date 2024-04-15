@@ -87,13 +87,6 @@ public class DashboardPage extends CommonPage {
 
         WebUI.sleep(2);
 
-//        testSearchProduct(keySearchProduct);
-//        WebUI.verifyAssertTrueIsDisplayed(resultSearchProduct, "Ket qua tim kiem KHONG xuat hien");
-//        //Check result contain keySearchProduct
-//        keySearchProduct = keySearchProduct.toLowerCase();
-//        keySearchProduct = WebUI.removeAccent(keySearchProduct);
-//        WebUI.verifyAssertTrueTextContainWithoutAccent(resultSearchProduct, keySearchProduct, "Ket qua tim kiem KHONG dung");
-//        WebUI.sleep(2);
     }
 
     public void testSearchProductHaveNotResult(String keySearchProduct) {

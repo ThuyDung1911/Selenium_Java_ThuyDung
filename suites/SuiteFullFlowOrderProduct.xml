@@ -22,7 +22,17 @@
         <classes>
             <class name="com.thuydung.testcases.OrderTest">
                 <methods>
-                    <include name="testFlowOrderSuccess"/>
+                    <include name="TC_FlowOrderSuccessWithCouponValid"/>
+                </methods>
+            </class>
+            <class name="com.thuydung.testcases.OrderTest">
+                <methods>
+                    <include name="TC_OrderProductWithCouponInvalid"/>
+                </methods>
+            </class>
+            <class name="com.thuydung.testcases.OrderTest">
+                <methods>
+                    <include name="TC_CancelOrder"/>
                 </methods>
             </class>
         </classes>

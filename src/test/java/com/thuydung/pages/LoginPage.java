@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 public class LoginPage extends CommonPage {
 
     public static By closeAdvertisementPopup = By.xpath("//i[@class='la la-close fs-20']");
-    public static By buttonLogin = By.xpath("//a[normalize-space() = 'Login' and @class = 'text-reset d-inline-block opacity-60 py-2']");
+    public static By buttonLogin = By.xpath("//a[normalize-space() = 'Registration']/parent::li/preceding-sibling::li/a");
     public static By buttonSubmitLogin = By.xpath("//button[normalize-space()='Login']");
     public static By titleLoginPage = By.xpath("//h1[normalize-space() = 'Login to your account.']");
     public static By messageRequiredEmail = By.xpath("//strong[contains(text(),'The email field is required when phone is not present.')]");

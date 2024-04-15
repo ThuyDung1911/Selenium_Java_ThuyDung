@@ -13,7 +13,7 @@ public class OrderTest extends BaseTest {
     public ExcelHelper excelUpdateProfile;
 
     @Test(priority = 1, description = "Kiem tra luong dat hang thanh cong khi co coupon")
-    public void TC_FlowOrderSuccess() {
+    public void TC_FlowOrderSuccessWithCouponValid() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getCouponPage().addCouponValid("COUPON2024", "100000", "10000", "5000000", "04/09/2024 - 06/09/2024");
@@ -24,7 +24,7 @@ public class OrderTest extends BaseTest {
     }
     // Add order success
     @Test(priority = 2, description = "Kiem tra dat hang thanh cong khi coupon het han")
-    public void TC_OrderProduct() {
+    public void TC_OrderProductWithCouponInvalid() {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
@@ -32,15 +32,6 @@ public class OrderTest extends BaseTest {
 //        getCartPage().addProductToCart("Cosy Thuy Dung GBNXJUZQ", "1");
         getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
         getCartPage().addProductToCart("Cosy Thuy Dung Update VFYJWRFN", "1");
-        getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
-    }
-
-    // Checkout order without product
-    @Test(priority = 2, description = "Kiem tra dat hang khong co san pham")
-    public void TC_CheckoutOrderWithoutProduct() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
         getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
     }
 
@@ -285,14 +276,5 @@ public class OrderTest extends BaseTest {
         By orderNotCancel = By.xpath("(//a[@title='Cancel'])[1]/ancestor::tr/td[1]");
         getOrderPage().testCancelOrder(WebUI.getElementText(orderNotCancel));
     }
-
-
-
-
-
-
-
-
-
 
 }
