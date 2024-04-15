@@ -19,7 +19,7 @@ public class OrderTest extends BaseTest {
         getCouponPage().addCouponValid("COUPON2024", "100000", "10000", "5000000", "04/09/2024 - 06/09/2024");
         getLoginPage().logOutRoleAdmin();
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getCartPage().addProductToCart("Cosy Thuy Dung Update VFYJWRFN", "1");
+//        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
         getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
     }
     // Add order success
@@ -28,9 +28,10 @@ public class OrderTest extends BaseTest {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
+//        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
 //        getCartPage().addProductToCart("Cosy Thuy Dung GBNXJUZQ", "1");
-//        getCartPage().addProductToCart("Tiramisu", "1");
+        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
+        getCartPage().addProductToCart("Cosy Thuy Dung Update VFYJWRFN", "1");
         getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
     }
 
@@ -68,6 +69,7 @@ public class OrderTest extends BaseTest {
         excelLogin = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
         getOrderPage().testCheckShippingInfoWithProfile();
     }
 
@@ -79,6 +81,7 @@ public class OrderTest extends BaseTest {
         excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         LoginPage loginPage = new LoginPage();
         loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
         getOrderPage().testAddNewAddressInShippingInfo(excelUpdateProfile.getCellData("address", 1), excelUpdateProfile.getCellData("country", 1), excelUpdateProfile.getCellData("state", 1), excelUpdateProfile.getCellData("city", 1), excelUpdateProfile.getCellData("postal code", 1), excelUpdateProfile.getCellData("phone", 1));
     }
 
@@ -90,6 +93,7 @@ public class OrderTest extends BaseTest {
         excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
         LoginPage loginPage = new LoginPage();
         loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
         getOrderPage().testEditAddressInShippingInfo(excelUpdateProfile.getCellData("address", 1), excelUpdateProfile.getCellData("country", 1), excelUpdateProfile.getCellData("state", 1), excelUpdateProfile.getCellData("city", 1), excelUpdateProfile.getCellData("postal code", 1), excelUpdateProfile.getCellData("phone", 1));
     }
     @Test(priority = 9, description = "Kiem tra khi chon dia chi trong shipping info")
@@ -98,6 +102,7 @@ public class OrderTest extends BaseTest {
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
         loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
         getOrderPage().testSelectAddressInShippingInfoWithAddress("3");
     }
     @Test(priority = 10, description = "Kiem tra truy cap trang delivery info tu trang shipping info khi khong co dia chi")
@@ -168,7 +173,7 @@ public class OrderTest extends BaseTest {
         getCouponPage().addCouponValid("COUPON2024", "100000", "10000", "5000000", "04/09/2024 - 06/09/2024");
         getLoginPage().logOutRoleAdmin();
         getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
+        getCartPage().addProductToCart("Gio qua Tet Thuy Dung FRCMXCFY", "1");
         getOrderPage().testApplyCouponDiscountValid(PropertiesHelper.getValue("COUPON_VALID"));
     }
 
@@ -178,6 +183,7 @@ public class OrderTest extends BaseTest {
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
         loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        getCartPage().addProductToCart("Gio qua Tet Thuy Dung FRCMXCFY", "1");
         getOrderPage().testApplyCouponDiscountNotExist("DUNG3");
     }
     @Test(priority = 19, description = "Kiem tra khi apply discount coupon da het han")
@@ -186,6 +192,7 @@ public class OrderTest extends BaseTest {
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
         loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+        getCartPage().addProductToCart("Gio qua Tet Thuy Dung FRCMXCFY", "1");
         getOrderPage().testApplyCouponDiscountExpired("DUNG2");
     }
     @Test(priority = 19, description = "Kiem tra thong tin tong tien khi khong co discount tai trang Payment")
@@ -194,6 +201,7 @@ public class OrderTest extends BaseTest {
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
         loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
+
         getOrderPage().testTotalPriceInPaymentInfoWithNoDiscountCoupon();
     }
     @Test(priority = 20, description = "Kiem tra thong tin tong tien khi co discount tai trang Payment")

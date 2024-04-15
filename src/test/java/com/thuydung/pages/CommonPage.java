@@ -9,7 +9,7 @@ public class CommonPage {
     public ProductInfoPage productInfoPage;
     public RegisterPage registerPage;
     public HomePage homePage;
-    public DashboardPage dashboardPage;
+    public static DashboardPage dashboardPage;
     public CartPage cartPage;
     public CouponPage couponPage;
 
@@ -71,7 +71,7 @@ public class CommonPage {
         }
         return editProductPage;
     }
-    public DashboardPage getDashboardPage() {
+    public static DashboardPage getDashboardPage() {
         if (dashboardPage == null) {
             dashboardPage = new DashboardPage();
         }

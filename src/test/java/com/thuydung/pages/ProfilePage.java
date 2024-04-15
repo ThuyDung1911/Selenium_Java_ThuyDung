@@ -55,6 +55,13 @@ public class ProfilePage extends CommonPage{
     public static By imageUploaded = By.xpath("(//div[@class='modal-body']//div[contains(@title,'AvatarAccount')]/descendant::img[@class='img-fit'])[1]");
     public static By iconEllipsisInCardAddressNewest = By.xpath("//div[@onclick='add_new_address()']/preceding-sibling::div[1]//i[@class='la la-ellipsis-v']");
     public static By buttonEditInCardAddressNewest = By.xpath("//div[@onclick='add_new_address()']/preceding-sibling::div[1]//i[@class='la la-ellipsis-v']/parent::button/following-sibling::div[contains(@class, 'dropdown-menu')]/a[normalize-space()='Edit']");
+    public static By elementAddressInProfile = By.xpath("//h5[text()='Address']/ancestor::div[@class='card']//span[contains(text(),'Address')]/following-sibling::span");
+    public static By elementPostalCodeInProfile = By.xpath("//h5[text()='Address']/ancestor::div[@class='card']//span[contains(text(),'Postal code')]/following-sibling::span");
+    public static By elementCityInProfile = By.xpath("//h5[text()='Address']/ancestor::div[@class='card']//span[contains(text(),'City')]/following-sibling::span");
+    public static By elementStateInProfile = By.xpath("//h5[text()='Address']/ancestor::div[@class='card']//span[contains(text(),'State')]/following-sibling::span");
+    public static By elementCountryInProfile = By.xpath("//h5[text()='Address']/ancestor::div[@class='card']//span[contains(text(),'Country')]/following-sibling::span");
+    public static By elementPhoneInProfile = By.xpath("//h5[text()='Address']/ancestor::div[@class='card']//span[contains(text(),'Phone')]/following-sibling::span");
+
     public void updateInfoBasicProfileCustomer(String name, String phone, String imgName, String password, String confirmPassword) {
         WebUI.waitForPageLoaded();
         WebUI.scrollToElementToBottom(menuManageProfile);

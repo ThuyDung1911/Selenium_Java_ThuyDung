@@ -22,11 +22,11 @@ import static com.thuydung.pages.OrderPage.buttonCart;
 public class CartPage extends CommonPage {
     static By messageCartEmptyInCartDetail = By.xpath("//section[@id='cart-summary']//h3[normalize-space()='Your Cart is empty']");
     public static By messageCartEmptyInCart = By.xpath("//div[@id='cart_items']//h3");
-    By inputQuantity = By.xpath("//input[@name='quantity']");
-    By viewProductNameInPopupAddSucceed = By.xpath("//div[@id='addToCart-modal-body']//h6");
+    static By inputQuantity = By.xpath("//input[@name='quantity']");
+    static By viewProductNameInPopupAddSucceed = By.xpath("//div[@id='addToCart-modal-body']//h6");
     By messageUpdateCart = By.xpath("//span[@data-notify='message']");
     By buttonViewCart = By.xpath("//a[normalize-space()='View cart']");
-    By totalPriceInDetailProduct = By.xpath("//strong[@id='chosen_price']");
+    static By totalPriceInDetailProduct = By.xpath("//strong[@id='chosen_price']");
     public static By subTotalPriceInCart = By.xpath("//div[@id='cart_items']//span[text()='Subtotal']/following-sibling::span");
     static By subPriceInCartDetail = By.xpath("//section[@id='cart-summary']//span[text()='Subtotal']/following-sibling::span");
     public By messageOverQuantityAvailable = By.xpath("//div[@id='addToCart-modal-body']//h3[normalize-space()='This item is out of stock!']");
@@ -46,7 +46,7 @@ public class CartPage extends CommonPage {
      * @param productName Tên sản phẩm
      * @param quantity    Số lượng sản phẩm
      */
-    public void addProductToCart(String productName, String quantity) {
+    public static void addProductToCart(String productName, String quantity) {
         By resultSearchProduct = By.xpath("//div[@id='search-content']//div[contains(text(),'" + productName + "')]");
         //Tìm kiếm sản phẩm
         getDashboardPage().testSearchProductHaveResult(productName);
@@ -283,7 +283,7 @@ public class CartPage extends CommonPage {
         return productPrice;
     }
 
-    public void checkSubTotalPriceInCart() {
+    public static void checkSubTotalPriceInCart() {
 
         List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInCartDropDown);
         List<WebElement> productPrices = DriverManager.getDriver().findElements(elementProductPricesInCartDropDown);
@@ -516,7 +516,7 @@ public class CartPage extends CommonPage {
 
     }
 
-    public Map<String, Cart> getCartDetail() {
+    public static Map<String, Cart> getCartDetail() {
         List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInCartDetail);
         if (productNames.isEmpty()) {
             return new HashMap<>();

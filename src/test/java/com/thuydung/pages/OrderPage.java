@@ -90,12 +90,12 @@ public class OrderPage {
     public static By buttonSaveNewAddressEdit = By.xpath("//div[@id='edit-address-modal']//button[normalize-space()='Save']");
     By priceCouponDiscountInDisplayPayment = By.xpath("(//th[text()='Coupon Discount'])/following-sibling::td//span");
     By buttonCouponDiscount = By.xpath("//button[contains(@id,'coupon')]");
-    By elementAddress = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Address')]/following-sibling::span");
-    By elementPostalCode = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Postal code')]/following-sibling::span");
-    By elementCity = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'City')]/following-sibling::span");
-    By elementState = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'State')]/following-sibling::span");
-    By elementCountry = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Country')]/following-sibling::span");
-    By elementPhone = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Phone')]/following-sibling::span");
+    By elementAddressInShippingInfo = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Address')]/following-sibling::span");
+    By elementPostalCodeInShippingInfo = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Postal code')]/following-sibling::span");
+    By elementCityInShippingInfo = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'City')]/following-sibling::span");
+    By elementStateInShippingInfo = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'State')]/following-sibling::span");
+    By elementCountryInShippingInfo = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Country')]/following-sibling::span");
+    By elementPhoneInShippingInfo = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Phone')]/following-sibling::span");
 
     public void openShippingInfoFromURL() {
         WebUI.openURL("https://cms.anhtester.com/checkout");
@@ -125,14 +125,17 @@ public class OrderPage {
 
     public void testCheckShippingInfoWithProfile() {
         openShippingInfoFromURL();
-
+        if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/checkout")) {
+            System.out.println("Không thể truy cập trang Shipping Info");
+            return;
+        }
         //Shipping Info
-        List<WebElement> addressInShippingInfo = DriverManager.getDriver().findElements(elementAddress);
-        List<WebElement> postalCodeInShippingInfo = DriverManager.getDriver().findElements(elementPostalCode);
-        List<WebElement> cityInShippingInfo = DriverManager.getDriver().findElements(elementCity);
-        List<WebElement> stateInShippingInfo = DriverManager.getDriver().findElements(elementState);
-        List<WebElement> countryInShippingInfo = DriverManager.getDriver().findElements(elementCountry);
-        List<WebElement> phoneInShippingInfo = DriverManager.getDriver().findElements(elementPhone);
+        List<WebElement> addressInShippingInfo = DriverManager.getDriver().findElements(elementAddressInShippingInfo);
+        List<WebElement> postalCodeInShippingInfo = DriverManager.getDriver().findElements(elementPostalCodeInShippingInfo);
+        List<WebElement> cityInShippingInfo = DriverManager.getDriver().findElements(elementCityInShippingInfo);
+        List<WebElement> stateInShippingInfo = DriverManager.getDriver().findElements(elementStateInShippingInfo);
+        List<WebElement> countryInShippingInfo = DriverManager.getDriver().findElements(elementCountryInShippingInfo);
+        List<WebElement> phoneInShippingInfo = DriverManager.getDriver().findElements(elementPhoneInShippingInfo);
         List<String> valueAddressInShippingInfo = new ArrayList<>();
         List<String> valuePostalCodeInShippingInfo = new ArrayList<>();
         List<String> valueCityInShippingInfo = new ArrayList<>();
@@ -161,12 +164,12 @@ public class OrderPage {
         DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
         WebUI.openURL("https://cms.anhtester.com/profile");
         WebUI.waitForPageLoaded();
-        List<WebElement> addressInProfile = DriverManager.getDriver().findElements(elementAddress);
-        List<WebElement> postalCodeInProfile = DriverManager.getDriver().findElements(elementPostalCode);
-        List<WebElement> cityInProfile = DriverManager.getDriver().findElements(elementCity);
-        List<WebElement> stateInProfile = DriverManager.getDriver().findElements(elementState);
-        List<WebElement> countryInProfile = DriverManager.getDriver().findElements(elementCountry);
-        List<WebElement> phoneInProfile = DriverManager.getDriver().findElements(elementPhone);
+        List<WebElement> addressInProfile = DriverManager.getDriver().findElements(ProfilePage.elementAddressInProfile);
+        List<WebElement> postalCodeInProfile = DriverManager.getDriver().findElements(ProfilePage.elementPostalCodeInProfile);
+        List<WebElement> cityInProfile = DriverManager.getDriver().findElements(ProfilePage.elementCityInProfile);
+        List<WebElement> stateInProfile = DriverManager.getDriver().findElements(ProfilePage.elementStateInProfile);
+        List<WebElement> countryInProfile = DriverManager.getDriver().findElements(ProfilePage.elementCountryInProfile);
+        List<WebElement> phoneInProfile = DriverManager.getDriver().findElements(ProfilePage.elementPhoneInProfile);
         List<String> valueAddressInProfile = new ArrayList<>();
         List<String> valuePostalCodeInProfile = new ArrayList<>();
         List<String> valueCityInProfile = new ArrayList<>();
@@ -260,7 +263,7 @@ public class OrderPage {
             openShippingInfoFromURL();
         }
         //By elementAddress = By.xpath("//input[@name='address_id']/following-sibling::span//span[contains(text(),'Address')]/following-sibling::span");
-        List<WebElement> addressInShippingInfo = DriverManager.getDriver().findElements(elementAddress);
+        List<WebElement> addressInShippingInfo = DriverManager.getDriver().findElements(elementAddressInShippingInfo);
         int size = addressInShippingInfo.size();
         if (Integer.parseInt(index) > size) {
             LogUtils.info("Không tồn tại địa chỉ thứ " + index + " trong Shipping Info");
@@ -860,11 +863,15 @@ public class OrderPage {
     public void checkOutOrder(String noteForOrder) {
 //        WebUI.clickElement(buttonCart);
 //        List<Cart> currentCart = CartPage.getCartDropdown();
+        if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/cart")) {
+            WebUI.openURL("https://cms.anhtester.com/cart");
+        }
         List<Cart> currentCart = CartPage.getCartDetailTemp2();
         if (currentCart.isEmpty()) {
             WebUI.verifyAssertTrueIsDisplayed(CartPage.messageCartEmptyInCartDetail, "Không có sản phẩm trong giỏ hàng");
             WebUI.verifyAssertTrueEqual(CartPage.messageCartEmptyInCartDetail, "Your Cart is empty", "Thông báo không có sản phẩm trong giỏ hàng không đúng");
-            return;
+            CartPage.addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
+            currentCart = CartPage.getCartDetailTemp2();
         }
         WebUI.clickElement(buttonContinueToShipping);
         selectAddressInShippingInfo("3");
