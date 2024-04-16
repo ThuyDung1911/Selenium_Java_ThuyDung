@@ -9,17 +9,17 @@ public class EditProductTest extends BaseTest {
     ExcelHelper excelEditProduct;
 
     //Edit product valid
-    @Test(priority = 2)
+    @Test(priority = 1, description = "Edit product valid")
     public void TC_EditProductValid() {
         excelLogin = new ExcelHelper();
         excelEditProduct = new ExcelHelper();
         excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
         excelEditProduct.setExcelFile("DataTest/EditProduct.xlsx", "EditProduct");
         getLoginPage().loginSuccessAdminPage(excelLogin.getCellData("email", 5), excelLogin.getCellData("password", 5));
-        getEditProductPage().editProductValid(excelEditProduct.getCellData("productName", 1), excelEditProduct.getCellData("category", 1), excelEditProduct.getCellData("unit", 1), excelEditProduct.getCellData("weight", 1), excelEditProduct.getCellData("tags", 1), excelEditProduct.getCellData("unitPrice", 1), excelEditProduct.getCellData("discountDate", 1), excelEditProduct.getCellData("quantity", 1), excelEditProduct.getCellData("description", 1), excelEditProduct.getCellData("discount", 1), excelEditProduct.getCellData("image", 1));
+        getEditProductPage().editProductValid(excelEditProduct.getCellData("productName", 1), excelEditProduct.getCellData("category", 1), excelEditProduct.getCellData("unit", 1), excelEditProduct.getCellData("weight", 1), excelEditProduct.getCellData("tags", 1), excelEditProduct.getCellData("unitPrice", 1), excelEditProduct.getCellData("discountDate", 1), excelEditProduct.getCellData("quantity", 1), excelEditProduct.getCellData("description", 1), excelEditProduct.getCellData("discount", 1), excelEditProduct.getCellData("image", 1), excelEditProduct.getCellData("vat", 1));
     }
     //Edit product invalid
-    @Test(priority = 1)
+    @Test(priority = 2, description = "Edit product invalid")
     public void TC_EditProductInvalid() {
         excelLogin = new ExcelHelper();
         excelEditProduct = new ExcelHelper();
