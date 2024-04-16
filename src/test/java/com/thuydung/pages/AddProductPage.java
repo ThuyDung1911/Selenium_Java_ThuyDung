@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class AddProductPage extends CommonPage {
@@ -411,6 +412,7 @@ public class AddProductPage extends CommonPage {
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
+        EditProductPage.verifyNewProductNoVariantInEditDisplay(nameProductVerify, category, unit, weight, unitPrice, discountDate, quantity, description, discount, vat);
         verifyNewProductInViewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount, vat);
     }
 
@@ -602,14 +604,7 @@ public class AddProductPage extends CommonPage {
         WebUI.checkHTML5MessageWithValueInvalid(inputUnit, "Unit la truong bat buoc");
         WebUI.verifyAssertTrueEqualMessageHTML(inputUnit, "Please fill out this field.", "Message Unit hien thi khong dung");
     }
-    public void verifyNewProductNoVariantInEditDisplay(String nameProductNew, String category, String unit, String discountDate, String description, String discount, String vat) {
-        if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/admin/products/admin")) {
-            WebUI.openURL("https://cms.anhtester.com/admin/products/admin");
-        }
-        WebUI.clickElement(EditProductPage.btnEditProductNewest);
 
-
-    }
     public static void verifyNewProductInViewProduct(String nameProductVerify, String category, String unit, String unitPrice, String discountDate, String quantity, String description, String discount, String vat) {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         //WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
