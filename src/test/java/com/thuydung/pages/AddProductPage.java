@@ -77,6 +77,10 @@ public class AddProductPage extends CommonPage {
     public static By valueVariantPrice = By.xpath("//tr[@class='variant']//input[contains(@name,'price')]");
     public static By valueVariantSKU = By.xpath("//tr[@class='variant']//input[contains(@name,'sku')]");
     public static By valueVariantQuantity = By.xpath("//tr[@class='variant']//input[contains(@name,'qty')]");
+    By toggleInputColor = By.xpath("//input[@name='colors_active']");
+    By toggleColor = By.xpath("//input[@name='colors_active']/parent::label");
+    By selectColor = By.xpath("//button[@data-id='colors']");
+    By inputSearchDropDown = By.xpath("//div[@class='dropdown-menu show']//input[@aria-label='Search']");
 
     public void openAddProductPage() {
         WebUI.clickElement(menuProduct);
@@ -188,10 +192,6 @@ public class AddProductPage extends CommonPage {
 
     public void addProductVariationColor(List<String> color) {
         WebUI.verifyAssertTrueIsDisplayed(blockProductVariation, "Product variation block KHONG xuat hien");
-        By toggleInputColor = By.xpath("//input[@name='colors_active']");
-        By toggleColor = By.xpath("//input[@name='colors_active']/parent::label");
-        By selectColor = By.xpath("//button[@data-id='colors']");
-        By inputSearchDropDown = By.xpath("//div[@class='dropdown-menu show']//input[@aria-label='Search']");
         WebUI.clickElement(toggleColor);
         WebUI.clickElement(selectColor);
         for (String colorName : color) {
@@ -411,7 +411,7 @@ public class AddProductPage extends CommonPage {
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
-        verifyNewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount, vat);
+        verifyNewProductInViewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount, vat);
     }
 
     public void addProductVariantValidRoleAdmin(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
@@ -423,7 +423,7 @@ public class AddProductPage extends CommonPage {
     }
 
     public void verifyNewProductVariant(String nameProductVerify, String category, String unit, String discountDate, String description, String discount, String vat) {
-        WebUI.clickElement(By.xpath("(//a[@title='Edit'])[1]"));
+        WebUI.clickElement(EditProductPage.btnEditProductNewest);
         WebUI.waitForPageLoaded();
         WebUI.waitForElementVisible(valueVariant);
         WebUI.waitForElementVisible(valueVariantPrice);
@@ -602,8 +602,15 @@ public class AddProductPage extends CommonPage {
         WebUI.checkHTML5MessageWithValueInvalid(inputUnit, "Unit la truong bat buoc");
         WebUI.verifyAssertTrueEqualMessageHTML(inputUnit, "Please fill out this field.", "Message Unit hien thi khong dung");
     }
+    public void verifyNewProductNoVariantInEditDisplay(String nameProductNew, String category, String unit, String discountDate, String description, String discount, String vat) {
+        if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/admin/products/admin")) {
+            WebUI.openURL("https://cms.anhtester.com/admin/products/admin");
+        }
+        WebUI.clickElement(EditProductPage.btnEditProductNewest);
 
-    public static void verifyNewProduct(String nameProductVerify, String category, String unit, String unitPrice, String discountDate, String quantity, String description, String discount, String vat) {
+
+    }
+    public static void verifyNewProductInViewProduct(String nameProductVerify, String category, String unit, String unitPrice, String discountDate, String quantity, String description, String discount, String vat) {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         //WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
         WebUI.waitForPageLoaded();
@@ -657,7 +664,7 @@ public class AddProductPage extends CommonPage {
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         nameProductVerify = DriverManager.getDriver().findElement(By.xpath("(//tr/td[2]/a)[1]")).getText();
-        verifyNewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount, vat);
+        verifyNewProductInViewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount, vat);
     }
     public void addProductVariantValidRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
         addProductVariantWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
@@ -672,6 +679,7 @@ public class AddProductPage extends CommonPage {
         WebUI.checkHTML5MessageWithValueInvalid(inputUnit, "Unit la truong bat buoc");
         WebUI.verifyAssertTrueEqualMessageHTML(inputUnit, "Please fill out this field.", "Messge Unit hien thi khong dung");
     }
+
 
 
 

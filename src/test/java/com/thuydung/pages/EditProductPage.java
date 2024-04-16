@@ -12,13 +12,15 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditProductPage extends CommonPage{
     private String nameProductVerify;
     private By menuProduct = By.xpath("//ul[@id='main-menu']//span[text()='Products']");
     private By submenuAllProducts = By.xpath("//ul[@id='main-menu']//span[normalize-space()='All products']");
     private By inputSearchProduct = By.xpath("//input[@id='search']");
-    private By btnEditProduct = By.xpath("(//a[@title='Edit'])[1]");
+    public static By btnEditProductNewest = By.xpath("(//a[@title='Edit'])[1]");
     private By titleEditProduct = By.xpath("//h1[normalize-space()='Edit Product']");
     private By inputProductName = By.name("name");
     private By selectCategory = By.xpath("//button[@data-id='category_id']");
@@ -27,6 +29,18 @@ public class EditProductPage extends CommonPage{
     private By inputWeight = By.xpath("//input[@name='weight']");
     private By inputUnit = By.xpath("//input[@name='unit']");
     private By inputTags = By.xpath("//tags[@role='tagslist']/span");
+    public By inputUnitPrice = By.xpath("//input[@name='unit_price']");
+    public By selectDate = By.xpath("//input[@name='date_range']");
+    public By inputDiscount = By.xpath("//input[@placeholder='Discount']");
+    public By selectUnitDiscount = By.xpath("//h5[normalize-space()='Product price + stock']/ancestor::div[@class='card']//select[@name='discount_type']/following-sibling::button");
+    public By selectUnitDiscountPercent = By.xpath("//span[normalize-space()='Percent']");
+    public By inputQuantity = By.xpath("//input[@placeholder='Quantity']");
+    public By inputSKU = By.xpath("//input[@placeholder='SKU']");
+    By inputVat = By.xpath("//input[@placeholder='Tax']");
+    public By selectUnitVat = By.xpath("//h5[normalize-space()='Vat & TAX']/ancestor::div[@class='card']//select[@name='tax_type[]']/following-sibling::button");
+    public By selectUnitVatFlat = By.xpath("//h5[text()='Vat & TAX']/parent::div/following-sibling::div//span[normalize-space()='Flat']");
+    public By inputDescription = By.xpath("//textarea[@name='description']/following-sibling::div//div[contains(@class,'note-editable')]");
+
     private By messageEditProduct = By.xpath("//span[@data-notify='message']");
     private By buttonUpdateProduct = By.xpath("//button[normalize-space()='Update Product']");
     private By newProductName = By.xpath("//input[@placeholder='Product Name']");
@@ -36,7 +50,7 @@ public class EditProductPage extends CommonPage{
         WebUI.waitForJQueryLoad();
         WebUI.clickElement(submenuAllProducts);
         WebUI.waitForPageLoaded();
-        WebUI.clickElement(btnEditProduct);
+        WebUI.clickElement(btnEditProductNewest);
         WebUI.waitForPageLoaded();
         WebUI.verifyElementVisible(titleEditProduct, "Tieu de Edit Product KHONG xuat hien");
         //Product Information
@@ -74,7 +88,7 @@ public class EditProductPage extends CommonPage{
         WebUI.verifyAssertTrueIsDisplayed(messageEditProduct, "Message Edit Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageEditProduct, "Product has been updated successfully", "Message Edit Product KHONG chinh xac");
         nameProductVerify = DriverManager.getDriver().findElement(newProductName).getAttribute("value");
-        AddProductPage.verifyNewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount, vat);
+        AddProductPage.verifyNewProductInViewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount, vat);
     }
     //Edit product invalid
     public void editProductInvalid(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String image) {
@@ -131,6 +145,37 @@ public class EditProductPage extends CommonPage{
         WebUI.sleep(1);
         WebUI.verifyAssertTrueEqual(AddProductPage.descriptionUI, description, "Description hien thi sai");
     }
+    public Map<String,String> getProductNoVariantDataInEditDisplay() {
+        String productName = WebUI.getElementText(inputProductName);
+        String category = WebUI.getElementText(selectCategory);
+        String unit = WebUI.getElementText(inputUnit);
+        String weight = WebUI.getElementText(inputWeight);
+        String tags = WebUI.getElementText(inputTags);
+        String unitPrice = WebUI.getElementText(inputUnit);
+        String discountDate = WebUI.getElementText(selectDate);
+        String quantity = WebUI.getElementText(inputQuantity);
+        String description = WebUI.getElementText(inputDescription);
+        String discount = WebUI.getElementText(inputDiscount);
+        String vat = WebUI.getElementText(inputVat);
+        String sku = WebUI.getElementText(inputSKU);
+        Map<String,String> productData = new HashMap<>();
+        productData.put("productName",productName);
+        productData.put("category",category);
+        productData.put("unit",unit);
+        productData.put("weight",weight);
+        productData.put("tags",tags);
+        productData.put("unitPrice",unitPrice);
+        productData.put("discountDate",discountDate);
+        productData.put("discount",discount);
+        productData.put("sku",sku);
+        productData.put("quantity",quantity);
+        productData.put("description",description);
+        productData.put("vat",vat);
+        return productData;
+    }
+//    public Map<String,String> getProductVariantDataInEditDisplay() {
+//
+//    }
 
 
 

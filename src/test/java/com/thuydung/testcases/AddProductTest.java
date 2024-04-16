@@ -26,15 +26,6 @@ public class AddProductTest extends BaseTest {
         getLoginPage().loginSuccessAdminPage(excelLogin.getCellData("email", 5), excelLogin.getCellData("password", 5));
         getAddProductPage().addProductNoVariantValidRoleAdmin(excelAddProduct.getCellData("productName",2), excelAddProduct.getCellData("category",2), excelAddProduct.getCellData("unit",2), excelAddProduct.getCellData("weight",2), excelAddProduct.getCellData("tags",2), excelAddProduct.getCellData("unitPrice",2), excelAddProduct.getCellData("discountDate",2), excelAddProduct.getCellData("quantity",2), excelAddProduct.getCellData("description",2), excelAddProduct.getCellData("discount",2), excelAddProduct.getCellData("image",2), excelAddProduct.getCellData("vat",1));
     }
-//    @Test(priority = 3, description = "Kiem tra them san pham moi khong co variant, khong co discount voi role admin")
-//    public void TC_AddProductNoVariantValidRoleAdminWithNoDiscount() {
-//        excelLogin = new ExcelHelper();
-//        excelAddProduct = new ExcelHelper();
-//        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-//        excelAddProduct.setExcelFile("DataTest/AddProduct.xlsx", "AddProduct");
-//        getLoginPage().loginSuccessAdminPage(excelLogin.getCellData("email", 5), excelLogin.getCellData("password", 5));
-//        getAddProductPage().addProductNoVariantValidRoleAdmin(excelAddProduct.getCellData("productName",4), excelAddProduct.getCellData("category",4), excelAddProduct.getCellData("unit",4), excelAddProduct.getCellData("weight",4), excelAddProduct.getCellData("tags",4), excelAddProduct.getCellData("unitPrice",4), excelAddProduct.getCellData("discountDate",4), excelAddProduct.getCellData("quantity",4), excelAddProduct.getCellData("description",4), excelAddProduct.getCellData("discount",4), excelAddProduct.getCellData("image",4), excelAddProduct.getCellData("vat",1));
-//    }
     @Test(priority = 4, description = "Kiem tra them san pham moi khong hop le voi role admin")
     public void TC_AddProductVariantInvalidRoleAdmin() {
         excelLogin = new ExcelHelper();
@@ -82,15 +73,6 @@ public class AddProductTest extends BaseTest {
         getLoginPage().loginSuccessWithSellerAccount("dungtest@yopmail.com", "123456");
         getAddProductPage().addProductNoVariantValidRoleSeller(excelAddProduct.getCellData("productName",2), excelAddProduct.getCellData("category",2), excelAddProduct.getCellData("unit",2), excelAddProduct.getCellData("weight",2), excelAddProduct.getCellData("tags",2), excelAddProduct.getCellData("unitPrice",2), excelAddProduct.getCellData("discountDate",2), excelAddProduct.getCellData("quantity",2), excelAddProduct.getCellData("description",2), excelAddProduct.getCellData("discount",2), excelAddProduct.getCellData("image",2), excelAddProduct.getCellData("vat",1));
     }
-//    @Test(priority = 7, description = "Kiem tra them san pham moi khong co variant, khong co discount voi role seller")
-//    public void TC_AddProductNoVariantValidRoleSellerWithNoDiscount() {
-//        excelLogin = new ExcelHelper();
-//        excelAddProduct = new ExcelHelper();
-//        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-//        excelAddProduct.setExcelFile("DataTest/AddProduct.xlsx", "AddProduct");
-//        getLoginPage().loginSuccessWithSellerAccount("dungtest@yopmail.com", "123456");
-//        getAddProductPage().addProductNoVariantValidRoleSeller(excelAddProduct.getCellData("productName",4), excelAddProduct.getCellData("category",4), excelAddProduct.getCellData("unit",4), excelAddProduct.getCellData("weight",4), excelAddProduct.getCellData("tags",4), excelAddProduct.getCellData("unitPrice",4), excelAddProduct.getCellData("discountDate",4), excelAddProduct.getCellData("quantity",4), excelAddProduct.getCellData("description",4), excelAddProduct.getCellData("discount",4), excelAddProduct.getCellData("image",4), excelAddProduct.getCellData("vat",1));
-//    }
     @Test(priority = 5, description = "Kiem tra them san pham moi co variant, co discount hop le voi role seller")
     public void TC_AddProductVariantValidRoleSellerWithHaveDiscount() {
         excelLogin = new ExcelHelper();
