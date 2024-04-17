@@ -3,7 +3,7 @@
     <listeners>
         <listener class-name="com.thuydung.listeners.TestListener"></listener>
     </listeners>
-    <test name="Verify Cart Test" parallel="none">
+    <test name="Verify Cart Test" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.CartTest"/>
         </classes>

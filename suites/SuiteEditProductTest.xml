@@ -1,9 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="SuiteEditProductTest" verbose="1">
-    <listeners>
-        <listener class-name="com.thuydung.listeners.TestListener"></listener>
-    </listeners>
-    <test name="Edit Product and verify Product" parallel="none">
+<!--    <listeners>-->
+<!--        <listener class-name="com.thuydung.listeners.TestListener"></listener>-->
+<!--    </listeners>-->
+    <test name="Edit Product and verify Product" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.EditProductTest"/>
         </classes>

@@ -2,277 +2,240 @@ package com.thuydung.testcases;
 
 import com.thuydung.common.BaseTest;
 import com.thuydung.helpers.ExcelHelper;
-import com.thuydung.pages.LoginPage;
+import com.thuydung.utils.JiraCreateIssue;
 import org.testng.annotations.Test;
 
 public class ProfileTest extends BaseTest {
-
-    public ExcelHelper excelLogin;
-    public ExcelHelper excelUpdateProfile;
-
+    
     //Update Info Basic Customer without name
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 1)
     public void TC_UpdateInfoBasicProfileCustomerWithoutName() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
-        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().updateInfoBasicProfileCustomerWithoutName(excelUpdateProfile.getCellData("name", 2), excelUpdateProfile.getCellData("phone", 2), excelUpdateProfile.getCellData("photo", 2), excelUpdateProfile.getCellData("password", 2), excelUpdateProfile.getCellData("confirm password", 2));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
+        getProfilePage().updateInfoBasicProfileCustomerWithoutName(excel.getCellData("name", 2), excel.getCellData("phone", 2), excel.getCellData("photo", 2), excel.getCellData("password", 2), excel.getCellData("confirm password", 2));
     }
 
     //Update Info Basic Customer without phone
     @Test(priority = 2)
     public void TC_UpdateInfoBasicProfileCustomerWithoutPhone() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
-        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().updateInfoBasicProfileCustomerWithoutPhone(excelUpdateProfile.getCellData("name", 3), excelUpdateProfile.getCellData("phone", 3), excelUpdateProfile.getCellData("photo", 3), excelUpdateProfile.getCellData("password", 3), excelUpdateProfile.getCellData("confirm password", 3));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
+        getProfilePage().updateInfoBasicProfileCustomerWithoutPhone(excel.getCellData("name", 3), excel.getCellData("phone", 3), excel.getCellData("photo", 3), excel.getCellData("password", 3), excel.getCellData("confirm password", 3));
     }
 
     //Update Info Basic Customer no match password
     @Test(priority = 3)
     public void TC_UpdateInfoBasicProfileCustomerNoMatchPassword() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
-        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().updateInfoBasicProfileCustomerNoMatchPassword(excelUpdateProfile.getCellData("name", 4), excelUpdateProfile.getCellData("phone", 4), excelUpdateProfile.getCellData("photo", 4), excelUpdateProfile.getCellData("password", 4), excelUpdateProfile.getCellData("confirm password", 4));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
+        getProfilePage().updateInfoBasicProfileCustomerNoMatchPassword(excel.getCellData("name", 4), excel.getCellData("phone", 4), excel.getCellData("photo", 4), excel.getCellData("password", 4), excel.getCellData("confirm password", 4));
 
     }
 
     //Update Info Basic Customer with password < 6 characters
     @Test(priority = 4)
     public void TC_UpdateInfoBasicProfileCustomerPasswordLessCharacter() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
-        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().updateInfoBasicProfileCustomerPasswordLessCharacter(excelUpdateProfile.getCellData("name", 5), excelUpdateProfile.getCellData("phone", 5), excelUpdateProfile.getCellData("photo", 5), excelUpdateProfile.getCellData("password", 5), excelUpdateProfile.getCellData("confirm password", 5));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
+        getProfilePage().updateInfoBasicProfileCustomerPasswordLessCharacter(excel.getCellData("name", 5), excel.getCellData("phone", 5), excel.getCellData("photo", 5), excel.getCellData("password", 5), excel.getCellData("confirm password", 5));
     }
     // Update Info Basic Valid Customer
     @Test(priority = 5)
     public void TC_UpdateInfoBasicValidProfileCustomer() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
-        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelUpdateProfile.getCellData("password", 5));
-        getProfilePage().updateInfoBasicValidProfileCustomer(excelUpdateProfile.getCellData("name", 1), excelUpdateProfile.getCellData("phone", 1), excelUpdateProfile.getCellData("photo", 1), excelUpdateProfile.getCellData("password", 1), excelUpdateProfile.getCellData("confirm password", 1));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 5));
+        excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
+        getProfilePage().updateInfoBasicValidProfileCustomer(excel.getCellData("name", 1), excel.getCellData("phone", 1), excel.getCellData("photo", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
     }
 
     //Update Email Valid Customer
     @Test(priority = 6)
     public void updateValidEmailCustomer() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "UpdateEmail");
-        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().updateValidEmailCustomer(excelUpdateProfile.getCellData("email", 1));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "UpdateEmail");
+        getProfilePage().updateValidEmailCustomer(excel.getCellData("email", 1));
     }
 
     //Update Email Customer with Current Email
     @Test(priority = 7)
     public void updateEmailCustomerWithCurrentEmail() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().updateEmailCustomerWithCurrentEmail(excelLogin.getCellData("email", 4));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        getProfilePage().updateEmailCustomerWithCurrentEmail(excel.getCellData("email", 4));
     }
 
     //Update Email Customer with Email already exists
     @Test(priority = 8)
     public void updateEmailCustomerWithEmailExist() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "UpdateEmail");
-        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().updateProfileWithEmailExist(excelUpdateProfile.getCellData("email", 2));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "UpdateEmail");
+        getProfilePage().updateProfileWithEmailExist(excel.getCellData("email", 2));
     }
 
     //Update Email Customer with Email invalid
     @Test(priority = 9)
     public void updateEmailCustomerWithEmailInvalid() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "UpdateEmail");
-        getLoginPage().loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().updateProfileWithNewEmailIncorrectFormat(excelUpdateProfile.getCellData("email",3));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "UpdateEmail");
+        getProfilePage().updateProfileWithNewEmailIncorrectFormat(excel.getCellData("email",3));
     }
 
     //Add New Address Customer Valid
     @Test(priority = 10)
     public void TC_AddNewAddressValid() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().addNewAddressValid(excelUpdateProfile.getCellData("address", 1), excelUpdateProfile.getCellData("country", 1), excelUpdateProfile.getCellData("state", 1), excelUpdateProfile.getCellData("city", 1), excelUpdateProfile.getCellData("postal code", 1), excelUpdateProfile.getCellData("phone", 1));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddressValid(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
     }
 
     //Add New Address Customer without Address
     @Test(priority = 11)
     public void TC_AddNewAddressWithoutAddress() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().addNewAddressWithoutAddress(excelUpdateProfile.getCellData("address", 2), excelUpdateProfile.getCellData("country", 2), excelUpdateProfile.getCellData("state", 2), excelUpdateProfile.getCellData("city", 2), excelUpdateProfile.getCellData("postal code", 2), excelUpdateProfile.getCellData("phone", 2));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddressWithoutAddress(excel.getCellData("address", 2), excel.getCellData("country", 2), excel.getCellData("state", 2), excel.getCellData("city", 2), excel.getCellData("postal code", 2), excel.getCellData("phone", 2));
     }
 
     //Add New Address Customer without Country
     @Test(priority = 12)
     public void TC_AddNewAddressWithoutCountry() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().addNewAddressWithoutCountry(excelUpdateProfile.getCellData("address", 3), excelUpdateProfile.getCellData("postal code", 3), excelUpdateProfile.getCellData("phone", 3));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddressWithoutCountry(excel.getCellData("address", 3), excel.getCellData("postal code", 3), excel.getCellData("phone", 3));
     }
 
     //Add New Address Customer without State
     @Test(priority = 13)
     public void TC_AddNewAddressWithoutState() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().addNewAddressWithoutState(excelUpdateProfile.getCellData("address", 5), excelUpdateProfile.getCellData("country", 5), excelUpdateProfile.getCellData("postal code", 5), excelUpdateProfile.getCellData("phone", 5));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddressWithoutState(excel.getCellData("address", 5), excel.getCellData("country", 5), excel.getCellData("postal code", 5), excel.getCellData("phone", 5));
     }
 
     //Add New Address Customer without City
     @Test(priority = 14)
     public void TC_AddNewAddressWithoutCity() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().addNewAddressWithoutCity(excelUpdateProfile.getCellData("address", 5), excelUpdateProfile.getCellData("country", 5), excelUpdateProfile.getCellData("state", 5), excelUpdateProfile.getCellData("postal code", 5), excelUpdateProfile.getCellData("phone", 5));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddressWithoutCity(excel.getCellData("address", 5), excel.getCellData("country", 5), excel.getCellData("state", 5), excel.getCellData("postal code", 5), excel.getCellData("phone", 5));
     }
 
     //Add New Address Customer without Postal Code
     @Test(priority = 15)
     public void TC_AddNewAddressWithoutPostalCode() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().addNewAddressWithoutPostalCode(excelUpdateProfile.getCellData("address", 6), excelUpdateProfile.getCellData("country", 6), excelUpdateProfile.getCellData("state", 6), excelUpdateProfile.getCellData("city", 6), excelUpdateProfile.getCellData("postal code", 6), excelUpdateProfile.getCellData("phone", 6));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddressWithoutPostalCode(excel.getCellData("address", 6), excel.getCellData("country", 6), excel.getCellData("state", 6), excel.getCellData("city", 6), excel.getCellData("postal code", 6), excel.getCellData("phone", 6));
     }
 
     //Add New Address Customer without Phone
     @Test(priority = 16)
     public void TC_AddNewAddressWithoutPhone() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().addNewAddressWithoutPhone(excelUpdateProfile.getCellData("address", 7), excelUpdateProfile.getCellData("country", 7), excelUpdateProfile.getCellData("state", 7), excelUpdateProfile.getCellData("city", 7), excelUpdateProfile.getCellData("postal code", 7), excelUpdateProfile.getCellData("phone", 7));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddressWithoutPhone(excel.getCellData("address", 7), excel.getCellData("country", 7), excel.getCellData("state", 7), excel.getCellData("city", 7), excel.getCellData("postal code", 7), excel.getCellData("phone", 7));
     }
 
     // Edit Address Customer Valid
     @Test(priority = 17)
     public void TC_EditAddressValid() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().editAddressValid(excelUpdateProfile.getCellData("address", 1), excelUpdateProfile.getCellData("country", 1), excelUpdateProfile.getCellData("state", 1), excelUpdateProfile.getCellData("city", 1), excelUpdateProfile.getCellData("postal code", 1), excelUpdateProfile.getCellData("phone", 1));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
+        getProfilePage().editAddressValid(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
     }
 
     // Edit Address Customer without Address
     @Test(priority = 18)
     public void TC_EditAddressWithoutAddress() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().editAddressWithoutAddress(excelUpdateProfile.getCellData("address", 2), excelUpdateProfile.getCellData("country", 2), excelUpdateProfile.getCellData("state", 2), excelUpdateProfile.getCellData("city", 2), excelUpdateProfile.getCellData("postal code", 2), excelUpdateProfile.getCellData("phone", 2));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
+        getProfilePage().editAddressWithoutAddress(excel.getCellData("address", 2), excel.getCellData("country", 2), excel.getCellData("state", 2), excel.getCellData("city", 2), excel.getCellData("postal code", 2), excel.getCellData("phone", 2));
     }
 
     // Edit Address Customer without Country
     @Test(priority = 19)
     public void TC_EditAddressWithoutCountry() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().editAddressWithoutCountry(excelUpdateProfile.getCellData("address", 3), excelUpdateProfile.getCellData("country",3), excelUpdateProfile.getCellData("postal code", 3), excelUpdateProfile.getCellData("phone", 3));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
+        getProfilePage().editAddressWithoutCountry(excel.getCellData("address", 3), excel.getCellData("country",3), excel.getCellData("postal code", 3), excel.getCellData("phone", 3));
     }
 
     // Edit Address Customer without State
     @Test(priority = 20)
     public void TC_EditAddressWithoutState() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().editAddressWithoutState(excelUpdateProfile.getCellData("address", 4), excelUpdateProfile.getCellData("country", 4), excelUpdateProfile.getCellData("state",4), excelUpdateProfile.getCellData("postal code", 4), excelUpdateProfile.getCellData("phone", 4));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
+        getProfilePage().editAddressWithoutState(excel.getCellData("address", 4), excel.getCellData("country", 4), excel.getCellData("state",4), excel.getCellData("postal code", 4), excel.getCellData("phone", 4));
     }
 
     // Edit Address Customer without City
     @Test(priority = 21)
     public void TC_EditAddressWithoutCity() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().editAddressWithoutCity(excelUpdateProfile.getCellData("address", 5), excelUpdateProfile.getCellData("country", 5), excelUpdateProfile.getCellData("state", 5), excelUpdateProfile.getCellData("city", 5), excelUpdateProfile.getCellData("postal code", 5), excelUpdateProfile.getCellData("phone", 5));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
+        getProfilePage().editAddressWithoutCity(excel.getCellData("address", 5), excel.getCellData("country", 5), excel.getCellData("state", 5), excel.getCellData("city", 5), excel.getCellData("postal code", 5), excel.getCellData("phone", 5));
     }
 
     // Edit Address Customer without Postal Code
     @Test(priority = 22)
     public void TC_EditAddressWithoutPostalCode() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().editAddressWithoutPostalCode(excelUpdateProfile.getCellData("address", 6), excelUpdateProfile.getCellData("country", 6), excelUpdateProfile.getCellData("state", 6), excelUpdateProfile.getCellData("city", 6), excelUpdateProfile.getCellData("postal code", 6), excelUpdateProfile.getCellData("phone", 6));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+
+        excel.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
+        getProfilePage().editAddressWithoutPostalCode(excel.getCellData("address", 6), excel.getCellData("country", 6), excel.getCellData("state", 6), excel.getCellData("city", 6), excel.getCellData("postal code", 6), excel.getCellData("phone", 6));
     }
 
     // Edit Address Customer without Phone
     @Test(priority = 23)
     public void TC_EditAddressWithoutPhone() {
-        excelLogin = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelUpdateProfile = new ExcelHelper();
-        excelUpdateProfile.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("email", 4), excelLogin.getCellData("password", 4));
-        getProfilePage().editAddressWithoutPhone(excelUpdateProfile.getCellData("address", 7), excelUpdateProfile.getCellData("country", 7), excelUpdateProfile.getCellData("state", 7), excelUpdateProfile.getCellData("city", 7), excelUpdateProfile.getCellData("postal code", 7), excelUpdateProfile.getCellData("phone", 7));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
+        getProfilePage().editAddressWithoutPhone(excel.getCellData("address", 7), excel.getCellData("country", 7), excel.getCellData("state", 7), excel.getCellData("city", 7), excel.getCellData("postal code", 7), excel.getCellData("phone", 7));
     }
 
 }

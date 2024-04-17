@@ -1,13 +1,17 @@
 package com.thuydung.listeners;
 
+import com.aventstack.extentreports.Status;
 import com.thuydung.helpers.CaptureHelper;
 import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.keywords.WebUI;
 import com.thuydung.reports.AllureManager;
 import com.thuydung.reports.ExtentReportManager;
 import com.thuydung.reports.ExtentTestManager;
+import com.thuydung.utils.JiraCreateIssue;
+import com.thuydung.utils.JiraServiceProvider;
 import com.thuydung.utils.LogUtils;
-import com.aventstack.extentreports.Status;
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -82,6 +86,17 @@ public class TestListener implements ITestListener {
         if (PropertiesHelper.getValue("VIDEO_RECORD").equals("true")) {
             WebUI.sleep(1);
             CaptureHelper.stopRecord();
+        }
+        boolean isLogIssue = result.getMethod().getConstructorOrMethod().getMethod().getAnnotation(JiraCreateIssue.class).isCreateIssue();
+        if (isLogIssue) {
+            JiraServiceProvider JiraServiceProvider = new JiraServiceProvider();
+            String issueDescription = "Failure reason from Automation Selenium\n\n" + result.getThrowable().getMessage() + "\n";
+
+            issueDescription.concat(ExceptionUtils.getFullStackTrace(result.getThrowable()));
+            String issueSummary = result.getMethod().getConstructorOrMethod().getMethod().getName() + " Failed in Automation Selenium";
+            JiraServiceProvider.createJiraIssue("Bug", issueSummary + RandomStringUtils.randomAlphabetic(6).toUpperCase(), issueDescription);
+            JiraServiceProvider.addAttachmentToJiraIssue("Report/screenshots/" + result.getName() + ".png");
+
         }
 
         //Add Screenshot to ExtentReport

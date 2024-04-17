@@ -5,28 +5,26 @@ import com.thuydung.helpers.ExcelHelper;
 import org.testng.annotations.Test;
 
 public class EditProductTest extends BaseTest {
-    ExcelHelper excelLogin;
-    ExcelHelper excelEditProduct;
 
     //Edit product valid
     @Test(priority = 1, description = "Edit product valid")
     public void TC_EditProductValid() {
-        excelLogin = new ExcelHelper();
-        excelEditProduct = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelEditProduct.setExcelFile("DataTest/EditProduct.xlsx", "EditProduct");
-        getLoginPage().loginSuccessAdminPage(excelLogin.getCellData("email", 5), excelLogin.getCellData("password", 5));
-        getEditProductPage().editProductValid(excelEditProduct.getCellData("productName", 1), excelEditProduct.getCellData("category", 1), excelEditProduct.getCellData("unit", 1), excelEditProduct.getCellData("weight", 1), excelEditProduct.getCellData("tags", 1), excelEditProduct.getCellData("unitPrice", 1), excelEditProduct.getCellData("discountDate", 1), excelEditProduct.getCellData("quantity", 1), excelEditProduct.getCellData("description", 1), excelEditProduct.getCellData("discount", 1), excelEditProduct.getCellData("image", 1), excelEditProduct.getCellData("vat", 1));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessAdminPage(excel.getCellData("email", 5), excel.getCellData("password", 5));
+
+        excel.setExcelFile("DataTest/EditProduct.xlsx", "EditProduct");
+        getEditProductPage().editProductValid(excel.getCellData("productName", 1), excel.getCellData("category", 1), excel.getCellData("unit", 1), excel.getCellData("weight", 1), excel.getCellData("tags", 1), excel.getCellData("unitPrice", 1), excel.getCellData("discountDate", 1), excel.getCellData("quantity", 1), excel.getCellData("description", 1), excel.getCellData("discount", 1), excel.getCellData("image", 1), excel.getCellData("vat", 1));
     }
     //Edit product invalid
     @Test(priority = 2, description = "Edit product invalid")
     public void TC_EditProductInvalid() {
-        excelLogin = new ExcelHelper();
-        excelEditProduct = new ExcelHelper();
-        excelLogin.setExcelFile("DataTest/Login.xlsx", "Login");
-        excelEditProduct.setExcelFile("DataTest/EditProduct.xlsx", "EditProduct");
-        getLoginPage().loginSuccessAdminPage(excelLogin.getCellData("email", 5), excelLogin.getCellData("password", 5));
-        getEditProductPage().editProductInvalid(excelEditProduct.getCellData("productName", 4), excelEditProduct.getCellData("category", 4), excelEditProduct.getCellData("unit", 4), excelEditProduct.getCellData("weight", 4), excelEditProduct.getCellData("tags", 4), excelEditProduct.getCellData("unitPrice", 4), excelEditProduct.getCellData("discountDate", 4), excelEditProduct.getCellData("quantity", 4), excelEditProduct.getCellData("description", 4), excelEditProduct.getCellData("discount", 4), excelEditProduct.getCellData("image", 4));
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessAdminPage(excel.getCellData("email", 5), excel.getCellData("password", 5));
+
+        excel.setExcelFile("DataTest/EditProduct.xlsx", "EditProduct");
+        getEditProductPage().editProductInvalid(excel.getCellData("productName", 4), excel.getCellData("category", 4), excel.getCellData("unit", 4), excel.getCellData("weight", 4), excel.getCellData("tags", 4), excel.getCellData("unitPrice", 4), excel.getCellData("discountDate", 4), excel.getCellData("quantity", 4), excel.getCellData("description", 4), excel.getCellData("discount", 4), excel.getCellData("image", 4));
     }
 
 }

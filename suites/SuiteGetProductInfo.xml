@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="SuiteGetProductInfo" verbose="1">
-    <test name="Get Product Information">
+    <test name="Get Product Information" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.ProductInfoTest"/>
         </classes>

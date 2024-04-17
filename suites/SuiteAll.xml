@@ -3,42 +3,42 @@
     <listeners>
         <listener class-name="com.thuydung.listeners.TestListener"></listener>
     </listeners>
-<!--    <test name="LoginTest" parallel="methods">-->
-<!--        <classes>-->
-<!--            <class name="com.thuydung.testcases.LoginTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--    <test name="RegisterTest" parallel="methods">-->
-<!--        <classes>-->
-<!--            <class name="com.thuydung.testcases.RegisterTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--    <test name="ProfileTest" parallel="none">-->
-<!--        <classes>-->
-<!--            <class name="com.thuydung.testcases.ProfileTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-    <test name="AddProductTest" parallel="none">
+    <test name="LoginTest" parallel="methods">
+        <classes>
+            <class name="com.thuydung.testcases.LoginTest"/>
+        </classes>
+    </test>
+    <test name="RegisterTest" parallel="methods">
+        <classes>
+            <class name="com.thuydung.testcases.RegisterTest"/>
+        </classes>
+    </test>
+    <test name="ProfileTest" parallel="methods">
+        <classes>
+            <class name="com.thuydung.testcases.ProfileTest"/>
+        </classes>
+    </test>
+    <test name="AddProductTest" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.AddProductTest"/>
         </classes>
     </test>
-    <test name="EditProductTest" parallel="none">
+    <test name="EditProductTest" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.AddProductTest"/>
         </classes>
     </test>
-    <test name="SearchProductTest" parallel="none">
+    <test name="SearchProductTest" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.AddProductTest"/>
         </classes>
     </test>
-    <test name="CartTest" parallel="none">
+    <test name="CartTest" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.CartTest"/>
         </classes>
     </test>
-    <test name="OrderTest" parallel="none">
+    <test name="OrderTest" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.OrderTest"/>
         </classes>
