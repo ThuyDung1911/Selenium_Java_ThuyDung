@@ -3,12 +3,13 @@ package com.thuydung.testcases;
 import com.thuydung.common.BaseTest;
 import com.thuydung.helpers.ExcelHelper;
 import com.thuydung.helpers.PropertiesHelper;
+import com.thuydung.utils.JiraCreateIssue;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 
 public class ProductInfoTest extends BaseTest {
-
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 1)
     public void TC_GetProductInfo() {
         getLoginPage().openHomePage();

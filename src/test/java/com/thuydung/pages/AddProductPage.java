@@ -67,7 +67,7 @@ public class AddProductPage extends CommonPage {
     public By messageAddProduct = By.xpath("//span[@data-notify='message']");
     public static By allCategoriesTabUI = By.xpath("//a[normalize-space()='All categories']");
     public static By unitUI = By.xpath("//div[text()='Price:']/parent::div/following-sibling::div//span");
-    public static By descriptionUI = By.xpath("//div[@id='tab_default_1']//p");
+    public static By descriptionUI = By.xpath("//div[@id='tab_default_1']/div/div");
     int randomNumber = new Random().nextInt(1000000);
     public static By newProduct = By.xpath("(//div[@class='card']//img/parent::div/following-sibling::div/span)[1]");
     public static By discountPriceProductInProductDetail = By.xpath("//div[text()='Discount Price:']/parent::div/following-sibling::div");

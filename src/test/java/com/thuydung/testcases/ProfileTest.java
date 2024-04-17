@@ -19,6 +19,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Update Info Basic Customer without phone
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 2)
     public void TC_UpdateInfoBasicProfileCustomerWithoutPhone() {
         ExcelHelper excel = new ExcelHelper();
@@ -29,6 +30,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Update Info Basic Customer no match password
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 3)
     public void TC_UpdateInfoBasicProfileCustomerNoMatchPassword() {
         ExcelHelper excel = new ExcelHelper();
@@ -40,6 +42,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Update Info Basic Customer with password < 6 characters
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 4)
     public void TC_UpdateInfoBasicProfileCustomerPasswordLessCharacter() {
         ExcelHelper excel = new ExcelHelper();
@@ -49,6 +52,7 @@ public class ProfileTest extends BaseTest {
         getProfilePage().updateInfoBasicProfileCustomerPasswordLessCharacter(excel.getCellData("name", 5), excel.getCellData("phone", 5), excel.getCellData("photo", 5), excel.getCellData("password", 5), excel.getCellData("confirm password", 5));
     }
     // Update Info Basic Valid Customer
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 5)
     public void TC_UpdateInfoBasicValidProfileCustomer() {
         ExcelHelper excel = new ExcelHelper();
@@ -59,6 +63,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Update Email Valid Customer
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 6)
     public void updateValidEmailCustomer() {
         ExcelHelper excel = new ExcelHelper();
@@ -69,6 +74,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Update Email Customer with Current Email
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 7)
     public void updateEmailCustomerWithCurrentEmail() {
         ExcelHelper excel = new ExcelHelper();
@@ -78,6 +84,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Update Email Customer with Email already exists
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 8)
     public void updateEmailCustomerWithEmailExist() {
         ExcelHelper excel = new ExcelHelper();
@@ -88,6 +95,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Update Email Customer with Email invalid
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 9)
     public void updateEmailCustomerWithEmailInvalid() {
         ExcelHelper excel = new ExcelHelper();
@@ -98,6 +106,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Add New Address Customer Valid
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 10)
     public void TC_AddNewAddressValid() {
         ExcelHelper excel = new ExcelHelper();
@@ -108,6 +117,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Add New Address Customer without Address
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 11)
     public void TC_AddNewAddressWithoutAddress() {
         ExcelHelper excel = new ExcelHelper();
@@ -118,6 +128,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Add New Address Customer without Country
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 12)
     public void TC_AddNewAddressWithoutCountry() {
         ExcelHelper excel = new ExcelHelper();
@@ -128,6 +139,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Add New Address Customer without State
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 13)
     public void TC_AddNewAddressWithoutState() {
         ExcelHelper excel = new ExcelHelper();
@@ -138,6 +150,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Add New Address Customer without City
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 14)
     public void TC_AddNewAddressWithoutCity() {
         ExcelHelper excel = new ExcelHelper();
@@ -148,6 +161,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Add New Address Customer without Postal Code
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 15)
     public void TC_AddNewAddressWithoutPostalCode() {
         ExcelHelper excel = new ExcelHelper();
@@ -158,6 +172,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Add New Address Customer without Phone
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 16)
     public void TC_AddNewAddressWithoutPhone() {
         ExcelHelper excel = new ExcelHelper();
@@ -168,6 +183,7 @@ public class ProfileTest extends BaseTest {
     }
 
     // Edit Address Customer Valid
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 17)
     public void TC_EditAddressValid() {
         ExcelHelper excel = new ExcelHelper();
@@ -178,6 +194,7 @@ public class ProfileTest extends BaseTest {
     }
 
     // Edit Address Customer without Address
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 18)
     public void TC_EditAddressWithoutAddress() {
         ExcelHelper excel = new ExcelHelper();
@@ -188,6 +205,7 @@ public class ProfileTest extends BaseTest {
     }
 
     // Edit Address Customer without Country
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 19)
     public void TC_EditAddressWithoutCountry() {
         ExcelHelper excel = new ExcelHelper();
@@ -198,6 +216,7 @@ public class ProfileTest extends BaseTest {
     }
 
     // Edit Address Customer without State
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 20)
     public void TC_EditAddressWithoutState() {
         ExcelHelper excel = new ExcelHelper();
@@ -208,6 +227,7 @@ public class ProfileTest extends BaseTest {
     }
 
     // Edit Address Customer without City
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 21)
     public void TC_EditAddressWithoutCity() {
         ExcelHelper excel = new ExcelHelper();
@@ -218,6 +238,7 @@ public class ProfileTest extends BaseTest {
     }
 
     // Edit Address Customer without Postal Code
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 22)
     public void TC_EditAddressWithoutPostalCode() {
         ExcelHelper excel = new ExcelHelper();
@@ -229,6 +250,7 @@ public class ProfileTest extends BaseTest {
     }
 
     // Edit Address Customer without Phone
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 23)
     public void TC_EditAddressWithoutPhone() {
         ExcelHelper excel = new ExcelHelper();

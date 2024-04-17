@@ -362,6 +362,24 @@ public class WebUI {
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElementFull(by);
         }
+        DriverManager.getDriver().findElement(by).clear();
+//        WebUI.clickElement(by);
+//        DriverManager.getDriver().findElement(by).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+//        action.keyDown(Keys.COMMAND).sendKeys("a").keyUp(Keys.COMMAND).sendKeys(Keys.DELETE).build().perform();
+        //AllureReportManager.saveTextLog("Clear text trên: " + by.toString());
+        LogUtils.info("Clear text trên: " + by.toString());
+        ExtentTestManager.logMessage("Clear text trên: " + by.toString());
+    }
+    @Step("Clear text trên: {0}")
+    public static void clearTextWithCtrlA(By by) {
+        waitForPageLoaded();
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        sleep(STEP_TIME);
+        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+            highLightElementFull(by);
+        }
+//        DriverManager.getDriver().findElement(by).clear();
         WebUI.clickElement(by);
         DriverManager.getDriver().findElement(by).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 //        action.keyDown(Keys.COMMAND).sendKeys("a").keyUp(Keys.COMMAND).sendKeys(Keys.DELETE).build().perform();
