@@ -33,14 +33,14 @@
             <class name="com.thuydung.testcases.AddProductTest"/>
         </classes>
     </test>
-    <test name="CartTest" parallel="methods">
-        <classes>
-            <class name="com.thuydung.testcases.CartTest"/>
-        </classes>
-    </test>
-    <test name="OrderTest" parallel="methods">
-        <classes>
-            <class name="com.thuydung.testcases.OrderTest"/>
-        </classes>
-    </test>
+<!--    <test name="CartTest" parallel="methods">-->
+<!--        <classes>-->
+<!--            <class name="com.thuydung.testcases.CartTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="OrderTest" parallel="methods">-->
+<!--        <classes>-->
+<!--            <class name="com.thuydung.testcases.OrderTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>

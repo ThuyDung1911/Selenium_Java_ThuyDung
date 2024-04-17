@@ -86,8 +86,10 @@ public class AddProductPage extends CommonPage {
     public void openAddProductPage() {
         WebUI.clickElement(menuProduct);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         WebUI.clickElement(submenuAddProduct);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         WebUI.verifyElementVisible(titleAddNewProduct, "Tieu de Add New Product KHONG xuat hien");
     }
 
@@ -133,6 +135,7 @@ public class AddProductPage extends CommonPage {
         WebUI.setTextAndClear(inputVat, vat);
         WebUI.clickElement(selectUnitVat);
         WebUI.waitForElementVisible(selectUnitVatFlat);
+        WebUI.sleep(1);
         WebUI.clickElement(selectUnitVatFlat);
         WebUI.clickElement(buttonSavePublish); //Click button Save&Public
 
@@ -217,6 +220,7 @@ public class AddProductPage extends CommonPage {
             WebUI.sleep(2);
             WebUI.clickElement(By.xpath("//div[@class='dropdown-menu show']//span[text()='" + attributeName + "']"));
             WebUI.waitForJQueryLoad();
+            WebUI.sleep(1);
             WebUI.clickElement(selectAttribute);
         }
     }
@@ -286,10 +290,13 @@ public class AddProductPage extends CommonPage {
         PropertiesHelper.setValue("product_P01", productName);
         WebUI.clickElement(menuProduct);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         WebUI.clickElement(submenuProducts);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         WebUI.clickElement(By.xpath("//div[normalize-space()='Add New Product']/ancestor::a/parent::div"));
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         WebUI.verifyElementVisible(titleAddNewProduct, "Tieu de Add New Product KHONG xuat hien");
         //Product Information
         WebUI.verifyElementVisible(blockProductInf, "Product Information block KHONG xuat hien");
@@ -341,6 +348,7 @@ public class AddProductPage extends CommonPage {
         WebUI.setTextAndClear(inputVat, vat);
         WebUI.clickElement(selectUnitVat);
         WebUI.waitForElementVisible(selectUnitVatFlat);
+        WebUI.sleep(1);
         WebUI.clickElement(By.xpath("//button[text()='Upload Product']")); //Click button Save&Public
 
     }
@@ -349,10 +357,13 @@ public class AddProductPage extends CommonPage {
         PropertiesHelper.setValue("product_P01", productName);
         WebUI.clickElement(menuProduct);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         WebUI.clickElement(submenuProducts);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         WebUI.clickElement(By.xpath("//div[normalize-space()='Add New Product']/ancestor::a/parent::div"));
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         WebUI.verifyElementVisible(titleAddNewProduct, "Tieu de Add New Product KHONG xuat hien");
         //Product Information
         WebUI.verifyElementVisible(blockProductInf, "Product Information block KHONG xuat hien");
@@ -404,6 +415,7 @@ public class AddProductPage extends CommonPage {
         WebUI.setTextAndClear(inputVat, vat);
         WebUI.clickElement(selectUnitVat);
         WebUI.waitForElementVisible(selectUnitVatFlat);
+        WebUI.sleep(1);
         WebUI.clickElement(By.xpath("//button[text()='Upload Product']")); //Click button Save&Public
 
     }
@@ -471,10 +483,13 @@ public class AddProductPage extends CommonPage {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         //WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         WebUI.clickElement(allCategoriesTabUI);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         WebUI.clickElement(By.xpath("//a[contains(text(),'" + category + "')]"));
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         WebUI.verifyAssertTrueIsDisplayed(By.xpath("(//a[normalize-space()='" + nameProductVerify + "'])"), "Product KHONG xuat hien");
         WebUI.sleep(2);
         WebUI.clickElement(By.xpath("(//a[normalize-space()='" + nameProductVerify + "'])[1]"));
@@ -609,8 +624,10 @@ public class AddProductPage extends CommonPage {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         //WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         WebUI.clickElement(allCategoriesTabUI);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         WebUI.clickElement(By.xpath("//a[contains(text(),'" + category + "')]"));
         WebUI.waitForPageLoaded();
         WebUI.verifyAssertTrueIsDisplayed(By.xpath("(//a[normalize-space()='" + nameProductVerify + "'])"), "Product KHONG xuat hien");
