@@ -227,6 +227,26 @@ public class OrderPage {
         WebUI.verifyAssertTrueEqual(valueNewestCountry, country, "Quốc gia mới không được thêm vào.");
         WebUI.verifyAssertTrueEqual(valueNewestPhone, phone, "Số điện thoại mới không được thêm vào.");
     }
+    public void testAddNewAddressInvalidInShippingInfo(String address, String country, String state, String city, String postalCode, String phone) {
+        openShippingInfoFromURL();
+        WebUI.scrollToElement(buttonAddNewAddress);
+        WebUI.clickElement(buttonAddNewAddress);
+        WebUI.verifyElementVisible(titleNewAddress, "Popup New Address KHONG hien thi.");
+
+        WebUI.setTextAndClear(inputAddYourAddress, address);
+        WebUI.clickElement(selectAddCountry);
+        WebUI.setTextAndClear(inputSearchCountry, country, Keys.ENTER);
+        WebUI.clickElement(selectAddState);
+        WebUI.setTextAndClear(inputSearchState, state, Keys.ENTER);
+        WebUI.clickElement(selectAddCity);
+        WebUI.setTextAndClear(inputSearchCity, city, Keys.ENTER);
+        WebUI.setTextAndClear(inputAddPostalCode, postalCode);
+        WebUI.setTextAndClear(inputAddPhoneAddress, phone);
+        WebUI.clickElement(buttonSaveNewAddress);
+        WebUI.waitForPageLoaded();
+        WebUI.verifyAssertTrueIsDisplayed(inputAddYourAddress, "Khong xuat hien thong bao");
+        WebUI.verifyAssertTrueEqual(inputAddYourAddress, "Please fill out this field.", "Thong bao khong chinh xac");
+    }
 
     public void testEditAddressInShippingInfo(String address, String country, String state, String city, String postalCode, String phone) {
         openShippingInfoFromURL();
@@ -255,6 +275,29 @@ public class OrderPage {
         WebUI.verifyAssertTrueEqual(valueNewestState, state, "Tỉnh/Thành phố mới không được cập nhật.");
         WebUI.verifyAssertTrueEqual(valueNewestCountry, country, "Quốc gia mới không được cập nhật.");
         WebUI.verifyAssertTrueEqual(valueNewestPhone, phone, "Số điện thoại mới không được cập nhật.");
+    }
+    public void testEditAddressInvalidInShippingInfo(String address, String country, String state, String city, String postalCode, String phone) {
+        openShippingInfoFromURL();
+        WebUI.scrollToElement(buttonAddNewAddress);
+        WebUI.clickElement(iconEllipsisInCardAddressNewest);
+        WebUI.clickElement(buttonEditInCardAddressNewest);
+        WebUI.waitForJQueryLoad();
+
+        WebUI.verifyElementVisible(titleNewAddressEdit, "Popup New Address KHONG hien thi.");
+
+        WebUI.setTextAndClear(inputAddYourAddressEdit, address);
+        WebUI.clickElement(selectAddCountryEdit);
+        WebUI.setTextAndClear(inputSearchCountryEdit, country, Keys.ENTER);
+        WebUI.clickElement(selectAddStateEdit);
+        WebUI.setTextAndClear(inputSearchStateEdit, state, Keys.ENTER);
+        WebUI.clickElement(selectAddCityEdit);
+        WebUI.setTextAndClear(inputSearchCityEdit, city, Keys.ENTER);
+        WebUI.setTextAndClear(inputAddPostalCodeEdit, postalCode);
+        WebUI.setTextAndClear(inputAddPhoneAddressEdit, phone);
+        WebUI.clickElement(buttonSaveNewAddressEdit);
+        WebUI.waitForPageLoaded();
+        WebUI.checkHTML5MessageWithValueInvalid(inputAddYourAddressEdit, "Khong xuat hien thong bao");
+        WebUI.verifyAssertTrueEqual(inputAddYourAddressEdit, "Please fill out this field.", "Thong bao khong chinh xac");
     }
 
     public void selectAddressInShippingInfo(String index) {
@@ -431,6 +474,7 @@ public class OrderPage {
         }
         By inputCouponDiscount = By.xpath("//input[@name='code']");
         By buttonApplyCoupon = By.xpath("//button[@id='coupon-apply']");
+        WebUI.waitForElementVisible(inputCouponDiscount);
         WebUI.setTextAndClear(inputCouponDiscount, couponCode);
         WebUI.clickElement(buttonApplyCoupon);
         WebUI.waitForPageLoaded();
@@ -441,34 +485,26 @@ public class OrderPage {
         WebUI.verifyAssertTrueIsDisplayed(messageNoti, "Khong xuat hien thong bao");
         WebUI.verifyAssertTrueEqual(messageNoti, "Coupon has been applied", "Thong bao khong chinh xac");
         WebUI.verifyAssertTrueIsDisplayed(priceCouponDiscountInDisplayPayment, "Khong hien thi gia tri Coupon Discount");
+        //check tổng tien o trang payment
+        checkTotalPriceInPayment();
     }
 
     public void testApplyCouponDiscountExpired(String couponCode) {
         applyCouponDiscount(couponCode);
         WebUI.verifyAssertTrueIsDisplayed(messageNoti, "Khong xuat hien thong bao");
         WebUI.verifyAssertTrueEqual(messageNoti, "Coupon expired!", "Thong bao khong chinh xac");
+        //check tổng tien o trang payment
+        checkTotalPriceInPayment();
     }
 
     public void testApplyCouponDiscountNotExist(String couponCode) {
         applyCouponDiscount(couponCode);
         WebUI.verifyAssertTrueIsDisplayed(messageNoti, "Khong xuat hien thong bao");
         WebUI.verifyAssertTrueEqual(messageNoti, "Invalid coupon!", "Thong bao khong chinh xac");
+        //check tổng tien o trang payment
+        checkTotalPriceInPayment();
     }
 
-    public void testTotalPriceInPaymentInfoWithNoDiscountCoupon() {
-        openPaymentInfoFromShippingInfoDisplay();
-        BigDecimal valuePriceTotal = calculatorTotalPriceInPaymentInfo();
-        BigDecimal valuePriceTotalInDisplayPayment = convertCurrencyToBigDecimal(WebUI.getElementText(priceTotalInDisplayPayment));
-        WebUI.verifyAssertEquals(valuePriceTotalInDisplayPayment, valuePriceTotal, "Tổng giá tiền ở trang thanh toán không khớp.");
-    }
-
-    public void testTotalPriceInPaymentInfoWithDiscountCoupon() {
-        openPaymentInfoFromShippingInfoDisplay();
-        applyCouponDiscount("DUNG1");
-        BigDecimal valuePriceTotal = calculatorTotalPriceInPaymentInfo();
-        BigDecimal valuePriceTotalInDisplayPayment = convertCurrencyToBigDecimal(WebUI.getElementText(priceTotalInDisplayPayment));
-        WebUI.verifyAssertEquals(valuePriceTotalInDisplayPayment, valuePriceTotal, "Tổng giá tiền ở trang thanh toán không khớp.");
-    }
 
     public void selectAgreeTerms() {
         openPaymentInfoFromShippingInfoDisplay();
@@ -557,12 +593,13 @@ public class OrderPage {
         WebUI.verifyAssertTrueEqual(elementMenuCheckOut, "5. Confirmation", "Trang hiện tại không phải trang Confirmation");
     }
 
-    public void testMessageOrderSuccess() {
+    public void testOrderSuccess() {
         if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/checkout/order-confirmed")) {
             openConfirmOrderFromShippingInfo();
         }
         WebUI.verifyAssertTrueIsDisplayed(messageNoti, "Đơn hàng thất bại");
         WebUI.verifyAssertTrueEqual(messageNoti, "Your order has been placed successfully", "Thông báo đơn hàng thành công không đúng");
+        WebUI.verifyAssertTrueEqual(elementMenuCheckOut, "5. Confirmation", "Trang hiện tại không phải trang Confirmation");
         WebUI.verifyAssertTrueIsDisplayed(messageOrderSuccess, "Khong xuat hien message cam on khach hang da dat hang");
     }
 
@@ -876,11 +913,15 @@ public class OrderPage {
         WebUI.clickElement(buttonContinueToDeliveryInfo);
         WebUI.waitForPageLoaded();
         selectShippingMethod("Home Delivery");
+        testProductInDeliveryInfoDisplay();
 
         WebUI.clickElement(buttonContinueToPayment);
         WebUI.waitForPageLoaded();
 
         applyCouponDiscount(couponCode);
+
+        //check tổng tien o trang payment
+        checkTotalPriceInPayment();
 
         choosePaymentMethodCashOnDelivery();
         addAdditaionalInfo(noteForOrder);
@@ -889,7 +930,70 @@ public class OrderPage {
         WebUI.clickElement(buttonCompleteOrder);
         WebUI.waitForPageLoaded();
         //Check order success
-        testMessageOrderSuccess();
+        WebUI.verifyAssertTrueEqual(elementMenuCheckOut, "5. Confirmation", "Trang hiện tại không phải trang Confirmation");
+        testOrderSuccess();
+        //Check order summary
+        testOrderSummaryInConfirmDisplay();
+
+        String valueShippingAddressInOrderSummaryConfirm = WebUI.getElementText(elementShippingAddressInOrderSummary);
+        String shippingAddressInOrderSummaryConfirm = valueShippingAddressInOrderSummaryConfirm.split(", ")[0];
+        String shippingCityInOrderSummaryConfirm = valueShippingAddressInOrderSummaryConfirm.split(", ")[1];
+        String shippingCountryInOrderSummaryConfirm = valueShippingAddressInOrderSummaryConfirm.split(", ")[2];
+
+        WebUI.verifyAssertEquals(shippingAddressInOrderSummaryConfirm, addressSelected.getAddress(), "Địa chỉ giao hàng không khớp.");
+        WebUI.verifyAssertEquals(shippingCityInOrderSummaryConfirm, addressSelected.getCity(), "Thành phố giao hàng không khớp.");
+        WebUI.verifyAssertEquals(shippingCountryInOrderSummaryConfirm, addressSelected.getCountry(), "Quốc gia giao hàng không khớp.");
+
+        //Check order detail
+        WebUI.scrollToElement(By.xpath("//h5[text()='Order Summary']/parent::div"));
+        List<Cart> listProduct = getInfoOrderDetailInDisplayConfirm();
+        for (int j = 0; j < listProduct.size(); j++) {
+            WebUI.verifyAssertContain(currentCart.get(j).getNameProduct(), listProduct.get(j).getNameProduct(), "Tên sản phẩm không khớp.");
+            WebUI.verifyAssertEquals(listProduct.get(j).getPrice(), currentCart.get(j).getPrice(), "Giá sản phẩm không khớp.");
+            WebUI.verifyAssertEquals(listProduct.get(j).getQuantity(), currentCart.get(j).getQuantity(), "Số lượng sản phẩm không khớp.");
+        }
+        checkInfoPriceInConfirmDisplay();
+        checkHistoryOrder(noteForOrder);
+
+    }
+    public void checkTotalPriceInPayment() {
+        BigDecimal valuePriceTotal = calculatorTotalPriceInPaymentInfo();
+        BigDecimal valuePriceTotalInDisplayPayment = convertCurrencyToBigDecimal(WebUI.getElementText(priceTotalInDisplayPayment));
+        WebUI.verifyAssertEquals(valuePriceTotalInDisplayPayment, valuePriceTotal, "Tổng giá tiền ở trang thanh toán không khớp.");
+
+    }
+    public void checkOutOrder(String noteForOrder) {
+        if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/cart")) {
+            WebUI.openURL("https://cms.anhtester.com/cart");
+        }
+        List<Cart> currentCart = CartPage.getCartDetailTemp2();
+        if (currentCart.isEmpty()) {
+            WebUI.verifyAssertTrueIsDisplayed(CartPage.messageCartEmptyInCartDetail, "Không có sản phẩm trong giỏ hàng");
+            WebUI.verifyAssertTrueEqual(CartPage.messageCartEmptyInCartDetail, "Your Cart is empty", "Thông báo không có sản phẩm trong giỏ hàng không đúng");
+            CartPage.addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
+            currentCart = CartPage.getCartDetailTemp2();
+        }
+        WebUI.clickElement(buttonContinueToShipping);
+        selectAddressInShippingInfo("3");
+        Address addressSelected = getSelectedAddress();
+        WebUI.clickElement(buttonContinueToDeliveryInfo);
+        WebUI.waitForPageLoaded();
+        selectShippingMethod("Home Delivery");
+
+        WebUI.clickElement(buttonContinueToPayment);
+        WebUI.waitForPageLoaded();
+
+        //check tổng tien o trang payment
+        checkTotalPriceInPayment();
+
+        choosePaymentMethodCashOnDelivery();
+        addAdditaionalInfo(noteForOrder);
+
+        WebUI.scrollToElement(buttonCompleteOrder);
+        WebUI.clickElement(buttonCompleteOrder);
+        WebUI.waitForPageLoaded();
+        //Check order success
+        testOrderSuccess();
         //Check order summary
         testOrderSummaryInConfirmDisplay();
 

@@ -4,7 +4,6 @@ import com.aventstack.extentreports.Status;
 import com.thuydung.constants.ConfigData;
 import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.PropertiesHelper;
-import com.thuydung.reports.AllureManager;
 import com.thuydung.reports.ExtentTestManager;
 import com.thuydung.utils.LogUtils;
 import io.qameta.allure.Step;
@@ -642,8 +641,9 @@ public class WebUI {
         boolean result = actual.equals(expected);
         softAssert.assertEquals(actual, expected, message);
         if (!result) {
-            LogUtils.error("Sai, Không khớp: " + actual.toString() + " != " + expected.toString());
-            ExtentTestManager.logMessage(Status.FAIL, "Sai, Không khớp: " + actual.toString() + " != " + expected.toString());
+            String message1 = "Sai, Không khớp: " + actual.toString() + " != " + expected.toString();
+            LogUtils.error(message1);
+            ExtentTestManager.logMessage(Status.FAIL, message1);
             ExtentTestManager.addScreenShot(Status.FAIL, message);
 //            AllureManager.saveTextLog("Sai, Không khớp: " + actual.toString() + " != " + expected.toString());
 //            AllureManager.saveScreenshotPNG();
