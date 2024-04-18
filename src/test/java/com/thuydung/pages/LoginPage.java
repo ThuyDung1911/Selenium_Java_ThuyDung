@@ -16,7 +16,6 @@ public class LoginPage extends CommonPage {
     public static By messageInvalidEmailFormat = By.xpath("//input[contains(@class, 'is-invalid') and @id = 'email']");
     public static By messageAccDoesNotExist = By.xpath("//span[@data-notify='message']");
     public static By messageRequiredPassword = By.xpath("//input[contains(@class, 'is-invalid') and @id = 'password']");
-    public static By logoAnhTesterPage = By.xpath("//img[@alt='Active eCommerce CMS']");
     public static By roleUser = By.xpath("//span[contains(@class,'avatar')]/following-sibling::span//descendant::span[contains(@class,'small')]");
     public static By buttonOkCookies = By.xpath("//button[normalize-space()='Ok. I Understood']");
     public void openLoginPage() {
@@ -110,8 +109,8 @@ public class LoginPage extends CommonPage {
         WebUI.setTextAndClear(inputEmail, email);
         WebUI.setTextAndClear(inputPassword, password);
         WebUI.clickElement(buttonSubmitLogin);
-        WebUI.waitForElementVisible(logoAnhTesterPage);
-        WebUI.verifyAssertTrueIsDisplayed(logoAnhTesterPage, "Đăng nhập vào hệ thống không thành công.");
+        WebUI.waitForElementVisible(roleUser);
+        WebUI.verifyAssertTrueIsDisplayed(roleUser, "Đăng nhập vào hệ thống không thành công.");
         WebUI.verifyAssertTrueEqual(roleUser,"admin","Tài khoản đăng nhập không phải admin.");
         WebUI.sleep(2);
     }
@@ -120,7 +119,6 @@ public class LoginPage extends CommonPage {
         WebUI.setTextAndClear(inputEmail, email);
         WebUI.setTextAndClear(inputPassword, password);
         WebUI.clickElement(buttonSubmitLogin);
-        //WebUI.verifyAssertTrueIsDisplayed(titleLoginPage, "Trang hiện tại không phải là trang đăng nhập.");
         WebUI.checkHTML5MessageWithValueInvalid(inputEmail,"Email sai dinh dang");
         WebUI.sleep(2);
     }

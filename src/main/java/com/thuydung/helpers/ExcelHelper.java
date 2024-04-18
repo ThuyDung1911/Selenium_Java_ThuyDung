@@ -5,7 +5,6 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.awt.Color;
 import java.io.*;
 import java.util.EmptyStackException;
 import java.util.HashMap;
@@ -23,19 +22,20 @@ public class ExcelHelper {
     private Map<String, Integer> columns = new HashMap<>();
 
     public void setExcelFile(String excelPath, String sheetName) {
-
+        LogUtils.info("----------- Chuẩn bị data test -----------");
         LogUtils.info("Set Excel File: " + excelPath);
         LogUtils.info("Sheet Name: " + sheetName);
+        LogUtils.info("----------- Setup data test thành công -----------");
 
         try {
             File f = new File(excelPath);
 
             if (!f.exists()) {
-                LogUtils.info("File Excel path not found.");
-                throw new FileNotFoundException("File Excel path not found.");
+                LogUtils.info("File Excel path không tìm thấy.");
+                throw new FileNotFoundException("File Excel path không tìm thấy.");
             }
             if (sheetName.isEmpty()) {
-                LogUtils.info("The Sheet Name is empty.");
+                LogUtils.info("The Sheet Name trống.");
                 throw new EmptyStackException();
             }
 
@@ -257,8 +257,8 @@ public class ExcelHelper {
         try {
             File f = new File(excelPath);
             if (!f.exists()) {
-                System.out.println("File Excel path not found.");
-                throw new IOException("File Excel path not found.");
+                System.out.println("File Excel path không tìm thấy.");
+                throw new IOException("File Excel path không tìm thấy.");
             }
 
             fis = new FileInputStream(excelPath);
@@ -297,8 +297,8 @@ public class ExcelHelper {
         try {
             File f = new File(excelPath);
             if (!f.exists()) {
-                System.out.println("File Excel path not found.");
-                throw new IOException("File Excel path not found.");
+                System.out.println("File Excel path không tìm thấy.");
+                throw new IOException("File Excel path không tìm thấy.");
             }
 
             fis = new FileInputStream(excelPath);

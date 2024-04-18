@@ -4,7 +4,6 @@ import com.aventstack.extentreports.Status;
 import com.thuydung.helpers.CaptureHelper;
 import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.keywords.WebUI;
-import com.thuydung.reports.AllureManager;
 import com.thuydung.reports.ExtentReportManager;
 import com.thuydung.reports.ExtentTestManager;
 import com.thuydung.utils.JiraCreateIssue;
@@ -46,7 +45,6 @@ public class TestListener implements ITestListener {
     public void onTestStart(ITestResult result) {
         LogUtils.info(getTestName(result) + " is starting...");
         ExtentTestManager.saveToReport(getTestName(result), getTestDescription(result));
-
         if (PropertiesHelper.getValue("VIDEO_RECORD").equals("true")) {
             CaptureHelper.startRecord(result.getName());
         }
@@ -56,6 +54,7 @@ public class TestListener implements ITestListener {
     public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
         LogUtils.error("Test failed but it is in defined success ratio " + getTestName(result));
         ExtentTestManager.logMessage("Test failed but it is in defined success ratio " + getTestName(result));
+//        AllureManager.saveTextLog("Test failed but it is in defined success ratio " + getTestName(result));
     }
 
     @Override
@@ -107,15 +106,15 @@ public class TestListener implements ITestListener {
 
         //Allure report
         LogUtils.error("Screenshot captured for test case: " + getTestName(result));
-        //AllureManager.saveTextLog(getTestName(result) + "is failed and screenshot taken!");
-        AllureManager.saveScreenshotPNG();
+//        AllureManager.saveTextLog(getTestName(result) + "is failed and screenshot taken!");
+//        AllureManager.saveScreenshotPNG();
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
         System.out.println("Đây là test case bị bỏ qua: " + result.getName());
         ExtentTestManager.logMessage(Status.SKIP, getTestDescription(result) + " is skipped");
-
+//        AllureManager.saveTextLog(getTestName(result) + " is skipped");
         if (PropertiesHelper.getValue("VIDEO_RECORD").equals("true")) {
             WebUI.sleep(0.5);
             CaptureHelper.stopRecord();

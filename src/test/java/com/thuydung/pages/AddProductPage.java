@@ -439,10 +439,6 @@ public class AddProductPage extends CommonPage {
     public void verifyNewProductVariant(String nameProductVerify, String category, String unit, String discountDate, String description, String discount, String vat) {
         WebUI.clickElement(EditProductPage.btnEditProductNewest);
         WebUI.waitForPageLoaded();
-        WebUI.waitForElementVisible(valueVariant);
-        WebUI.waitForElementVisible(valueVariantPrice);
-        WebUI.waitForElementVisible(valueVariantSKU);
-        WebUI.waitForElementVisible(valueVariantQuantity);
         WebUI.sleep(5);
         List<WebElement> elementValueVariants = DriverManager.getDriver().findElements(valueVariant);
         List<WebElement> elementValueVariantPrices = DriverManager.getDriver().findElements(valueVariantPrice);

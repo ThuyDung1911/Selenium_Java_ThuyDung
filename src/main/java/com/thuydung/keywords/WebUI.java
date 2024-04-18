@@ -60,7 +60,7 @@ public class WebUI {
         DriverManager.getDriver().findElement(by).click();
         ExtentTestManager.logMessage(Status.PASS, "Nhấn vào element: " + by);
         LogUtils.info("Nhấn vào element: " + by.toString());
-        //AllureReportManager.saveTextLog("Nhấn vào element: " + by.toString());
+        //AllureManager.saveTextLog("Nhấn vào element: " + by.toString());
     }
 
     @Step("Nhấn vào element: {0}")
@@ -73,7 +73,7 @@ public class WebUI {
         }
         getWebElement(by).click();
         LogUtils.info("Nhấn vào element: " + by.toString());
-        //AllureReportManager.saveTextLog("Nhấn vào element: " + by.toString());
+        //AllureManager.saveTextLog("Nhấn vào element: " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Nhấn vào element: " + by);
     }
 
@@ -141,15 +141,18 @@ public class WebUI {
             LogUtils.error("Xác thực " + verifyText + " hiển thị không đúng với " + by.toString());
             ExtentTestManager.logMessage(Status.FAIL, "Xác thực " + verifyText + " hiển thị không đúng với " + by.toString());
             ExtentTestManager.addScreenShot(Status.FAIL, message);
+//            AllureManager.saveTextLog("Xác thực " + verifyText + " hiển thị không đúng với " + by.toString());
+//            AllureManager.saveScreenshotPNG();
 //            softAssert.fail("Sai, Không khớp: " + actual.toString() + " != " + expected.toString());
         } else {
             ExtentTestManager.logMessage(Status.PASS, "Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
+            //AllureManager.saveTextLog("Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
             LogUtils.info("Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
         }
 
 
 //        LogUtils.info("Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
-//        //AllureReportManager.saveTextLog("Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
+//        //AllureManager.saveTextLog("Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
 //        ExtentTestManager.logMessage(Status.PASS, "Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
     }
 
@@ -162,7 +165,7 @@ public class WebUI {
             highLightElement(by);
         }
         LogUtils.info("Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
-        //AllureReportManager.saveTextLog("Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
+        //AllureManager.saveTextLog("Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
     }
 
@@ -175,7 +178,7 @@ public class WebUI {
             highLightElement(by);
         }
         LogUtils.info("Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
-        //AllureReportManager.saveTextLog("Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
+        //AllureManager.saveTextLog("Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
     }
 
@@ -187,8 +190,8 @@ public class WebUI {
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
-        LogUtils.info("Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
-        //AllureReportManager.saveTextLog("Xác thực " + verifyText + " hiển thị không đúng với " + by.toString());
+        LogUtils.info("Xác thực " + verifyText + " hiển thị không đúng với " + by.toString());
+        //AllureManager.saveTextLog("Xác thực " + verifyText + " hiển thị không đúng với " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Xác thực " + verifyText + " hiển thị không đúng với " + by.toString());
     }
 
@@ -200,8 +203,8 @@ public class WebUI {
             highLightElement(by);
         }
         Assert.assertFalse(DriverManager.getDriver().findElement(by).getText().trim().equals(verifyText), message);
-        LogUtils.info("Xác thực " + verifyText + " hiển thị đúng với " + by.toString());
-        //AllureReportManager.saveTextLog("Xác thực " + verifyText + " hiển thị không đúng với " + by.toString());
+        LogUtils.info("Xác thực " + verifyText + " hiển thị không đúng với " + by.toString());
+        //AllureManager.saveTextLog("Xác thực " + verifyText + " hiển thị không đúng với " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Xác thực " + verifyText + " hiển thị không đúng với " + by.toString());
     }
 
@@ -215,7 +218,7 @@ public class WebUI {
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
-        //AllureReportManager.saveTextLog("Xác thực " + attribute + " chứa " + verifyText + " trong " + by.toString());
+        //AllureManager.saveTextLog("Xác thực " + attribute + " chứa " + verifyText + " trong " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Xác thực " + attribute + " chứa " + verifyText + " trong " + by.toString());
     }
 
@@ -228,7 +231,7 @@ public class WebUI {
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
-        //AllureReportManager.saveTextLog("Xác thực text chứa " + verifyText + " trong " + by.toString());
+        //AllureManager.saveTextLog("Xác thực text chứa " + verifyText + " trong " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Xác thực text chứa " + verifyText + " trong " + by.toString());
     }
 
@@ -248,7 +251,7 @@ public class WebUI {
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
-        //AllureReportManager.saveTextLog("Xác thực text chứa " + verifyText + " trong " + by.toString());
+        //AllureManager.saveTextLog("Xác thực text chứa " + verifyText + " trong " + by.toString());
         ExtentTestManager.logMessage(Status.PASS, "Xác thực text chứa " + verifyText + " trong " + by.toString());
     }
 
@@ -262,7 +265,7 @@ public class WebUI {
             if (ConfigData.HIGHLIGHT_ELEMENT == true) {
                 highLightElement(by);
             }
-            //AllureReportManager.saveTextLog("Xác thực " + by + " hiển thị");
+            //AllureManager.saveTextLog("Xác thực " + by + " hiển thị");
             ExtentTestManager.logMessage("Xác thực " + by + " hiển thị");
         } catch (NoSuchElementException e) {
             softAssert.fail(message);
@@ -279,7 +282,7 @@ public class WebUI {
             if (ConfigData.HIGHLIGHT_ELEMENT == true) {
                 highLightElement(by);
             }
-            //AllureReportManager.saveTextLog("Xác thực " + by + " hiển thị");
+            //AllureManager.saveTextLog("Xác thực " + by + " hiển thị");
             ExtentTestManager.logMessage("Xác thực " + by + " hiển thị");
         } catch (NoSuchElementException e) {
             Assert.fail(message);
@@ -296,7 +299,7 @@ public class WebUI {
             if (ConfigData.HIGHLIGHT_ELEMENT == true) {
                 highLightElement(by);
             }
-            //AllureReportManager.saveTextLog("Message HTML với giá trị " + by + " không hợp lệ hiển thị");
+            //AllureManager.saveTextLog("Message HTML với giá trị " + by + " không hợp lệ hiển thị");
             ExtentTestManager.logMessage("Message HTML với giá trị " + by + " không hợp lệ hiển thị");
         } catch (NoSuchElementException e) {
             Assert.fail(message);
@@ -313,7 +316,7 @@ public class WebUI {
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
-        //AllureReportManager.saveTextLog("Xác thực " + by + " không hiển thị");
+        //AllureManager.saveTextLog("Xác thực " + by + " không hiển thị");
         ExtentTestManager.logMessage("Xác thực " + by + " không hiển thị");
 
     }
@@ -327,7 +330,7 @@ public class WebUI {
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
-        //AllureReportManager.saveTextLog("Xác thực attribute " + attribute + " chứa " + expectedValue + " trong " + by.toString());
+        //AllureManager.saveTextLog("Xác thực attribute " + attribute + " chứa " + expectedValue + " trong " + by.toString());
         ExtentTestManager.logMessage("Xác thực attribute " + attribute + " chứa " + expectedValue + " trong " + by.toString());
     }
 
@@ -340,7 +343,7 @@ public class WebUI {
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
-        //AllureReportManager.saveTextLog("Xác thực attribute " + attribute + " chứa " + expectedValue + " trong " + by.toString());
+        //AllureManager.saveTextLog("Xác thực attribute " + attribute + " chứa " + expectedValue + " trong " + by.toString());
         ExtentTestManager.logMessage("Xác thực attribute " + attribute + " chứa " + expectedValue + " trong " + by.toString());
     }
 
@@ -366,7 +369,7 @@ public class WebUI {
 //        WebUI.clickElement(by);
 //        DriverManager.getDriver().findElement(by).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 //        action.keyDown(Keys.COMMAND).sendKeys("a").keyUp(Keys.COMMAND).sendKeys(Keys.DELETE).build().perform();
-        //AllureReportManager.saveTextLog("Clear text trên: " + by.toString());
+        //AllureManager.saveTextLog("Clear text trên: " + by.toString());
         LogUtils.info("Clear text trên: " + by.toString());
         ExtentTestManager.logMessage("Clear text trên: " + by.toString());
     }
@@ -383,7 +386,7 @@ public class WebUI {
         WebUI.clickElement(by);
         DriverManager.getDriver().findElement(by).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 //        action.keyDown(Keys.COMMAND).sendKeys("a").keyUp(Keys.COMMAND).sendKeys(Keys.DELETE).build().perform();
-        //AllureReportManager.saveTextLog("Clear text trên: " + by.toString());
+        //AllureManager.saveTextLog("Clear text trên: " + by.toString());
         LogUtils.info("Clear text trên: " + by.toString());
         ExtentTestManager.logMessage("Clear text trên: " + by.toString());
     }
@@ -391,7 +394,7 @@ public class WebUI {
     @Step("Ấn Enter")
     public static void keydownEnter() {
         action.keyDown(Keys.ENTER).keyUp(Keys.ENTER).build().perform();
-        //AllureReportManager.saveTextLog("Ấn Enter");
+        //AllureManager.saveTextLog("Ấn Enter");
         LogUtils.info("Ấn Enter");
         ExtentTestManager.logMessage("Ấn Enter");
     }
@@ -406,14 +409,14 @@ public class WebUI {
         }
         getWebElement(by).sendKeys(value, Keys.BACK_SPACE);
         ExtentTestManager.logMessage(Status.PASS, "Nhập text: " + value + " trong element " + by);
-        //AllureReportManager.saveTextLog("Nhập text " + value + " trong " + by.toString() + " và ấn nút backspace");
+        //AllureManager.saveTextLog("Nhập text " + value + " trong " + by.toString() + " và ấn nút backspace");
         LogUtils.info("Nhập text " + value + " trong " + by.toString() + " và ấn nút backspace");
     }
 
     @Step("Ấn nút backspace")
     public static void keydownBackspace() {
         action.keyDown(Keys.BACK_SPACE).keyUp(Keys.BACK_SPACE).build().perform();
-        //AllureReportManager.saveTextLog("Ấn nút backspace");
+        //AllureManager.saveTextLog("Ấn nút backspace");
         LogUtils.info("Ấn nút backspace");
         ExtentTestManager.logMessage("Ấn nút backspace");
     }
@@ -447,6 +450,7 @@ public class WebUI {
         getWebElement(by).sendKeys(value);
         ExtentTestManager.logMessage(Status.PASS, "Nhập text: " + value + " trong element " + by);
         LogUtils.info("Nhập text: " + value + " trong " + by);
+        //AllureManager.saveTextLog("Nhập text: " + value + " trong " + by);
     }
 
     @Step("Nhập text {1} trong element {0}")
@@ -460,6 +464,7 @@ public class WebUI {
         getWebElement(by).sendKeys(value);
         ExtentTestManager.logMessage(Status.PASS, "Nhập text: " + value + " trong element " + by);
         LogUtils.info("Nhập text: " + value + " trong " + by);
+        //AllureManager.saveTextLog("Nhập text: " + value + " trong " + by);
     }
 
     @Step("Nhập text trong textbox và ấn nút")
@@ -477,7 +482,7 @@ public class WebUI {
         if (ExtentTestManager.getTest() != null) {
             ExtentTestManager.logMessage("Nhập text " + value + " trong " + by + " và ấn nút " + keys.name());
         }
-        AllureManager.saveTextLog("Nhập text " + value + " trong " + by + " và ấn nút " + keys.name());
+        //AllureManager.saveTextLog("Nhập text " + value + " trong " + by + " và ấn nút " + keys.name());
     }
 
     @Step("Nhập text {1} trong element {0} và ấn nút enter")
@@ -490,7 +495,7 @@ public class WebUI {
         }
         getWebElement(by).sendKeys(value, Keys.ENTER);
         ExtentTestManager.logMessage(Status.PASS, "Nhập text: " + value + " trong element " + by);
-        //AllureReportManager.saveTextLog("Nhập text " + value + " trong " + by.toString() + "  và ấn nút enter");
+        //AllureManager.saveTextLog("Nhập text " + value + " trong " + by.toString() + "  và ấn nút enter");
         LogUtils.info("Nhập text " + value + " trong " + by.toString() + " và ấn nút enter");
     }
 
@@ -509,7 +514,7 @@ public class WebUI {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         ExtentTestManager.logMessage(Status.PASS, "Chờ cho tới khi element " + by + " hiển thị");
-        //AllureReportManager.saveTextLog("Chờ cho tới khi element " + by + " hiển thị");
+        //AllureManager.saveTextLog("Chờ cho tới khi element " + by + " hiển thị");
         LogUtils.info("Chờ cho tới khi element " + by + " hiển thị");
         return getWebElement(by);
     }
@@ -525,7 +530,7 @@ public class WebUI {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
         ExtentTestManager.logMessage(Status.PASS, "Chờ cho tới khi element " + by + " không hiển thị");
-        //AllureReportManager.saveTextLog("Chờ cho tới khi element " + by + " không hiển thị");
+        //AllureManager.saveTextLog("Chờ cho tới khi element " + by + " không hiển thị");
         LogUtils.info("Chờ cho tới khi element " + by + " không hiển thị");
     }
 
@@ -535,7 +540,7 @@ public class WebUI {
         LogUtils.info("Truy cập URL: " + URL);
         ExtentTestManager.logMessage(Status.PASS, "Truy cập URL: " + URL);
         waitForPageLoaded();
-        //AllureReportManager.saveTextLog("Truy cập URL: " + URL);
+        //AllureManager.saveTextLog("Truy cập URL: " + URL);
     }
 
     @Step("Lấy text của element {0}")
@@ -620,16 +625,17 @@ public class WebUI {
         }
     }
 
-    @Step("Xác thực result {1} dung")
+    @Step("Xác thực result {1} đúng")
     public static void verifyEquals(Object actual, Object expected) {
         waitForPageLoaded();
         sleep(STEP_TIME);
         softAssert.assertEquals(actual, expected, "Sai, Không khớp: " + actual.toString() + " != " + expected.toString());
-        ExtentTestManager.logMessage(Status.PASS, "Xác thực result: " + expected + " dung");
-        LogUtils.info("Xác thực result: " + expected + " dung");
+        ExtentTestManager.logMessage(Status.PASS, "Xác thực result: " + expected + " đúng");
+        //AllureManager.saveTextLog("Xác thực result: " + expected + " đúng");
+        LogUtils.info("Xác thực result: " + expected + " đúng");
     }
 
-    @Step("Xác thực result {1} dung")
+    @Step("Xác thực result {1} đúng")
     public static void verifySoftAssertEquals(Object actual, Object expected, String message) {
         waitForPageLoaded();
         sleep(STEP_TIME);
@@ -639,24 +645,28 @@ public class WebUI {
             LogUtils.error("Sai, Không khớp: " + actual.toString() + " != " + expected.toString());
             ExtentTestManager.logMessage(Status.FAIL, "Sai, Không khớp: " + actual.toString() + " != " + expected.toString());
             ExtentTestManager.addScreenShot(Status.FAIL, message);
+//            AllureManager.saveTextLog("Sai, Không khớp: " + actual.toString() + " != " + expected.toString());
+//            AllureManager.saveScreenshotPNG();
             //softAssert.fail("Sai, Không khớp: " + actual.toString() + " != " + expected.toString());
         } else {
-            ExtentTestManager.logMessage(Status.PASS, "Xác thực result: " + expected + " dung");
-            LogUtils.info("Xác thực result: " + expected + " dung");
+            ExtentTestManager.logMessage(Status.PASS, "Xác thực result: " + expected + " đúng");
+            LogUtils.info("Xác thực result: " + expected + " đúng");
+//            AllureManager.saveTextLog("Xác thực result: " + expected + " đúng");
         }
 
 //        softAssert.assertEquals(actual, expected, message);
-//        ExtentTestManager.logMessage(Status.PASS, "Xác thực result: " + expected + " dung");
-//        LogUtils.info("Xác thực result: " + expected + " dung");
+//        ExtentTestManager.logMessage(Status.PASS, "Xác thực result: " + expected + " đúng");
+//        LogUtils.info("Xác thực result: " + expected + " đúng");
     }
 
-    @Step("Xác thực result {1} dung")
+    @Step("Xác thực result {1} đúng")
     public static void verifyAssertEquals(Object actual, Object expected, String message) {
         waitForPageLoaded();
         sleep(STEP_TIME);
         Assert.assertEquals(actual, expected, message);
-        ExtentTestManager.logMessage(Status.PASS, "Xác thực result: " + expected + " dung");
-        LogUtils.info("Xác thực result: " + expected + " dung");
+        ExtentTestManager.logMessage(Status.PASS, "Xác thực result: " + expected + " đúng");
+        LogUtils.info("Xác thực result: " + expected + " đúng");
+        //AllureManager.saveTextLog("Xác thực result: " + expected + " đúng");
     }
 
     @Step("Xác thực result {0} chứa {1}")
@@ -667,6 +677,7 @@ public class WebUI {
         //Assert.assertEquals(actual, key, message);
         ExtentTestManager.logMessage(Status.PASS, "Xác thực result: " + actual + " chứa " + key);
         LogUtils.info("Xác thực result: " + actual + " chứa " + key);
+//        AllureManager.saveTextLog("Xác thực result: " + actual + " chứa " + key);
     }
 
     @Step("Xác thực result {0} bằng {1}")
@@ -677,6 +688,7 @@ public class WebUI {
         Assert.assertEquals(actual, key, message);
         ExtentTestManager.logMessage(Status.PASS, "Xác thực result: " + actual + " bằng " + key);
         LogUtils.info("Xác thực result: " + actual + " bằng " + key);
+//        AllureManager.saveTextLog("Xác thực result: " + actual + " bằng " + key);
     }
 
 

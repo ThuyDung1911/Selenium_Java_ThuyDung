@@ -8,8 +8,8 @@ import org.testng.annotations.Test;
 public class LoginTest extends BaseTest {
 
     //đăng nhập thành công vào trang Admin quản trị
-    @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 1)
+    @JiraCreateIssue(isCreateIssue = true)
+    @Test(priority = 1, description = "Đăng nhập thành công vào trang Admin quản trị")
     public void TC_LoginSuccessAdminPage() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
@@ -17,8 +17,8 @@ public class LoginTest extends BaseTest {
     }
 
     //đăng nhập thành công với tài khoản customer
-    @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 2)
+    @JiraCreateIssue(isCreateIssue = true)
+    @Test(priority = 2, description = "Đăng nhập thành công với tài khoản customer")
     public void TC_LoginSuccessWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
@@ -26,8 +26,8 @@ public class LoginTest extends BaseTest {
     }
 
     //đăng nhập thành công với tài khoản seller
-    @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 3)
+    @JiraCreateIssue(isCreateIssue = true)
+    @Test(priority = 3, description = "Đăng nhập thành công với tài khoản seller")
     public void TC_LoginSuccessWithSellerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
@@ -35,15 +35,15 @@ public class LoginTest extends BaseTest {
     }
 
     //đăng nhập với email để trống
-    @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 4)
+    @JiraCreateIssue(isCreateIssue = true)
+    @Test(priority = 4, description = "Đăng nhập với email để trống")
     public void TC_LoginFailWithEmailNull() {
         getLoginPage().loginFailWithEmailNull();
     }
 
     //đăng nhập với password trống
-    @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 5)
+    @JiraCreateIssue(isCreateIssue = true)
+    @Test(priority = 5, description = "Đăng nhập với password trống")
     public void TC_LoginFailWithNullPassword() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
@@ -51,8 +51,8 @@ public class LoginTest extends BaseTest {
     }
 
     //đăng nhập với password không đúng
-    @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 6)
+    @JiraCreateIssue(isCreateIssue = true)
+    @Test(priority = 6, description = "Đăng nhập với password không đúng")
     public void TC_LoginFailWithIncorrectPassword() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
@@ -60,8 +60,8 @@ public class LoginTest extends BaseTest {
     }
 
     //đăng nhập với email không tồn tại
-    @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 7)
+    @JiraCreateIssue(isCreateIssue = true)
+    @Test(priority = 7, description = "Đăng nhập với email không tồn tại")
     public void TC_LoginFailWithEmailDoesNotExist() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
@@ -70,8 +70,8 @@ public class LoginTest extends BaseTest {
     }
 
     //đăng nhập với email sai định dạng
-    @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 8)
+    @JiraCreateIssue(isCreateIssue = true)
+    @Test(priority = 8, description = "Đăng nhập với email sai định dạng")
     public void TC_LoginFailWithInvalidEmailFormat() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
