@@ -11,15 +11,15 @@ import org.testng.annotations.Test;
 
 public class OrderTest extends BaseTest {
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 1, description = "Kiem tra luong dat hang thanh cong khi co coupon")
+    @Test(priority = 1, description = "Kiem tra luồng dat hang thanh cong khi co coupon")
     public void TC_FlowOrderSuccessWithCouponValid() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getCouponPage().addCouponValid("COUPON2024", "100000", "10000", "5000000", "04/09/2024 - 06/09/2024");
         getLoginPage().logOutRoleAdmin();
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-//        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
-        getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
+        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
+        getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính", PropertiesHelper.getValue("COUPON_VALID"));
     }
     // Add order success
     @JiraCreateIssue(isCreateIssue = false)
@@ -32,10 +32,11 @@ public class OrderTest extends BaseTest {
 //        getCartPage().addProductToCart("Cosy Thuy Dung GBNXJUZQ", "1");
         getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
         getCartPage().addProductToCart("Cosy Thuy Dung Update VFYJWRFN", "1");
-        getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
+        getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính","DUNG2");
     }
+
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 3, description = "Kiem tra truy cap trang shippging info khi co san pham trong gio hang")
+    @Test(priority = 3, description = "Kiểm tra truy cập trang shipping info khi có sản phẩm trong giỏ hàng")
     public void TC_OpenShippingInfoDisplay() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
@@ -44,7 +45,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testOpenShippingInfoHaveProductInCart();
     }
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 4, description = "Kiem tra truy cap trang shippging info khi khong co san pham trong gio hang")
+    @Test(priority = 4, description = "Kiểm tra truy cập trang shipping info khi không có sản phẩm trong giỏ hàng")
     public void TC_CheckOutOrder() {
         getLoginPage().loginSuccessWithCustomerAccount("dungtest@gmail.com", "123456");
         getOrderPage().testOpenShippingInfoWithoutCartEmpty();
@@ -178,7 +179,7 @@ public class OrderTest extends BaseTest {
     }
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 20, description = "Kiem tra khi apply discount coupon da het han")
-    public void TC_ApplyCouponDiscountExpried() {
+    public void TC_ApplyCouponDiscountExpired() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
@@ -251,15 +252,7 @@ public class OrderTest extends BaseTest {
         loginPage.loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         getOrderPage().testClickInPrivacyPolicy();
     }
-    @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 28, description = "Kiem tra khi truy cap trang Confirm Order tu URL")
-    public void TC_OpenConfirmOrderFromURL() {
-        ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
-        getOrderPage().testOpenConfirmOrderFromURL();
-    }
+
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 29, description = "kiem tra khi truy cap trang Confirm Order tu trang Shipping Info")
     public void TC_OpenConfirmOrderFromShippingInfo() {
@@ -287,6 +280,15 @@ public class OrderTest extends BaseTest {
         WebUI.openURL("https://cms.anhtester.com/purchase_history");
         By orderNotCancel = By.xpath("(//a[@title='Cancel'])[1]/ancestor::tr/td[1]");
         getOrderPage().testCancelOrder(WebUI.getElementText(orderNotCancel));
+    }
+    @JiraCreateIssue(isCreateIssue = false)
+    @Test(priority = 28, description = "Kiem tra khi truy cap trang Confirm Order tu URL")
+    public void TC_OpenConfirmOrderFromURL() {
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
+        getOrderPage().testOpenConfirmOrderFromURL();
     }
 
 }

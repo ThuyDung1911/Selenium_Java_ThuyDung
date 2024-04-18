@@ -2,7 +2,6 @@ package com.thuydung.pages;
 
 import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.ExcelHelper;
-import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.keywords.WebUI;
 import com.thuydung.requests.Address;
 import com.thuydung.requests.Cart;
@@ -860,9 +859,7 @@ public class OrderPage {
         WebUI.verifyAssertTrueTextContain(elementOrderStatusInOrderDetail, "Cancelled", "Trang thai don hang khong chinh xac");
     }
 
-    public void checkOutOrder(String noteForOrder) {
-//        WebUI.clickElement(buttonCart);
-//        List<Cart> currentCart = CartPage.getCartDropdown();
+    public void checkOutOrder(String noteForOrder, String couponCode) {
         if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/cart")) {
             WebUI.openURL("https://cms.anhtester.com/cart");
         }
@@ -883,7 +880,7 @@ public class OrderPage {
         WebUI.clickElement(buttonContinueToPayment);
         WebUI.waitForPageLoaded();
 
-        applyCouponDiscount(PropertiesHelper.getValue("COUPON_VALID"));
+        applyCouponDiscount(couponCode);
 
         choosePaymentMethodCashOnDelivery();
         addAdditaionalInfo(noteForOrder);

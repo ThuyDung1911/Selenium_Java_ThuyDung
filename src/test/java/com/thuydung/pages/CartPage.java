@@ -40,6 +40,20 @@ public class CartPage extends CommonPage {
     public static By elementTotalPriceInCartDetail = By.xpath("//section[@id='cart-summary']//span[text()='Total']/following-sibling::span");
     By buttonBuyNow = By.xpath("//button[normalize-space()='Buy Now']");
 
+    public boolean checkProductExistInCart(String productName) {
+        WebUI.openURL("https://cms.anhtester.com/cart");
+        By viewProductNameInCartDetail = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + productName + "')]");
+        //check san pham o cart detail
+        if (WebUI.checkElementExist(viewProductNameInCartDetail)) {
+            WebUI.scrollToElement(viewProductNameInCartDetail);
+            WebUI.hoverElement(viewProductNameInCartDetail);
+            System.out.println("San pham " + productName + " co trong gio hang");
+        } else {
+            System.out.println("San pham " + productName + " khong co trong gio hang");
+        }
+        return WebUI.checkElementExist(viewProductNameInCartDetail);
+    }
+
     /**
      * Add product to cart from product detail page
      *
@@ -83,10 +97,9 @@ public class CartPage extends CommonPage {
         int quantityProductInCart;
 
         String key;
-        if(valueVariantName != "") {
+        if (valueVariantName != "") {
             key = productName + " - " + valueVariantName;
-        }
-        else {
+        } else {
             key = productName;
         }
         By viewProductNameInCartDetail = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + key + "')]");
@@ -148,8 +161,8 @@ public class CartPage extends CommonPage {
             WebUI.verifyAssertEquals(currentCart.get(key).getPrice(), afterCart.get(key).getPrice(), "Đơn giá sản phẩm trong giỏ hàng không đúng");
         }
 
-        By viewProductPriceInCartDetail = By.xpath("//section[@id='cart-summary']//span[contains(text(),'"+key+"')]/ancestor::li//span[text()='Price']/following-sibling::span");
-        By viewProductTaxInCartDetail = By.xpath("//section[@id='cart-summary']//span[contains(text(),'"+key+"')]/ancestor::li//span[text()='Tax']/following-sibling::span");
+        By viewProductPriceInCartDetail = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + key + "')]/ancestor::li//span[text()='Price']/following-sibling::span");
+        By viewProductTaxInCartDetail = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + key + "')]/ancestor::li//span[text()='Tax']/following-sibling::span");
         //Lay đơn giá sản phẩm trong giỏ hàng (bao gom ca tax)
         BigDecimal priceInCartVer1 = convertCurrencyToBigDecimal(WebUI.getElementText(viewProductPriceInCartDetail));
         BigDecimal taxInCart = convertCurrencyToBigDecimal(WebUI.getElementText(viewProductTaxInCartDetail));
@@ -177,7 +190,7 @@ public class CartPage extends CommonPage {
         WebUI.sleep(2);
     }
 
-    public void checkQuantityAddToCart(String productName, String quantity) {
+    public void addProductOverQuantityToCart(String productName, String quantity) {
         By resultSearchProduct = By.xpath("//div[@id='search-content']//div[contains(text(),'" + productName + "')]");
         By viewProductNameInCart = By.xpath("//div[@id='cart_items']//span[contains(text(),'" + productName + "')]");
         //Tìm kiếm sản phẩm
@@ -363,6 +376,7 @@ public class CartPage extends CommonPage {
         }
         return cart;
     }
+
     public static List<Cart> getCartDetailTemp() {
         List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInCartDetail);
         if (productNames.isEmpty()) {
@@ -397,6 +411,7 @@ public class CartPage extends CommonPage {
         }
         return cartDetailTemp;
     }
+
     public static List<Cart> getCartDetailTemp2() {
         List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInCartDetail);
         if (productNames.isEmpty()) {
@@ -601,10 +616,9 @@ public class CartPage extends CommonPage {
 
 
         String key;
-        if(valueVariantName != "") {
+        if (valueVariantName != "") {
             key = productName + " - " + valueVariantName;
-        }
-        else {
+        } else {
             key = productName;
         }
         By viewProductNameInCartDetail = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + key + "')]");
@@ -629,8 +643,7 @@ public class CartPage extends CommonPage {
         if (Integer.parseInt(quantity) > quantityAvailable) {
             System.out.println("Số lượng sản phẩm tồn kho không đủ. Không thể cập nhập số lượng sản phẩm trong giỏ hàng với số lượng: " + quantity);
             WebUI.verifyAssertEquals(valueQuantityInCart, valueQuantityProductInCart, "Số lượng sản phẩm trong giỏ hàng không đúng");
-        }
-        else {
+        } else {
             WebUI.verifyAssertEquals(valueQuantityInCart, quantity, "Số lượng sản phẩm trong giỏ hàng không đúng");
         }
         checkSubTotalPriceInCartDetail();
