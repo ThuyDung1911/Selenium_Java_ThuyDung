@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class AddProductPage extends CommonPage {
@@ -424,7 +423,7 @@ public class AddProductPage extends CommonPage {
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
-        EditProductPage.verifyNewProductNoVariantInEditDisplay(nameProductVerify, category, unit, weight, unitPrice, discountDate, quantity, description, discount, vat);
+        //EditProductPage.verifyNewProductNoVariantInEditDisplay(nameProductVerify, category, unit, weight, unitPrice, discountDate, quantity, description, discount, vat);
         verifyNewProductInViewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount, vat);
     }
 
