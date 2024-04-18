@@ -70,4 +70,12 @@ public class RegisterTest extends BaseTest {
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
         getRegisterPage().registerFailCustomerWithPasswordNotMatch(excel.getCellData("fullname", 8), excel.getCellData("email", 8), excel.getCellData("password", 8), excel.getCellData("confirm password", 8));
     }
+    //Đăng ký tài khoản Customer không thành công khi không chấp nhận điều khoản
+    @JiraCreateIssue(isCreateIssue = false)
+    @Test(priority = 9)
+    public void TC_RegisterFailCustomerWithoutAcceptTerm() {
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerFailCustomerWithoutAcceptTerm(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+    }
 }

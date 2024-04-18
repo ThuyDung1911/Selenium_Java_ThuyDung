@@ -86,6 +86,21 @@ public class RegisterPage extends CommonPage {
         WebUI.verifyAssertTrueEqual(messageRequiredConfirmPasswordMatch,"The password confirmation does not match.","Thong bao mat khau khong trung khop khong dung.");
         WebUI.sleep(2);
     }
+    public void registerFailCustomerWithoutAcceptTerm(String fullname, String email, String password, String confirm_password) {
+        email = email + RandomStringUtils.randomAlphabetic(8).toUpperCase() + "@gmail.com";
+        WebUI.openURL(PropertiesHelper.getValue("URL_REGISTER"));
+        WebUI.clickElement(LoginPage.closeAdvertisementPopup);
+        WebUI.clickElement(LoginPage.buttonOkCookies);
+        WebUI.waitForPageLoaded();
+        WebUI.setText(inputFullName,fullname);
+        WebUI.setText(inputEmail,email);
+        WebUI.setText(inputPassword,password);
+        WebUI.setText(inputConfirmPassword,confirm_password);
+        WebUI.clickElement(buttonRegister);
+        WebUI.waitForPageLoaded();
+        WebUI.verifyAssertTrueIsDisplayed(titleRegisterPage,"Cho phep dang ky ma chua dong y dieu khoan.");
+        WebUI.sleep(2);
+    }
 
 
 }
