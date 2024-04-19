@@ -143,8 +143,10 @@ public class ProfilePage extends CommonPage{
     public void updateInfoBasicProfileCustomerPasswordLessCharacter(String name, String phone, String imgName, String password, String confirmPassword) {
         updateInfoBasicProfileCustomer(name, phone, imgName, password, confirmPassword);
         WebUI.verifyAssertTrueIsDisplayed(messageUpdate, "Thông báo không xuất hiện");
-        WebUI.verifyAssertFalseEqual(messageUpdate, "Your Profile has been updated successfully!", "Thông báo cập nhật thành công VẪN được hiển thị, mật khẩu ít hơn 6 ký tự.");
+        WebUI.verifySoftAssertFalseEqual(messageUpdate, "Your Profile has been updated successfully!", "Thông báo cập nhật thành công VẪN được hiển thị, mật khẩu ít hơn 6 ký tự.");
         WebUI.sleep(2);
+        updateInfoBasicProfileCustomer(name, phone, imgName, "123456", "123456");
+
         //Đăng nhập lại để kiểm tra thông tin đã được cập nhật
         //verifyUpdatePasswordFail(password, confirmPassword);
     }

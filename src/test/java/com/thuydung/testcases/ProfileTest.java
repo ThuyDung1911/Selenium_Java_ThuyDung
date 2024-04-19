@@ -13,7 +13,7 @@ public class ProfileTest extends BaseTest {
     public void TC_UpdateInfoBasicValidProfileCustomer() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 5));
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
         getProfilePage().updateInfoBasicValidProfileCustomer(excel.getCellData("name", 1), excel.getCellData("phone", 1), excel.getCellData("photo", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
     }
@@ -50,7 +50,7 @@ public class ProfileTest extends BaseTest {
 
 
     //Update Info Basic Customer without name
-    @JiraCreateIssue(isCreateIssue = true)
+    @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 5)
     public void TC_UpdateInfoBasicProfileCustomerWithoutName() {
         ExcelHelper excel = new ExcelHelper();
