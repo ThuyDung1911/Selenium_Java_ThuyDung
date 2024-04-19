@@ -18,8 +18,9 @@ public class OrderTest extends BaseTest {
         getCouponPage().addCouponValid("COUPON2024", "100000", "10000", "5000000", "04/09/2024 - 06/09/2024");
         getLoginPage().logOutRoleAdmin();
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
-        getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính", PropertiesHelper.getValue("COUPON_VALID"));
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 1), excel.getCellData("quantity", 1));
+        getOrderPage().checkOutOrder(excel.getCellData("note",2), PropertiesHelper.getValue("COUPON_VALID"));
     }
 
     // Add order success
@@ -29,11 +30,9 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-//        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
-//        getCartPage().addProductToCart("Cosy Thuy Dung GBNXJUZQ", "1");
-        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
-        getCartPage().addProductToCart("Cosy Thuy Dung Update VFYJWRFN", "1");
-        getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính", "DUNG2");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 2), excel.getCellData("quantity", 2));
+        getOrderPage().checkOutOrder(excel.getCellData("note",1), "DUNG2");
     }
 
     @JiraCreateIssue(isCreateIssue = false)
@@ -42,11 +41,9 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-//        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
-//        getCartPage().addProductToCart("Cosy Thuy Dung GBNXJUZQ", "1");
-        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
-        getCartPage().addProductToCart("Cosy Thuy Dung Update VFYJWRFN", "1");
-        getOrderPage().checkOutOrder("Chỉ giao hàng vào giờ hành chính");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 2), excel.getCellData("quantity", 2));
+        getOrderPage().checkOutOrder(excel.getCellData("note",3));
     }
 
     @JiraCreateIssue(isCreateIssue = false)
@@ -55,7 +52,8 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 3), excel.getCellData("quantity", 3));
         getOrderPage().testOpenShippingInfoHaveProductInCart();
         getOrderPage().testCheckShippingInfoWithProfile();
     }
@@ -79,7 +77,8 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 1), excel.getCellData("quantity", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getOrderPage().testAddNewAddressInShippingInfo(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
     }
@@ -89,7 +88,8 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 1), excel.getCellData("quantity", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getOrderPage().testAddNewAddressInvalidInShippingInfo(excel.getCellData("address", 2), excel.getCellData("country", 2), excel.getCellData("state", 2), excel.getCellData("city", 2), excel.getCellData("postal code", 2), excel.getCellData("phone", 2));
     }
@@ -100,7 +100,9 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 1), excel.getCellData("quantity", 1));
+
         excel.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
         getOrderPage().testEditAddressInShippingInfo(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
     }
@@ -110,7 +112,9 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 1), excel.getCellData("quantity", 1));
+
         excel.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
         getOrderPage().testEditAddressInvalidInShippingInfo(excel.getCellData("address", 2), excel.getCellData("country", 2), excel.getCellData("state", 2), excel.getCellData("city", 2), excel.getCellData("postal code", 2), excel.getCellData("phone", 2));
     }
@@ -128,8 +132,11 @@ public class OrderTest extends BaseTest {
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 11, description = "Kiểm tra truy cập trang delivery info từ trang shipping info khi không có địa chỉ")
     public void TC_OpenDeliveryInfoWithoutProductInCart() {
+        ExcelHelper excel = new ExcelHelper();
         getLoginPage().loginSuccessWithCustomerAccount("dungtest2@gmail.com", "123456");
-        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 1), excel.getCellData("quantity", 1));
+
         getOrderPage().testOpenDeliveryInfoWithoutAddress();
     }
     @JiraCreateIssue(isCreateIssue = false)
@@ -138,7 +145,9 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Cosy Thuy Dung OOTVUJLN", "1");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 1), excel.getCellData("quantity", 1));
+
         getOrderPage().testOpenDeliveryInfoWithShippingInfo();
         getOrderPage().testProductInDeliveryInfoDisplay();
     }
@@ -148,7 +157,9 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 3), excel.getCellData("quantity", 3));
+
         getOrderPage().testSelectShippingMethod("Home Delivery");
     }
     @JiraCreateIssue(isCreateIssue = false)
@@ -157,7 +168,8 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 3), excel.getCellData("quantity", 3));
         getOrderPage().testOpenPaymentInfoFromShippingInfoDisplay();
         getOrderPage().testInfoOrderInPaymentInfo();
     }
@@ -168,7 +180,8 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 3), excel.getCellData("quantity", 3));
         getOrderPage().testChoosePaymentMethodCashOnDelivery();
     }
     @JiraCreateIssue(isCreateIssue = false)
@@ -177,7 +190,8 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "2");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 3), excel.getCellData("quantity", 3));
         getOrderPage().testNotSelectAgreeTerms();
     }
 
@@ -200,7 +214,8 @@ public class OrderTest extends BaseTest {
         getCouponPage().addCouponValid("COUPON2024", "100000", "10000", "5000000", "04/09/2024 - 06/09/2024");
         getLoginPage().logOutRoleAdmin();
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung FRCMXCFY", "1");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 1), excel.getCellData("quantity", 1));
         getOrderPage().testApplyCouponDiscountValid(PropertiesHelper.getValue("COUPON_VALID"));
     }
 
@@ -211,7 +226,8 @@ public class OrderTest extends BaseTest {
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
         loginPage.loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung FRCMXCFY", "1");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 1), excel.getCellData("quantity", 1));
         getOrderPage().testApplyCouponDiscountNotExist("DUNG3");
     }
 
@@ -222,7 +238,8 @@ public class OrderTest extends BaseTest {
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         LoginPage loginPage = new LoginPage();
         loginPage.loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung FRCMXCFY", "1");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 1), excel.getCellData("quantity", 1));
         getOrderPage().testApplyCouponDiscountExpired("DUNG2");
     }
     @JiraCreateIssue(isCreateIssue = false)
@@ -250,7 +267,8 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 1), excel.getCellData("quantity", 1));
         getOrderPage().testOpenConfirmOrderFromURL();
     }
     @JiraCreateIssue(isCreateIssue = false)
@@ -259,7 +277,8 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 1), excel.getCellData("quantity", 1));
         getOrderPage().openPaymentInfoFromURL();
     }
     @JiraCreateIssue(isCreateIssue = false)
@@ -268,7 +287,8 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        getCartPage().addProductToCart("Gio qua Tet Thuy Dung CZRFANYB", "1");
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("product", 1), excel.getCellData("quantity", 1));
         getOrderPage().testOpenDeliveryInfoWithURL();
     }
 }

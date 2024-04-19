@@ -44,14 +44,11 @@ public class LoginPage extends CommonPage {
     
     public void loginFailWithEmailNull() {
         openLoginPage();
-        WebUI.sleep(1);
         WebUI.setText(inputPassword, "123456");
-        WebUI.sleep(1);
         WebUI.clickElement(buttonSubmitLogin);
         WebUI.verifyAssertTrueIsDisplayed(messageInvalidEmailFormat, "Email không bắt buộc.");
         WebUI.verifyAssertTrueIsDisplayed(messageRequiredEmail, "Thông báo bắt buộc nhập email không xuất hiện.");
         WebUI.verifyAssertEquals(WebUI.getElementText(messageRequiredEmail), "The email field is required when phone is not present.", "Nội dung của thông báo không đúng.");
-        WebUI.sleep(2);
     }
 
     public void loginFailWithEmailDoesNotExist(String email, String password) {
@@ -68,7 +65,6 @@ public class LoginPage extends CommonPage {
         WebUI.setTextAndClear(inputEmail, email);
         WebUI.clickElement(buttonSubmitLogin);
         WebUI.verifyAssertTrueIsDisplayed(messageRequiredPassword, "Mật khẩu không bắt buộc.");
-        WebUI.sleep(2);
     }
 
     public void loginFailWithIncorrectPassword(String email, String password) {
@@ -78,7 +74,6 @@ public class LoginPage extends CommonPage {
         WebUI.clickElement(buttonSubmitLogin);
         WebUI.verifyAssertTrueIsDisplayed(messageAccDoesNotExist, "Không hiển thị thông báo lỗi.");
         WebUI.verifyAssertEquals(WebUI.getElementText(messageAccDoesNotExist), "Invalid login credentials", "Nội dung của thông báo không đúng.");
-        WebUI.sleep(2);
     }
 
     public void loginSuccessWithCustomerAccount(String email, String password) {
@@ -89,7 +84,6 @@ public class LoginPage extends CommonPage {
         WebUI.waitForElementVisible(DashboardPage.titleDashboard);
         WebUI.verifyAssertTrueIsDisplayed(DashboardPage.titleDashboard, "Trang Dashboard không được hiển thị.");
         WebUI.verifyAssertEquals(WebUI.getElementText(DashboardPage.titleDashboard), "Dashboard","Tiêu đề trang Dashboard không đúng.");
-        WebUI.sleep(2);
     }
 
     public void loginSuccessWithSellerAccount(String email, String password) {
@@ -101,7 +95,6 @@ public class LoginPage extends CommonPage {
         WebUI.verifyAssertTrueIsDisplayed(DashboardPage.titleDashboard, "Trang Dashboard không được hiển thị.");
         WebUI.verifyAssertEquals(WebUI.getElementText(DashboardPage.titleDashboard), "Dashboard","Tiêu đề trang Dashboard không đúng.");
         WebUI.verifyAssertTrueEqual(roleUser,"seller","Tài khoản đăng nhập không phải seller.");
-        WebUI.sleep(2);
     }
 
     public void loginSuccessAdminPage(String email, String password) {
@@ -112,7 +105,6 @@ public class LoginPage extends CommonPage {
         WebUI.waitForElementVisible(roleUser);
         WebUI.verifyAssertTrueIsDisplayed(roleUser, "Đăng nhập vào hệ thống không thành công.");
         WebUI.verifyAssertTrueEqual(roleUser,"admin","Tài khoản đăng nhập không phải admin.");
-        WebUI.sleep(2);
     }
     public void loginFailWithInvalidEmailFormat(String email, String password) {
         openLoginPage();
@@ -120,7 +112,6 @@ public class LoginPage extends CommonPage {
         WebUI.setTextAndClear(inputPassword, password);
         WebUI.clickElement(buttonSubmitLogin);
         WebUI.checkHTML5MessageWithValueInvalid(inputEmail,"Email sai dinh dang");
-        WebUI.sleep(2);
     }
 }
 
