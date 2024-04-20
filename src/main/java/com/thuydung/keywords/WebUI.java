@@ -159,7 +159,8 @@ public class WebUI {
     public static void verifyAssertTrueEqual(By by, String verifyText, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        Assert.assertTrue(DriverManager.getDriver().findElement(by).getText().trim().equals(verifyText), message);
+        //Assert.assertTrue(DriverManager.getDriver().findElement(by).getText().trim().equals(verifyText), message);
+        Assert.assertEquals(DriverManager.getDriver().findElement(by).getText().trim(), verifyText, message);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
@@ -172,7 +173,8 @@ public class WebUI {
     public static void verifyAssertTrueEqualMessageHTML(By by, String verifyText, String message) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        Assert.assertTrue(DriverManager.getDriver().findElement(by).getAttribute("validationMessage").equals(verifyText), message);
+//        Assert.assertTrue(DriverManager.getDriver().findElement(by).getAttribute("validationMessage").equals(verifyText), message);
+        Assert.assertEquals(DriverManager.getDriver().findElement(by).getAttribute("validationMessage"), verifyText, message);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
         }
@@ -442,7 +444,7 @@ public class WebUI {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         sleep(STEP_TIME);
-        clearText(by);
+        clearTextWithCtrlA(by);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElementFull(by);
         }

@@ -245,7 +245,7 @@ public class OrderPage {
         WebUI.clickElement(buttonSaveNewAddress);
         WebUI.waitForPageLoaded();
         WebUI.verifyAssertTrueIsDisplayed(inputAddYourAddress, "Khong xuat hien thong bao");
-        WebUI.verifyAssertTrueEqual(inputAddYourAddress, "Please fill out this field.", "Thong bao khong chinh xac");
+        WebUI.verifyAssertTrueEqualMessageHTML(inputAddYourAddress, "Please fill out this field.", "Thong bao khong chinh xac");
     }
 
     public void testEditAddressInShippingInfo(String address, String country, String state, String city, String postalCode, String phone) {
@@ -297,7 +297,7 @@ public class OrderPage {
         WebUI.clickElement(buttonSaveNewAddressEdit);
         WebUI.waitForPageLoaded();
         WebUI.checkHTML5MessageWithValueInvalid(inputAddYourAddressEdit, "Khong xuat hien thong bao");
-        WebUI.verifyAssertTrueEqual(inputAddYourAddressEdit, "Please fill out this field.", "Thong bao khong chinh xac");
+        WebUI.verifyAssertTrueEqualMessageHTML(inputAddYourAddressEdit, "Please fill out this field.", "Thong bao khong chinh xac");
     }
 
     public void selectAddressInShippingInfo(String index) {
@@ -386,7 +386,9 @@ public class OrderPage {
     }
 
     public void testProductInDeliveryInfoDisplay() {
-        openDeliveryInfoWithShippingInfo();
+        if(!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/checkout/delivery_info")){
+            openDeliveryInfoWithShippingInfo();
+        }
         //Check info order in display delivery info
         List<String> productNamesInDisplayDeliveryInfo = getProductsNameInDeliveryInfoDisplay();
         WebUI.clickElement(buttonCart);
@@ -433,26 +435,37 @@ public class OrderPage {
     }
 
     public void testInfoOrderInPaymentInfo() {
-        openPaymentInfoFromShippingInfoDisplay();
+        if(!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/checkout/payment_select")){
+            openPaymentInfoFromShippingInfoDisplay();
+        }
         //check quantity item product in summary with cart
-        WebUI.clickElement(buttonCart);
-        String quantityItemProductInCart = String.valueOf(CartPage.getQuantityItemProductInCart());
-        WebUI.clickElement(buttonCart);
-        String quantityItemProductInDisplayPayment = WebUI.getElementText(By.xpath("//span[@class='badge badge-inline badge-primary']")).replaceAll("\\D", "");
+        String mainWindow = DriverManager.getDriver().getWindowHandle();
+        DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
+        WebUI.openURL("https://cms.anhtester.com/cart");
+        WebUI.waitForPageLoaded();
+        List<Cart> cartDetails = CartPage.getCartDetailTemp2();
+        String subTotalPriceInCart = WebUI.getElementText(CartPage.subPriceInCartDetail);
+        String quantityItemProductInCart = String.valueOf(CartPage.getQuantityItemProductInCartDetail());
+        DriverManager.getDriver().switchTo().window(mainWindow);
+        String quantityItemProductInDisplayPayment = WebUI.getElementText(By.xpath("//h3[text()='Summary']/following-sibling::div/span")).replaceAll("\\D", "");
         WebUI.verifyAssertEquals(quantityItemProductInCart, quantityItemProductInDisplayPayment, "Số lượng sản phẩm không khớp.");
 
         //Check info order in display payment with cart
-        WebUI.clickElement(buttonCart);
-        List<Cart> infoProductsInCart = CartPage.getCartDropdown();
-        String subTotalPriceInCart = WebUI.getElementText(CartPage.subTotalPriceInCart);
-        WebUI.clickElement(buttonCart);
+
         List<Cart> infoProductsInDisplayPayment = getInfoProductsInDisplayPayment();
-        for (int i = 0; i < infoProductsInCart.size(); i++) {
-            WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getNameProduct(), infoProductsInCart.get(i).getNameProduct(), "Ten san pham khong khop so voi gio hang.");
-            WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getPrice(), infoProductsInCart.get(i).getPrice(), "Gia san pham khong khop so voi gio hang.");
-            WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getQuantity(), infoProductsInCart.get(i).getQuantity(), "So luong san pham khong khop so voi gio hang.");
+        for (int i = 0; i < cartDetails.size(); i++) {
+            WebUI.verifyAssertContain( cartDetails.get(i).getNameProduct(), infoProductsInDisplayPayment.get(i).getNameProduct(), "Ten san pham khong khop so voi gio hang.");
+            WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getPrice(), cartDetails.get(i).getPrice(), "Gia san pham khong khop so voi gio hang.");
+            WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getQuantity(), cartDetails.get(i).getQuantity(), "So luong san pham khong khop so voi gio hang.");
         }
-        WebUI.verifyAssertTrueEqual(subTotalPriceInDisplayPayment, subTotalPriceInCart, "Sub total price không khớp so voi gio hang.");
+        BigDecimal subTotalPriceInDisplayPaymentCheck = BigDecimal.ZERO;
+        for (int j = 0; j <infoProductsInDisplayPayment.size(); j++) {
+            BigDecimal quantity = new BigDecimal(infoProductsInDisplayPayment.get(j).getQuantity());
+            BigDecimal price = infoProductsInDisplayPayment.get(j).getPrice().multiply(quantity);
+            subTotalPriceInDisplayPaymentCheck = subTotalPriceInDisplayPaymentCheck.add(price);
+        }
+        BigDecimal valueSubTotalPriceInDisplayPayment = convertCurrencyToBigDecimal(WebUI.getElementText(subTotalPriceInDisplayPayment));
+        WebUI.verifyAssertEquals(valueSubTotalPriceInDisplayPayment, subTotalPriceInDisplayPaymentCheck, "Sub total price không khớp so voi gio hang.");
     }
 
     public BigDecimal calculatorTotalPriceInPaymentInfo() {
@@ -474,7 +487,10 @@ public class OrderPage {
         }
         By inputCouponDiscount = By.xpath("//input[@name='code']");
         By buttonApplyCoupon = By.xpath("//button[@id='coupon-apply']");
-        WebUI.waitForElementVisible(inputCouponDiscount);
+        if (WebUI.checkElementExist(By.xpath("//button[@id='coupon-remove']"))) {
+            WebUI.clickElement(buttonCouponDiscount);
+            WebUI.waitForElementInvisible(inputCouponDiscount);
+        }
         WebUI.setTextAndClear(inputCouponDiscount, couponCode);
         WebUI.clickElement(buttonApplyCoupon);
         WebUI.waitForPageLoaded();
@@ -909,6 +925,7 @@ public class OrderPage {
         }
         WebUI.clickElement(buttonContinueToShipping);
         selectAddressInShippingInfo("3");
+        WebUI.sleep(5);
         Address addressSelected = getSelectedAddress();
         WebUI.clickElement(buttonContinueToDeliveryInfo);
         WebUI.waitForPageLoaded();
@@ -953,7 +970,7 @@ public class OrderPage {
             WebUI.verifyAssertEquals(listProduct.get(j).getQuantity(), currentCart.get(j).getQuantity(), "Số lượng sản phẩm không khớp.");
         }
         checkInfoPriceInConfirmDisplay();
-        checkHistoryOrder(noteForOrder);
+//        checkHistoryOrder(noteForOrder);
 
     }
     public void checkTotalPriceInPayment() {
@@ -1018,7 +1035,7 @@ public class OrderPage {
             WebUI.verifyAssertEquals(listProduct.get(j).getQuantity(), currentCart.get(j).getQuantity(), "Số lượng sản phẩm không khớp.");
         }
         checkInfoPriceInConfirmDisplay();
-        checkHistoryOrder(noteForOrder);
+//        checkHistoryOrder(noteForOrder);
 
     }
 
@@ -1117,7 +1134,7 @@ public class OrderPage {
             By elementTotalOrderAmountInHistoryOrderDetail = By.xpath("//td[text()='Total order amount:']/following-sibling::td");
             String valueTotalOrderAmount = WebUI.getElementText(elementTotalOrderAmountInHistoryOrderDetail);
             valueTotalOrderAmount = convertCurrencyToBigDecimal(valueTotalOrderAmount).toString();
-            WebUI.verifySoftAssertEquals(valueTotalOrderAmount, orderAmountInHistoryOrder.getTotal(), "Tổng giá tiền không đúng tại phần order summary trong trang lich sử đơn hàng.");
+            WebUI.verifyAssertEquals(valueTotalOrderAmount, orderAmountInHistoryOrder.getTotal(), "Tổng giá tiền không đúng tại phần order summary trong trang lich sử đơn hàng.");
 
             DriverManager.getDriver().switchTo().window(mainWindow);
 

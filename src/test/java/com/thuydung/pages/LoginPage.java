@@ -28,6 +28,7 @@ public class LoginPage extends CommonPage {
         }
         WebUI.clickElement(buttonLogin);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(2);
         WebUI.verifyAssertTrueIsDisplayed(titleLoginPage, "Trang đăng nhập KHÔNG được hiển thị");
     }
     public void logOutRoleAdmin() {

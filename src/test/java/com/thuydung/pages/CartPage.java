@@ -465,6 +465,14 @@ public class CartPage extends CommonPage {
         }
         return valueProductNames.size();
     }
+    public static int getQuantityItemProductInCartDetail() {
+        List<WebElement> productNames = DriverManager.getDriver().findElements(elementProductNamesInCartDetail);
+        List<String> valueProductNames = new ArrayList<>();
+        for (WebElement productName : productNames) {
+            valueProductNames.add(productName.getText());
+        }
+        return valueProductNames.size();
+    }
 
 
     /**
@@ -638,7 +646,7 @@ public class CartPage extends CommonPage {
         By priceInCart = By.xpath("//section[@id='cart-summary']//span[contains(text(),'" + key + "')]/ancestor::li//span[text()='Price']/following-sibling::span");
         WebUI.setTextAndClear(viewQuantityInCart, quantity);
         WebUI.clickElement(priceInCart);
-        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
         String valueQuantityInCart = WebUI.getElementAttribute(viewQuantityInCart, "value");
         if (Integer.parseInt(quantity) > quantityAvailable) {
             System.out.println("Số lượng sản phẩm tồn kho không đủ. Không thể cập nhập số lượng sản phẩm trong giỏ hàng với số lượng: " + quantity);

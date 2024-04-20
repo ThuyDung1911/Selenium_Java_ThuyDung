@@ -11,7 +11,7 @@ public class CartTest extends BaseTest {
     public void TC_AddProductNoVariantNotExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 8), excel.getCellData("password", 8));
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
         if (checkExistProduct) {
@@ -24,7 +24,7 @@ public class CartTest extends BaseTest {
     public void TC_AddProductVariantNotExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 8), excel.getCellData("password", 8));
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         String keyProductName = excel.getCellData("productName", 2) + " - " + excel.getCellData("variantName", 2);
         boolean checkExistProduct = getCartPage().checkProductExistInCart(keyProductName);
@@ -38,7 +38,7 @@ public class CartTest extends BaseTest {
     public void TC_AddProductNoVariantExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 8), excel.getCellData("password", 8));
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
         if (checkExistProduct) {
@@ -51,7 +51,7 @@ public class CartTest extends BaseTest {
     public void TC_AddProductVariantExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 8), excel.getCellData("password", 8));
+        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         String keyProductName = excel.getCellData("productName", 2) + " - " + excel.getCellData("variantName", 2);
         boolean checkExistProduct = getCartPage().checkProductExistInCart(keyProductName);
@@ -136,6 +136,7 @@ public class CartTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
         if (!checkExistProduct) {
             getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));

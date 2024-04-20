@@ -351,6 +351,7 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(By.xpath("//button[text()='Upload Product']")); //Click button Save&Public
 
     }
+
     public void addProductVariantWithRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
         productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
@@ -418,26 +419,133 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(By.xpath("//button[text()='Upload Product']")); //Click button Save&Public
 
     }
+
     public void addProductNoVariantValidRoleAdmin(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
-        addProductNoVariantWithRoleAdmin(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
+        //addProductNoVariantWithRoleAdmin(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
+        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        PropertiesHelper.setValue("product_P01", productName);
+        openAddProductPage();
+        //Product Information
+        WebUI.verifyElementVisible(blockProductInf, "Product Information block KHONG xuat hien");
+        WebUI.setTextAndClear(inputProductName, productName);
+        WebUI.clickElement(selectCategory);
+        WebUI.setTextEnter(inputSearchCategory, category);
+        WebUI.clickElement(selectBrand);
+        WebUI.setTextEnter(inputSearchBrand, "CMS brand 01");
+        WebUI.setTextAndClear(inputUnit, unit);
+        WebUI.setTextAndClear(inputWeight, String.valueOf(weight));
+        WebUI.setTextAndClear(inputTags, tags);
+        //Product Images
+        WebUI.verifyAssertTrueIsDisplayed(blockProductImages, "Product Images block KHONG xuat hien");
+        WebUI.clickElement(selectChooseGalleryImages);
+        WebUI.clickElement(uploadNewImageTab);
+        DriverManager.getDriver().findElement(inputGalleryImages).sendKeys(SystemHelper.getCurrentDir() + "DataTest\\" + imgName);
+        WebUI.clickElement(selectFileTab);
+        String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
+        WebUI.setTextEnter(inputSearchImg, imageName);
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
+        WebUI.clickElement(selectGalleryImages);
+        WebUI.clickElement(buttonAddFileImages);
+        WebUI.clickElement(selectChooseThumbnailImages);
+        WebUI.setTextEnter(inputSearchImg, imageName);
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
+        WebUI.clickElement(selectThumbnailImages);
+        WebUI.clickElement(buttonAddFileImages);
+        ////No Product Variation
+        //Product price + stock
+        addProductPriceAndStockNoVariation(unitPrice, discountDate, discount, quantity);
+        //Product Description
+        WebUI.verifyAssertTrueIsDisplayed(blockProductDescription, "Product description KHONG xuat hien");
+        WebUI.setTextAndClear(inputDescription, description);
+        //vat
+        WebUI.setTextAndClear(inputVat, vat);
+        WebUI.clickElement(selectUnitVat);
+        WebUI.waitForElementVisible(selectUnitVatFlat);
+        WebUI.sleep(1);
+        WebUI.clickElement(selectUnitVatFlat);
+        WebUI.clickElement(buttonSavePublish); //Click button Save&Public
+
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
-        nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
+        nameProductVerify = productName;
         //EditProductPage.verifyNewProductNoVariantInEditDisplay(nameProductVerify, category, unit, weight, unitPrice, discountDate, quantity, description, discount, vat);
         verifyNewProductInViewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount, vat);
     }
 
     public void addProductVariantValidRoleAdmin(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
-        addProductVariantWithRoleAdmin(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
+        //addProductVariantWithRoleAdmin(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
+        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        PropertiesHelper.setValue("product_P01", productName);
+        openAddProductPage();
+        //Product Information
+        WebUI.verifyElementVisible(blockProductInf, "Product Information block KHONG xuat hien");
+        WebUI.setTextAndClear(inputProductName, productName);
+        WebUI.clickElement(selectCategory);
+        WebUI.setTextEnter(inputSearchCategory, category);
+        WebUI.clickElement(selectBrand);
+        WebUI.setTextEnter(inputSearchBrand, "CMS brand 01");
+        WebUI.setTextAndClear(inputUnit, unit);
+        WebUI.setTextAndClear(inputWeight, String.valueOf(weight));
+        WebUI.setTextAndClear(inputTags, tags);
+        //Product Images
+        WebUI.verifyAssertTrueIsDisplayed(blockProductImages, "Product Images block KHONG xuat hien");
+        WebUI.clickElement(selectChooseGalleryImages);
+        WebUI.clickElement(uploadNewImageTab);
+        DriverManager.getDriver().findElement(inputGalleryImages).sendKeys(SystemHelper.getCurrentDir() + "DataTest\\" + imgName);
+        WebUI.clickElement(selectFileTab);
+        String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
+        WebUI.setTextEnter(inputSearchImg, imageName);
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
+        WebUI.clickElement(selectGalleryImages);
+        WebUI.clickElement(buttonAddFileImages);
+        WebUI.clickElement(selectChooseThumbnailImages);
+        WebUI.setTextEnter(inputSearchImg, imageName);
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
+        WebUI.clickElement(selectThumbnailImages);
+        WebUI.clickElement(buttonAddFileImages);
+        //Product Variation
+        WebUI.scrollToElement(divProductVariation);
+        addProductVariationColor(List.of("AliceBlue", "Amethyst"));
+        addProductVariationAttribute(List.of("Size"));
+        addProductVariationAttribute(List.of("Quality"));
+        addProductVariationAttributeValue("Size", List.of("22", "23"));
+        addProductVariationAttributeValue("Quality", List.of("Real", "Remake"));
+        //Product price + stock
+        addProductPriceAndStockVariation(unitPrice, discountDate, discount);
+        //Product Description
+        WebUI.verifyAssertTrueIsDisplayed(blockProductDescription, "Product description KHONG xuat hien");
+        WebUI.setTextAndClear(inputDescription, description);
+        //vat
+        WebUI.scrollToElement(inputVat);
+        WebUI.setTextAndClear(inputVat, vat);
+        WebUI.clickElement(selectUnitVat);
+        WebUI.clickElement(selectUnitVatFlat);
+        WebUI.clickElement(buttonSavePublish); //Click button Save&Public
+
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
-        nameProductVerify = DriverManager.getDriver().findElement(newProduct).getText();
-        verifyNewProductVariant(nameProductVerify, category, unit, discountDate, description, discount, vat);
+        nameProductVerify = productName;
+        verifyNewProductVariantAdmin(nameProductVerify, category, unit, discountDate, description, discount, vat);
     }
 
-    public void verifyNewProductVariant(String nameProductVerify, String category, String unit, String discountDate, String description, String discount, String vat) {
-        WebUI.clickElement(EditProductPage.btnEditProductNewest);
+    public void verifyNewProductVariantAdmin(String nameProductVerify, String category, String unit, String discountDate, String description, String discount, String vat) {
+//        WebUI.clickElement(EditProductPage.btnEditProductNewest);
+        By btnEditProductVerify = By.xpath("//span[normalize-space()='" + nameProductVerify + "']/ancestor::tr//a[@title='Edit']");
+        WebUI.waitForElementVisible(btnEditProductVerify);
+        WebUI.clickElement(btnEditProductVerify);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(5);
+        WebUI.waitForElementVisible(valueVariant);
+        WebUI.sleep(2);
+        WebUI.waitForElementVisible(valueVariantPrice);
+        WebUI.sleep(2);
+        WebUI.waitForElementVisible(valueVariantSKU);
+        WebUI.sleep(2);
+        WebUI.waitForElementVisible(valueVariantQuantity);
         WebUI.sleep(5);
         List<WebElement> elementValueVariants = DriverManager.getDriver().findElements(valueVariant);
         List<WebElement> elementValueVariantPrices = DriverManager.getDriver().findElements(valueVariantPrice);
@@ -478,6 +586,158 @@ public class AddProductPage extends CommonPage {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         //WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
+        WebUI.waitForElementVisible(allCategoriesTabUI);
+        WebUI.sleep(1);
+        WebUI.clickElement(allCategoriesTabUI);
+        WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
+        WebUI.clickElement(By.xpath("//a[contains(text(),'" + category + "')]"));
+        WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
+        WebUI.verifyAssertTrueIsDisplayed(By.xpath("(//a[normalize-space()='" + nameProductVerify + "'])"), "Product KHONG xuat hien");
+        WebUI.sleep(2);
+        WebUI.clickElement(By.xpath("(//a[normalize-space()='" + nameProductVerify + "'])[1]"));
+        WebUI.waitForPageLoaded();
+        WebUI.sleep(2);
+        //nameProduct
+        WebUI.verifyAssertTrueEqual(By.xpath("//h1[normalize-space()='" + nameProductVerify + "']"), nameProductVerify, "Product name hien thi sai");
+        //unit
+        WebUI.verifyAssertTrueEqual(unitUI, "/" + unit, "Unit hien thi sai");
+        Assert.assertTrue(DriverManager.getDriver().findElement(unitUI).getText().trim().contains(unit), "Unit hien thi sai");
+        //unitPrice
+        //discountDateEnd
+        if (!discountDate.contains("to")) {
+
+        }
+        String[] discountDates = discountDate.split(" to ");
+        String dataDiscountDateEnd = discountDates[discountDates.length - 1];
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        LocalDateTime discountDateEnd = LocalDateTime.parse(dataDiscountDateEnd, formatter);
+        //currentDate
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDate = currentDateTime;
+
+        //get value variant selected
+        String valueVariantName = getVariantNameSelected();
+        //get price variant
+        BigDecimal infoVariantPrice = BigDecimal.ZERO;
+        String infoVariantQuantity = "";
+        BigDecimal minValueInfoVariantPrice = infoProductVariant.get(0).getVariantPrice();
+        BigDecimal maxValueInfoVariantPrice = infoProductVariant.get(0).getVariantPrice();
+        for (int j = 0; j < infoProductVariant.size(); j++) {
+            if (infoProductVariant.get(j).getVariantPrice().compareTo(minValueInfoVariantPrice) < 0) {
+                minValueInfoVariantPrice = infoProductVariant.get(j).getVariantPrice();
+            }
+            if (infoProductVariant.get(j).getVariantPrice().compareTo(maxValueInfoVariantPrice) > 0) {
+                maxValueInfoVariantPrice = infoProductVariant.get(j).getVariantPrice();
+            }
+            if (infoProductVariant.get(j).getVariantName().equals(valueVariantName)) {
+                infoVariantPrice = infoProductVariant.get(j).getVariantPrice();
+                //quantity
+                infoVariantQuantity = infoProductVariant.get(j).getVariantQuantity();
+            }
+        }
+        //unitPrice hien thi o trang product detail (hien thi khoang tu min - max) + tax
+        String unitPriceInProductDetail = WebUI.getElementText(unitPriceProductInProductDetail);
+        String minUnitPriceInProductDetail = unitPriceInProductDetail.split("-")[0].trim();
+        String maxUnitPriceInProductDetail = unitPriceInProductDetail.split("-")[1].split("/g")[0].trim();
+        BigDecimal minValueUnitPriceInProductDetail = WebUI.convertCurrencyToBigDecimal(minUnitPriceInProductDetail);
+        BigDecimal maxValueUnitPriceInProductDetail = WebUI.convertCurrencyToBigDecimal(maxUnitPriceInProductDetail);
+//        BigDecimal minValueInfoVariantPriceCheck = minValueInfoVariantPrice.add(minValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(vat)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
+//        BigDecimal maxValueInfoVariantPriceCheck = maxValueInfoVariantPrice.add(maxValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(vat)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal minValueInfoVariantPriceCheck = minValueInfoVariantPrice.add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal maxValueInfoVariantPriceCheck = maxValueInfoVariantPrice.add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
+        WebUI.verifySoftAssertEquals(minValueUnitPriceInProductDetail, minValueInfoVariantPriceCheck, "Min Unit Price hien thi sai");
+        WebUI.verifySoftAssertEquals(maxValueUnitPriceInProductDetail, maxValueInfoVariantPriceCheck, "Max Unit Price hien thi sai");
+
+        if (discountDateEnd.isAfter(currentDate)) {
+            //discountPrice
+            String discountPriceInProductDetail = WebUI.getElementText(discountPriceProductInProductDetail);
+            String minDiscountPriceInProductDetail = discountPriceInProductDetail.split("-")[0].trim();
+            String maxDiscountPriceInProductDetail = discountPriceInProductDetail.split("-")[1].split("/g")[0].trim();
+            BigDecimal minDiscountPriceCheck = minValueInfoVariantPrice.subtract(minValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
+            BigDecimal maxDiscountPriceCheck = maxValueInfoVariantPrice.subtract(maxValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
+
+            WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(minDiscountPriceInProductDetail), minDiscountPriceCheck, "Min Discount Price hien thi sai");
+            WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(maxDiscountPriceInProductDetail), maxDiscountPriceCheck, "Max Discount Price hien thi sai");
+        }
+
+        //quantity
+        WebUI.verifyAssertEquals(WebUI.getElementText(ProductInfoPage.quantityProductAvailable), infoVariantQuantity, "Quantity hien thi sai");
+        //description
+        WebUI.scrollToElement(descriptionUI);
+        WebUI.sleep(1);
+        WebUI.verifySoftAssertTrueEqual(descriptionUI, description, "Description hien thi sai");
+        //Total price in detail product
+        String totalPriceInProductDetail = WebUI.getElementText(totalPriceInDetailProduct);
+        BigDecimal valueUnitPriceInProductDetail = WebUI.convertCurrencyToBigDecimal(totalPriceInProductDetail);
+//        BigDecimal valueUnitPriceCheck = infoVariantPrice.add(infoVariantPrice.multiply(WebUI.stringToBigDecimal(vat)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal valueUnitPriceCheck = infoVariantPrice.add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
+
+        if (discountDateEnd.isAfter(currentDate)) {
+            BigDecimal discountPrice = infoVariantPrice.subtract(infoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).add(WebUI.stringToBigDecimal(vat));
+            valueUnitPriceCheck = discountPrice;
+        }
+        WebUI.verifySoftAssertEquals(valueUnitPriceInProductDetail, valueUnitPriceCheck, "Unit Price hien thi sai");
+    }
+
+    public void verifyNewProductVariantSeller(String nameProductVerify, String category, String unit, String discountDate, String description, String discount, String vat) {
+//        WebUI.clickElement(EditProductPage.btnEditProductNewest);
+        By btnEditProductVerify = By.xpath("//a[normalize-space()='" + nameProductVerify + "']/ancestor::tr//a[@title='Edit']");
+        WebUI.waitForElementVisible(btnEditProductVerify);
+        WebUI.clickElement(btnEditProductVerify);
+        WebUI.waitForPageLoaded();
+        WebUI.sleep(5);
+        WebUI.waitForElementVisible(valueVariant);
+        WebUI.sleep(2);
+        WebUI.waitForElementVisible(valueVariantPrice);
+        WebUI.sleep(2);
+        WebUI.waitForElementVisible(valueVariantSKU);
+        WebUI.sleep(2);
+        WebUI.waitForElementVisible(valueVariantQuantity);
+        WebUI.sleep(2);
+        List<WebElement> elementValueVariants = DriverManager.getDriver().findElements(valueVariant);
+        List<WebElement> elementValueVariantPrices = DriverManager.getDriver().findElements(valueVariantPrice);
+        List<WebElement> elementValueVariantSKUs = DriverManager.getDriver().findElements(valueVariantSKU);
+        List<WebElement> elementValueVariantQuantities = DriverManager.getDriver().findElements(valueVariantQuantity);
+
+        List<String> valueElementValueVariants = new ArrayList<>();
+        for (WebElement elementValueVariant : elementValueVariants) {
+            valueElementValueVariants.add(elementValueVariant.getText());
+        }
+        List<BigDecimal> valueElementValueVariantPrices = new ArrayList<>();
+        for (WebElement elementValueVariantPrice : elementValueVariantPrices) {
+            valueElementValueVariantPrices.add(new BigDecimal(elementValueVariantPrice.getAttribute("value")));
+        }
+        List<String> valueElementValueVariantSKUs = new ArrayList<>();
+        for (WebElement elementValueVariantSKU : elementValueVariantSKUs) {
+            valueElementValueVariantSKUs.add(elementValueVariantSKU.getAttribute("value"));
+        }
+        List<String> valueElementValueVariantQuantities = new ArrayList<>();
+        for (WebElement elementValueVariantQuantity : elementValueVariantQuantities) {
+            valueElementValueVariantQuantities.add(elementValueVariantQuantity.getAttribute("value"));
+        }
+        List<ProductVariant> infoProductVariant = new ArrayList<>();
+        for (int i = 0; i < valueElementValueVariants.size(); i++) {
+            ProductVariant productVariant = new ProductVariant();
+            String variantName = valueElementValueVariants.get(i);
+            BigDecimal variantPrice = valueElementValueVariantPrices.get(i);
+            String variantSKU = valueElementValueVariantSKUs.get(i);
+            String variantQuantity = valueElementValueVariantQuantities.get(i);
+            productVariant.setVariantName(variantName);
+            productVariant.setVariantPrice(variantPrice);
+            productVariant.setVariantSKU(variantSKU);
+            productVariant.setVariantQuantity(variantQuantity);
+            infoProductVariant.add(productVariant);
+        }
+
+        DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
+        WebUI.openURL(PropertiesHelper.getValue("URL"));
+        //WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
+        WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
+        WebUI.waitForElementVisible(allCategoriesTabUI);
         WebUI.sleep(1);
         WebUI.clickElement(allCategoriesTabUI);
         WebUI.waitForPageLoaded();
@@ -667,18 +927,152 @@ public class AddProductPage extends CommonPage {
     }
 
     public void addProductNoVariantValidRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
-        addProductNoVariantWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
+//        addProductNoVariantWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
+        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        PropertiesHelper.setValue("product_P01", productName);
+        WebUI.clickElement(menuProduct);
+        WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
+        WebUI.clickElement(submenuProducts);
+        WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
+        WebUI.clickElement(By.xpath("//div[normalize-space()='Add New Product']/ancestor::a/parent::div"));
+        WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
+        WebUI.verifyElementVisible(titleAddNewProduct, "Tieu de Add New Product KHONG xuat hien");
+        //Product Information
+        WebUI.verifyElementVisible(blockProductInf, "Product Information block KHONG xuat hien");
+        WebUI.setTextAndClear(inputProductName, productName);
+        WebUI.clickElement(selectCategory);
+        WebUI.setTextEnter(inputSearchCategory, category);
+        WebUI.clickElement(selectBrand);
+        WebUI.setTextEnter(inputSearchBrand, "CMS brand 01");
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
+        WebUI.setTextAndClear(inputUnit, unit);
+        WebUI.setTextAndClear(inputWeight, String.valueOf(weight));
+        WebUI.setTextAndClear(inputTags, tags);
+        //Product Images
+        WebUI.verifyAssertTrueIsDisplayed(blockProductImages, "Product Images block KHONG xuat hien");
+        WebUI.clickElement(selectChooseGalleryImages);
+        WebUI.clickElement(uploadNewImageTab);
+        DriverManager.getDriver().findElement(inputGalleryImages).sendKeys(SystemHelper.getCurrentDir() + "DataTest\\" + imgName);
+        WebUI.clickElement(selectFileTab);
+        LogUtils.info(imgName);
+        LogUtils.info(SystemHelper.splitString(imgName, "[.]"));
+        String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
+        WebUI.setTextEnter(inputSearchImg, imageName);
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
+        WebUI.clickElement(selectGalleryImages);
+        WebUI.clickElement(buttonAddFileImages);
+        WebUI.clickElement(selectChooseThumbnailImages);
+        WebUI.setTextEnter(inputSearchImg, imageName);
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
+        WebUI.clickElement(selectThumbnailImages);
+        WebUI.clickElement(buttonAddFileImages);
+        //Product price + stock
+        WebUI.verifyAssertTrueIsDisplayed(blockProductPrice, "Product price block KHONG xuat hien");
+        WebUI.setTextAndClear(inputUnitPrice, String.valueOf(unitPrice));
+        WebUI.setTextAndClear(selectDate, discountDate);
+        WebUI.clickElement(buttonSelectDiscountDate);
+        WebUI.setTextAndClear(inputDiscount, String.valueOf(discount));
+        WebUI.clickElement(selectUnitDiscount);
+        WebUI.clickElement(selectUnitDiscountPercent);
+        WebUI.setTextAndClear(inputQuantity, String.valueOf(quantity));
+        WebUI.setTextAndClear(inputSKU, String.valueOf(randomNumber));
+        //Product Description
+        WebUI.verifyAssertTrueIsDisplayed(blockProductDescription, "Product description KHONG xuat hien");
+        WebUI.setTextAndClear(inputDescription, description);
+        //Vat
+        WebUI.scrollToElement(inputVat);
+        WebUI.setTextAndClear(inputVat, vat);
+        WebUI.clickElement(selectUnitVat);
+        WebUI.waitForElementVisible(selectUnitVatFlat);
+        WebUI.sleep(1);
+        WebUI.clickElement(By.xpath("//button[text()='Upload Product']")); //Click button Save&Public
+
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
-        nameProductVerify = DriverManager.getDriver().findElement(By.xpath("(//tr/td[2]/a)[1]")).getText();
+//        nameProductVerify = DriverManager.getDriver().findElement(By.xpath("(//tr/td[2]/a)[1]")).getText();
+        nameProductVerify = productName;
         verifyNewProductInViewProduct(nameProductVerify, category, unit, unitPrice, discountDate, quantity, description, discount, vat);
     }
+
     public void addProductVariantValidRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
-        addProductVariantWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
+//        addProductVariantWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
+        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        PropertiesHelper.setValue("product_P01", productName);
+        WebUI.clickElement(menuProduct);
+        WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
+        WebUI.clickElement(submenuProducts);
+        WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
+        WebUI.clickElement(By.xpath("//div[normalize-space()='Add New Product']/ancestor::a/parent::div"));
+        WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
+        WebUI.verifyElementVisible(titleAddNewProduct, "Tieu de Add New Product KHONG xuat hien");
+        //Product Information
+        WebUI.verifyElementVisible(blockProductInf, "Product Information block KHONG xuat hien");
+        WebUI.setTextAndClear(inputProductName, productName);
+        WebUI.clickElement(selectCategory);
+        WebUI.setTextEnter(inputSearchCategory, category);
+        WebUI.clickElement(selectBrand);
+        WebUI.setTextEnter(inputSearchBrand, "CMS brand 01");
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
+        WebUI.setTextAndClear(inputUnit, unit);
+        WebUI.setTextAndClear(inputWeight, String.valueOf(weight));
+        WebUI.setTextAndClear(inputTags, tags);
+        //Product Images
+        WebUI.verifyAssertTrueIsDisplayed(blockProductImages, "Product Images block KHONG xuat hien");
+        WebUI.clickElement(selectChooseGalleryImages);
+        WebUI.clickElement(uploadNewImageTab);
+        DriverManager.getDriver().findElement(inputGalleryImages).sendKeys(SystemHelper.getCurrentDir() + "DataTest\\" + imgName);
+        WebUI.clickElement(selectFileTab);
+        LogUtils.info(imgName);
+        LogUtils.info(SystemHelper.splitString(imgName, "[.]"));
+        String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
+        WebUI.setTextEnter(inputSearchImg, imageName);
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
+        WebUI.clickElement(selectGalleryImages);
+        WebUI.clickElement(buttonAddFileImages);
+        WebUI.clickElement(selectChooseThumbnailImages);
+        WebUI.setTextEnter(inputSearchImg, imageName);
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
+        WebUI.clickElement(selectThumbnailImages);
+        WebUI.clickElement(buttonAddFileImages);
+        //Product Variation
+        WebUI.scrollToElement(divProductVariation);
+        addProductVariationColor(List.of("AliceBlue", "Amethyst"));
+        addProductVariationAttribute(List.of("Size"));
+        WebUI.sleep(2);
+        addProductVariationAttribute(List.of("Quality"));
+        addProductVariationAttributeValue("Size", List.of("22", "23"));
+        addProductVariationAttributeValue("Quality", List.of("Real", "Remake"));
+        //Product price + stock
+        addProductPriceAndStockVariation(unitPrice, discountDate, discount);
+        //Product Description
+        WebUI.verifyAssertTrueIsDisplayed(blockProductDescription, "Product description KHONG xuat hien");
+        WebUI.setTextAndClear(inputDescription, description);
+        //Vat
+        WebUI.scrollToElement(inputVat);
+        WebUI.setTextAndClear(inputVat, vat);
+        WebUI.clickElement(selectUnitVat);
+        WebUI.waitForElementVisible(selectUnitVatFlat);
+        WebUI.sleep(1);
+        WebUI.clickElement(By.xpath("//button[text()='Upload Product']")); //Click button Save&Public
+
+
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
-        nameProductVerify = DriverManager.getDriver().findElement(By.xpath("(//tr/td[2]/a)[1]")).getText();
-        verifyNewProductVariant(nameProductVerify, category, unit, discountDate, description, discount, vat);
+//        nameProductVerify = DriverManager.getDriver().findElement(By.xpath("(//tr/td[2]/a)[1]")).getText();
+        nameProductVerify = productName;
+        verifyNewProductVariantSeller(nameProductVerify, category, unit, discountDate, description, discount, vat);
     }
 
     public void addProductInvalidRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
@@ -686,9 +1080,6 @@ public class AddProductPage extends CommonPage {
         WebUI.checkHTML5MessageWithValueInvalid(inputUnit, "Unit la truong bat buoc");
         WebUI.verifyAssertTrueEqualMessageHTML(inputUnit, "Please fill out this field.", "Messge Unit hien thi khong dung");
     }
-
-
-
 
 
 }
