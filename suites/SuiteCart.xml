@@ -1,9 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="SuiteCartTest" verbose="1">
+<suite name="SuiteCartTest" verbose="1" thread-count="4">
     <listeners>
         <listener class-name="com.thuydung.listeners.TestListener"></listener>
     </listeners>
-    <test name="Verify Cart Test" parallel="none">
+    <test name="Verify Cart Test" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.CartTest"/>
         </classes>

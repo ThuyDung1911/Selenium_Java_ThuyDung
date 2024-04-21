@@ -17,7 +17,11 @@ public class OrderTest extends BaseTest {
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getCouponPage().addCouponValid("COUPON2024", "100000", "10000", "5000000", "04/09/2024 - 06/09/2024");
         getLoginPage().logOutRoleAdmin();
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
         getOrderPage().checkOutOrder(excel.getCellData("note",2), PropertiesHelper.getValue("COUPON_VALID"));
@@ -28,8 +32,13 @@ public class OrderTest extends BaseTest {
     @Test(priority = 2, description = "Kiểm tra chức năng tạo đơn hàng thành công khi có áp mã giảm giá đã hết hạn")
     public void TC_OrderProductWithCouponInvalid() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 2), excel.getCellData("quantity", 2));
         getOrderPage().checkOutOrder(excel.getCellData("note",1), "DUNG2");
@@ -39,8 +48,13 @@ public class OrderTest extends BaseTest {
     @Test(priority = 3, description = "Kiểm tra chức năng tạo đơn hàng thành công khi không áp mã giảm giá")
     public void TC_OrderProductWithNoCoupon() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 2), excel.getCellData("quantity", 2));
         getOrderPage().checkOutOrder(excel.getCellData("note",3));
@@ -50,8 +64,13 @@ public class OrderTest extends BaseTest {
     @Test(priority = 4, description = "Kiểm tra truy cập trang shipping info khi có sản phẩm trong giỏ hàng")
     public void TC_OpenShippingInfoDisplay() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 3), excel.getCellData("quantity", 3));
         getOrderPage().testOpenShippingInfoHaveProductInCart();
@@ -61,15 +80,26 @@ public class OrderTest extends BaseTest {
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 5, description = "Kiểm tra truy cập trang shipping info khi không có sản phẩm trong giỏ hàng")
     public void TC_CheckOutOrderWithoutCartEmpty() {
-        getLoginPage().loginSuccessWithCustomerAccount("dungtest@gmail.com", "123456");
+//        getLoginPage().loginSuccessWithCustomerAccount("dungtest@gmail.com", "123456");
+        ExcelHelper excel = new ExcelHelper();
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
         getOrderPage().testOpenShippingInfoWithoutCartEmpty();
     }
     @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 6, description = "Kiểm tra chi tiết hóa đơn")
     public void TC_CheckOrderDetail() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 2), excel.getCellData("quantity", 2));
         getOrderPage().checkOutOrder(excel.getCellData("note",3));
@@ -97,8 +127,13 @@ public class OrderTest extends BaseTest {
     @Test(priority = 9, description = "Kiểm tra chức năng thêm địa chỉ giao hàng không hợp lệ")
     public void TC_AddNewAddressInvalidInShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
@@ -109,8 +144,13 @@ public class OrderTest extends BaseTest {
     @Test(priority = 10, description = "Kiểm tra chức năng sửa địa chỉ giao hàng hợp lệ")
     public void TC_EditAddressInShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
 
@@ -121,8 +161,13 @@ public class OrderTest extends BaseTest {
     @Test(priority = 11, description = "Kiểm tra chức năng sửa địa chỉ giao hàng không hợp lệ")
     public void TC_EditAddressInvalidInShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
 
@@ -144,7 +189,10 @@ public class OrderTest extends BaseTest {
     @Test(priority = 12, description = "Kiểm tra truy cập trang delivery info từ trang shipping info khi không có địa chỉ")
     public void TC_OpenDeliveryInfoWithoutProductInCart() {
         ExcelHelper excel = new ExcelHelper();
-        getLoginPage().loginSuccessWithCustomerAccount("dungtest2@gmail.com", "123456");
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+
+//        getLoginPage().loginSuccessWithCustomerAccount("dungtest2@gmail.com", "123456");
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
 
@@ -154,8 +202,13 @@ public class OrderTest extends BaseTest {
     @Test(priority = 13, description = "Kiểm tra truy cập trang delivery info từ trang shipping info khi có địa chỉ")
     public void TC_OpenDeliveryInfoFromShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
 
@@ -166,6 +219,11 @@ public class OrderTest extends BaseTest {
     @Test(priority = 14, description = "Kiểm tra khi chọn phương thức vận chuyển")
     public void TC_SelectShippingMethod() {
         ExcelHelper excel = new ExcelHelper();
+//        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+//        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+//        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+//        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
@@ -177,8 +235,13 @@ public class OrderTest extends BaseTest {
     @Test(priority = 15, description = "Kiểm tra truy cập trang Payment từ trang Shipping Info")
     public void TC_OpenPaymentInfo() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 3), excel.getCellData("quantity", 3));
         getOrderPage().testOpenPaymentInfoFromShippingInfoDisplay();
@@ -234,9 +297,13 @@ public class OrderTest extends BaseTest {
     @Test(priority = 20, description = "Kiểm tra áp mã coupon không tồn tại")
     public void TC_ApplyDiscountCouponNotExist() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        LoginPage loginPage = new LoginPage();
-        loginPage.loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
         getOrderPage().testApplyCouponDiscountNotExist("DUNG3");
@@ -246,8 +313,13 @@ public class OrderTest extends BaseTest {
     @Test(priority = 21, description = "Kiểm tra áp mã coupon đã hết hạn")
     public void TC_ApplyCouponDiscountExpired() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
         getOrderPage().testApplyCouponDiscountExpired("DUNG2");
@@ -275,8 +347,13 @@ public class OrderTest extends BaseTest {
     @Test(priority = 24, description = "Kiểm tra truy cập trang Confirm order từ URL")
     public void TC_OpenConfirmOrderFromURL() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
         getOrderPage().testOpenConfirmOrderFromURL();
@@ -285,8 +362,13 @@ public class OrderTest extends BaseTest {
     @Test(priority = 25, description = "Kiểm tra truy cập trang Payment từ URL")
     public void TC_OpenPaymentInfoFromURL() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
         getOrderPage().openPaymentInfoFromURL();
@@ -295,8 +377,13 @@ public class OrderTest extends BaseTest {
     @Test(priority = 26, description = "Kiểm tra truy cập trang delivery info từ URL")
     public void TC_OpenDeliveryInfoFromURL() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
+
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
         getOrderPage().testOpenDeliveryInfoWithURL();

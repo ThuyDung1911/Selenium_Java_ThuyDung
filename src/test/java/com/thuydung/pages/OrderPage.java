@@ -367,6 +367,7 @@ public class OrderPage {
 
     public void openDeliveryInfoWithShippingInfo() {
         openShippingInfoFromURL();
+        selectAddressInShippingInfo("1");
         WebUI.clickElement(buttonContinueToDeliveryInfo);
         WebUI.waitForPageLoaded();
     }
@@ -924,7 +925,7 @@ public class OrderPage {
             currentCart = CartPage.getCartDetailTemp2();
         }
         WebUI.clickElement(buttonContinueToShipping);
-        selectAddressInShippingInfo("3");
+        selectAddressInShippingInfo("1");
         WebUI.sleep(5);
         Address addressSelected = getSelectedAddress();
         WebUI.clickElement(buttonContinueToDeliveryInfo);
@@ -991,7 +992,7 @@ public class OrderPage {
             currentCart = CartPage.getCartDetailTemp2();
         }
         WebUI.clickElement(buttonContinueToShipping);
-        selectAddressInShippingInfo("3");
+        selectAddressInShippingInfo("1");
         Address addressSelected = getSelectedAddress();
         WebUI.clickElement(buttonContinueToDeliveryInfo);
         WebUI.waitForPageLoaded();

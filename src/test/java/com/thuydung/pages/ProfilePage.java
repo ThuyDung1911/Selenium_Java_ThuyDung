@@ -64,6 +64,7 @@ public class ProfilePage extends CommonPage{
 
     public void updateInfoBasicProfileCustomer(String name, String phone, String imgName, String password, String confirmPassword) {
         WebUI.waitForPageLoaded();
+        WebUI.sleep(2);
         WebUI.scrollToElementToBottom(menuManageProfile);
         WebUI.clickElement(menuManageProfile);
         WebUI.verifyElementVisible(titleManageProfile, "Trang Manage Profile KHÔNG được hiển thị.");
@@ -76,6 +77,7 @@ public class ProfilePage extends CommonPage{
         WebUI.clickElement(tabSelectFile);
         WebUI.setTextEnter(inputSearchPhoto, imgName);
         WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
         WebUI.clickElement(imageUploaded);
         WebUI.clickElement(buttonAddFile);
         WebUI.setTextAndClear(inputPassword, password);
@@ -143,9 +145,9 @@ public class ProfilePage extends CommonPage{
     public void updateInfoBasicProfileCustomerPasswordLessCharacter(String name, String phone, String imgName, String password, String confirmPassword) {
         updateInfoBasicProfileCustomer(name, phone, imgName, password, confirmPassword);
         WebUI.verifyAssertTrueIsDisplayed(messageUpdate, "Thông báo không xuất hiện");
-        WebUI.verifySoftAssertFalseEqual(messageUpdate, "Your Profile has been updated successfully!", "Thông báo cập nhật thành công VẪN được hiển thị, mật khẩu ít hơn 6 ký tự.");
+        WebUI.verifyAssertFalseEqual(messageUpdate, "Your Profile has been updated successfully!", "Thông báo cập nhật thành công VẪN được hiển thị, mật khẩu ít hơn 6 ký tự.");
+//        WebUI.verifySoftAssertFalseEqual(messageUpdate, "Your Profile has been updated successfully!", "Thông báo cập nhật thành công VẪN được hiển thị, mật khẩu ít hơn 6 ký tự.");
         WebUI.sleep(2);
-        updateInfoBasicProfileCustomer(name, phone, imgName, "123456", "123456");
 
         //Đăng nhập lại để kiểm tra thông tin đã được cập nhật
         //verifyUpdatePasswordFail(password, confirmPassword);
@@ -300,14 +302,14 @@ public class ProfilePage extends CommonPage{
     }
     public void editAddressValid(String address, String country, String state, String city, String postalCode, String phone) {
         editNewAddress(address, country, state, city, postalCode, phone);
+        WebUI.verifyAssertTrueIsDisplayed(messageUpdate, "Thông báo cập nhật thanh cong không hiển thị.");
+        WebUI.verifyAssertTrueEqual(messageUpdate, "Address info updated successfully", "Thông báo cập nhật không đúng.");
         WebUI.verifyAssertTrueEqual(valueNewestAddress, address, "Địa chỉ mới không được sua lai.");
         WebUI.verifyAssertTrueEqual(valueNewestCountry, country, "Quốc gia mới không được sua lai.");
         WebUI.verifyAssertTrueEqual(valueNewestState, state, "Tỉnh/Thành phố mới không được sua lai.");
         WebUI.verifyAssertTrueEqual(valueNewestCity, city, "Thành phố mới không được sua lai.");
         WebUI.verifyAssertTrueEqual(valueNewestPostalCode, postalCode, "Mã bưu chính mới không được sua lai.");
         WebUI.verifyAssertTrueEqual(valueNewestPhone, phone, "Số điện thoại mới không được sua lai.");
-        WebUI.verifyAssertTrueIsDisplayed(messageUpdate, "Thông báo cập nhật thanh cong không hiển thị.");
-        WebUI.verifyAssertTrueEqual(messageUpdate, "Address info updated successfully", "Thông báo cập nhật không đúng.");
     }
     public void editAddressWithoutAddress(String address, String country, String state, String city, String postalCode, String phone) {
         editNewAddress(address, country, state, city, postalCode, phone);

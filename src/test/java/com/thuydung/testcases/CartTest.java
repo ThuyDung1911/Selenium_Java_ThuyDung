@@ -10,8 +10,10 @@ public class CartTest extends BaseTest {
     @Test(priority = 1, description = "Kiểm tra chức năng thêm sản phẩm không có biển thể chưa tồn tại trong giỏ hàng vào giỏ hàng")
     public void TC_AddProductNoVariantNotExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
         if (checkExistProduct) {
@@ -23,8 +25,10 @@ public class CartTest extends BaseTest {
     @Test(priority = 2, description = "Kiểm tra chức năng thêm sản phẩm có biển thể chưa tồn tại trong giỏ hàng vào giỏ hàng")
     public void TC_AddProductVariantNotExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         String keyProductName = excel.getCellData("productName", 2) + " - " + excel.getCellData("variantName", 2);
         boolean checkExistProduct = getCartPage().checkProductExistInCart(keyProductName);
@@ -37,8 +41,10 @@ public class CartTest extends BaseTest {
     @Test(priority = 3, description = "Kiểm tra chức năng thêm sản phẩm không có biển thể đã tồn tại trong giỏ hàng vào giỏ hàng")
     public void TC_AddProductNoVariantExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
         if (checkExistProduct) {
@@ -50,8 +56,10 @@ public class CartTest extends BaseTest {
     @Test(priority = 4, description = "Kiểm tra chức năng thêm sản phẩm có biển thể đã tồn tại trong giỏ hàng vào giỏ hàng")
     public void TC_AddProductVariantExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         String keyProductName = excel.getCellData("productName", 2) + " - " + excel.getCellData("variantName", 2);
         boolean checkExistProduct = getCartPage().checkProductExistInCart(keyProductName);
@@ -64,8 +72,10 @@ public class CartTest extends BaseTest {
     @Test(priority = 5, description = "Kiểm tra chức năng thêm sản phẩm đã tồn tại trong giỏ hàng với số lượng vượt quá số lượng tồn kho")
     public void TC_AddProductExistToCartOverQuantity() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
         if (!checkExistProduct) {
@@ -77,8 +87,10 @@ public class CartTest extends BaseTest {
     @Test(priority = 6, description = "Kiểm tra chức năng thêm sản phẩm chưa tồn tại trong giỏ hàng với số lượng vượt quá số lượng tồn kho")
     public void TC_AddProductNotExistToCartOverQuantity() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
         if (!checkExistProduct) {
@@ -92,8 +104,10 @@ public class CartTest extends BaseTest {
     @Test(priority = 7, description = "Kiem tra khi cap nhat so luong san pham hop le trong gio hang")
     public void TC_UpdateQuantityValidProductInCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
         if (!checkExistProduct) {
@@ -106,8 +120,10 @@ public class CartTest extends BaseTest {
     @Test(priority = 8, description = "Kiem tra khi cap nhat san pham vao gio hang vuot qua so luong")
     public void TC_UpdateQuantityInvalidProductInCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
         if (!checkExistProduct) {
@@ -121,8 +137,10 @@ public class CartTest extends BaseTest {
     @Test(priority = 9, description = "Kiem tra khi xoa san pham khoi gio hang chi tiet")
     public void TC_RemoveProductFromCartDetailWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
         if (!checkExistProduct) {
@@ -134,8 +152,10 @@ public class CartTest extends BaseTest {
     @Test(priority = 10, description = "Kiem tra khi xoa san pham khoi gio hang dropdown")
     public void TC_RemoveProductFromCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/Register.xlsx", "Register");
+        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+//        excel.setExcelFile("DataTest/Login.xlsx", "Login");
+//        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
         boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
         if (!checkExistProduct) {

@@ -22,9 +22,14 @@ public class RegisterPage extends CommonPage {
     private By errorMessage = By.xpath("//h1[normalize-space()='Something went wrong!']");
     public void registerAccount(String fullname, String email, String password, String confirm_password) {
         WebUI.openURL(PropertiesHelper.getValue("URL_REGISTER"));
-        WebUI.clickElement(LoginPage.closeAdvertisementPopup);
-        WebUI.clickElement(LoginPage.buttonOkCookies);
+        if (WebUI.getWebElement(LoginPage.closeAdvertisementPopup).isDisplayed()) {
+            WebUI.clickElement(LoginPage.closeAdvertisementPopup);
+        }
+        if (WebUI.getWebElement(LoginPage.buttonOkCookies).isDisplayed()) {
+            WebUI.clickElement(LoginPage.buttonOkCookies);
+        }
         WebUI.waitForPageLoaded();
+        WebUI.sleep(2);
         WebUI.setText(inputFullName,fullname);
         WebUI.setText(inputEmail,email);
         WebUI.setText(inputPassword,password);

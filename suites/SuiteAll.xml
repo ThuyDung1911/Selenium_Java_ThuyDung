@@ -13,11 +13,6 @@
             <class name="com.thuydung.testcases.RegisterTest"/>
         </classes>
     </test>
-    <test name="ProfileTest" parallel="none">
-        <classes>
-            <class name="com.thuydung.testcases.ProfileTest"/>
-        </classes>
-    </test>
     <test name="AddProductTest" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.AddProductTest"/>
@@ -31,6 +26,11 @@
     <test name="SearchProductTest" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.SearchProductTest"/>
+        </classes>
+    </test>
+    <test name="ProfileTest" parallel="none">
+        <classes>
+            <class name="com.thuydung.testcases.ProfileTest"/>
         </classes>
     </test>
     <test name="CartTest" parallel="none">

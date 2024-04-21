@@ -30,6 +30,7 @@ public class LoginPage extends CommonPage {
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
         WebUI.verifyAssertTrueIsDisplayed(titleLoginPage, "Trang đăng nhập KHÔNG được hiển thị");
+        WebUI.sleep(1);
     }
     public void logOutRoleAdmin() {
         WebUI.clickElement(LoginPage.roleUser);
@@ -83,6 +84,7 @@ public class LoginPage extends CommonPage {
         WebUI.setTextAndClear(inputPassword, password);
         WebUI.clickElement(buttonSubmitLogin);
         WebUI.waitForElementVisible(DashboardPage.titleDashboard);
+        WebUI.sleep(2);
         WebUI.verifyAssertTrueIsDisplayed(DashboardPage.titleDashboard, "Trang Dashboard không được hiển thị.");
         WebUI.verifyAssertEquals(WebUI.getElementText(DashboardPage.titleDashboard), "Dashboard","Tiêu đề trang Dashboard không đúng.");
     }

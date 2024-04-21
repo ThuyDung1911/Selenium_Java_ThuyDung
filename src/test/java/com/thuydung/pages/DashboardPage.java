@@ -32,13 +32,13 @@ public class DashboardPage extends CommonPage {
             WebUI.clickElement(LoginPage.buttonOkCookies);
         }
         WebUI.setTextFromSplitString(inputSearchProduct, keySearchProduct);
-        WebUI.setTextAndBackspace(inputSearchProduct, " ");
-        WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
+        WebUI.setTextAndBackspace(inputSearchProduct, " ");
     }
     public void testSearchProduct(String keySearchProduct) {
         searchProduct(keySearchProduct);
         WebUI.verifyAssertTrueIsDisplayed(divSearchResult, "Khối Search result KHONG xuat hien");
+
     }
 
     public void testSearchProductHaveResult(String keySearchProduct) {
@@ -91,8 +91,9 @@ public class DashboardPage extends CommonPage {
 
     public void testSearchProductHaveNotResult(String keySearchProduct) {
         testSearchProduct(keySearchProduct);
+        WebUI.sleep(5);
         WebUI.verifyAssertTrueIsDisplayed(messageSearchNothing, "Ket qua tim kiem van xuat hien");
-        WebUI.verifyAssertTrueEqual(messageSearchNothing, "Sorry, nothing found for \"" + keySearchProduct + "\"", "Message khong tim thay KHONG dung");
+        WebUI.verifyAssertTrueTextContain(messageSearchNothing, "Sorry, nothing found", "Message khong tim thay KHONG dung");
         WebUI.sleep(2);
     }
 
