@@ -10,10 +10,12 @@ import com.thuydung.utils.JiraCreateIssue;
 import com.thuydung.utils.JiraServiceProvider;
 import com.thuydung.utils.LogUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class TestListener implements ITestListener {
     public String getTestName(ITestResult result) {
@@ -93,7 +95,10 @@ public class TestListener implements ITestListener {
 
             issueDescription.concat(ExceptionUtils.getFullStackTrace(result.getThrowable()));
             String issueSummary = result.getMethod().getConstructorOrMethod().getMethod().getName() + " Failed in Automation Selenium";
-            JiraServiceProvider.createJiraIssue("Bug", issueSummary + RandomStringUtils.randomAlphabetic(6).toUpperCase(), issueDescription);
+            Date now = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+            String timestamp = formatter.format(now);
+            JiraServiceProvider.createJiraIssue("Bug", issueSummary + " " + timestamp, issueDescription);
             JiraServiceProvider.addAttachmentToJiraIssue("Report/screenshots/" + result.getName() + ".png");
 
         }

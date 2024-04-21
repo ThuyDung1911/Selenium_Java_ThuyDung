@@ -49,13 +49,13 @@ public class JiraServiceProvider {
             }
 
             //Create issue if not exists
-            Issue.FluentCreate fleuntCreate = jira.createIssue(jiraPRODUCTKEY, issueType);
-            fleuntCreate.field(Field.SUMMARY, summary);
-            fleuntCreate.field(Field.DESCRIPTION, description);
+            Issue.FluentCreate fluentCreate = jira.createIssue(jiraPRODUCTKEY, issueType);
+            fluentCreate.field(Field.SUMMARY, summary);
+            fluentCreate.field(Field.DESCRIPTION, description);
             //fleuntCreate.field(Field.COMMENT, comment);
             //fleuntCreate.field(Field.ASSIGNEE, assignee);
 
-            Issue newIssue = fleuntCreate.execute();
+            Issue newIssue = fluentCreate.execute();
             System.out.println("********************************************");
             System.out.println("New issue created in Jira with ID: " + newIssue);
             System.out.println("New issue URL is :" + jiraURL + "/browse/" + newIssue);
