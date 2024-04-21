@@ -5,6 +5,9 @@ import com.thuydung.keywords.WebUI;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class RegisterPage extends CommonPage {
     public By titleRegisterPage = By.xpath("//h1[normalize-space()='Create an account.']");
@@ -36,13 +39,22 @@ public class RegisterPage extends CommonPage {
         WebUI.setText(inputConfirmPassword,confirm_password);
         WebUI.clickElement(checkboxAgreeCondition);
         WebUI.clickElement(buttonRegister);
-        WebUI.waitForPageLoaded();
+        WebUI.waitForElementInvisible(HomePage.messageRegisterSuccess);
     }
     public void registerSuccessCustomerAccount(String fullname, String email, String password, String confirm_password) {
-        email = email + RandomStringUtils.randomAlphabetic(8).toUpperCase() + "@gmail.com";
+        Date now = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String timestamp = formatter.format(now);
+        email = email + timestamp + RandomStringUtils.randomAlphabetic(3).toUpperCase() + "@gmail.com";
         registerAccount(fullname,email,password,confirm_password);
         WebUI.verifyAssertTrueIsDisplayed(HomePage.messageRegisterSuccess,"Khong xuat hien thong bao dang ky thanh cong.");
         WebUI.verifyAssertTrueEqual(HomePage.messageRegisterSuccess,"Registration successful.","Thong bao dang ky thanh cong khong dung.");
+        verifyNewCustomerAccount(fullname,email);
+        WebUI.sleep(2);
+    }
+    public void registerCustomerAccount(String fullname, String email, String password, String confirm_password) {
+        email = email + RandomStringUtils.randomAlphabetic(8).toUpperCase() + "@gmail.com";
+        registerAccount(fullname,email,password,confirm_password);
         verifyNewCustomerAccount(fullname,email);
         WebUI.sleep(2);
     }

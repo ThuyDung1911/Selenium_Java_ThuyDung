@@ -22,10 +22,8 @@ public class ExcelHelper {
     private Map<String, Integer> columns = new HashMap<>();
 
     public void setExcelFile(String excelPath, String sheetName) {
-        LogUtils.info("----------- Chuẩn bị data test -----------");
         LogUtils.info("Set Excel File: " + excelPath);
         LogUtils.info("Sheet Name: " + sheetName);
-        LogUtils.info("----------- Setup data test thành công -----------");
 
         try {
             File f = new File(excelPath);

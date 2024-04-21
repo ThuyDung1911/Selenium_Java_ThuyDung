@@ -11,6 +11,7 @@ public class HomePage extends CommonPage{
     public void openMyPanel() {
         WebUI.verifyAssertTrueIsDisplayed(linkMyPanel,"Không thể truy cập trang My Panel.");
         WebUI.clickElement(linkMyPanel);
+        WebUI.waitForPageLoaded();
     }
 
 }

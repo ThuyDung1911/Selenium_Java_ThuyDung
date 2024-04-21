@@ -28,17 +28,17 @@
             <class name="com.thuydung.testcases.SearchProductTest"/>
         </classes>
     </test>
-    <test name="ProfileTest" parallel="none">
+    <test name="ProfileTest" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.ProfileTest"/>
         </classes>
     </test>
-    <test name="CartTest" parallel="none">
+    <test name="CartTest" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.CartTest"/>
         </classes>
     </test>
-    <test name="OrderTest" parallel="none">
+    <test name="OrderTest" parallel="methods">
         <classes>
             <class name="com.thuydung.testcases.OrderTest"/>
         </classes>

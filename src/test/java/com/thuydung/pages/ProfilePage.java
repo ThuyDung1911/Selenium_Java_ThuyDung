@@ -71,8 +71,12 @@ public class ProfilePage extends CommonPage{
         WebUI.setTextAndClear(inputName, name);
         WebUI.setTextAndClear(inputPhone, phone);
         WebUI.clickElement(inputPhoto);
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(1);
         //Upload file new
         WebUI.clickElement(tabUploadNew);
+        WebUI.waitForJQueryLoad();
+        WebUI.sleep(1);
         DriverManager.getDriver().findElement(inputUploadPhoto).sendKeys(SystemHelper.getCurrentDir() + "DataTest\\" + imgName + ".png");
         WebUI.clickElement(tabSelectFile);
         WebUI.setTextEnter(inputSearchPhoto, imgName);

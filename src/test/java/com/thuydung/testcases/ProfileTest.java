@@ -8,48 +8,48 @@ import org.testng.annotations.Test;
 public class ProfileTest extends BaseTest {
 
     // Update Info Basic Valid Customer
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 1)
     public void TC_UpdateInfoBasicValidProfileCustomer() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
         getProfilePage().updateInfoBasicValidProfileCustomer(excel.getCellData("name", 1), excel.getCellData("phone", 1), excel.getCellData("photo", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
     }
     //Update Email Valid Customer
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 2)
     public void TC_UpdateValidEmailCustomer() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/Profile.xlsx", "UpdateEmail");
         getProfilePage().updateValidEmailCustomer(excel.getCellData("email", 1));
     }
     //Add New Address Customer Valid
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 3)
     public void TC_AddNewAddressValid() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddressValid(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
     }
     // Edit Address Customer Valid
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 4)
     public void TC_EditAddressValid() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
@@ -60,12 +60,12 @@ public class ProfileTest extends BaseTest {
 
 
     //Update Info Basic Customer without name
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 5)
     public void TC_UpdateInfoBasicProfileCustomerWithoutName() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
@@ -73,36 +73,36 @@ public class ProfileTest extends BaseTest {
     }
 
     //Update Info Basic Customer without phone
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 6)
     public void TC_UpdateInfoBasicProfileCustomerWithoutPhone() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
         getProfilePage().updateInfoBasicProfileCustomerWithoutPhone(excel.getCellData("name", 3), excel.getCellData("phone", 3), excel.getCellData("photo", 3), excel.getCellData("password", 3), excel.getCellData("confirm password", 3));
     }
     //Update Info Basic Customer with password < 6 characters
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 7)
     public void TC_UpdateInfoBasicProfileCustomerPasswordLessCharacter() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
         getProfilePage().updateInfoBasicProfileCustomerPasswordLessCharacter(excel.getCellData("name", 5), excel.getCellData("phone", 5), excel.getCellData("photo", 5), excel.getCellData("password", 5), excel.getCellData("confirm password", 5));
     }
     //Update Info Basic Customer no match password
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 8)
     public void TC_UpdateInfoBasicProfileCustomerNoMatchPassword() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
@@ -111,7 +111,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Update Email Customer with Current Email
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 9)
     public void TC_UpdateEmailCustomerWithCurrentEmail() {
         ExcelHelper excel = new ExcelHelper();
@@ -121,7 +121,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Update Email Customer with Email already exists
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 10)
     public void TC_UpdateEmailCustomerWithEmailExist() {
         ExcelHelper excel = new ExcelHelper();
@@ -132,7 +132,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Update Email Customer with Email invalid
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 11)
     public void TC_UpdateEmailCustomerWithEmailInvalid() {
         ExcelHelper excel = new ExcelHelper();
@@ -143,7 +143,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Add New Address Customer without Address
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 12)
     public void TC_AddNewAddressWithoutAddress() {
         ExcelHelper excel = new ExcelHelper();
@@ -154,7 +154,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Add New Address Customer without Country
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 13)
     public void TC_AddNewAddressWithoutCountry() {
         ExcelHelper excel = new ExcelHelper();
@@ -165,7 +165,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Add New Address Customer without State
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 14)
     public void TC_AddNewAddressWithoutState() {
         ExcelHelper excel = new ExcelHelper();
@@ -176,7 +176,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Add New Address Customer without City
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 15)
     public void TC_AddNewAddressWithoutCity() {
         ExcelHelper excel = new ExcelHelper();
@@ -187,7 +187,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Add New Address Customer without Postal Code
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 16)
     public void TC_AddNewAddressWithoutPostalCode() {
         ExcelHelper excel = new ExcelHelper();
@@ -198,7 +198,7 @@ public class ProfileTest extends BaseTest {
     }
 
     //Add New Address Customer without Phone
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 17)
     public void TC_AddNewAddressWithoutPhone() {
         ExcelHelper excel = new ExcelHelper();
@@ -209,7 +209,7 @@ public class ProfileTest extends BaseTest {
     }
 
     // Edit Address Customer without Address
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 18)
     public void TC_EditAddressWithoutAddress() {
         ExcelHelper excel = new ExcelHelper();
@@ -220,7 +220,7 @@ public class ProfileTest extends BaseTest {
     }
 
     // Edit Address Customer without Country
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 19)
     public void TC_EditAddressWithoutCountry() {
         ExcelHelper excel = new ExcelHelper();
@@ -231,7 +231,7 @@ public class ProfileTest extends BaseTest {
     }
 
     // Edit Address Customer without State
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 20)
     public void TC_EditAddressWithoutState() {
         ExcelHelper excel = new ExcelHelper();
@@ -242,7 +242,7 @@ public class ProfileTest extends BaseTest {
     }
 
     // Edit Address Customer without City
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 21)
     public void TC_EditAddressWithoutCity() {
         ExcelHelper excel = new ExcelHelper();
@@ -253,7 +253,7 @@ public class ProfileTest extends BaseTest {
     }
 
     // Edit Address Customer without Postal Code
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 22)
     public void TC_EditAddressWithoutPostalCode() {
         ExcelHelper excel = new ExcelHelper();
@@ -265,7 +265,7 @@ public class ProfileTest extends BaseTest {
     }
 
     // Edit Address Customer without Phone
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 23)
     public void TC_EditAddressWithoutPhone() {
         ExcelHelper excel = new ExcelHelper();
