@@ -11,7 +11,7 @@ public class CartTest extends BaseTest {
     public void TC_AddProductNoVariantNotExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
@@ -26,7 +26,7 @@ public class CartTest extends BaseTest {
     public void TC_AddProductVariantNotExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
@@ -42,7 +42,7 @@ public class CartTest extends BaseTest {
     public void TC_AddProductNoVariantExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
@@ -57,7 +57,7 @@ public class CartTest extends BaseTest {
     public void TC_AddProductVariantExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
@@ -73,7 +73,7 @@ public class CartTest extends BaseTest {
     public void TC_AddProductExistToCartOverQuantity() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
@@ -88,7 +88,7 @@ public class CartTest extends BaseTest {
     public void TC_AddProductNotExistToCartOverQuantity() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
@@ -105,14 +105,15 @@ public class CartTest extends BaseTest {
     public void TC_UpdateQuantityValidProductInCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
-        boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
-        if (!checkExistProduct) {
-            getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
-        }
+        getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
+//        boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
+//        if (!checkExistProduct) {
+//            getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
+//        }
         getCartPage().updateQuantityProductInCart(excel.getCellData("productName", 1), "3");
     }
     //check add product over quantity
@@ -121,14 +122,15 @@ public class CartTest extends BaseTest {
     public void TC_UpdateQuantityInvalidProductInCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
-        boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
-        if (!checkExistProduct) {
-            getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
-        }
+        getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
+//        boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
+//        if (!checkExistProduct) {
+//            getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
+//        }
         getCartPage().updateQuantityProductInCart(excel.getCellData("productName", 1), "1000");
     }
 
@@ -138,7 +140,7 @@ public class CartTest extends BaseTest {
     public void TC_RemoveProductFromCartDetailWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
@@ -153,7 +155,7 @@ public class CartTest extends BaseTest {
     public void TC_RemoveProductFromCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
