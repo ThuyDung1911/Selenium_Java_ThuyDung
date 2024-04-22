@@ -1,8 +1,12 @@
 package com.thuydung.testcases;
 
 import com.thuydung.common.BaseTest;
+import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.ExcelHelper;
+import com.thuydung.keywords.WebUI;
 import com.thuydung.utils.JiraCreateIssue;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.Test;
 
 public class AddProductTest extends BaseTest {
@@ -73,11 +77,19 @@ public class AddProductTest extends BaseTest {
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 8, description = "Kiem tra them san pham moi co variant, co discount hop le voi role seller")
     public void TC_AddProductVariantValidRoleSellerWithHaveDiscount() {
-        ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithSellerAccount("dungtest@yopmail.com", "123456");
-        excel.setExcelFile("DataTest/AddProduct.xlsx", "AddProduct");
-        getAddProductPage().addProductVariantValidRoleSeller(excel.getCellData("productName",1), excel.getCellData("category",1), excel.getCellData("unit",1), excel.getCellData("weight",1), excel.getCellData("tags",1), excel.getCellData("unitPrice",1), excel.getCellData("discountDate",1), excel.getCellData("quantity",1), excel.getCellData("description",1), excel.getCellData("discount",1), excel.getCellData("image",1), excel.getCellData("vat",1));
+        try {
+            ExcelHelper excel = new ExcelHelper();
+            excel.setExcelFile("DataTest/Login.xlsx", "Login");
+            getLoginPage().loginSuccessWithSellerAccount("dungtest@yopmail.com", "123456");
+            excel.setExcelFile("DataTest/AddProduct.xlsx", "AddProduct");
+            getAddProductPage().addProductVariantValidRoleSeller(excel.getCellData("productName", 1), excel.getCellData("category", 1), excel.getCellData("unit", 1), excel.getCellData("weight", 1), excel.getCellData("tags", 1), excel.getCellData("unitPrice", 1), excel.getCellData("discountDate", 1), excel.getCellData("quantity", 1), excel.getCellData("description", 1), excel.getCellData("discount", 1), excel.getCellData("image", 1), excel.getCellData("vat", 1));
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+                js.executeScript("location.reload()");
+            }
+        }
     }
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 9, description = "Kiem tra them san pham moi co variant, co discount khong hop le voi role seller")

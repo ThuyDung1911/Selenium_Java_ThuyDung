@@ -124,6 +124,7 @@ public class CartPage extends CommonPage {
         }
         WebUI.setTextAndClear(inputQuantity, quantity);
         WebUI.clickElement(totalPriceInDetailProduct);
+        WebUI.waitForJQueryLoad();
         //Check tổng tiền sản phẩm trong trang chi tiết sản phẩm
         BigDecimal valueTotalPriceInDetailProduct = convertCurrencyToBigDecimal(WebUI.getElementText(totalPriceInDetailProduct)); //Tien hien thi tren trang detail product
         BigDecimal checkTotalPriceCheck = productPrice.multiply(WebUI.stringToBigDecimal(quantity)).setScale(2, RoundingMode.HALF_UP); //Tien tinh dua tren don gia va so luong

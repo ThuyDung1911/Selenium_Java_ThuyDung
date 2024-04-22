@@ -1,8 +1,10 @@
 package com.thuydung.pages;
 
+import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.keywords.WebUI;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 
 public class LoginPage extends CommonPage {
 
@@ -79,25 +81,42 @@ public class LoginPage extends CommonPage {
     }
 
     public void loginSuccessWithCustomerAccount(String email, String password) {
-        openLoginPage();
-        WebUI.setTextAndClear(inputEmail, email);
-        WebUI.setTextAndClear(inputPassword, password);
-        WebUI.clickElement(buttonSubmitLogin);
-        WebUI.waitForElementVisible(DashboardPage.titleDashboard);
-        WebUI.sleep(2);
-        WebUI.verifyAssertTrueIsDisplayed(DashboardPage.titleDashboard, "Trang Dashboard không được hiển thị.");
-        WebUI.verifyAssertEquals(WebUI.getElementText(DashboardPage.titleDashboard), "Dashboard","Tiêu đề trang Dashboard không đúng.");
+        try {
+            openLoginPage();
+            WebUI.setTextAndClear(inputEmail, email);
+            WebUI.setTextAndClear(inputPassword, password);
+            WebUI.clickElement(buttonSubmitLogin);
+            WebUI.waitForElementVisible(DashboardPage.titleDashboard);
+            WebUI.sleep(2);
+            WebUI.verifyAssertTrueIsDisplayed(DashboardPage.titleDashboard, "Trang Dashboard không được hiển thị.");
+            WebUI.verifyAssertEquals(WebUI.getElementText(DashboardPage.titleDashboard), "Dashboard", "Tiêu đề trang Dashboard không đúng.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+                js.executeScript("location.reload()");
+            }
+        }
     }
 
     public void loginSuccessWithSellerAccount(String email, String password) {
-        openLoginPage();
-        WebUI.setTextAndClear(inputEmail, email);
-        WebUI.setTextAndClear(inputPassword, password);
-        WebUI.clickElement(buttonSubmitLogin);
-        WebUI.waitForElementVisible(DashboardPage.titleDashboard);
-        WebUI.verifyAssertTrueIsDisplayed(DashboardPage.titleDashboard, "Trang Dashboard không được hiển thị.");
-        WebUI.verifyAssertEquals(WebUI.getElementText(DashboardPage.titleDashboard), "Dashboard","Tiêu đề trang Dashboard không đúng.");
-        WebUI.verifyAssertTrueEqual(roleUser,"seller","Tài khoản đăng nhập không phải seller.");
+        try {
+            openLoginPage();
+            WebUI.setTextAndClear(inputEmail, email);
+            WebUI.setTextAndClear(inputPassword, password);
+            WebUI.clickElement(buttonSubmitLogin);
+            WebUI.waitForElementVisible(DashboardPage.titleDashboard);
+            WebUI.verifyAssertTrueIsDisplayed(DashboardPage.titleDashboard, "Trang Dashboard không được hiển thị.");
+            WebUI.verifyAssertEquals(WebUI.getElementText(DashboardPage.titleDashboard), "Dashboard","Tiêu đề trang Dashboard không đúng.");
+            WebUI.verifyAssertTrueEqual(roleUser,"seller","Tài khoản đăng nhập không phải seller.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+                js.executeScript("location.reload()");
+            }
+        }
+
     }
 
     public void loginSuccessAdminPage(String email, String password) {

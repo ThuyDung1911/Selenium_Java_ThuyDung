@@ -197,11 +197,17 @@ public class ProfilePage extends CommonPage{
         WebUI.verifyElementVisible(titlePopupNewAddress, "Popup New Address KHONG hien thi.");
         WebUI.setTextAndClear(inputAddYourAddress, address);
         WebUI.clickElement(selectAddCountry);
+        WebUI.sleep(1);
         WebUI.setTextAndClear(inputSearchCountry, country, Keys.ENTER);
+        WebUI.sleep(1);
         WebUI.clickElement(selectAddState);
+        WebUI.sleep(1);
         WebUI.setTextAndClear(inputSearchState, state, Keys.ENTER);
+        WebUI.sleep(1);
         WebUI.clickElement(selectAddCity);
+        WebUI.sleep(1);
         WebUI.setTextAndClear(inputSearchCity, city, Keys.ENTER);
+        WebUI.sleep(1);
         WebUI.setTextAndClear(inputAddPostalCode, postalCode);
         WebUI.setTextAndClear(inputAddPhoneAddress, phone);
         WebUI.clickElement(buttonSaveNewAddress);

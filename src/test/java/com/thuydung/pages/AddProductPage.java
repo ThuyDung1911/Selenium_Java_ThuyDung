@@ -95,7 +95,11 @@ public class AddProductPage extends CommonPage {
     }
 
     public void addProductNoVariantWithRoleAdmin(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
-        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+//        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
+        String strDate = formatter.format(date);
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         openAddProductPage();
         //Product Information
@@ -143,7 +147,11 @@ public class AddProductPage extends CommonPage {
     }
 
     public void addProductVariantWithRoleAdmin(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
-        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+//        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
+        String strDate = formatter.format(date);
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         openAddProductPage();
         //Product Information
@@ -287,7 +295,11 @@ public class AddProductPage extends CommonPage {
     }
 
     public void addProductNoVariantWithRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
-        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+//        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
+        String strDate = formatter.format(date);
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         WebUI.clickElement(menuProduct);
         WebUI.waitForPageLoaded();
@@ -355,7 +367,11 @@ public class AddProductPage extends CommonPage {
     }
 
     public void addProductVariantWithRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
-        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+//        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
+        String strDate = formatter.format(date);
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         WebUI.clickElement(menuProduct);
         WebUI.waitForPageLoaded();
@@ -424,7 +440,11 @@ public class AddProductPage extends CommonPage {
 
     public void addProductNoVariantValidRoleAdmin(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
         //addProductNoVariantWithRoleAdmin(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
-        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
+        String strDate = formatter.format(date);
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
+//        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         openAddProductPage();
         //Product Information
@@ -478,7 +498,10 @@ public class AddProductPage extends CommonPage {
 
     public void addProductVariantValidRoleAdmin(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
         //addProductVariantWithRoleAdmin(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
-        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
+        String strDate = formatter.format(date);
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         openAddProductPage();
         //Product Information
@@ -540,11 +563,12 @@ public class AddProductPage extends CommonPage {
         WebUI.waitForElementVisible(btnEditProductVerify);
         WebUI.clickElement(btnEditProductVerify);
         WebUI.waitForPageLoaded();
+        WebUI.scrollToElementToBottom(By.xpath("//h5[normalize-space()='Product price + stock']/ancestor::div[@class='card']"));
         WebUI.sleep(5);
-        WebUI.waitForElementVisible(valueVariant);
-        WebUI.waitForElementVisible(valueVariantPrice);
-        WebUI.waitForElementVisible(valueVariantSKU);
-        WebUI.waitForElementVisible(valueVariantQuantity);
+//        WebUI.waitForElementVisible(valueVariant);
+//        WebUI.waitForElementVisible(valueVariantPrice);
+//        WebUI.waitForElementVisible(valueVariantSKU);
+//        WebUI.waitForElementVisible(valueVariantQuantity);
         List<WebElement> elementValueVariants = DriverManager.getDriver().findElements(valueVariant);
         List<WebElement> elementValueVariantPrices = DriverManager.getDriver().findElements(valueVariantPrice);
         List<WebElement> elementValueVariantSKUs = DriverManager.getDriver().findElements(valueVariantSKU);
@@ -579,8 +603,6 @@ public class AddProductPage extends CommonPage {
             productVariant.setVariantQuantity(variantQuantity);
             infoProductVariant.add(productVariant);
         }
-        WebUI.scrollToElementToBottom(By.xpath("//h5[normalize-space()='Product price + stock']/ancestor::div[@class='card']"));
-
         DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         //WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
@@ -603,7 +625,8 @@ public class AddProductPage extends CommonPage {
         WebUI.verifyAssertTrueEqual(By.xpath("//h1[normalize-space()='" + nameProductVerify + "']"), nameProductVerify, "Product name hien thi sai");
         //unit
         WebUI.verifyAssertTrueEqual(unitUI, "/" + unit, "Unit hien thi sai");
-        Assert.assertTrue(DriverManager.getDriver().findElement(unitUI).getText().trim().contains(unit), "Unit hien thi sai");
+        //Assert.assertTrue(DriverManager.getDriver().findElement(unitUI).getText().trim().contains(unit), "Unit hien thi sai");
+        WebUI.verifyAssertTrueTextContain(unitUI, unit, "Unit hien thi sai");
         //unitPrice
         //discountDateEnd
         if (!discountDate.contains("to")) {
@@ -687,15 +710,12 @@ public class AddProductPage extends CommonPage {
         WebUI.waitForElementVisible(btnEditProductVerify);
         WebUI.clickElement(btnEditProductVerify);
         WebUI.waitForPageLoaded();
+        WebUI.scrollToElementToBottom(By.xpath("//h5[normalize-space()='Product price + stock']/ancestor::div[@class='card']"));
         WebUI.sleep(5);
-        WebUI.waitForElementVisible(valueVariant);
-        WebUI.sleep(2);
-        WebUI.waitForElementVisible(valueVariantPrice);
-        WebUI.sleep(2);
-        WebUI.waitForElementVisible(valueVariantSKU);
-        WebUI.sleep(2);
-        WebUI.waitForElementVisible(valueVariantQuantity);
-        WebUI.sleep(2);
+//        WebUI.waitForElementVisible(valueVariant);
+//        WebUI.waitForElementVisible(valueVariantPrice);
+//        WebUI.waitForElementVisible(valueVariantSKU);
+//        WebUI.waitForElementVisible(valueVariantQuantity);
         List<WebElement> elementValueVariants = DriverManager.getDriver().findElements(valueVariant);
         List<WebElement> elementValueVariantPrices = DriverManager.getDriver().findElements(valueVariantPrice);
         List<WebElement> elementValueVariantSKUs = DriverManager.getDriver().findElements(valueVariantSKU);
@@ -817,7 +837,7 @@ public class AddProductPage extends CommonPage {
         //description
         WebUI.scrollToElement(descriptionUI);
         WebUI.sleep(1);
-        WebUI.verifySoftAssertTrueEqual(descriptionUI, description, "Description hien thi sai");
+        WebUI.verifyAssertTrueEqual(descriptionUI, description, "Description hien thi sai");
         //Total price in detail product
         String totalPriceInProductDetail = WebUI.getElementText(totalPriceInDetailProduct);
         BigDecimal valueUnitPriceInProductDetail = WebUI.convertCurrencyToBigDecimal(totalPriceInProductDetail);
@@ -927,7 +947,11 @@ public class AddProductPage extends CommonPage {
 
     public void addProductNoVariantValidRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
 //        addProductNoVariantWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
-        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+//        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
+        String strDate = formatter.format(date);
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         WebUI.clickElement(menuProduct);
         WebUI.waitForPageLoaded();

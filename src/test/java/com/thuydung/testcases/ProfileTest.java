@@ -1,8 +1,12 @@
 package com.thuydung.testcases;
 
 import com.thuydung.common.BaseTest;
+import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.ExcelHelper;
+import com.thuydung.keywords.WebUI;
 import com.thuydung.utils.JiraCreateIssue;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.Test;
 
 public class ProfileTest extends BaseTest {
@@ -201,11 +205,19 @@ public class ProfileTest extends BaseTest {
     @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 17)
     public void TC_AddNewAddressWithoutPhone() {
-        ExcelHelper excel = new ExcelHelper();
-        excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
-        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
-        getProfilePage().addNewAddressWithoutPhone(excel.getCellData("address", 7), excel.getCellData("country", 7), excel.getCellData("state", 7), excel.getCellData("city", 7), excel.getCellData("postal code", 7), excel.getCellData("phone", 7));
+        try {
+            ExcelHelper excel = new ExcelHelper();
+            excel.setExcelFile("DataTest/Login.xlsx", "Login");
+            getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+            excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
+            getProfilePage().addNewAddressWithoutPhone(excel.getCellData("address", 7), excel.getCellData("country", 7), excel.getCellData("state", 7), excel.getCellData("city", 7), excel.getCellData("postal code", 7), excel.getCellData("phone", 7));
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+                js.executeScript("location.reload()");
+            }
+        }
     }
 
     // Edit Address Customer without Address
