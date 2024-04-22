@@ -2,7 +2,7 @@
 target/
 out/
 logs/
-allure-results/
+target/allure-results/
 allure-reports/
 VideoRecord/
 VideoRecords/

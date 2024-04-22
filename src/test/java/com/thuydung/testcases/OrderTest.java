@@ -1,12 +1,14 @@
 package com.thuydung.testcases;
 
 import com.thuydung.common.BaseTest;
+import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.ExcelHelper;
 import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.keywords.WebUI;
 import com.thuydung.pages.LoginPage;
 import com.thuydung.utils.JiraCreateIssue;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WindowType;
 import org.testng.annotations.Test;
 
 public class OrderTest extends BaseTest {
@@ -19,7 +21,7 @@ public class OrderTest extends BaseTest {
         getLoginPage().logOutRoleAdmin();
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
@@ -33,7 +35,7 @@ public class OrderTest extends BaseTest {
     public void TC_OrderProductWithCouponInvalid() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -49,7 +51,7 @@ public class OrderTest extends BaseTest {
     public void TC_OrderProductWithNoCoupon() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -65,7 +67,7 @@ public class OrderTest extends BaseTest {
     public void TC_OpenShippingInfoDisplay() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -83,7 +85,7 @@ public class OrderTest extends BaseTest {
 //        getLoginPage().loginSuccessWithCustomerAccount("dungtest@gmail.com", "123456");
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -94,7 +96,7 @@ public class OrderTest extends BaseTest {
     public void TC_CheckOrderDetail() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -128,7 +130,7 @@ public class OrderTest extends BaseTest {
     public void TC_AddNewAddressInvalidInShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -145,7 +147,7 @@ public class OrderTest extends BaseTest {
     public void TC_EditAddressInShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -162,7 +164,7 @@ public class OrderTest extends BaseTest {
     public void TC_EditAddressInvalidInShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -190,7 +192,7 @@ public class OrderTest extends BaseTest {
     public void TC_OpenDeliveryInfoWithoutProductInCart() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 
 //        getLoginPage().loginSuccessWithCustomerAccount("dungtest2@gmail.com", "123456");
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
@@ -203,7 +205,7 @@ public class OrderTest extends BaseTest {
     public void TC_OpenDeliveryInfoFromShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -220,7 +222,7 @@ public class OrderTest extends BaseTest {
     public void TC_SelectShippingMethod() {
         ExcelHelper excel = new ExcelHelper();
 //        excel.setExcelFile("DataTest/Register.xlsx", "Register");
-//        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+//        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
 //        excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
 //        getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -236,7 +238,7 @@ public class OrderTest extends BaseTest {
     public void TC_OpenPaymentInfo() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -275,6 +277,10 @@ public class OrderTest extends BaseTest {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
+        excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
+        getCartPage().addProductToCart(excel.getCellData("productName", 2), excel.getCellData("quantity", 2));
+        getOrderPage().checkOutOrder(excel.getCellData("note",3));
+        DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
         WebUI.openURL("https://cms.anhtester.com/purchase_history");
         By orderNotCancel = By.xpath("(//a[@title='Cancel'])[1]/ancestor::tr/td[1]");
         getOrderPage().testCancelOrder(WebUI.getElementText(orderNotCancel));
@@ -298,7 +304,7 @@ public class OrderTest extends BaseTest {
     public void TC_ApplyDiscountCouponNotExist() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -314,7 +320,7 @@ public class OrderTest extends BaseTest {
     public void TC_ApplyCouponDiscountExpired() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -348,7 +354,7 @@ public class OrderTest extends BaseTest {
     public void TC_OpenConfirmOrderFromURL() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -363,7 +369,7 @@ public class OrderTest extends BaseTest {
     public void TC_OpenPaymentInfoFromURL() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 
@@ -378,7 +384,7 @@ public class OrderTest extends BaseTest {
     public void TC_OpenDeliveryInfoFromURL() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
-        getRegisterPage().registerSuccessCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
+        getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
 

@@ -34,6 +34,7 @@ public class DashboardPage extends CommonPage {
         WebUI.setTextFromSplitString(inputSearchProduct, keySearchProduct);
         WebUI.sleep(2);
         WebUI.setTextAndBackspace(inputSearchProduct, " ");
+        WebUI.sleep(2);
     }
     public void testSearchProduct(String keySearchProduct) {
         searchProduct(keySearchProduct);

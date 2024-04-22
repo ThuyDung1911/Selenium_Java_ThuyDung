@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="SuiteFullFlowOrder" verbose="1" parallel="none">
+<suite name="SuiteFullFlowOrder" verbose="1" parallel="methods">
     <listeners>
         <listener class-name="com.thuydung.listeners.TestListener"></listener>
     </listeners>

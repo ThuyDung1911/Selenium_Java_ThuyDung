@@ -39,7 +39,7 @@ public class RegisterPage extends CommonPage {
         WebUI.setText(inputConfirmPassword,confirm_password);
         WebUI.clickElement(checkboxAgreeCondition);
         WebUI.clickElement(buttonRegister);
-        WebUI.waitForElementInvisible(HomePage.messageRegisterSuccess);
+        //WebUI.waitForElementInvisible(HomePage.messageRegisterSuccess);
     }
     public void registerSuccessCustomerAccount(String fullname, String email, String password, String confirm_password) {
         Date now = new Date();

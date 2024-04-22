@@ -15,10 +15,10 @@ public class CartTest extends BaseTest {
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
-        boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
-        if (checkExistProduct) {
-            getCartPage().removeProductFromCartDetail(excel.getCellData("productName", 1));
-        }
+//        boolean checkExistProduct = getCartPage().checkProductExistInCart(excel.getCellData("productName", 1));
+//        if (checkExistProduct) {
+//            getCartPage().removeProductFromCartDetail(excel.getCellData("productName", 1));
+//        }
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
     }
     @JiraCreateIssue(isCreateIssue = false)
@@ -30,11 +30,11 @@ public class CartTest extends BaseTest {
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "AddProductToCart");
-        String keyProductName = excel.getCellData("productName", 2) + " - " + excel.getCellData("variantName", 2);
-        boolean checkExistProduct = getCartPage().checkProductExistInCart(keyProductName);
-        if (checkExistProduct) {
-            getCartPage().removeProductFromCartDetail(keyProductName);
-        }
+//        String keyProductName = excel.getCellData("productName", 2) + " - " + excel.getCellData("variantName", 2);
+//        boolean checkExistProduct = getCartPage().checkProductExistInCart(keyProductName);
+//        if (checkExistProduct) {
+//            getCartPage().removeProductFromCartDetail(keyProductName);
+//        }
         getCartPage().addProductToCart(excel.getCellData("productName", 2), excel.getCellData("quantity", 2));
     }
     @JiraCreateIssue(isCreateIssue = false)

@@ -15,9 +15,11 @@ import org.testng.Assert;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -540,13 +542,9 @@ public class AddProductPage extends CommonPage {
         WebUI.waitForPageLoaded();
         WebUI.sleep(5);
         WebUI.waitForElementVisible(valueVariant);
-        WebUI.sleep(2);
         WebUI.waitForElementVisible(valueVariantPrice);
-        WebUI.sleep(2);
         WebUI.waitForElementVisible(valueVariantSKU);
-        WebUI.sleep(2);
         WebUI.waitForElementVisible(valueVariantQuantity);
-        WebUI.sleep(5);
         List<WebElement> elementValueVariants = DriverManager.getDriver().findElements(valueVariant);
         List<WebElement> elementValueVariantPrices = DriverManager.getDriver().findElements(valueVariantPrice);
         List<WebElement> elementValueVariantSKUs = DriverManager.getDriver().findElements(valueVariantSKU);
@@ -581,6 +579,7 @@ public class AddProductPage extends CommonPage {
             productVariant.setVariantQuantity(variantQuantity);
             infoProductVariant.add(productVariant);
         }
+        WebUI.scrollToElementToBottom(By.xpath("//h5[normalize-space()='Product price + stock']/ancestor::div[@class='card']"));
 
         DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
         WebUI.openURL(PropertiesHelper.getValue("URL"));
@@ -1002,7 +1001,10 @@ public class AddProductPage extends CommonPage {
 
     public void addProductVariantValidRoleSeller(String productName, String category, String unit, String weight, String tags, String unitPrice, String discountDate, String quantity, String description, String discount, String imgName, String vat) {
 //        addProductVariantWithRoleSeller(productName, category, unit, weight, tags, unitPrice, discountDate, quantity, description, discount, imgName, vat);
-        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
+        String strDate = formatter.format(date);
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + RandomStringUtils.randomAlphabetic(3).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         WebUI.clickElement(menuProduct);
         WebUI.waitForPageLoaded();
@@ -1013,7 +1015,7 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(By.xpath("//div[normalize-space()='Add New Product']/ancestor::a/parent::div"));
         WebUI.waitForPageLoaded();
         WebUI.sleep(1);
-        WebUI.verifyElementVisible(titleAddNewProduct, "Tieu de Add New Product KHONG xuat hien");
+        WebUI.verifyElementVisible(By.xpath("//h1[text()='Add Your Product']"), "Tieu de Add Your Product KHONG xuat hien");
         //Product Information
         WebUI.verifyElementVisible(blockProductInf, "Product Information block KHONG xuat hien");
         WebUI.setTextAndClear(inputProductName, productName);
