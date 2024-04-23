@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 public class CartTest extends BaseTest {
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 1, description = "Kiểm tra chức năng thêm sản phẩm không có biển thể chưa tồn tại trong giỏ hàng vào giỏ hàng")
+    @Test(priority = 1, description = "Kiem tra chuc nang them san pham khong co bien the chua ton tai trong gio hang vao gio hang")
     public void TC_AddProductNoVariantNotExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -23,7 +23,7 @@ public class CartTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 2, description = "Kiểm tra chức năng thêm sản phẩm có biển thể chưa tồn tại trong giỏ hàng vào giỏ hàng")
+    @Test(priority = 2, description = "Kiem tra chuc nang them san pham co bien the chua ton tai trong gio hang vao gio hang")
     public void TC_AddProductVariantNotExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -40,7 +40,7 @@ public class CartTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 3, description = "Kiểm tra chức năng thêm sản phẩm không có biển thể đã tồn tại trong giỏ hàng vào giỏ hàng")
+    @Test(priority = 3, description = "Kiem tra chuc nang them san pham khong co bien the da ton tai trong gio hang vao gio hang")
     public void TC_AddProductNoVariantExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -56,7 +56,7 @@ public class CartTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 4, description = "Kiểm tra chức năng thêm sản phẩm có biển thể đã tồn tại trong giỏ hàng vào giỏ hàng")
+    @Test(priority = 4, description = "Kiem tra chuc nang them san pham co bien the da ton tai trong gio hang vao gio hang")
     public void TC_AddProductVariantExistToCartWithCustomerAccount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -73,7 +73,7 @@ public class CartTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 5, description = "Kiểm tra chức năng thêm sản phẩm đã tồn tại trong giỏ hàng với số lượng vượt quá số lượng tồn kho")
+    @Test(priority = 5, description = "Kiem tra chuc nang them san pham da ton tai trong gio hang voi so luong vuot qua so luong ton kho")
     public void TC_AddProductExistToCartOverQuantity() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -89,7 +89,7 @@ public class CartTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 6, description = "Kiểm tra chức năng thêm sản phẩm chưa tồn tại trong giỏ hàng với số lượng vượt quá số lượng tồn kho")
+    @Test(priority = 6, description = "Kiem tra chuc nang them san pham chua ton tai trong gio hang voi so luong vuot qua so luong ton kho")
     public void TC_AddProductNotExistToCartOverQuantity() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");

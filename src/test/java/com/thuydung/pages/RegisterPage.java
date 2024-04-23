@@ -49,8 +49,8 @@ public class RegisterPage extends CommonPage {
         String timestamp = formatter.format(now);
         email = email + timestamp + RandomStringUtils.randomAlphabetic(3).toUpperCase() + "@gmail.com";
         registerAccount(fullname, email, password, confirm_password);
-        WebUI.verifyAssertTrueIsDisplayed(HomePage.messageRegisterSuccess, "Khong xuat hien thong bao dang ky thanh cong.");
-        WebUI.verifyAssertTrueEqual(HomePage.messageRegisterSuccess, "Registration successful.", "Thong bao dang ky thanh cong khong dung.");
+        WebUI.verifyAssertTrueIsDisplayed(By.xpath("//span[@data-notify = 'message']"), "Khong xuat hien thong bao dang ky thanh cong.");
+        WebUI.verifyAssertTrueEqual(By.xpath("//span[@data-notify = 'message']"), "Registration successful.", "Thong bao dang ky thanh cong khong dung.");
         verifyNewCustomerAccount(fullname, email);
         WebUI.sleep(2);
     }

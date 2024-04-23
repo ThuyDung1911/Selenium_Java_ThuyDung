@@ -103,7 +103,7 @@ public class AddProductTest extends BaseTest {
     public void TC_AddProductVariantValidRoleSellerWithInvalidDiscount() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
-        getLoginPage().loginSuccessWithSellerAccount("dungtest@yopmail.com", "123456");
+        getLoginPage().loginSuccessWithSellerAccount("dungtest2@yopmail.com", "123456");
         excel.setExcelFile("DataTest/AddProduct.xlsx", "AddProduct");
         getAddProductPage().addProductVariantValidRoleSeller(excel.getCellData("productName", 2), excel.getCellData("category", 2), excel.getCellData("unit", 2), excel.getCellData("weight", 2), excel.getCellData("tags", 2), excel.getCellData("unitPrice", 2), excel.getCellData("discountDate", 2), excel.getCellData("quantity", 2), excel.getCellData("description", 2), excel.getCellData("discount", 2), excel.getCellData("image", 2), excel.getCellData("vat", 1));
     }

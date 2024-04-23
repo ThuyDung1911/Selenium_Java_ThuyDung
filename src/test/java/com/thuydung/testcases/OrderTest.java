@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 
 public class OrderTest extends BaseTest {
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 1, description = "Kiểm tra chức năng tạo đơn hàng thành công khi có áp mã giảm giá hợp lệ")
+    @Test(priority = 1, description = "Kiem tra chuc nang tao don hang thanh cong khi co ap ma giam gia hop le")
     public void TC_FlowOrderSuccessWithCouponValid() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
@@ -32,7 +32,7 @@ public class OrderTest extends BaseTest {
 
     // Add order success
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 2, description = "Kiểm tra chức năng tạo đơn hàng thành công khi có áp mã giảm giá đã hết hạn")
+    @Test(priority = 2, description = "Kiem tra chuc nang tao don hang thanh cong khi co ap ma giam gia da het han")
     public void TC_OrderProductWithCouponInvalid() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -48,7 +48,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 3, description = "Kiểm tra chức năng tạo đơn hàng thành công khi không áp mã giảm giá")
+    @Test(priority = 3, description = "Kiem tra chuc nang tao don hang thanh cong khi khong ap ma giam gia")
     public void TC_OrderProductWithNoCoupon() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -64,7 +64,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 4, description = "Kiểm tra truy cập trang shipping info khi có sản phẩm trong giỏ hàng")
+    @Test(priority = 4, description = "Kiem tra truy cap trang shipping info khi co san pham trong gio hang")
     public void TC_OpenShippingInfoDisplay() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -81,7 +81,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 5, description = "Kiểm tra truy cập trang shipping info khi không có sản phẩm trong giỏ hàng")
+    @Test(priority = 5, description = "Kiem tra truy cap trang shipping info khi khong co san pham trong gio hang")
     public void TC_CheckOutOrderWithoutCartEmpty() {
 //        getLoginPage().loginSuccessWithCustomerAccount("dungtest@gmail.com", "123456");
         ExcelHelper excel = new ExcelHelper();
@@ -94,7 +94,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = true)
-    @Test(priority = 6, description = "Kiểm tra chi tiết hóa đơn")
+    @Test(priority = 6, description = "Kiem tra chi tiet hoa don")
     public void TC_CheckOrderDetail() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -111,13 +111,13 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 7, description = "Kiểm tra truy cập trang shipping info khi chưa đăng nhập")
+    @Test(priority = 7, description = "Kiem tra truy cap trang shipping info khi chua dang nhap")
     public void TC_OpenShippingInfoWithoutLogin() {
         getOrderPage().testOpenShippingInfoWithoutLogin();
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 8, description = "Kiểm tra chức năng thêm địa chỉ giao hàng hợp lệ")
+    @Test(priority = 8, description = "Kiem tra chuc nang them dia chi giao hang hop le")
     public void TC_AddNewAddressInShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -134,7 +134,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 9, description = "Kiểm tra chức năng thêm địa chỉ giao hàng không hợp lệ")
+    @Test(priority = 9, description = "Kiem tra chuc nang them dia chi giao hang khong hop le")
     public void TC_AddNewAddressInvalidInShippingInfo() {
         try {
             ExcelHelper excel = new ExcelHelper();
@@ -159,7 +159,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 10, description = "Kiểm tra chức năng sửa địa chỉ giao hàng hợp lệ")
+    @Test(priority = 10, description = "Kiem tra chuc nang sua dia chi giao hang hop le")
     public void TC_EditAddressInShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -177,7 +177,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 11, description = "Kiểm tra chức năng sửa địa chỉ giao hàng không hợp lệ")
+    @Test(priority = 11, description = "Kiem tra chuc nang sua dia chi giao hang khong hop le")
     public void TC_EditAddressInvalidInShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -205,7 +205,7 @@ public class OrderTest extends BaseTest {
 //    }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 12, description = "Kiểm tra truy cập trang delivery info từ trang shipping info khi không có địa chỉ")
+    @Test(priority = 12, description = "Kiem tra truy cap trang delivery info tu trang shipping info khi khong co san pham trong gio hang")
     public void TC_OpenDeliveryInfoWithoutProductInCart() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -219,7 +219,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 13, description = "Kiểm tra truy cập trang delivery info từ trang shipping info khi có địa chỉ")
+    @Test(priority = 13, description = "Kiem tra truy cap trang delivery info tu trang shipping info khi co dia chi")
     public void TC_OpenDeliveryInfoFromShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -237,7 +237,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 14, description = "Kiểm tra khi chọn phương thức vận chuyển")
+    @Test(priority = 14, description = "Kiem tra khi chon phuong thuc van chuyen")
     public void TC_SelectShippingMethod() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -253,7 +253,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 15, description = "Kiểm tra truy cập trang Payment từ trang Shipping Info")
+    @Test(priority = 15, description = "Kiem tra truy cap trang Payment tu trang Shipping Info")
     public void TC_OpenPaymentInfo() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -270,7 +270,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 16, description = "Kiểm tra khi chọn phương thức thanh toán Cash on Delivery")
+    @Test(priority = 16, description = "Kiem tra khi chon phuong thuc thanh toan Cash on Delivery")
     public void TC_SelectPaymentMethodCashOnDelivery() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -286,7 +286,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 17, description = "Kiểm tra khi chưa đồng ý điều kiện, điều khoản")
+    @Test(priority = 17, description = "Kiem tra khi chua dong y dieu kien, dieu khoan")
     public void TC_NotSelectAgreeTerms() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -301,7 +301,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 18, description = "Kiểm tra chức năng hủy đơn hàng")
+    @Test(priority = 18, description = "Kiem tra chuc nang huy don hang")
     public void TC_CancelOrder() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -321,7 +321,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 19, description = "Kiểm tra áp mã coupon hợp lệ")
+    @Test(priority = 19, description = "Kiem tra ap ma coupon hop le")
     public void TC_ApplyDiscountCouponValid() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
@@ -339,7 +339,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 20, description = "Kiểm tra áp mã coupon không tồn tại")
+    @Test(priority = 20, description = "Kiem tra ap ma coupon khong ton tai")
     public void TC_ApplyDiscountCouponNotExist() {
         try {
             ExcelHelper excel = new ExcelHelper();
@@ -364,7 +364,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 21, description = "Kiểm tra áp mã coupon đã hết hạn")
+    @Test(priority = 21, description = "Kiem tra ap ma coupon da het han")
     public void TC_ApplyCouponDiscountExpired() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -380,7 +380,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 22, description = "Kiểm tra khi ấn vào link Terms and Conditions")
+    @Test(priority = 22, description = "Kiem tra khi an vao lien ket Terms and Conditions")
     public void TC_ClickInTermsAndConditions() {
         ExcelHelper excel = new ExcelHelper();
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
@@ -395,7 +395,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 23, description = "Kiểm tra khi ấn vào link Privacy Policy")
+    @Test(priority = 23, description = "Kiem tra khi an vao lien ket Privacy Policy")
     public void TC_ClickInPrivacyPolicy() {
         ExcelHelper excel = new ExcelHelper();
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
@@ -410,7 +410,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 24, description = "Kiểm tra truy cập trang Confirm order từ URL")
+    @Test(priority = 24, description = "Kiem tra truy cap trang Confirm order tu URL")
     public void TC_OpenConfirmOrderFromURL() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -426,7 +426,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 25, description = "Kiểm tra truy cập trang Payment từ URL")
+    @Test(priority = 25, description = "Kiem tra truy cap trang Payment tu URL")
     public void TC_OpenPaymentInfoFromURL() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
@@ -442,7 +442,7 @@ public class OrderTest extends BaseTest {
     }
 
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 26, description = "Kiểm tra truy cập trang delivery info từ URL")
+    @Test(priority = 26, description = "Kiem tra truy cap trang Delivery Info tu URL")
     public void TC_OpenDeliveryInfoFromURL() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");

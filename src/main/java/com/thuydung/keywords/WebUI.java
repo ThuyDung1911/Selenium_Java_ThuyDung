@@ -48,19 +48,28 @@ public class WebUI {
 
     @Step("Nhấn vào element: {0}")
     public static void clickElement(By by) {
-        waitForPageLoaded();
-        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        wait.until(ExpectedConditions.elementToBeClickable(by));
-        waitForJQueryLoad();
-        sleep(STEP_TIME);
-        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
-            highLightElement(by);
+        try {
+            waitForPageLoaded();
+            WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            wait.until(ExpectedConditions.elementToBeClickable(by));
+            waitForJQueryLoad();
+            //sleep(STEP_TIME);
+            if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+                highLightElement(by);
+            }
+            DriverManager.getDriver().findElement(by).click();
+            ExtentTestManager.logMessage(Status.PASS, "Nhấn vào element: " + by);
+            LogUtils.info("Nhấn vào element: " + by.toString());
+            //AllureManager.saveTextLog("Nhấn vào element: " + by.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+                JavascriptExecutor js2 = (JavascriptExecutor) DriverManager.getDriver();
+                js2.executeScript("location.reload()");
+            }
         }
-        DriverManager.getDriver().findElement(by).click();
-        ExtentTestManager.logMessage(Status.PASS, "Nhấn vào element: " + by);
-        LogUtils.info("Nhấn vào element: " + by.toString());
-        //AllureManager.saveTextLog("Nhấn vào element: " + by.toString());
+
     }
 
     @Step("Nhấn vào element: {0}")

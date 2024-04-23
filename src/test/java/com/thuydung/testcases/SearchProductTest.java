@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class SearchProductTest extends BaseTest {
     //Search product have result
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 1, description = "Kiểm tra chức năng tìm kiếm sản phẩm với từ khóa có trả ra kết quả")
+    @Test(priority = 1, description = "Kiem tra chuc nang tim kiem san pham voi tu khoa co tra ra ket qua")
     public void TC_SearchProductHaveResult() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "SearchProduct");
@@ -17,7 +17,7 @@ public class SearchProductTest extends BaseTest {
 
     //Search product have not result
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 2, description = "Kiểm tra chức năng tìm kiếm sản phẩm với từ khóa không trả ra kết quả")
+    @Test(priority = 2, description = "Kiem tra chuc nang tim kiem san pham voi tu khoa khong tra ra ket qua")
     public void TC_SearchProductHaveNotResult() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "SearchProduct");
@@ -26,7 +26,7 @@ public class SearchProductTest extends BaseTest {
 
     //Search tag contain keySearchProduct
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 3, description = "Kiểm tra chức năng gợi ý tag sản phẩm")
+    @Test(priority = 3, description = "Kiem tra chuc nang goi y tag san pham")
     public void TC_SearchSuggestionTagContainKeySearchProduct() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "SearchProduct");
@@ -35,7 +35,7 @@ public class SearchProductTest extends BaseTest {
 
     //Search category contain keySearchProduct
     @JiraCreateIssue(isCreateIssue = false)
-    @Test(priority = 4, description = "Kiểm tra chức năng gợi ý danh mục sản phẩm")
+    @Test(priority = 4, description = "Kiem tra chuc nang goi y danh muc san pham")
     public void TC_SearchSuggestionCategoryContainKeySearchProduct() {
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "SearchProduct");
