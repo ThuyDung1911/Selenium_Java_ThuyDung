@@ -39,6 +39,7 @@ public class RegisterPage extends CommonPage {
         WebUI.setText(inputPassword, password);
         WebUI.setText(inputConfirmPassword, confirm_password);
         WebUI.clickElement(checkboxAgreeCondition);
+        WebUI.sleep(2);
         WebUI.clickElement(buttonRegister);
         //WebUI.waitForElementInvisible(HomePage.messageRegisterSuccess);
     }
