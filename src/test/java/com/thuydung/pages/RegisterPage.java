@@ -21,8 +21,9 @@ public class RegisterPage extends CommonPage {
     public By messageRequiredFullName = By.xpath("//strong[normalize-space()='The name field is required.']");
     public By messageRequiredPasswordCharacter = By.xpath("//strong[normalize-space()='The password must be at least 6 characters.']");
     public By messageRequiredConfirmPasswordMatch = By.xpath("//strong[normalize-space()='The password confirmation does not match.']");
-    public By messageNotiRegister= By.xpath("//span[@data-notify='message']");
+    public By messageNotiRegister = By.xpath("//span[@data-notify='message']");
     private By errorMessage = By.xpath("//h1[normalize-space()='Something went wrong!']");
+
     public void registerAccount(String fullname, String email, String password, String confirm_password) {
         WebUI.openURL(PropertiesHelper.getValue("URL_REGISTER"));
         if (WebUI.getWebElement(LoginPage.closeAdvertisementPopup).isDisplayed()) {
@@ -33,89 +34,110 @@ public class RegisterPage extends CommonPage {
         }
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
-        WebUI.setText(inputFullName,fullname);
-        WebUI.setText(inputEmail,email);
-        WebUI.setText(inputPassword,password);
-        WebUI.setText(inputConfirmPassword,confirm_password);
+        WebUI.setText(inputFullName, fullname);
+        WebUI.setText(inputEmail, email);
+        WebUI.setText(inputPassword, password);
+        WebUI.setText(inputConfirmPassword, confirm_password);
         WebUI.clickElement(checkboxAgreeCondition);
         WebUI.clickElement(buttonRegister);
         //WebUI.waitForElementInvisible(HomePage.messageRegisterSuccess);
     }
+
     public void registerSuccessCustomerAccount(String fullname, String email, String password, String confirm_password) {
         Date now = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
         String timestamp = formatter.format(now);
         email = email + timestamp + RandomStringUtils.randomAlphabetic(3).toUpperCase() + "@gmail.com";
-        registerAccount(fullname,email,password,confirm_password);
-        WebUI.verifyAssertTrueIsDisplayed(HomePage.messageRegisterSuccess,"Khong xuat hien thong bao dang ky thanh cong.");
-        WebUI.verifyAssertTrueEqual(HomePage.messageRegisterSuccess,"Registration successful.","Thong bao dang ky thanh cong khong dung.");
-        verifyNewCustomerAccount(fullname,email);
+        registerAccount(fullname, email, password, confirm_password);
+        WebUI.verifyAssertTrueIsDisplayed(HomePage.messageRegisterSuccess, "Khong xuat hien thong bao dang ky thanh cong.");
+        WebUI.verifyAssertTrueEqual(HomePage.messageRegisterSuccess, "Registration successful.", "Thong bao dang ky thanh cong khong dung.");
+        verifyNewCustomerAccount(fullname, email);
         WebUI.sleep(2);
     }
+
     public void registerCustomerAccount(String fullname, String email, String password, String confirm_password) {
-        email = email + RandomStringUtils.randomAlphabetic(8).toUpperCase() + "@gmail.com";
-        registerAccount(fullname,email,password,confirm_password);
-        verifyNewCustomerAccount(fullname,email);
+        Date now = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String timestamp = formatter.format(now);
+        email = email + timestamp + RandomStringUtils.randomAlphabetic(3).toUpperCase() + "@gmail.com";
+//        email = email + RandomStringUtils.randomAlphabetic(8).toUpperCase() + "@gmail.com";
+        registerAccount(fullname, email, password, confirm_password);
+        verifyNewCustomerAccount(fullname, email);
         WebUI.sleep(2);
     }
+
     public void verifyNewCustomerAccount(String fullname, String email) {
         getHomePage().openMyPanel();
-        WebUI.verifyAssertTrueEqual(DashboardPage.fullNameAccount,fullname,"Tên tài khoản không đúng.");
-        WebUI.verifyAssertTrueEqual(DashboardPage.emailAccount,email,"Email tài khoản không đúng.");
+        WebUI.verifyAssertTrueEqual(DashboardPage.fullNameAccount, fullname, "Tên tài khoản không đúng.");
+        WebUI.verifyAssertTrueEqual(DashboardPage.emailAccount, email, "Email tài khoản không đúng.");
     }
+
     public void registerFailWithoutFullname(String fullname, String email, String password, String confirm_password) {
-        registerAccount(fullname,email,password,confirm_password);
-        WebUI.verifyAssertTrueIsDisplayed(messageRequiredFullName,"Khong xuat hien thong bao bat buoc nhap ten.");
-        WebUI.verifyAssertTrueEqual(messageRequiredFullName,"The name field is required.","Thong bao bat buoc nhap ten khong dung.");
+        registerAccount(fullname, email, password, confirm_password);
+        WebUI.verifyAssertTrueIsDisplayed(messageRequiredFullName, "Khong xuat hien thong bao bat buoc nhap ten.");
+        WebUI.verifyAssertTrueEqual(messageRequiredFullName, "The name field is required.", "Thong bao bat buoc nhap ten khong dung.");
         WebUI.sleep(2);
     }
+
     public void registerFailWithoutEmail(String fullname, String email, String password, String confirm_password) {
-        registerAccount(fullname,email,password,confirm_password);
-        WebUI.verifyAssertTrueIsDisplayed(errorMessage,"He thong khong bao loi khi email de trong.");
+        registerAccount(fullname, email, password, confirm_password);
+        WebUI.verifyAssertTrueIsDisplayed(errorMessage, "He thong khong bao loi khi email de trong.");
         WebUI.sleep(2);
     }
+
     public void registerFailWithExistEmail(String fullname, String email, String password, String confirm_password) {
-        registerAccount(fullname,email,password,confirm_password);
-        WebUI.verifyAssertTrueIsDisplayed(messageNotiRegister,"Khong xuat hien thong bao email da ton tai.");
-        WebUI.verifyAssertTrueEqual(messageNotiRegister,"Email or Phone already exists.","Thong bao email da ton tai khong dung.");
+        registerAccount(fullname, email, password, confirm_password);
+        WebUI.verifyAssertTrueIsDisplayed(messageNotiRegister, "Khong xuat hien thong bao email da ton tai.");
+        WebUI.verifyAssertTrueEqual(messageNotiRegister, "Email or Phone already exists.", "Thong bao email da ton tai khong dung.");
         WebUI.sleep(2);
     }
+
     public void registerFailWithInvalidEmail(String fullname, String email, String password, String confirm_password) {
-        registerAccount(fullname,email,password,confirm_password);
-        WebUI.verifyAssertTrueIsDisplayed(titleRegisterPage,"Email khong dung dinh dang.");
+        registerAccount(fullname, email, password, confirm_password);
+        WebUI.verifyAssertTrueIsDisplayed(titleRegisterPage, "Email khong dung dinh dang.");
         WebUI.sleep(2);
     }
+
     public void registerFailWithoutPassword(String fullname, String email, String password, String confirm_password) {
-        registerAccount(fullname,email,password,confirm_password);
-        WebUI.verifyAssertTrueIsDisplayed(messageRequiredPassword,"Khong xuat hien thong bao bat buoc nhap mat khau.");
-        WebUI.verifyAssertTrueEqual(messageRequiredPassword,"The password field is required.","Thong bao bat buoc nhap mat khau khong dung.");
+        registerAccount(fullname, email, password, confirm_password);
+        WebUI.verifyAssertTrueIsDisplayed(messageRequiredPassword, "Khong xuat hien thong bao bat buoc nhap mat khau.");
+        WebUI.verifyAssertTrueEqual(messageRequiredPassword, "The password field is required.", "Thong bao bat buoc nhap mat khau khong dung.");
         WebUI.sleep(2);
     }
+
     public void registerFailCustomerWithPasswordLessCharacter(String fullname, String email, String password, String confirm_password) {
-        registerAccount(fullname,email,password,confirm_password);
-        WebUI.verifyAssertTrueIsDisplayed(messageRequiredPasswordCharacter,"Khong xuat hien thong bao mat khau phai co it nhat 6 ky tu.");
-        WebUI.verifyAssertTrueEqual(messageRequiredPasswordCharacter,"The password must be at least 6 characters.","Thong bao mat khau phai co it nhat 6 ky tu khong dung.");
+        registerAccount(fullname, email, password, confirm_password);
+        WebUI.verifyAssertTrueIsDisplayed(messageRequiredPasswordCharacter, "Khong xuat hien thong bao mat khau phai co it nhat 6 ky tu.");
+        WebUI.verifyAssertTrueEqual(messageRequiredPasswordCharacter, "The password must be at least 6 characters.", "Thong bao mat khau phai co it nhat 6 ky tu khong dung.");
         WebUI.sleep(2);
     }
+
     public void registerFailCustomerWithPasswordNotMatch(String fullname, String email, String password, String confirm_password) {
-        registerAccount(fullname,email,password,confirm_password);
-        WebUI.verifyAssertTrueIsDisplayed(messageRequiredConfirmPasswordMatch,"Khong xuat hien thong bao mat khau khong trung khop.");
-        WebUI.verifyAssertTrueEqual(messageRequiredConfirmPasswordMatch,"The password confirmation does not match.","Thong bao mat khau khong trung khop khong dung.");
+        registerAccount(fullname, email, password, confirm_password);
+        WebUI.verifyAssertTrueIsDisplayed(messageRequiredConfirmPasswordMatch, "Khong xuat hien thong bao mat khau khong trung khop.");
+        WebUI.verifyAssertTrueEqual(messageRequiredConfirmPasswordMatch, "The password confirmation does not match.", "Thong bao mat khau khong trung khop khong dung.");
         WebUI.sleep(2);
     }
+
     public void registerFailCustomerWithoutAcceptTerm(String fullname, String email, String password, String confirm_password) {
-        email = email + RandomStringUtils.randomAlphabetic(8).toUpperCase() + "@gmail.com";
+        Date now = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String timestamp = formatter.format(now);
+        email = email + timestamp + RandomStringUtils.randomAlphabetic(3).toUpperCase() + "@gmail.com";
+//        email = email + RandomStringUtils.randomAlphabetic(8).toUpperCase() + "@gmail.com";
         WebUI.openURL(PropertiesHelper.getValue("URL_REGISTER"));
         WebUI.clickElement(LoginPage.closeAdvertisementPopup);
         WebUI.clickElement(LoginPage.buttonOkCookies);
         WebUI.waitForPageLoaded();
-        WebUI.setText(inputFullName,fullname);
-        WebUI.setText(inputEmail,email);
-        WebUI.setText(inputPassword,password);
-        WebUI.setText(inputConfirmPassword,confirm_password);
+        WebUI.sleep(2);
+        WebUI.setText(inputFullName, fullname);
+        WebUI.setText(inputEmail, email);
+        WebUI.setText(inputPassword, password);
+        WebUI.setText(inputConfirmPassword, confirm_password);
         WebUI.clickElement(buttonRegister);
         WebUI.waitForPageLoaded();
-        WebUI.verifyAssertTrueIsDisplayed(titleRegisterPage,"Cho phep dang ky ma chua dong y dieu khoan.");
+        WebUI.sleep(2);
+        WebUI.verifyAssertTrueIsDisplayed(titleRegisterPage, "Cho phep dang ky ma chua dong y dieu khoan.");
         WebUI.sleep(2);
     }
 

@@ -20,6 +20,7 @@ public class LoginPage extends CommonPage {
     public static By messageRequiredPassword = By.xpath("//input[contains(@class, 'is-invalid') and @id = 'password']");
     public static By roleUser = By.xpath("//span[contains(@class,'avatar')]/following-sibling::span//descendant::span[contains(@class,'small')]");
     public static By buttonOkCookies = By.xpath("//button[normalize-space()='Ok. I Understood']");
+
     public void openLoginPage() {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         if (WebUI.getWebElement(LoginPage.closeAdvertisementPopup).isDisplayed()) {
@@ -34,6 +35,7 @@ public class LoginPage extends CommonPage {
         WebUI.verifyAssertTrueIsDisplayed(titleLoginPage, "Trang đăng nhập KHÔNG được hiển thị");
         WebUI.sleep(1);
     }
+
     public void logOutRoleAdmin() {
         WebUI.clickElement(LoginPage.roleUser);
         WebUI.clickElement(HomePage.buttonLogoutWithRoleAdmin);
@@ -45,7 +47,7 @@ public class LoginPage extends CommonPage {
         WebUI.clickElement(buttonOkCookies);
         WebUI.waitForPageLoaded();
     }
-    
+
     public void loginFailWithEmailNull() {
         openLoginPage();
         WebUI.setText(inputPassword, "123456");
@@ -107,8 +109,8 @@ public class LoginPage extends CommonPage {
             WebUI.clickElement(buttonSubmitLogin);
             WebUI.waitForElementVisible(DashboardPage.titleDashboard);
             WebUI.verifyAssertTrueIsDisplayed(DashboardPage.titleDashboard, "Trang Dashboard không được hiển thị.");
-            WebUI.verifyAssertEquals(WebUI.getElementText(DashboardPage.titleDashboard), "Dashboard","Tiêu đề trang Dashboard không đúng.");
-            WebUI.verifyAssertTrueEqual(roleUser,"seller","Tài khoản đăng nhập không phải seller.");
+            WebUI.verifyAssertEquals(WebUI.getElementText(DashboardPage.titleDashboard), "Dashboard", "Tiêu đề trang Dashboard không đúng.");
+            WebUI.verifyAssertTrueEqual(roleUser, "seller", "Tài khoản đăng nhập không phải seller.");
         } catch (Exception e) {
             e.printStackTrace();
             if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
@@ -120,20 +122,29 @@ public class LoginPage extends CommonPage {
     }
 
     public void loginSuccessAdminPage(String email, String password) {
-        openLoginPage();
-        WebUI.setTextAndClear(inputEmail, email);
-        WebUI.setTextAndClear(inputPassword, password);
-        WebUI.clickElement(buttonSubmitLogin);
-        WebUI.waitForElementVisible(roleUser);
-        WebUI.verifyAssertTrueIsDisplayed(roleUser, "Đăng nhập vào hệ thống không thành công.");
-        WebUI.verifyAssertTrueEqual(roleUser,"admin","Tài khoản đăng nhập không phải admin.");
+        try {
+            openLoginPage();
+            WebUI.setTextAndClear(inputEmail, email);
+            WebUI.setTextAndClear(inputPassword, password);
+            WebUI.clickElement(buttonSubmitLogin);
+            WebUI.waitForElementVisible(roleUser);
+            WebUI.verifyAssertTrueIsDisplayed(roleUser, "Đăng nhập vào hệ thống không thành công.");
+            WebUI.verifyAssertTrueEqual(roleUser, "admin", "Tài khoản đăng nhập không phải admin.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+                js.executeScript("location.reload()");
+            }
+        }
     }
+
     public void loginFailWithInvalidEmailFormat(String email, String password) {
         openLoginPage();
         WebUI.setTextAndClear(inputEmail, email);
         WebUI.setTextAndClear(inputPassword, password);
         WebUI.clickElement(buttonSubmitLogin);
-        WebUI.checkHTML5MessageWithValueInvalid(inputEmail,"Email sai dinh dang");
+        WebUI.checkHTML5MessageWithValueInvalid(inputEmail, "Email sai dinh dang");
     }
 }
 

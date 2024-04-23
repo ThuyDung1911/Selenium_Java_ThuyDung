@@ -227,6 +227,7 @@ public class OrderPage {
         WebUI.verifyAssertTrueEqual(valueNewestCountry, country, "Quốc gia mới không được thêm vào.");
         WebUI.verifyAssertTrueEqual(valueNewestPhone, phone, "Số điện thoại mới không được thêm vào.");
     }
+
     public void testAddNewAddressInvalidInShippingInfo(String address, String country, String state, String city, String postalCode, String phone) {
         openShippingInfoFromURL();
         WebUI.scrollToElement(buttonAddNewAddress);
@@ -276,6 +277,7 @@ public class OrderPage {
         WebUI.verifyAssertTrueEqual(valueNewestCountry, country, "Quốc gia mới không được cập nhật.");
         WebUI.verifyAssertTrueEqual(valueNewestPhone, phone, "Số điện thoại mới không được cập nhật.");
     }
+
     public void testEditAddressInvalidInShippingInfo(String address, String country, String state, String city, String postalCode, String phone) {
         openShippingInfoFromURL();
         WebUI.scrollToElement(buttonAddNewAddress);
@@ -387,13 +389,14 @@ public class OrderPage {
     }
 
     public void testProductInDeliveryInfoDisplay() {
-        if(!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/checkout/delivery_info")){
+        if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/checkout/delivery_info")) {
             openDeliveryInfoWithShippingInfo();
         }
         //Check info order in display delivery info
         List<String> productNamesInDisplayDeliveryInfo = getProductsNameInDeliveryInfoDisplay();
         WebUI.clickElement(buttonCart);
         WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
         List<String> productNamesInCart = CartPage.getProductsNameInCart();
         WebUI.verifyAssertEquals(productNamesInDisplayDeliveryInfo, productNamesInCart, "Danh sách sản phẩm không khớp với giỏ hàng.");
 
@@ -436,7 +439,7 @@ public class OrderPage {
     }
 
     public void testInfoOrderInPaymentInfo() {
-        if(!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/checkout/payment_select")){
+        if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/checkout/payment_select")) {
             openPaymentInfoFromShippingInfoDisplay();
         }
         //check quantity item product in summary with cart
@@ -455,12 +458,12 @@ public class OrderPage {
 
         List<Cart> infoProductsInDisplayPayment = getInfoProductsInDisplayPayment();
         for (int i = 0; i < cartDetails.size(); i++) {
-            WebUI.verifyAssertContain( cartDetails.get(i).getNameProduct(), infoProductsInDisplayPayment.get(i).getNameProduct(), "Ten san pham khong khop so voi gio hang.");
+            WebUI.verifyAssertContain(cartDetails.get(i).getNameProduct(), infoProductsInDisplayPayment.get(i).getNameProduct(), "Ten san pham khong khop so voi gio hang.");
             WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getPrice(), cartDetails.get(i).getPrice(), "Gia san pham khong khop so voi gio hang.");
             WebUI.verifyAssertEquals(infoProductsInDisplayPayment.get(i).getQuantity(), cartDetails.get(i).getQuantity(), "So luong san pham khong khop so voi gio hang.");
         }
         BigDecimal subTotalPriceInDisplayPaymentCheck = BigDecimal.ZERO;
-        for (int j = 0; j <infoProductsInDisplayPayment.size(); j++) {
+        for (int j = 0; j < infoProductsInDisplayPayment.size(); j++) {
             BigDecimal quantity = new BigDecimal(infoProductsInDisplayPayment.get(j).getQuantity());
             BigDecimal price = infoProductsInDisplayPayment.get(j).getPrice().multiply(quantity);
             subTotalPriceInDisplayPaymentCheck = subTotalPriceInDisplayPaymentCheck.add(price);
@@ -974,12 +977,14 @@ public class OrderPage {
 //        checkHistoryOrder(noteForOrder);
 
     }
+
     public void checkTotalPriceInPayment() {
         BigDecimal valuePriceTotal = calculatorTotalPriceInPaymentInfo();
         BigDecimal valuePriceTotalInDisplayPayment = convertCurrencyToBigDecimal(WebUI.getElementText(priceTotalInDisplayPayment));
         WebUI.verifyAssertEquals(valuePriceTotalInDisplayPayment, valuePriceTotal, "Tổng giá tiền ở trang thanh toán không khớp.");
 
     }
+
     public void checkOutOrder(String noteForOrder) {
         if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/cart")) {
             WebUI.openURL("https://cms.anhtester.com/cart");

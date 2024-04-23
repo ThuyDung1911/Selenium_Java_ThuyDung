@@ -23,6 +23,7 @@ public class ProfileTest extends BaseTest {
         excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
         getProfilePage().updateInfoBasicValidProfileCustomer(excel.getCellData("name", 1), excel.getCellData("phone", 1), excel.getCellData("photo", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
     }
+
     //Update Email Valid Customer
     @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 2)
@@ -35,6 +36,7 @@ public class ProfileTest extends BaseTest {
         excel.setExcelFile("DataTest/Profile.xlsx", "UpdateEmail");
         getProfilePage().updateValidEmailCustomer(excel.getCellData("email", 1));
     }
+
     //Add New Address Customer Valid
     @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 3)
@@ -47,6 +49,7 @@ public class ProfileTest extends BaseTest {
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddressValid(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
     }
+
     // Edit Address Customer Valid
     @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 4)
@@ -88,6 +91,7 @@ public class ProfileTest extends BaseTest {
         excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
         getProfilePage().updateInfoBasicProfileCustomerWithoutPhone(excel.getCellData("name", 3), excel.getCellData("phone", 3), excel.getCellData("photo", 3), excel.getCellData("password", 3), excel.getCellData("confirm password", 3));
     }
+
     //Update Info Basic Customer with password < 6 characters
     @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 7)
@@ -100,6 +104,7 @@ public class ProfileTest extends BaseTest {
         excel.setExcelFile("DataTest/Profile.xlsx", "UpdateBasicInfo");
         getProfilePage().updateInfoBasicProfileCustomerPasswordLessCharacter(excel.getCellData("name", 5), excel.getCellData("phone", 5), excel.getCellData("photo", 5), excel.getCellData("password", 5), excel.getCellData("confirm password", 5));
     }
+
     //Update Info Basic Customer no match password
     @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 8)
@@ -143,7 +148,7 @@ public class ProfileTest extends BaseTest {
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/Profile.xlsx", "UpdateEmail");
-        getProfilePage().updateProfileWithNewEmailIncorrectFormat(excel.getCellData("email",3));
+        getProfilePage().updateProfileWithNewEmailIncorrectFormat(excel.getCellData("email", 3));
     }
 
     //Add New Address Customer without Address
@@ -239,7 +244,7 @@ public class ProfileTest extends BaseTest {
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
-        getProfilePage().editAddressWithoutCountry(excel.getCellData("address", 3), excel.getCellData("country",3), excel.getCellData("postal code", 3), excel.getCellData("phone", 3));
+        getProfilePage().editAddressWithoutCountry(excel.getCellData("address", 3), excel.getCellData("country", 3), excel.getCellData("postal code", 3), excel.getCellData("phone", 3));
     }
 
     // Edit Address Customer without State
@@ -250,7 +255,7 @@ public class ProfileTest extends BaseTest {
         excel.setExcelFile("DataTest/Login.xlsx", "Login");
         getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/Profile.xlsx", "EditAddress");
-        getProfilePage().editAddressWithoutState(excel.getCellData("address", 4), excel.getCellData("country", 4), excel.getCellData("state",4), excel.getCellData("postal code", 4), excel.getCellData("phone", 4));
+        getProfilePage().editAddressWithoutState(excel.getCellData("address", 4), excel.getCellData("country", 4), excel.getCellData("state", 4), excel.getCellData("postal code", 4), excel.getCellData("phone", 4));
     }
 
     // Edit Address Customer without City

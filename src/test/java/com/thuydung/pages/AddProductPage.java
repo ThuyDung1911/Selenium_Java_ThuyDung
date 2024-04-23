@@ -99,7 +99,7 @@ public class AddProductPage extends CommonPage {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
         String strDate = formatter.format(date);
-        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " + RandomStringUtils.randomAlphabetic(3).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         openAddProductPage();
         //Product Information
@@ -151,7 +151,7 @@ public class AddProductPage extends CommonPage {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
         String strDate = formatter.format(date);
-        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " + RandomStringUtils.randomAlphabetic(3).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         openAddProductPage();
         //Product Information
@@ -299,7 +299,7 @@ public class AddProductPage extends CommonPage {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
         String strDate = formatter.format(date);
-        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " + RandomStringUtils.randomAlphabetic(3).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         WebUI.clickElement(menuProduct);
         WebUI.waitForPageLoaded();
@@ -371,7 +371,7 @@ public class AddProductPage extends CommonPage {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
         String strDate = formatter.format(date);
-        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " + RandomStringUtils.randomAlphabetic(3).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         WebUI.clickElement(menuProduct);
         WebUI.waitForPageLoaded();
@@ -443,7 +443,7 @@ public class AddProductPage extends CommonPage {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
         String strDate = formatter.format(date);
-        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " + RandomStringUtils.randomAlphabetic(3).toUpperCase();
 //        productName = productName + " " + ConfigData.AUTHOR + " " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         openAddProductPage();
@@ -501,7 +501,7 @@ public class AddProductPage extends CommonPage {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
         String strDate = formatter.format(date);
-        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " + RandomStringUtils.randomAlphabetic(3).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         openAddProductPage();
         //Product Information
@@ -951,7 +951,7 @@ public class AddProductPage extends CommonPage {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
         String strDate = formatter.format(date);
-        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " +RandomStringUtils.randomAlphabetic(3).toUpperCase();
+        productName = productName + " " + ConfigData.AUTHOR + " " + strDate + " " + RandomStringUtils.randomAlphabetic(3).toUpperCase();
         PropertiesHelper.setValue("product_P01", productName);
         WebUI.clickElement(menuProduct);
         WebUI.waitForPageLoaded();

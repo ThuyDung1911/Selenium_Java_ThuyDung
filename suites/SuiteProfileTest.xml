@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="SuiteProfileTest" verbose="1" thread-count = "4">
+<suite name="SuiteProfileTest" verbose="1" thread-count = "3">
     <listeners>
         <listener class-name="com.thuydung.listeners.TestListener"></listener>
     </listeners>

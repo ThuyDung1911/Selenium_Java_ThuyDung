@@ -52,6 +52,7 @@ public class WebUI {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         wait.until(ExpectedConditions.elementToBeClickable(by));
+        waitForJQueryLoad();
         sleep(STEP_TIME);
         if (ConfigData.HIGHLIGHT_ELEMENT == true) {
             highLightElement(by);
@@ -716,6 +717,10 @@ public class WebUI {
                 wait.until(jsLoad);
             } catch (Throwable error) {
                 error.printStackTrace();
+                if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+                    JavascriptExecutor js2 = (JavascriptExecutor) DriverManager.getDriver();
+                    js2.executeScript("location.reload()");
+                }
                 softAssert.fail("Hết thời gian cho trang load (Javascript). (" + PAGE_LOAD_TIMEOUT + "s)");
             }
         }

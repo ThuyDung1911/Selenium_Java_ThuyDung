@@ -21,6 +21,7 @@ public class CartTest extends BaseTest {
 //        }
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
     }
+
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 2, description = "Kiểm tra chức năng thêm sản phẩm có biển thể chưa tồn tại trong giỏ hàng vào giỏ hàng")
     public void TC_AddProductVariantNotExistToCartWithCustomerAccount() {
@@ -37,6 +38,7 @@ public class CartTest extends BaseTest {
 //        }
         getCartPage().addProductToCart(excel.getCellData("productName", 2), excel.getCellData("quantity", 2));
     }
+
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 3, description = "Kiểm tra chức năng thêm sản phẩm không có biển thể đã tồn tại trong giỏ hàng vào giỏ hàng")
     public void TC_AddProductNoVariantExistToCartWithCustomerAccount() {
@@ -52,6 +54,7 @@ public class CartTest extends BaseTest {
         }
         getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
     }
+
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 4, description = "Kiểm tra chức năng thêm sản phẩm có biển thể đã tồn tại trong giỏ hàng vào giỏ hàng")
     public void TC_AddProductVariantExistToCartWithCustomerAccount() {
@@ -68,6 +71,7 @@ public class CartTest extends BaseTest {
         }
         getCartPage().addProductToCart(excel.getCellData("productName", 2), excel.getCellData("quantity", 2));
     }
+
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 5, description = "Kiểm tra chức năng thêm sản phẩm đã tồn tại trong giỏ hàng với số lượng vượt quá số lượng tồn kho")
     public void TC_AddProductExistToCartOverQuantity() {
@@ -81,8 +85,9 @@ public class CartTest extends BaseTest {
         if (!checkExistProduct) {
             getCartPage().addProductToCart(excel.getCellData("productName", 1), excel.getCellData("quantity", 1));
         }
-        getCartPage().addProductOverQuantityToCart(excel.getCellData("productName",1), "901");
+        getCartPage().addProductOverQuantityToCart(excel.getCellData("productName", 1), "901");
     }
+
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 6, description = "Kiểm tra chức năng thêm sản phẩm chưa tồn tại trong giỏ hàng với số lượng vượt quá số lượng tồn kho")
     public void TC_AddProductNotExistToCartOverQuantity() {
@@ -96,7 +101,7 @@ public class CartTest extends BaseTest {
         if (!checkExistProduct) {
             getCartPage().removeProductFromCartDetail(excel.getCellData("productName", 1));
         }
-        getCartPage().addProductOverQuantityToCart(excel.getCellData("productName",1), "901");
+        getCartPage().addProductOverQuantityToCart(excel.getCellData("productName", 1), "901");
     }
 
     //check update quantity product in cart
@@ -116,6 +121,7 @@ public class CartTest extends BaseTest {
 //        }
         getCartPage().updateQuantityProductInCart(excel.getCellData("productName", 1), "3");
     }
+
     //check add product over quantity
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 8, description = "Kiem tra khi cap nhat san pham vao gio hang vuot qua so luong")
@@ -150,6 +156,7 @@ public class CartTest extends BaseTest {
         }
         getCartPage().removeProductFromCartDetail(excel.getCellData("productName", 1));
     }
+
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 10, description = "Kiem tra khi xoa san pham khoi gio hang dropdown")
     public void TC_RemoveProductFromCartWithCustomerAccount() {
@@ -230,9 +237,6 @@ public class CartTest extends BaseTest {
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
 //        getCartPage().checkQuantityAvailabelFail(PropertiesHelper.getValue("product_P01"));
 //    }
-
-
-
 
 
 }

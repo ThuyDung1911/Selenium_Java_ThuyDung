@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EditProductPage extends CommonPage{
+public class EditProductPage extends CommonPage {
     private String nameProductVerify;
     private By menuProduct = By.xpath("//ul[@id='main-menu']//span[text()='Products']");
     private By submenuAllProducts = By.xpath("//ul[@id='main-menu']//span[normalize-space()='All products']");
@@ -51,6 +51,7 @@ public class EditProductPage extends CommonPage{
     public static By valueVariantPrice = By.xpath("//tr[@class='variant']//input[contains(@name,'price')]");
     public static By valueVariantSKU = By.xpath("//tr[@class='variant']//input[contains(@name,'sku')]");
     public static By valueVariantQuantity = By.xpath("//tr[@class='variant']//input[contains(@name,'qty')]");
+
     public void editProduct(String productName, String category, String unit, String description) {
         WebUI.clickElement(menuProduct);
         WebUI.waitForJQueryLoad();
@@ -75,6 +76,7 @@ public class EditProductPage extends CommonPage{
         WebUI.setTextAndClear(inputDescription, description);
         WebUI.clickElement(buttonUpdateProduct);
     }
+
     //Edit product valid
     public void editProductValid(String productName, String category, String unit, String description) {
         editProduct(productName, category, unit, description);
@@ -85,6 +87,7 @@ public class EditProductPage extends CommonPage{
         //verifyNewProductNoVariantInEditDisplay(nameProductVerify, category, unit, weight, unitPrice, discountDate, quantity, description, discount, vat);
         verifyNewProductInViewProductWithCommonInfo(nameProductVerify, category, unit, description);
     }
+
     public static void verifyNewProductInViewProductWithCommonInfo(String nameProductVerify, String category, String unit, String description) {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         //WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
@@ -110,13 +113,14 @@ public class EditProductPage extends CommonPage{
         WebUI.sleep(1);
         WebUI.verifyAssertTrueEqual(AddProductPage.descriptionUI, description, "Description hien thi sai");
     }
-    public static void verifyNewProductNoVariantInEditDisplay(String nameProductNew, String category, String unit, String weight, String unitPrice, String discountDate, String quantity,  String description, String discount, String vat) {
+
+    public static void verifyNewProductNoVariantInEditDisplay(String nameProductNew, String category, String unit, String weight, String unitPrice, String discountDate, String quantity, String description, String discount, String vat) {
         if (!DriverManager.getDriver().getCurrentUrl().equals("https://cms.anhtester.com/admin/products/admin")) {
             WebUI.openURL("https://cms.anhtester.com/admin/products/admin");
         }
         WebUI.clickElement(EditProductPage.btnEditProductNewest);
         WebUI.waitForPageLoaded();
-        Map<String,String> dataAddSuccessProduct = EditProductPage.getProductNoVariantDataInEditDisplay();
+        Map<String, String> dataAddSuccessProduct = EditProductPage.getProductNoVariantDataInEditDisplay();
         WebUI.verifyAssertEquals(nameProductNew, dataAddSuccessProduct.get("productName"), "Product name khong duoc chinh sua dung");
 
         WebUI.verifyAssertEquals(category, dataAddSuccessProduct.get("category"), "Category khong duoc chinh sua dung");
@@ -141,48 +145,51 @@ public class EditProductPage extends CommonPage{
         BigDecimal vatCheck = WebUI.stringToBigDecimal(vat).setScale(2, RoundingMode.HALF_UP);
         WebUI.verifyAssertEquals(String.valueOf(vatCheck), dataAddSuccessProduct.get("vat"), "Vat khong duoc chinh sua dung");
     }
+
     //Edit product invalid
     public void editProductInvalid(String productName, String category, String unit, String description) {
         editProduct(productName, category, unit, description);
         //Verify
         WebUI.checkHTML5MessageWithValueInvalid(inputUnit, "Unit la truong bat buoc");
-        WebUI.verifyAssertTrueEqualMessageHTML(inputUnit, "Please fill out this field.","Messge Product name hien thi khong dung");
+        WebUI.verifyAssertTrueEqualMessageHTML(inputUnit, "Please fill out this field.", "Messge Product name hien thi khong dung");
     }
-    public static Map<String,String> getProductNoVariantDataInEditDisplay() {
-        String productName = WebUI.getElementAttribute(inputProductName,"value");
-        String category = WebUI.getElementAttribute(selectCategory,"title").replace("-","").trim();
-        String unit = WebUI.getElementAttribute(inputUnit,"value");
-        String brand = WebUI.getElementAttribute(selectBrand,"title");
-        String weight = WebUI.getElementAttribute(inputWeight,"value");
-        List<WebElement> listTag= DriverManager.getDriver().findElements(valueInputTags);
+
+    public static Map<String, String> getProductNoVariantDataInEditDisplay() {
+        String productName = WebUI.getElementAttribute(inputProductName, "value");
+        String category = WebUI.getElementAttribute(selectCategory, "title").replace("-", "").trim();
+        String unit = WebUI.getElementAttribute(inputUnit, "value");
+        String brand = WebUI.getElementAttribute(selectBrand, "title");
+        String weight = WebUI.getElementAttribute(inputWeight, "value");
+        List<WebElement> listTag = DriverManager.getDriver().findElements(valueInputTags);
         List<String> tags = new ArrayList<>();
         for (WebElement tag : listTag) {
             tags.add(tag.getAttribute("value"));
         }
-        String unitPrice = WebUI.getElementAttribute(inputUnitPrice,"value");
-        String discountDate = WebUI.getElementAttribute(selectDate,"value");
-        String quantity = WebUI.getElementAttribute(inputQuantity,"value");
+        String unitPrice = WebUI.getElementAttribute(inputUnitPrice, "value");
+        String discountDate = WebUI.getElementAttribute(selectDate, "value");
+        String quantity = WebUI.getElementAttribute(inputQuantity, "value");
         String description = WebUI.getElementText(inputDescription);
-        String discount = WebUI.getElementAttribute(inputDiscount,"value");
-        String vat = WebUI.getElementAttribute(inputVat,"value");
-        String sku = WebUI.getElementAttribute(inputSKU,"value");
-        Map<String,String> productData = new HashMap<>();
-        productData.put("productName",productName);
-        productData.put("category",category);
-        productData.put("brand",brand);
-        productData.put("unit",unit);
-        productData.put("weight",weight);
+        String discount = WebUI.getElementAttribute(inputDiscount, "value");
+        String vat = WebUI.getElementAttribute(inputVat, "value");
+        String sku = WebUI.getElementAttribute(inputSKU, "value");
+        Map<String, String> productData = new HashMap<>();
+        productData.put("productName", productName);
+        productData.put("category", category);
+        productData.put("brand", brand);
+        productData.put("unit", unit);
+        productData.put("weight", weight);
         productData.put("tags", tags.toString());
-        productData.put("unitPrice",unitPrice);
-        productData.put("discountDate",discountDate);
-        productData.put("discount",discount);
-        productData.put("sku",sku);
-        productData.put("quantity",quantity);
-        productData.put("description",description);
-        productData.put("vat",vat);
+        productData.put("unitPrice", unitPrice);
+        productData.put("discountDate", discountDate);
+        productData.put("discount", discount);
+        productData.put("sku", sku);
+        productData.put("quantity", quantity);
+        productData.put("description", description);
+        productData.put("vat", vat);
         return productData;
     }
-    public Map<String,String> getProductVariantDataInEditDisplay() {
+
+    public Map<String, String> getProductVariantDataInEditDisplay() {
         String productName = WebUI.getElementText(inputProductName);
         String category = WebUI.getElementText(selectCategory);
         String unit = WebUI.getElementText(inputUnit);
@@ -215,27 +222,25 @@ public class EditProductPage extends CommonPage{
         for (WebElement variantQuantity : variantQuantityList) {
             variantQuantityListData.add(variantQuantity.getAttribute("value"));
         }
-        Map<String,String> productData = new HashMap<>();
-        productData.put("productName",productName);
-        productData.put("category",category);
-        productData.put("brand",brand);
-        productData.put("unit",unit);
-        productData.put("weight",weight);
-        productData.put("tags",tags);
-        productData.put("unitPrice",unitPrice);
-        productData.put("discountDate",discountDate);
-        productData.put("discount",discount);
-        productData.put("sku",sku);
-        productData.put("description",description);
-        productData.put("vat",vat);
-        productData.put("variantList",variantListData.toString());
-        productData.put("variantPriceList",variantPriceListData.toString());
-        productData.put("variantSKUList",variantSKUListData.toString());
-        productData.put("variantQuantityList",variantQuantityListData.toString());
+        Map<String, String> productData = new HashMap<>();
+        productData.put("productName", productName);
+        productData.put("category", category);
+        productData.put("brand", brand);
+        productData.put("unit", unit);
+        productData.put("weight", weight);
+        productData.put("tags", tags);
+        productData.put("unitPrice", unitPrice);
+        productData.put("discountDate", discountDate);
+        productData.put("discount", discount);
+        productData.put("sku", sku);
+        productData.put("description", description);
+        productData.put("vat", vat);
+        productData.put("variantList", variantListData.toString());
+        productData.put("variantPriceList", variantPriceListData.toString());
+        productData.put("variantSKUList", variantSKUListData.toString());
+        productData.put("variantQuantityList", variantQuantityListData.toString());
         return productData;
     }
-
-
 
 
 }

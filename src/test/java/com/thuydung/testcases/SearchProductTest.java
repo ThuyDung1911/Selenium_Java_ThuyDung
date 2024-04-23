@@ -14,6 +14,7 @@ public class SearchProductTest extends BaseTest {
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "SearchProduct");
         getDashboardPage().testSearchProductHaveResult(excel.getCellData("keySearchProduct", 1));
     }
+
     //Search product have not result
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 2, description = "Kiểm tra chức năng tìm kiếm sản phẩm với từ khóa không trả ra kết quả")
@@ -22,6 +23,7 @@ public class SearchProductTest extends BaseTest {
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "SearchProduct");
         getDashboardPage().testSearchProductHaveNotResult(excel.getCellData("keySearchProduct", 2));
     }
+
     //Search tag contain keySearchProduct
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 3, description = "Kiểm tra chức năng gợi ý tag sản phẩm")
@@ -30,6 +32,7 @@ public class SearchProductTest extends BaseTest {
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "SearchProduct");
         getDashboardPage().testSearchSuggestionTagContainKeySearchProduct(excel.getCellData("keySearchProduct", 3));
     }
+
     //Search category contain keySearchProduct
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 4, description = "Kiểm tra chức năng gợi ý danh mục sản phẩm")

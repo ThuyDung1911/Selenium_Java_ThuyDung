@@ -19,6 +19,7 @@ public class CommonPage {
         }
         return couponPage;
     }
+
     public LoginPage getLoginPage() {
         if (loginPage == null) {
             loginPage = new LoginPage();
@@ -53,30 +54,35 @@ public class CommonPage {
         }
         return productInfoPage;
     }
+
     public RegisterPage getRegisterPage() {
         if (registerPage == null) {
             registerPage = new RegisterPage();
         }
         return registerPage;
     }
+
     public HomePage getHomePage() {
         if (homePage == null) {
             homePage = new HomePage();
         }
         return homePage;
     }
+
     public EditProductPage getEditProductPage() {
         if (editProductPage == null) {
             editProductPage = new EditProductPage();
         }
         return editProductPage;
     }
+
     public static DashboardPage getDashboardPage() {
         if (dashboardPage == null) {
             dashboardPage = new DashboardPage();
         }
         return dashboardPage;
     }
+
     public CartPage getCartPage() {
         if (cartPage == null) {
             cartPage = new CartPage();

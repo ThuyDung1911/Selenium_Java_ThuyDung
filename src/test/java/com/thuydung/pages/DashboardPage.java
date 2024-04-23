@@ -23,6 +23,7 @@ public class DashboardPage extends CommonPage {
     public static By resultCategorySuggestions = By.xpath("//div[contains(@class,'typed-search-box')]//div[text()='Category Suggestions']/following-sibling::ul//a");
     public static By resultTagSuggestions = By.xpath("//div[contains(@class,'typed-search-box')]//div[text()='Popular Suggestions']/following-sibling::ul//a");
     public static By messageSearchNothing = By.xpath("//div[contains(@class,'search-nothing')]");
+
     public void searchProduct(String keySearchProduct) {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         if (WebUI.getWebElement(LoginPage.closeAdvertisementPopup).isDisplayed()) {
@@ -37,6 +38,7 @@ public class DashboardPage extends CommonPage {
         WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
     }
+
     public void testSearchProduct(String keySearchProduct) {
         searchProduct(keySearchProduct);
         WebUI.verifyAssertTrueIsDisplayed(divSearchResult, "Khối Search result KHONG xuat hien");
@@ -47,11 +49,10 @@ public class DashboardPage extends CommonPage {
         testSearchProduct(keySearchProduct);
         List<WebElement> listResultSearchProduct = DriverManager.getDriver().findElements(resultSearchProduct);
         System.out.println("Size of listResultSearchProduct: " + listResultSearchProduct.size());
-        if(listResultSearchProduct.size() == 0){
+        if (listResultSearchProduct.size() == 0) {
             ExtentTestManager.logMessage(Status.FAIL, "Ket qua tim kiem KHONG xuat hien");
             LogUtils.info("Ket qua tim kiem KHONG xuat hien");
-        }
-        else {
+        } else {
             ExtentTestManager.logMessage(Status.PASS, "Ket qua tim kiem xuat hien");
             LogUtils.info("Ket qua tim kiem xuat hien");
         }

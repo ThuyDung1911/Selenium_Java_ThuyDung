@@ -17,6 +17,7 @@ public class EditProductTest extends BaseTest {
         excel.setExcelFile("DataTest/EditProduct.xlsx", "EditProduct");
         getEditProductPage().editProductValid(excel.getCellData("productName", 1), excel.getCellData("category", 1), excel.getCellData("unit", 1), excel.getCellData("description", 1));
     }
+
     //Edit product invalid
     @JiraCreateIssue(isCreateIssue = false)
     @Test(priority = 2, description = "Kiem tra sua san pham that bai voi role admin")
