@@ -375,6 +375,7 @@ public class WebUI {
         LogUtils.info("Clear text trên: " + by.toString());
         ExtentTestManager.logMessage("Clear text trên: " + by.toString());
     }
+
     @Step("Clear text trên: {0}")
     public static void clearTextWithCtrlA(By by) {
         waitForPageLoaded();
@@ -699,30 +700,30 @@ public class WebUI {
      * Chờ đợi trang tải xong (Javascript) với thời gian thiết lập sẵn
      */
     public static void waitForPageLoaded() {
-        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(PAGE_LOAD_TIMEOUT), Duration.ofMillis(500));
-        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+        try {
+            WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(PAGE_LOAD_TIMEOUT), Duration.ofMillis(500));
+            JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
 
-        // wait for Javascript to loaded
-        ExpectedCondition<Boolean> jsLoad = driver -> ((JavascriptExecutor) DriverManager.getDriver()).executeScript("return document.readyState")
-                .toString().equals("complete");
+            // wait for Javascript to loaded
+            ExpectedCondition<Boolean> jsLoad = driver -> ((JavascriptExecutor) DriverManager.getDriver()).executeScript("return document.readyState")
+                    .toString().equals("complete");
 
-        //Get JS is Ready
-        boolean jsReady = js.executeScript("return document.readyState").toString().equals("complete");
+            //Get JS is Ready
+            boolean jsReady = js.executeScript("return document.readyState").toString().equals("complete");
 
-        //Wait Javascript until it is Ready!
-        if (!jsReady) {
-            LogUtils.info("Javascript in NOT Ready!");
-            //Wait for Javascript to load
-            try {
+            //Wait Javascript until it is Ready!
+            if (!jsReady) {
+                LogUtils.info("Javascript in NOT Ready!");
+                //Wait for Javascript to load
                 wait.until(jsLoad);
-            } catch (Throwable error) {
-                error.printStackTrace();
-                if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
-                    JavascriptExecutor js2 = (JavascriptExecutor) DriverManager.getDriver();
-                    js2.executeScript("location.reload()");
-                }
-                softAssert.fail("Hết thời gian cho trang load (Javascript). (" + PAGE_LOAD_TIMEOUT + "s)");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+                JavascriptExecutor js2 = (JavascriptExecutor) DriverManager.getDriver();
+                js2.executeScript("location.reload()");
+            }
+            softAssert.fail("Hết thời gian cho trang load (Javascript). (" + PAGE_LOAD_TIMEOUT + "s)");
         }
     }
 
@@ -730,28 +731,29 @@ public class WebUI {
      * Chờ đợi JQuery tải xong với thời gian thiết lập sẵn
      */
     public static void waitForJQueryLoad() {
-        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(PAGE_LOAD_TIMEOUT), Duration.ofMillis(500));
-        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+        try {
+            WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(PAGE_LOAD_TIMEOUT), Duration.ofMillis(500));
+            JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
 
-        //Wait for jQuery to load
-        ExpectedCondition<Boolean> jQueryLoad = driver -> {
-            assert driver != null;
-            return ((Long) ((JavascriptExecutor) DriverManager.getDriver())
-                    .executeScript("return jQuery.active") == 0);
-        };
+            //Wait for jQuery to load
+            ExpectedCondition<Boolean> jQueryLoad = driver -> {
+                assert driver != null;
+                return ((Long) ((JavascriptExecutor) DriverManager.getDriver())
+                        .executeScript("return jQuery.active") == 0);
+            };
 
-        //Get JQuery is Ready
-        boolean jqueryReady = (Boolean) js.executeScript("return jQuery.active==0");
+            //Get JQuery is Ready
+            boolean jqueryReady = (Boolean) js.executeScript("return jQuery.active==0");
 
-        //Wait JQuery until it is Ready!
-        if (!jqueryReady) {
-            //LogUtils.info("JQuery is NOT Ready!");
-            try {
+            //Wait JQuery until it is Ready!
+            if (!jqueryReady) {
+                LogUtils.info("JQuery is NOT Ready!");
                 //Wait for jQuery to load
                 wait.until(jQueryLoad);
-            } catch (Throwable error) {
-                softAssert.fail("Hết thời gian cho JQuery load. (" + PAGE_LOAD_TIMEOUT + "s)");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            softAssert.fail("Hết thời gian cho JQuery load. (" + PAGE_LOAD_TIMEOUT + "s)");
         }
     }
 
@@ -759,33 +761,32 @@ public class WebUI {
      * Chờ đợi Angular tải xong với thời gian thiết lập sẵn
      */
     public static void waitForAngularLoad() {
-        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(PAGE_LOAD_TIMEOUT), Duration.ofMillis(500));
-        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
-        final String angularReadyScript = "return angular.element(document).injector().get('$http').pendingRequests.length === 0";
+        try {
+            WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(PAGE_LOAD_TIMEOUT), Duration.ofMillis(500));
+            JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+            final String angularReadyScript = "return angular.element(document).injector().get('$http').pendingRequests.length === 0";
 
-        //Wait for ANGULAR to load
-        ExpectedCondition<Boolean> angularLoad = driver -> {
-            assert driver != null;
-            return Boolean.valueOf(((JavascriptExecutor) DriverManager.getDriver())
-                    .executeScript(angularReadyScript).toString());
-        };
+            //Wait for ANGULAR to load
+            ExpectedCondition<Boolean> angularLoad = driver -> {
+                assert driver != null;
+                return Boolean.valueOf(((JavascriptExecutor) DriverManager.getDriver())
+                        .executeScript(angularReadyScript).toString());
+            };
 
-        //Get Angular is Ready
-        boolean angularReady = Boolean.parseBoolean(js.executeScript(angularReadyScript).toString());
+            //Get Angular is Ready
+            boolean angularReady = Boolean.parseBoolean(js.executeScript(angularReadyScript).toString());
 
-        //Wait ANGULAR until it is Ready!
-        if (!angularReady) {
-            LogUtils.info("Angular is NOT Ready!");
-            //Wait for Angular to load
-            try {
-                //Wait for jQuery to load
+            //Wait ANGULAR until it is Ready!
+            if (!angularReady) {
+                LogUtils.info("Angular is NOT Ready!");
+                //Wait for Angular to load
                 wait.until(angularLoad);
-            } catch (Throwable error) {
-                softAssert.fail("Hết thời gian cho Angular load. (" + PAGE_LOAD_TIMEOUT + "s)");
             }
+        } catch (Exception error) {
+            softAssert.fail("Hết thời gian cho Angular load. (" + PAGE_LOAD_TIMEOUT + "s)");
         }
-
     }
+
 
     public static void scrollToElement(By element) {
         JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
