@@ -576,7 +576,7 @@ public class WebUI {
     @Step("Kiểm tra element tồn tại {0}")
     public static Boolean checkElementExist(By by) {
         waitForPageLoaded();
-        sleep(3);
+        sleep(STEP_TIME);
         List<WebElement> listElement = getWebElements(by);
         if (listElement.size() > 0) {
             LogUtils.info("Element tồn tại: " + true + " ---" + by);

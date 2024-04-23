@@ -11,10 +11,8 @@ import org.testng.Assert;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class EditProductPage extends CommonPage {
     private String nameProductVerify;
@@ -55,13 +53,19 @@ public class EditProductPage extends CommonPage {
     public void editProduct(String productName, String category, String unit, String description) {
         WebUI.clickElement(menuProduct);
         WebUI.waitForJQueryLoad();
+        WebUI.sleep(2);
         WebUI.clickElement(submenuAllProducts);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(2);
         WebUI.clickElement(btnEditProductNewest);
         WebUI.waitForPageLoaded();
+        WebUI.sleep(2);
         WebUI.verifyElementVisible(titleEditProduct, "Tieu de Edit Product KHONG xuat hien");
         //Product Information
-        String nameProductNeedEdit = productName + " " + ConfigData.AUTHOR + " Update " + RandomStringUtils.randomAlphabetic(8).toUpperCase();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
+        String strDate = formatter.format(date);
+        String nameProductNeedEdit = productName + " " + ConfigData.AUTHOR + " Update " + strDate + " "+ RandomStringUtils.randomAlphabetic(3).toUpperCase();
 
         WebUI.setTextAndClear(inputProductName, nameProductNeedEdit);
         WebUI.clickElement(selectCategory);
