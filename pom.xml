@@ -162,7 +162,7 @@
                     <configuration>
                         <suiteXmlFiles>
                             <!-- Call Suite path -->
-                            <suiteXmlFile>suites/SuiteAll.xml</suiteXmlFile>
+                            <suiteXmlFile>suites/SuiteLogin.xml</suiteXmlFile>
                         </suiteXmlFiles>
                         <argLine>
                             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.21.1/aspectjweaver-1.9.21.1.jar"

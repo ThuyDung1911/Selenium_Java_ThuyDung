@@ -80,10 +80,9 @@ public class OrderTest extends BaseTest {
         getOrderPage().testCheckShippingInfoWithProfile();
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 5, description = "Kiem tra truy cap trang shipping info khi khong co san pham trong gio hang")
     public void TC_CheckOutOrderWithoutCartEmpty() {
-//        getLoginPage().loginSuccessWithCustomerAccount("dungtest@gmail.com", "123456");
         ExcelHelper excel = new ExcelHelper();
         excel.setExcelFile("DataTest/Register.xlsx", "Register");
         getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
@@ -101,7 +100,6 @@ public class OrderTest extends BaseTest {
         getRegisterPage().registerCustomerAccount(excel.getCellData("fullname", 1), excel.getCellData("email", 1), excel.getCellData("password", 1), excel.getCellData("confirm password", 1));
         excel.setExcelFile("DataTest/Profile.xlsx", "AddAddress");
         getProfilePage().addNewAddress(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
-
 //        excel.setExcelFile("DataTest/Login.xlsx", "Login");
 //        getLoginPage().loginSuccessWithCustomerAccount(excel.getCellData("email", 4), excel.getCellData("password", 4));
         excel.setExcelFile("DataTest/DataTestCMS.xlsx", "Order");
