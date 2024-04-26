@@ -1,9 +1,11 @@
 package com.thuydung.pages;
 
+import com.thuydung.drivers.DriverManager;
 import com.thuydung.helpers.PropertiesHelper;
 import com.thuydung.keywords.WebUI;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
