@@ -13,7 +13,7 @@ import org.openqa.selenium.WindowType;
 import org.testng.annotations.Test;
 
 public class OrderTest extends BaseTest {
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 1, description = "Kiem tra chuc nang tao don hang thanh cong khi co ap ma giam gia hop le")
     public void TC_FlowOrderSuccessWithCouponValid() {
         ExcelHelper excel = new ExcelHelper();
@@ -31,7 +31,7 @@ public class OrderTest extends BaseTest {
     }
 
     // Add order success
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 2, description = "Kiem tra chuc nang tao don hang thanh cong khi co ap ma giam gia da het han")
     public void TC_OrderProductWithCouponInvalid() {
         ExcelHelper excel = new ExcelHelper();
@@ -47,7 +47,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().checkOutOrder(excel.getCellData("note", 1), "DUNG2");
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 3, description = "Kiem tra chuc nang tao don hang thanh cong khi khong ap ma giam gia")
     public void TC_OrderProductWithNoCoupon() {
         ExcelHelper excel = new ExcelHelper();
@@ -63,7 +63,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().checkOutOrder(excel.getCellData("note", 3));
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 4, description = "Kiem tra truy cap trang shipping info khi co san pham trong gio hang")
     public void TC_OpenShippingInfoDisplay() {
         ExcelHelper excel = new ExcelHelper();
@@ -108,13 +108,13 @@ public class OrderTest extends BaseTest {
         getOrderPage().checkHistoryOrder(excel.getCellData("note", 3));
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 7, description = "Kiem tra truy cap trang shipping info khi chua dang nhap")
     public void TC_OpenShippingInfoWithoutLogin() {
         getOrderPage().testOpenShippingInfoWithoutLogin();
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 8, description = "Kiem tra chuc nang them dia chi giao hang hop le")
     public void TC_AddNewAddressInShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
@@ -131,7 +131,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testAddNewAddressInShippingInfo(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 9, description = "Kiem tra chuc nang them dia chi giao hang khong hop le")
     public void TC_AddNewAddressInvalidInShippingInfo() {
         try {
@@ -156,7 +156,7 @@ public class OrderTest extends BaseTest {
         }
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 10, description = "Kiem tra chuc nang sua dia chi giao hang hop le")
     public void TC_EditAddressInShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
@@ -174,7 +174,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testEditAddressInShippingInfo(excel.getCellData("address", 1), excel.getCellData("country", 1), excel.getCellData("state", 1), excel.getCellData("city", 1), excel.getCellData("postal code", 1), excel.getCellData("phone", 1));
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 11, description = "Kiem tra chuc nang sua dia chi giao hang khong hop le")
     public void TC_EditAddressInvalidInShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
@@ -192,7 +192,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testEditAddressInvalidInShippingInfo(excel.getCellData("address", 2), excel.getCellData("country", 2), excel.getCellData("state", 2), excel.getCellData("city", 2), excel.getCellData("postal code", 2), excel.getCellData("phone", 2));
     }
 
-//    @JiraCreateIssue(isCreateIssue = false)
+//    @JiraCreateIssue(isCreateIssue = true)
 //    @Test(priority = 9, description = "Kiem tra khi chon dia chi trong shipping info")
 //    public void TC_SelectAddressInShippingInfo() {
 //        ExcelHelper excel = new ExcelHelper();
@@ -202,7 +202,7 @@ public class OrderTest extends BaseTest {
 //        getOrderPage().testSelectAddressInShippingInfoWithAddress("3");
 //    }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 12, description = "Kiem tra truy cap trang delivery info tu trang shipping info khi khong co san pham trong gio hang")
     public void TC_OpenDeliveryInfoWithoutProductInCart() {
         ExcelHelper excel = new ExcelHelper();
@@ -216,7 +216,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testOpenDeliveryInfoWithoutAddress();
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 13, description = "Kiem tra truy cap trang delivery info tu trang shipping info khi co dia chi")
     public void TC_OpenDeliveryInfoFromShippingInfo() {
         ExcelHelper excel = new ExcelHelper();
@@ -234,7 +234,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testProductInDeliveryInfoDisplay();
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 14, description = "Kiem tra khi chon phuong thuc van chuyen")
     public void TC_SelectShippingMethod() {
         ExcelHelper excel = new ExcelHelper();
@@ -250,7 +250,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testSelectShippingMethod("Home Delivery");
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 15, description = "Kiem tra truy cap trang Payment tu trang Shipping Info")
     public void TC_OpenPaymentInfo() {
         ExcelHelper excel = new ExcelHelper();
@@ -267,7 +267,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testInfoOrderInPaymentInfo();
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 16, description = "Kiem tra khi chon phuong thuc thanh toan Cash on Delivery")
     public void TC_SelectPaymentMethodCashOnDelivery() {
         ExcelHelper excel = new ExcelHelper();
@@ -283,7 +283,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testChoosePaymentMethodCashOnDelivery();
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 17, description = "Kiem tra khi chua dong y dieu kien, dieu khoan")
     public void TC_NotSelectAgreeTerms() {
         ExcelHelper excel = new ExcelHelper();
@@ -298,7 +298,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testNotSelectAgreeTerms();
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 18, description = "Kiem tra chuc nang huy don hang")
     public void TC_CancelOrder() {
         ExcelHelper excel = new ExcelHelper();
@@ -318,7 +318,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testCancelOrder(WebUI.getElementText(orderNotCancel));
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 19, description = "Kiem tra ap ma coupon hop le")
     public void TC_ApplyDiscountCouponValid() {
         ExcelHelper excel = new ExcelHelper();
@@ -336,7 +336,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testApplyCouponDiscountValid(PropertiesHelper.getValue("COUPON_VALID"));
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 20, description = "Kiem tra ap ma coupon khong ton tai")
     public void TC_ApplyDiscountCouponNotExist() {
         try {
@@ -361,7 +361,7 @@ public class OrderTest extends BaseTest {
 
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 21, description = "Kiem tra ap ma coupon da het han")
     public void TC_ApplyCouponDiscountExpired() {
         ExcelHelper excel = new ExcelHelper();
@@ -377,7 +377,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testApplyCouponDiscountExpired("DUNG2");
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 22, description = "Kiem tra khi an vao lien ket Terms and Conditions")
     public void TC_ClickInTermsAndConditions() {
         ExcelHelper excel = new ExcelHelper();
@@ -392,7 +392,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testClickInTermsAndConditions();
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 23, description = "Kiem tra khi an vao lien ket Privacy Policy")
     public void TC_ClickInPrivacyPolicy() {
         ExcelHelper excel = new ExcelHelper();
@@ -407,7 +407,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testClickInPrivacyPolicy();
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 24, description = "Kiem tra truy cap trang Confirm order tu URL")
     public void TC_OpenConfirmOrderFromURL() {
         ExcelHelper excel = new ExcelHelper();
@@ -423,7 +423,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().testOpenConfirmOrderFromURL();
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 25, description = "Kiem tra truy cap trang Payment tu URL")
     public void TC_OpenPaymentInfoFromURL() {
         ExcelHelper excel = new ExcelHelper();
@@ -439,7 +439,7 @@ public class OrderTest extends BaseTest {
         getOrderPage().openPaymentInfoFromURL();
     }
 
-    @JiraCreateIssue(isCreateIssue = false)
+    @JiraCreateIssue(isCreateIssue = true)
     @Test(priority = 26, description = "Kiem tra truy cap trang Delivery Info tu URL")
     public void TC_OpenDeliveryInfoFromURL() {
         ExcelHelper excel = new ExcelHelper();
