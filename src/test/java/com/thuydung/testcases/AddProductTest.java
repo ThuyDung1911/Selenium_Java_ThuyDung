@@ -91,10 +91,10 @@ public class AddProductTest extends BaseTest {
             getAddProductPage().addProductVariantValidRoleSeller(excel.getCellData("productName", 1), excel.getCellData("category", 1), excel.getCellData("unit", 1), excel.getCellData("weight", 1), excel.getCellData("tags", 1), excel.getCellData("unitPrice", 1), excel.getCellData("discountDate", 1), excel.getCellData("quantity", 1), excel.getCellData("description", 1), excel.getCellData("discount", 1), excel.getCellData("image", 1), excel.getCellData("vat", 1));
         } catch (Exception e) {
             e.printStackTrace();
-            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
-                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
-                js.executeScript("location.reload()");
-            }
+//            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+//                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+//                js.executeScript("location.reload()");
+//            }
         }
     }
 

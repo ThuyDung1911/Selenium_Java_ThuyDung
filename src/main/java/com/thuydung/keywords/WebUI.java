@@ -452,17 +452,26 @@ public class WebUI {
 
     @Step("Nhập text {1} trong element {0}")
     public static void setTextAndClear(By by, String value) {
-        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        sleep(STEP_TIME);
-        clearTextWithCtrlA(by);
-        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
-            highLightElementFull(by);
+        try {
+            WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            sleep(STEP_TIME);
+            clearTextWithCtrlA(by);
+            if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+                highLightElementFull(by);
+            }
+            getWebElement(by).sendKeys(value);
+            ExtentTestManager.logMessage(Status.PASS, "Nhập text: " + value + " trong element " + by);
+            LogUtils.info("Nhập text: " + value + " trong " + by);
+            //AllureManager.saveTextLog("Nhập text: " + value + " trong " + by);
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+                JavascriptExecutor js2 = (JavascriptExecutor) DriverManager.getDriver();
+                js2.executeScript("location.reload()");
+            }
         }
-        getWebElement(by).sendKeys(value);
-        ExtentTestManager.logMessage(Status.PASS, "Nhập text: " + value + " trong element " + by);
-        LogUtils.info("Nhập text: " + value + " trong " + by);
-        //AllureManager.saveTextLog("Nhập text: " + value + " trong " + by);
+
     }
 
     @Step("Nhập text {1} trong element {0}")
@@ -499,16 +508,25 @@ public class WebUI {
 
     @Step("Nhập text {1} trong element {0} và ấn nút enter")
     public static void setTextEnter(By by, String value) {
-        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        sleep(STEP_TIME);
-        if (ConfigData.HIGHLIGHT_ELEMENT == true) {
-            highLightElementFull(by);
+        try {
+            WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            sleep(STEP_TIME);
+            if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+                highLightElementFull(by);
+            }
+            getWebElement(by).sendKeys(value, Keys.ENTER);
+            ExtentTestManager.logMessage(Status.PASS, "Nhập text: " + value + " trong element " + by);
+            //AllureManager.saveTextLog("Nhập text " + value + " trong " + by.toString() + "  và ấn nút enter");
+            LogUtils.info("Nhập text " + value + " trong " + by.toString() + " và ấn nút enter");
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+                JavascriptExecutor js2 = (JavascriptExecutor) DriverManager.getDriver();
+                js2.executeScript("location.reload()");
+            }
         }
-        getWebElement(by).sendKeys(value, Keys.ENTER);
-        ExtentTestManager.logMessage(Status.PASS, "Nhập text: " + value + " trong element " + by);
-        //AllureManager.saveTextLog("Nhập text " + value + " trong " + by.toString() + "  và ấn nút enter");
-        LogUtils.info("Nhập text " + value + " trong " + by.toString() + " và ấn nút enter");
+
     }
 
     public static void waitForElementClick(By by) {

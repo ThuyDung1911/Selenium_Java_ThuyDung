@@ -120,13 +120,13 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(selectFileTab);
         String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectGalleryImages);
         WebUI.clickElement(buttonAddFileImages);
         WebUI.clickElement(selectChooseThumbnailImages);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectThumbnailImages);
         WebUI.clickElement(buttonAddFileImages);
@@ -172,13 +172,13 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(selectFileTab);
         String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectGalleryImages);
         WebUI.clickElement(buttonAddFileImages);
         WebUI.clickElement(selectChooseThumbnailImages);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectThumbnailImages);
         WebUI.clickElement(buttonAddFileImages);
@@ -186,9 +186,9 @@ public class AddProductPage extends CommonPage {
         WebUI.scrollToElement(divProductVariation);
         addProductVariationColor(List.of("AliceBlue", "Amethyst"));
         addProductVariationAttribute(List.of("Size"));
-        addProductVariationAttribute(List.of("Quality"));
+        //addProductVariationAttribute(List.of("Quality"));
         addProductVariationAttributeValue("Size", List.of("22", "23"));
-        addProductVariationAttributeValue("Quality", List.of("Real", "Remake"));
+        //addProductVariationAttributeValue("Quality", List.of("Real", "Remake"));
         //Product price + stock
         addProductPriceAndStockVariation(unitPrice, discountDate, discount);
         //Product Description
@@ -209,7 +209,7 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(selectColor);
         for (String colorName : color) {
             WebUI.setTextAndClear(inputSearchDropDown, colorName);
-            WebUI.waitForJQueryLoad();
+            //WebUI.waitForJQueryLoad();
             WebUI.sleep(2);
             WebUI.clickElement(By.xpath("//div[@class='dropdown-menu show']//span[text()='" + colorName + "']"));
         }
@@ -225,10 +225,10 @@ public class AddProductPage extends CommonPage {
         for (String attributeName : attribute) {
             WebUI.clickElement(selectAttribute);
             WebUI.setTextAndClear(inputSearchDropDown, attributeName);
-            WebUI.waitForJQueryLoad();
+            //WebUI.waitForJQueryLoad();
             WebUI.sleep(2);
             WebUI.clickElement(By.xpath("//div[@class='dropdown-menu show']//span[text()='" + attributeName + "']"));
-            WebUI.waitForJQueryLoad();
+            //WebUI.waitForJQueryLoad();
             WebUI.sleep(1);
             WebUI.clickElement(selectAttribute);
         }
@@ -243,7 +243,7 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(selectAttributeValue);
         for (String attributeNameValue : attributeValue) {
             WebUI.setTextAndClear(inputSearchDropDown, attributeNameValue);
-            WebUI.waitForJQueryLoad();
+            //WebUI.waitForJQueryLoad();
             WebUI.sleep(2);
             WebUI.clickElement(By.xpath("//div[@class='dropdown-menu show']//span[text()='" + attributeNameValue + "']"));
         }
@@ -318,7 +318,7 @@ public class AddProductPage extends CommonPage {
         WebUI.setTextEnter(inputSearchCategory, category);
         WebUI.clickElement(selectBrand);
         WebUI.setTextEnter(inputSearchBrand, "CMS brand 01");
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.setTextAndClear(inputUnit, unit);
         WebUI.setTextAndClear(inputWeight, String.valueOf(weight));
@@ -333,13 +333,13 @@ public class AddProductPage extends CommonPage {
         LogUtils.info(SystemHelper.splitString(imgName, "[.]"));
         String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectGalleryImages);
         WebUI.clickElement(buttonAddFileImages);
         WebUI.clickElement(selectChooseThumbnailImages);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectThumbnailImages);
         WebUI.clickElement(buttonAddFileImages);
@@ -390,7 +390,7 @@ public class AddProductPage extends CommonPage {
         WebUI.setTextEnter(inputSearchCategory, category);
         WebUI.clickElement(selectBrand);
         WebUI.setTextEnter(inputSearchBrand, "CMS brand 01");
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.setTextAndClear(inputUnit, unit);
         WebUI.setTextAndClear(inputWeight, String.valueOf(weight));
@@ -405,13 +405,13 @@ public class AddProductPage extends CommonPage {
         LogUtils.info(SystemHelper.splitString(imgName, "[.]"));
         String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectGalleryImages);
         WebUI.clickElement(buttonAddFileImages);
         WebUI.clickElement(selectChooseThumbnailImages);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectThumbnailImages);
         WebUI.clickElement(buttonAddFileImages);
@@ -420,9 +420,9 @@ public class AddProductPage extends CommonPage {
         addProductVariationColor(List.of("AliceBlue", "Amethyst"));
         addProductVariationAttribute(List.of("Size"));
         WebUI.sleep(2);
-        addProductVariationAttribute(List.of("Quality"));
+        //addProductVariationAttribute(List.of("Quality"));
         addProductVariationAttributeValue("Size", List.of("22", "23"));
-        addProductVariationAttributeValue("Quality", List.of("Real", "Remake"));
+        //addProductVariationAttributeValue("Quality", List.of("Real", "Remake"));
         //Product price + stock
         addProductPriceAndStockVariation(unitPrice, discountDate, discount);
         //Product Description
@@ -465,13 +465,13 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(selectFileTab);
         String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectGalleryImages);
         WebUI.clickElement(buttonAddFileImages);
         WebUI.clickElement(selectChooseThumbnailImages);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectThumbnailImages);
         WebUI.clickElement(buttonAddFileImages);
@@ -488,7 +488,7 @@ public class AddProductPage extends CommonPage {
         WebUI.sleep(1);
         WebUI.clickElement(selectUnitVatFlat);
         WebUI.clickElement(buttonSavePublish); //Click button Save&Public
-
+        WebUI.waitForPageLoaded();
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         nameProductVerify = productName;
@@ -522,13 +522,13 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(selectFileTab);
         String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectGalleryImages);
         WebUI.clickElement(buttonAddFileImages);
         WebUI.clickElement(selectChooseThumbnailImages);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectThumbnailImages);
         WebUI.clickElement(buttonAddFileImages);
@@ -536,9 +536,9 @@ public class AddProductPage extends CommonPage {
         WebUI.scrollToElement(divProductVariation);
         addProductVariationColor(List.of("AliceBlue", "Amethyst"));
         addProductVariationAttribute(List.of("Size"));
-        addProductVariationAttribute(List.of("Quality"));
+        //addProductVariationAttribute(List.of("Quality"));
         addProductVariationAttributeValue("Size", List.of("22", "23"));
-        addProductVariationAttributeValue("Quality", List.of("Real", "Remake"));
+        //addProductVariationAttributeValue("Quality", List.of("Real", "Remake"));
         //Product price + stock
         addProductPriceAndStockVariation(unitPrice, discountDate, discount);
         //Product Description
@@ -550,7 +550,7 @@ public class AddProductPage extends CommonPage {
         WebUI.clickElement(selectUnitVat);
         WebUI.clickElement(selectUnitVatFlat);
         WebUI.clickElement(buttonSavePublish); //Click button Save&Public
-
+        WebUI.waitForPageLoaded();
         WebUI.verifyAssertTrueIsDisplayed(messageAddProduct, "Message Add Product KHONG xuat hien");
         WebUI.verifyAssertTrueEqual(messageAddProduct, "Product has been inserted successfully", "Message Add Product thanh cong KHONG xuat hien");
         nameProductVerify = productName;
@@ -563,47 +563,61 @@ public class AddProductPage extends CommonPage {
         WebUI.waitForElementVisible(btnEditProductVerify);
         WebUI.clickElement(btnEditProductVerify);
         WebUI.waitForPageLoaded();
-        WebUI.scrollToElementToBottom(By.xpath("//h5[normalize-space()='Product price + stock']/ancestor::div[@class='card']"));
-        WebUI.sleep(5);
-        WebUI.waitForElementVisible(valueVariant);
-        WebUI.waitForElementVisible(valueVariantPrice);
-        WebUI.waitForElementVisible(valueVariantSKU);
-        WebUI.waitForElementVisible(valueVariantQuantity);
-        WebUI.sleep(5);
+        WebUI.scrollToElementToTop(By.xpath("//h5[normalize-space()='Product price + stock']/ancestor::div[@class='card']"));
+        WebUI.sleep(4);
+        WebUI.waitForElementVisible(By.xpath("(//tr[@class='variant']//label)[1]"));
+        WebUI.sleep(2);
         List<WebElement> elementValueVariants = DriverManager.getDriver().findElements(valueVariant);
-        List<WebElement> elementValueVariantPrices = DriverManager.getDriver().findElements(valueVariantPrice);
-        List<WebElement> elementValueVariantSKUs = DriverManager.getDriver().findElements(valueVariantSKU);
-        List<WebElement> elementValueVariantQuantities = DriverManager.getDriver().findElements(valueVariantQuantity);
 
+        WebUI.waitForElementVisible(By.xpath("(//tr[@class='variant']//input[contains(@name,'price')])[1]"));
+        WebUI.sleep(2);
+        List<WebElement> elementValueVariantPrices = DriverManager.getDriver().findElements(valueVariantPrice);
+
+        WebUI.waitForElementVisible(By.xpath("(//tr[@class='variant']//input[contains(@name,'sku')])[1]"));
+        WebUI.sleep(2);
+        List<WebElement> elementValueVariantSKUs = DriverManager.getDriver().findElements(valueVariantSKU);
+
+        WebUI.waitForElementVisible(By.xpath("(//tr[@class='variant']//input[contains(@name,'qty')])[1]"));
+        WebUI.sleep(2);
+        List<WebElement> elementValueVariantQuantities = DriverManager.getDriver().findElements(valueVariantQuantity);
         List<String> valueElementValueVariants = new ArrayList<>();
         for (WebElement elementValueVariant : elementValueVariants) {
             valueElementValueVariants.add(elementValueVariant.getText());
         }
+        WebUI.sleep(2);
         List<BigDecimal> valueElementValueVariantPrices = new ArrayList<>();
         for (WebElement elementValueVariantPrice : elementValueVariantPrices) {
             valueElementValueVariantPrices.add(new BigDecimal(elementValueVariantPrice.getAttribute("value")));
         }
+        WebUI.sleep(2);
         List<String> valueElementValueVariantSKUs = new ArrayList<>();
         for (WebElement elementValueVariantSKU : elementValueVariantSKUs) {
             valueElementValueVariantSKUs.add(elementValueVariantSKU.getAttribute("value"));
         }
+        WebUI.sleep(2);
         List<String> valueElementValueVariantQuantities = new ArrayList<>();
         for (WebElement elementValueVariantQuantity : elementValueVariantQuantities) {
             valueElementValueVariantQuantities.add(elementValueVariantQuantity.getAttribute("value"));
         }
+        WebUI.sleep(2);
         List<ProductVariant> infoProductVariant = new ArrayList<>();
         for (int i = 0; i < valueElementValueVariants.size(); i++) {
             ProductVariant productVariant = new ProductVariant();
             String variantName = valueElementValueVariants.get(i);
+            System.out.println("variantName: " + variantName);
             BigDecimal variantPrice = valueElementValueVariantPrices.get(i);
+            System.out.println("variantPrice: " + variantPrice);
             String variantSKU = valueElementValueVariantSKUs.get(i);
+            System.out.println("variantSKU: " + variantSKU);
             String variantQuantity = valueElementValueVariantQuantities.get(i);
+            System.out.println("variantQuantity: " + variantQuantity);
             productVariant.setVariantName(variantName);
             productVariant.setVariantPrice(variantPrice);
             productVariant.setVariantSKU(variantSKU);
             productVariant.setVariantQuantity(variantQuantity);
             infoProductVariant.add(productVariant);
         }
+        WebUI.sleep(4);
         DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         //WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
@@ -711,48 +725,61 @@ public class AddProductPage extends CommonPage {
         WebUI.waitForElementVisible(btnEditProductVerify);
         WebUI.clickElement(btnEditProductVerify);
         WebUI.waitForPageLoaded();
-        WebUI.scrollToElementToBottom(By.xpath("//h5[normalize-space()='Product price + stock']/ancestor::div[@class='card']"));
-        WebUI.sleep(5);
-        WebUI.waitForElementVisible(valueVariant);
-        WebUI.waitForElementVisible(valueVariantPrice);
-        WebUI.waitForElementVisible(valueVariantSKU);
-        WebUI.waitForElementVisible(valueVariantQuantity);
-        WebUI.sleep(5);
+        WebUI.scrollToElementToTop(By.xpath("//h5[normalize-space()='Product price + stock']/ancestor::div[@class='card']"));
+        WebUI.sleep(4);
+        WebUI.waitForElementVisible(By.xpath("(//tr[@class='variant']//label)[1]"));
+        WebUI.sleep(2);
         List<WebElement> elementValueVariants = DriverManager.getDriver().findElements(valueVariant);
-        List<WebElement> elementValueVariantPrices = DriverManager.getDriver().findElements(valueVariantPrice);
-        List<WebElement> elementValueVariantSKUs = DriverManager.getDriver().findElements(valueVariantSKU);
-        List<WebElement> elementValueVariantQuantities = DriverManager.getDriver().findElements(valueVariantQuantity);
 
+        WebUI.waitForElementVisible(By.xpath("(//tr[@class='variant']//input[contains(@name,'price')])[1]"));
+        WebUI.sleep(2);
+        List<WebElement> elementValueVariantPrices = DriverManager.getDriver().findElements(valueVariantPrice);
+
+        WebUI.waitForElementVisible(By.xpath("(//tr[@class='variant']//input[contains(@name,'sku')])[1]"));
+        WebUI.sleep(2);
+        List<WebElement> elementValueVariantSKUs = DriverManager.getDriver().findElements(valueVariantSKU);
+
+        WebUI.waitForElementVisible(By.xpath("(//tr[@class='variant']//input[contains(@name,'qty')])[1]"));
+        WebUI.sleep(2);
+        List<WebElement> elementValueVariantQuantities = DriverManager.getDriver().findElements(valueVariantQuantity);
         List<String> valueElementValueVariants = new ArrayList<>();
         for (WebElement elementValueVariant : elementValueVariants) {
             valueElementValueVariants.add(elementValueVariant.getText());
         }
+        WebUI.sleep(2);
         List<BigDecimal> valueElementValueVariantPrices = new ArrayList<>();
         for (WebElement elementValueVariantPrice : elementValueVariantPrices) {
             valueElementValueVariantPrices.add(new BigDecimal(elementValueVariantPrice.getAttribute("value")));
         }
+        WebUI.sleep(2);
         List<String> valueElementValueVariantSKUs = new ArrayList<>();
         for (WebElement elementValueVariantSKU : elementValueVariantSKUs) {
             valueElementValueVariantSKUs.add(elementValueVariantSKU.getAttribute("value"));
         }
+        WebUI.sleep(2);
         List<String> valueElementValueVariantQuantities = new ArrayList<>();
         for (WebElement elementValueVariantQuantity : elementValueVariantQuantities) {
             valueElementValueVariantQuantities.add(elementValueVariantQuantity.getAttribute("value"));
         }
+        WebUI.sleep(2);
         List<ProductVariant> infoProductVariant = new ArrayList<>();
         for (int i = 0; i < valueElementValueVariants.size(); i++) {
             ProductVariant productVariant = new ProductVariant();
             String variantName = valueElementValueVariants.get(i);
+            System.out.println("variantName: " + variantName);
             BigDecimal variantPrice = valueElementValueVariantPrices.get(i);
+            System.out.println("variantPrice: " + variantPrice);
             String variantSKU = valueElementValueVariantSKUs.get(i);
+            System.out.println("variantSKU: " + variantSKU);
             String variantQuantity = valueElementValueVariantQuantities.get(i);
+            System.out.println("variantQuantity: " + variantQuantity);
             productVariant.setVariantName(variantName);
             productVariant.setVariantPrice(variantPrice);
             productVariant.setVariantSKU(variantSKU);
             productVariant.setVariantQuantity(variantQuantity);
             infoProductVariant.add(productVariant);
         }
-
+        WebUI.sleep(4);
         DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         //WebUI.clickElement(new LoginPage().closeAdvertisementPopup);
@@ -791,6 +818,7 @@ public class AddProductPage extends CommonPage {
 
         //get value variant selected
         String valueVariantName = getVariantNameSelected();
+        WebUI.sleep(2);
         //get price variant
         BigDecimal infoVariantPrice = BigDecimal.ZERO;
         String infoVariantQuantity = "";
@@ -972,7 +1000,8 @@ public class AddProductPage extends CommonPage {
         WebUI.setTextEnter(inputSearchCategory, category);
         WebUI.clickElement(selectBrand);
         WebUI.setTextEnter(inputSearchBrand, "CMS brand 01");
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
+        ////WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.setTextAndClear(inputUnit, unit);
         WebUI.setTextAndClear(inputWeight, String.valueOf(weight));
@@ -987,13 +1016,13 @@ public class AddProductPage extends CommonPage {
         LogUtils.info(SystemHelper.splitString(imgName, "[.]"));
         String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectGalleryImages);
         WebUI.clickElement(buttonAddFileImages);
         WebUI.clickElement(selectChooseThumbnailImages);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectThumbnailImages);
         WebUI.clickElement(buttonAddFileImages);
@@ -1049,7 +1078,7 @@ public class AddProductPage extends CommonPage {
         WebUI.setTextEnter(inputSearchCategory, category);
         WebUI.clickElement(selectBrand);
         WebUI.setTextEnter(inputSearchBrand, "CMS brand 01");
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.setTextAndClear(inputUnit, unit);
         WebUI.setTextAndClear(inputWeight, String.valueOf(weight));
@@ -1064,13 +1093,13 @@ public class AddProductPage extends CommonPage {
         LogUtils.info(SystemHelper.splitString(imgName, "[.]"));
         String imageName = SystemHelper.splitString(imgName, "[.]").get(0);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectGalleryImages);
         WebUI.clickElement(buttonAddFileImages);
         WebUI.clickElement(selectChooseThumbnailImages);
         WebUI.setTextEnter(inputSearchImg, imageName);
-        WebUI.waitForJQueryLoad();
+        //WebUI.waitForJQueryLoad();
         WebUI.sleep(2);
         WebUI.clickElement(selectThumbnailImages);
         WebUI.clickElement(buttonAddFileImages);
@@ -1079,9 +1108,9 @@ public class AddProductPage extends CommonPage {
         addProductVariationColor(List.of("AliceBlue", "Amethyst"));
         addProductVariationAttribute(List.of("Size"));
         WebUI.sleep(2);
-        addProductVariationAttribute(List.of("Quality"));
+        //addProductVariationAttribute(List.of("Quality"));
         addProductVariationAttributeValue("Size", List.of("22", "23"));
-        addProductVariationAttributeValue("Quality", List.of("Real", "Remake"));
+        //addProductVariationAttributeValue("Quality", List.of("Real", "Remake"));
         //Product price + stock
         addProductPriceAndStockVariation(unitPrice, discountDate, discount);
         //Product Description

@@ -18,10 +18,10 @@ public class HomePage extends CommonPage {
             WebUI.waitForPageLoaded();
         } catch (Exception e) {
             e.printStackTrace();
-            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
-                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
-                js.executeScript("location.reload()");
-            }
+//            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+//                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+//                js.executeScript("location.reload()");
+//            }
         }
     }
 

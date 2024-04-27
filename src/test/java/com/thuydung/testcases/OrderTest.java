@@ -149,10 +149,10 @@ public class OrderTest extends BaseTest {
             getOrderPage().testAddNewAddressInvalidInShippingInfo(excel.getCellData("address", 2), excel.getCellData("country", 2), excel.getCellData("state", 2), excel.getCellData("city", 2), excel.getCellData("postal code", 2), excel.getCellData("phone", 2));
         } catch (Exception e) {
             e.printStackTrace();
-            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
-                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
-                js.executeScript("location.reload()");
-            }
+//            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+//                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+//                js.executeScript("location.reload()");
+//            }
         }
     }
 
@@ -353,10 +353,10 @@ public class OrderTest extends BaseTest {
             getOrderPage().testApplyCouponDiscountNotExist("DUNG3");
         } catch (Exception e) {
             e.printStackTrace();
-            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
-                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
-                js.executeScript("location.reload()");
-            }
+//            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+//                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+//                js.executeScript("location.reload()");
+//            }
         }
 
     }

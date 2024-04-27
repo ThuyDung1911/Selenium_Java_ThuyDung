@@ -218,10 +218,10 @@ public class ProfileTest extends BaseTest {
             getProfilePage().addNewAddressWithoutPhone(excel.getCellData("address", 7), excel.getCellData("country", 7), excel.getCellData("state", 7), excel.getCellData("city", 7), excel.getCellData("postal code", 7), excel.getCellData("phone", 7));
         } catch (Exception e) {
             e.printStackTrace();
-            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
-                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
-                js.executeScript("location.reload()");
-            }
+//            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+//                JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+//                js.executeScript("location.reload()");
+//            }
         }
     }
 
