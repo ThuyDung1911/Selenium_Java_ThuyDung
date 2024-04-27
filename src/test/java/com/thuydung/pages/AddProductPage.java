@@ -685,8 +685,10 @@ public class AddProductPage extends CommonPage {
 //        BigDecimal maxValueInfoVariantPriceCheck = maxValueInfoVariantPrice.add(maxValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(vat)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
         BigDecimal minValueInfoVariantPriceCheck = minValueInfoVariantPrice.add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
         BigDecimal maxValueInfoVariantPriceCheck = maxValueInfoVariantPrice.add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
-        WebUI.verifySoftAssertEquals(minValueUnitPriceInProductDetail, minValueInfoVariantPriceCheck, "Min Unit Price hien thi sai");
-        WebUI.verifySoftAssertEquals(maxValueUnitPriceInProductDetail, maxValueInfoVariantPriceCheck, "Max Unit Price hien thi sai");
+//        WebUI.verifySoftAssertEquals(minValueUnitPriceInProductDetail, minValueInfoVariantPriceCheck, "Min Unit Price hien thi sai");
+//        WebUI.verifySoftAssertEquals(maxValueUnitPriceInProductDetail, maxValueInfoVariantPriceCheck, "Max Unit Price hien thi sai");
+        WebUI.verifyAssertEquals(minValueUnitPriceInProductDetail, minValueInfoVariantPriceCheck, "Min Unit Price hien thi sai");
+        WebUI.verifyAssertEquals(maxValueUnitPriceInProductDetail, maxValueInfoVariantPriceCheck, "Max Unit Price hien thi sai");
 
         if (discountDateEnd.isAfter(currentDate)) {
             //discountPrice
@@ -696,8 +698,10 @@ public class AddProductPage extends CommonPage {
             BigDecimal minDiscountPriceCheck = minValueInfoVariantPrice.subtract(minValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
             BigDecimal maxDiscountPriceCheck = maxValueInfoVariantPrice.subtract(maxValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
 
-            WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(minDiscountPriceInProductDetail), minDiscountPriceCheck, "Min Discount Price hien thi sai");
-            WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(maxDiscountPriceInProductDetail), maxDiscountPriceCheck, "Max Discount Price hien thi sai");
+//            WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(minDiscountPriceInProductDetail), minDiscountPriceCheck, "Min Discount Price hien thi sai");
+//            WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(maxDiscountPriceInProductDetail), maxDiscountPriceCheck, "Max Discount Price hien thi sai");
+            WebUI.verifyAssertEquals(WebUI.convertCurrencyToBigDecimal(minDiscountPriceInProductDetail), minDiscountPriceCheck, "Min Discount Price hien thi sai");
+            WebUI.verifyAssertEquals(WebUI.convertCurrencyToBigDecimal(maxDiscountPriceInProductDetail), maxDiscountPriceCheck, "Max Discount Price hien thi sai");
         }
 
         //quantity
@@ -705,7 +709,8 @@ public class AddProductPage extends CommonPage {
         //description
         WebUI.scrollToElement(descriptionUI);
         WebUI.sleep(1);
-        WebUI.verifySoftAssertTrueEqual(descriptionUI, description, "Description hien thi sai");
+//        WebUI.verifySoftAssertTrueEqual(descriptionUI, description, "Description hien thi sai");
+        WebUI.verifyAssertTrueEqual(descriptionUI, description, "Description hien thi sai");
         //Total price in detail product
         String totalPriceInProductDetail = WebUI.getElementText(totalPriceInDetailProduct);
         BigDecimal valueUnitPriceInProductDetail = WebUI.convertCurrencyToBigDecimal(totalPriceInProductDetail);
@@ -716,7 +721,8 @@ public class AddProductPage extends CommonPage {
             BigDecimal discountPrice = infoVariantPrice.subtract(infoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).add(WebUI.stringToBigDecimal(vat));
             valueUnitPriceCheck = discountPrice;
         }
-        WebUI.verifySoftAssertEquals(valueUnitPriceInProductDetail, valueUnitPriceCheck, "Unit Price hien thi sai");
+//        WebUI.verifySoftAssertEquals(valueUnitPriceInProductDetail, valueUnitPriceCheck, "Unit Price hien thi sai");
+        WebUI.verifyAssertEquals(valueUnitPriceInProductDetail, valueUnitPriceCheck, "Unit Price hien thi sai");
     }
 
     public void verifyNewProductVariantSeller(String nameProductVerify, String category, String unit, String discountDate, String description, String discount, String vat) {
@@ -847,8 +853,10 @@ public class AddProductPage extends CommonPage {
 //        BigDecimal maxValueInfoVariantPriceCheck = maxValueInfoVariantPrice.add(maxValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(vat)).divide(new BigDecimal(100))).setScale(2, RoundingMode.HALF_UP);
         BigDecimal minValueInfoVariantPriceCheck = minValueInfoVariantPrice.add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
         BigDecimal maxValueInfoVariantPriceCheck = maxValueInfoVariantPrice.add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
-        WebUI.verifySoftAssertEquals(minValueUnitPriceInProductDetail, minValueInfoVariantPriceCheck, "Min Unit Price hien thi sai");
-        WebUI.verifySoftAssertEquals(maxValueUnitPriceInProductDetail, maxValueInfoVariantPriceCheck, "Max Unit Price hien thi sai");
+//        WebUI.verifySoftAssertEquals(minValueUnitPriceInProductDetail, minValueInfoVariantPriceCheck, "Min Unit Price hien thi sai");
+//        WebUI.verifySoftAssertEquals(maxValueUnitPriceInProductDetail, maxValueInfoVariantPriceCheck, "Max Unit Price hien thi sai");
+        WebUI.verifyAssertEquals(minValueUnitPriceInProductDetail, minValueInfoVariantPriceCheck, "Min Unit Price hien thi sai");
+        WebUI.verifyAssertEquals(maxValueUnitPriceInProductDetail, maxValueInfoVariantPriceCheck, "Max Unit Price hien thi sai");
 
         if (discountDateEnd.isAfter(currentDate)) {
             //discountPrice
@@ -858,8 +866,10 @@ public class AddProductPage extends CommonPage {
             BigDecimal minDiscountPriceCheck = minValueInfoVariantPrice.subtract(minValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
             BigDecimal maxDiscountPriceCheck = maxValueInfoVariantPrice.subtract(maxValueInfoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).add(WebUI.stringToBigDecimal(vat)).setScale(2, RoundingMode.HALF_UP);
 
-            WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(minDiscountPriceInProductDetail), minDiscountPriceCheck, "Min Discount Price hien thi sai");
-            WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(maxDiscountPriceInProductDetail), maxDiscountPriceCheck, "Max Discount Price hien thi sai");
+//            WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(minDiscountPriceInProductDetail), minDiscountPriceCheck, "Min Discount Price hien thi sai");
+//            WebUI.verifySoftAssertEquals(WebUI.convertCurrencyToBigDecimal(maxDiscountPriceInProductDetail), maxDiscountPriceCheck, "Max Discount Price hien thi sai");
+            WebUI.verifyAssertEquals(WebUI.convertCurrencyToBigDecimal(minDiscountPriceInProductDetail), minDiscountPriceCheck, "Min Discount Price hien thi sai");
+            WebUI.verifyAssertEquals(WebUI.convertCurrencyToBigDecimal(maxDiscountPriceInProductDetail), maxDiscountPriceCheck, "Max Discount Price hien thi sai");
         }
 
         //quantity
@@ -878,7 +888,8 @@ public class AddProductPage extends CommonPage {
             BigDecimal discountPrice = infoVariantPrice.subtract(infoVariantPrice.multiply(WebUI.stringToBigDecimal(discount)).divide(new BigDecimal(100))).add(WebUI.stringToBigDecimal(vat));
             valueUnitPriceCheck = discountPrice;
         }
-        WebUI.verifySoftAssertEquals(valueUnitPriceInProductDetail, valueUnitPriceCheck, "Unit Price hien thi sai");
+//        WebUI.verifySoftAssertEquals(valueUnitPriceInProductDetail, valueUnitPriceCheck, "Unit Price hien thi sai");
+        WebUI.verifyAssertEquals(valueUnitPriceInProductDetail, valueUnitPriceCheck, "Unit Price hien thi sai");
     }
 
     public static String getVariantNameSelected() {

@@ -314,7 +314,9 @@ public class CartPage extends CommonPage {
             subTotalPrice = subTotalPrice.add(productPrice.multiply(BigDecimal.valueOf(productQuantity))).setScale(2, RoundingMode.HALF_UP);
         }
         BigDecimal valueSubTotalPriceInCart = convertCurrencyToBigDecimal(WebUI.getElementText(subTotalPriceInCart)).setScale(2, RoundingMode.HALF_UP);
-        WebUI.verifySoftAssertEquals(valueSubTotalPriceInCart, subTotalPrice, "Tổng tiền sản phẩm trong giỏ hàng không đúng");
+//        WebUI.verifySoftAssertEquals(valueSubTotalPriceInCart, subTotalPrice, "Tổng tiền sản phẩm trong giỏ hàng không đúng");
+        WebUI.verifyAssertEquals(valueSubTotalPriceInCart, subTotalPrice, "Tổng tiền sản phẩm trong giỏ hàng không đúng");
+
     }
 
     public static Map<String, Cart> getCartDropdownMap() {
@@ -531,12 +533,14 @@ public class CartPage extends CommonPage {
             BigDecimal productTax = convertCurrencyToBigDecimal(productTaxes.get(i).getText());
             int productQuantity = Integer.parseInt(productQuantities.get(i).getAttribute("value"));
             totalPrice = totalPrice.add((productPrice.add(productTax)).multiply(BigDecimal.valueOf(productQuantity)));
-            WebUI.verifySoftAssertEquals(convertCurrencyToBigDecimal(totalPriceInCartDetail.get(i).getText()).setScale(2, RoundingMode.HALF_UP), totalPrice.setScale(2, RoundingMode.HALF_UP), "Tổng tiền sản phẩm trong giỏ hàng chi tiết không đúng");
+//            WebUI.verifySoftAssertEquals(convertCurrencyToBigDecimal(totalPriceInCartDetail.get(i).getText()).setScale(2, RoundingMode.HALF_UP), totalPrice.setScale(2, RoundingMode.HALF_UP), "Tổng tiền sản phẩm trong giỏ hàng chi tiết không đúng");
+            WebUI.verifyAssertEquals(convertCurrencyToBigDecimal(totalPriceInCartDetail.get(i).getText()).setScale(2, RoundingMode.HALF_UP), totalPrice.setScale(2, RoundingMode.HALF_UP), "Tổng tiền sản phẩm trong giỏ hàng chi tiết không đúng");
             subPrice = subPrice.add(totalPrice);
         }
         BigDecimal valueSubTotalPriceInCart = convertCurrencyToBigDecimal(WebUI.getElementText(subPriceInCartDetail));
         WebUI.scrollToElementToBottom(subPriceInCartDetail);
-        WebUI.verifySoftAssertEquals(subPrice, valueSubTotalPriceInCart.setScale(2, RoundingMode.HALF_UP), "Tổng tien tất cả sản phẩm chi tiết trong giỏ hàng không đúng");
+//        WebUI.verifySoftAssertEquals(subPrice, valueSubTotalPriceInCart.setScale(2, RoundingMode.HALF_UP), "Tổng tien tất cả sản phẩm chi tiết trong giỏ hàng không đúng");
+        WebUI.verifyAssertEquals(subPrice, valueSubTotalPriceInCart.setScale(2, RoundingMode.HALF_UP), "Tổng tien tất cả sản phẩm chi tiết trong giỏ hàng không đúng");
 
     }
 
