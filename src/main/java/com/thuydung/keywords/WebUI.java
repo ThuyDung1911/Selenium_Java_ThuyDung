@@ -89,6 +89,9 @@ public class WebUI {
     public static WebElement getWebElement(By by) {
         return DriverManager.getDriver().findElement(by);
     }
+    public static WebElement getWebElement(WebElement webElement) {
+        return webElement;
+    }
 
     @Step("Di chuột đến element {0}")
     public static void scrollToElementToTop(By by) {
@@ -711,6 +714,7 @@ public class WebUI {
 //        AllureManager.saveTextLog("Xác thực result: " + actual + " chứa " + key);
     }
 
+
     @Step("Xác thực result {0} bằng {1}")
     public static void verifyAssertEqual(String actual, String key, String message) {
         waitForPageLoaded();
@@ -840,6 +844,16 @@ public class WebUI {
             return false;
         }
     }
+    public static boolean moveToElement(WebElement toElement) {
+        try {
+            Actions action = new Actions(DriverManager.getDriver());
+            action.moveToElement(toElement).release(toElement).build().perform();
+            return true;
+        } catch (Exception e) {
+            LogUtils.error(e.getMessage());
+            return false;
+        }
+    }
 
     public static boolean moveToOffset(int X, int Y) {
         try {
@@ -858,6 +872,30 @@ public class WebUI {
             action.moveToElement(getWebElement(by)).perform();
             if (ConfigData.HIGHLIGHT_ELEMENT == true) {
                 highLightElement(by);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public static boolean hoverElement(WebElement webElement) {
+        try {
+            Actions action = new Actions(DriverManager.getDriver());
+            action.moveToElement(webElement).perform();
+            if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+                highLightElement(webElement);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public static boolean hoverElement2(WebElement webElement) {
+        try {
+            Actions action = new Actions(DriverManager.getDriver());
+            action.moveToElement(webElement).perform();
+            if (ConfigData.HIGHLIGHT_ELEMENT == true) {
+                highLightElementFull(webElement);
             }
             return true;
         } catch (Exception e) {
@@ -959,6 +997,13 @@ public class WebUI {
         }
         return getWebElement(by);
     }
+    public static WebElement highLightElementFull(WebElement webElement) {
+        if (DriverManager.getDriver() instanceof JavascriptExecutor) {
+            ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].style.backgroundColor='skyblue'", webElement);
+            sleep(ConfigData.HIGHLIGHT_TIMEOUT);
+        }
+        return getWebElement(webElement);
+    }
 
     public static WebElement highLightElementFull2(By by) {
         if (DriverManager.getDriver() instanceof JavascriptExecutor) {
@@ -974,6 +1019,13 @@ public class WebUI {
             sleep(ConfigData.HIGHLIGHT_TIMEOUT);
         }
         return getWebElement(by);
+    }
+    public static WebElement highLightElement(WebElement webElement) {
+        if (DriverManager.getDriver() instanceof JavascriptExecutor) {
+            ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].style.border='5px solid blue'", webElement);
+            sleep(ConfigData.HIGHLIGHT_TIMEOUT);
+        }
+        return getWebElement(webElement);
     }
 
     public static BigDecimal stringToBigDecimal(String numberString) {
