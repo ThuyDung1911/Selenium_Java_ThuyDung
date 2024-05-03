@@ -569,9 +569,22 @@ public class WebUI {
 
     @Step("Truy cập URL: {0}")
     public static void openURL(String URL) {
-        DriverManager.getDriver().get(URL);
-        LogUtils.info("Truy cập URL: " + URL);
-        ExtentTestManager.logMessage(Status.PASS, "Truy cập URL: " + URL);
+        try {
+            DriverManager.getDriver().get(URL);
+            LogUtils.info("Truy cập URL: " + URL);
+            ExtentTestManager.logMessage(Status.PASS, "Truy cập URL: " + URL);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (WebUI.checkElementExist(By.xpath("//*[contains(text(),'too long to response')]"))) {
+                JavascriptExecutor js2 = (JavascriptExecutor) DriverManager.getDriver();
+                js2.executeScript("location.reload()");
+            }
+
+        }
+//        DriverManager.getDriver().get(URL);
+//        LogUtils.info("Truy cập URL: " + URL);
+//        ExtentTestManager.logMessage(Status.PASS, "Truy cập URL: " + URL);
         waitForPageLoaded();
         //AllureManager.saveTextLog("Truy cập URL: " + URL);
     }

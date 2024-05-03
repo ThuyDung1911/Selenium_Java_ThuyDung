@@ -1142,7 +1142,7 @@ public class OrderPage {
             By elementOrderCodeInOrderDetail = By.xpath("(//h2[contains(text(),'Order Code')])[" + i + "]/span");
             String orderCode = WebUI.getElementText(elementOrderCodeInOrderDetail);
             valueOrderCode.add(orderCode);
-            List<Cart> listProduct = getInfoOrderDetailInDisplayConfirmWithOrderCode(orderCode);
+            List<Cart> listProductInDisplayConfirm = getInfoOrderDetailInDisplayConfirmWithOrderCode(orderCode);
             OrderAmount orderAmountInOrderDetail = getOrderAmountInOrderDetail(orderCode);
             OrderSummary orderSummaryInConfirmDisplay = getOrderSummaryInConfirmDisplay();
 
@@ -1180,12 +1180,12 @@ public class OrderPage {
             WebUI.scrollToElement(By.xpath("//td[normalize-space()='Total']/following-sibling::td//span"));
 
             List<Cart> listProductInHistoryOrder = getInfoOrderDetailInHistoryOrder(orderCode);
-            for (int j = 0; j < listProduct.size(); j++) {
+            for (int j = 0; j < listProductInDisplayConfirm.size(); j++) {
                 By elementProductDeliveryMethodsInHistoryOrder = By.xpath("(//h1[text()='Order Id: " + orderCode + "']/ancestor::div[contains(@class,'aiz-user-panel')]//h5[text()='Order Details']/ancestor::div[@class='card']//table//td[5])[" + (j + 1) + "]");
-                WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getNameProduct(), listProduct.get(j).getNameProduct(), "Tên sản phẩm không khớp.");
-                WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getNameVariant(), listProduct.get(j).getNameVariant(), "Tên biến thể sản phẩm không khớp.");
-                WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getPrice(), listProduct.get(j).getPrice(), "Giá sản phẩm không khớp.");
-                WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getQuantity(), listProduct.get(j).getQuantity(), "Số lượng sản phẩm không khớp.");
+                WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getNameProduct(), listProductInDisplayConfirm.get(j).getNameProduct(), "Tên sản phẩm không khớp.");
+                WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getNameVariant(), listProductInDisplayConfirm.get(j).getNameVariant(), "Tên biến thể sản phẩm không khớp.");
+                WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getPrice(), listProductInDisplayConfirm.get(j).getPrice(), "Giá sản phẩm không khớp.");
+                WebUI.verifyAssertEquals(listProductInHistoryOrder.get(j).getQuantity(), listProductInDisplayConfirm.get(j).getQuantity(), "Số lượng sản phẩm không khớp.");
                 WebUI.verifyAssertTrueEqual(elementProductDeliveryMethodsInHistoryOrder, "Home Delivery", "Phương thức vận chuyển không khớp");
             }
             OrderAmount orderAmountInHistoryOrder = getOrderAmountInHistoryOrder();

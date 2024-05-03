@@ -205,8 +205,8 @@ public class ProfilePage extends CommonPage {
     public void addNewAddress(String address, String country, String state, String city, String postalCode, String phone) {
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
-        WebUI.moveToElement(menuManageProfile);
 //        WebUI.scrollToElementToBottom(menuManageProfile);
+        WebUI.scrollToElementToBottom(menuManageProfile);
         WebUI.clickElement(menuManageProfile);
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
@@ -252,7 +252,7 @@ public class ProfilePage extends CommonPage {
     public void addNewAddressWithoutCountry(String address, String postalCode, String phone) {
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
-        WebUI.moveToElement(menuManageProfile);
+        WebUI.scrollToElementToBottom(menuManageProfile);
         WebUI.clickElement(menuManageProfile);
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
@@ -271,7 +271,7 @@ public class ProfilePage extends CommonPage {
     public void addNewAddressWithoutState(String address, String country, String postalCode, String phone) {
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
-        WebUI.moveToElement(menuManageProfile);
+        WebUI.scrollToElementToBottom(menuManageProfile);
         WebUI.clickElement(menuManageProfile);
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
@@ -294,7 +294,7 @@ public class ProfilePage extends CommonPage {
     public void addNewAddressWithoutCity(String address, String country, String state, String postalCode, String phone) {
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
-        WebUI.moveToElement(menuManageProfile);
+        WebUI.scrollToElementToBottom(menuManageProfile);
         WebUI.clickElement(menuManageProfile);
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
@@ -337,7 +337,7 @@ public class ProfilePage extends CommonPage {
     public void editNewAddress(String address, String country, String state, String city, String postalCode, String phone) {
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
-        WebUI.moveToElement(menuManageProfile);
+        WebUI.scrollToElementToBottom(menuManageProfile);
         WebUI.clickElement(menuManageProfile);
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
@@ -391,7 +391,7 @@ public class ProfilePage extends CommonPage {
     public void editAddressWithoutCountry(String address, String country, String postalCode, String phone) {
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
-        WebUI.moveToElement(menuManageProfile);
+        WebUI.scrollToElementToBottom(menuManageProfile);
         WebUI.clickElement(menuManageProfile);
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
@@ -415,7 +415,7 @@ public class ProfilePage extends CommonPage {
     public void editAddressWithoutState(String address, String country, String state, String postalCode, String phone) {
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
-        WebUI.moveToElement(menuManageProfile);
+        WebUI.scrollToElementToBottom(menuManageProfile);
         WebUI.clickElement(menuManageProfile);
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
@@ -451,7 +451,7 @@ public class ProfilePage extends CommonPage {
     public void editAddressWithoutCity(String address, String country, String state, String city, String postalCode, String phone) {
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
-        WebUI.moveToElement(menuManageProfile);
+        WebUI.scrollToElementToBottom(menuManageProfile);
         WebUI.clickElement(menuManageProfile);
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);

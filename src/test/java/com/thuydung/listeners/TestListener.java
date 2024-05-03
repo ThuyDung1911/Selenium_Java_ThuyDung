@@ -118,7 +118,7 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        System.out.println("Đây là test case bị bỏ qua: " + result.getName());
+        System.out.println("Test case is skipped: " + result.getName());
         ExtentTestManager.logMessage(Status.SKIP, getTestDescription(result) + " is skipped");
         AllureManager.saveTextLog(getTestName(result) + " is skipped");
         if (PropertiesHelper.getValue("VIDEO_RECORD").equals("true")) {

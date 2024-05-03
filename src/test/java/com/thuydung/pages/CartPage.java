@@ -442,6 +442,11 @@ public class CartPage extends CommonPage {
         List<String> valueVariantNames = new ArrayList<>();
         for (WebElement productName : productNames) {
             WebUI.hoverElement(productName);
+            if (!productName.getText().contains(" - ")) {
+                valueProductNames.add(productName.getText());
+                valueVariantNames.add("");
+                continue;
+            }
             String productName1 = productName.getText().split(" - ")[0].trim();
             String variantName = productName.getText().split(" - ")[1].trim();
             valueVariantNames.add(variantName);
